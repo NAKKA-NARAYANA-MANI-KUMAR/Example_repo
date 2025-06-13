@@ -1,8 +1,9 @@
 data = [
-    ["Name", "Age", "City", "Occupation"],
-    ["Alice", "30", "New York", "Engineer"],
-    ["Bob", "25", "Los Angeles", "Designer"],
-    ["Charlie", "35", "Chicago", "Manager"]
+    ["Full Name", "Age (Years)", "City of Residence", "Current Occupation"],
+    ["Alice Johnson, B.Tech in Computer Science", "30 years old", "Downtown area, New York City, NY", "Senior Software Engineer working at TechNova Inc., specialized in backend systems"],
+    ["Bob Martinez, BA in Graphic Design", "25 years of age", "Suburban district, Los Angeles, California", "Creative UI/UX Designer currently employed at Creative Studio Lab"],
+    ["Charlie O'Donnell, MBA Graduate", "35 years old", "Northern side, Chicago, Illinois", "Experienced Project Manager at Urban Infrastructure Group handling commercial projects"],
+    ["Diana Thompson, MSc in Marketing", "28 years old", "Central area, Austin, Texas", "Market Research Analyst working at BrightWave Solutions in digital strategy division"]
 ]
 
 
@@ -44,6 +45,15 @@ for i in range(1,rownumb):
         ('BACKGROUND',(0,i),(-1,i),bc)
     ])
     table.setStyle(ts)
+
+#Add Boarders
+ts=TableStyle([
+    ('BOX',(0,0),(-1,-1),1,colors.black),
+    ('LINEBEFORE',(2,1),(2,-1),1,colors.blue),
+    ('LINEABOVE',(0,2),(-1,3),1,colors.red),
+    ('GRID',(0,1),(-1,-1),1,colors.black)
+])
+table.setStyle(ts)
 elems=[]
 elems.append(table)
 pdf.build (elems)
