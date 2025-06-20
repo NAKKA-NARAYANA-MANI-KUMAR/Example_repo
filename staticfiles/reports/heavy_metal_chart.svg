@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="600" height="400" fill="white"/>
+
+    <!-- Grid lines -->
+    <g stroke="#E5E7EB" stroke-width="1">
+        <line x1="150" y1="50" x2="550" y2="50"/>
+        <line x1="150" y1="80" x2="550" y2="80"/>
+        <line x1="150" y1="110" x2="550" y2="110"/>
+        <line x1="150" y1="140" x2="550" y2="140"/>
+        <line x1="150" y1="170" x2="550" y2="170"/>
+        <line x1="150" y1="200" x2="550" y2="200"/>
+        <line x1="150" y1="230" x2="550" y2="230"/>
+        <line x1="150" y1="260" x2="550" y2="260"/>
+        <line x1="150" y1="290" x2="550" y2="290"/>
+        <line x1="150" y1="320" x2="550" y2="320"/>
+        <line x1="150" y1="350" x2="550" y2="350"/>
+    </g>
+
+    <!-- Labels -->
+    <g font-family="Raleway-Regular" font-size="12" fill="#667085">
+        <text x="20" y="55" text-anchor="start">Aluminium</text>
+        <text x="20" y="85" text-anchor="start">Antimony</text>
+        <text x="20" y="115" text-anchor="start">Silver</text>
+        <text x="20" y="145" text-anchor="start">Arsenic</text>
+        <text x="20" y="175" text-anchor="start">Barium</text>
+        <text x="20" y="205" text-anchor="start">Beryllium</text>
+        <text x="20" y="235" text-anchor="start">Bismuth</text>
+        <text x="20" y="265" text-anchor="start">Cadmium</text>
+        <text x="20" y="295" text-anchor="start">Mercury</text>
+        <text x="20" y="325" text-anchor="start">Nickel</text>
+        <text x="20" y="355" text-anchor="start">Platinum</text>
+    </g>
+
+    <!-- Chemical symbols -->
+    <g font-family="Raleway-Bold" font-size="12" fill="#667085">
+        <text x="120" y="55" text-anchor="end">Al</text>
+        <text x="120" y="85" text-anchor="end">Sb</text>
+        <text x="120" y="115" text-anchor="end">Ag</text>
+        <text x="120" y="145" text-anchor="end">As</text>
+        <text x="120" y="175" text-anchor="end">Ba</text>
+        <text x="120" y="205" text-anchor="end">Be</text>
+        <text x="120" y="235" text-anchor="end">Bi</text>
+        <text x="120" y="265" text-anchor="end">Cd</text>
+        <text x="120" y="295" text-anchor="end">Hg</text>
+        <text x="120" y="325" text-anchor="end">Ni</text>
+        <text x="120" y="355" text-anchor="end">Pt</text>
+    </g>
+
+    <!-- Data points -->
+    <g>
+        <!-- Ideal zone markers (green) -->
+        <circle cx="250" y="85" r="6" fill="#4CAF50" opacity="0.8"/> <!-- Antimony 17% -->
+        <circle cx="280" y="205" r="6" fill="#4CAF50" opacity="0.8"/> <!-- Beryllium 37% -->
+        <circle cx="260" y="325" r="6" fill="#4CAF50" opacity="0.8"/> <!-- Nickel 22% -->
+        <circle cx="220" y="355" r="6" fill="#4CAF50" opacity="0.8"/> <!-- Platinum 14% -->
+
+        <!-- To correct markers (orange) -->
+        <circle cx="400" y="55" r="6" fill="#FF9800" opacity="0.8"/> <!-- Aluminium 61% -->
+        <circle cx="350" y="115" r="6" fill="#FF9800" opacity="0.8"/> <!-- Silver 48% -->
+        <circle cx="380" y="145" r="6" fill="#FF9800" opacity="0.8"/> <!-- Arsenic 55% -->
+        <circle cx="370" y="175" r="6" fill="#FF9800" opacity="0.8"/> <!-- Barium 52% -->
+        <circle cx="350" y="235" r="6" fill="#FF9800" opacity="0.8"/> <!-- Bismuth 48% -->
+        <circle cx="390" y="265" r="6" fill="#FF9800" opacity="0.8"/> <!-- Cadmium 60% -->
+        <circle cx="360" y="295" r="6" fill="#FF9800" opacity="0.8"/> <!-- Mercury 49% -->
+    </g>
+
+    <!-- Legend -->
+    <g transform="translate(150, 380)">
+        <text x="0" y="0" font-family="Raleway-Regular" font-size="12" fill="#667085">Ideal zone</text>
+        <circle cx="80" cy="-4" r="6" fill="#4CAF50" opacity="0.8"/>
+
+        <text x="120" y="0" font-family="Raleway-Regular" font-size="12" fill="#667085">to correct</text>
+        <circle cx="200" cy="-4" r="6" fill="#FF9800" opacity="0.8"/>
+    </g>
+</svg>
