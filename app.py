@@ -1,5 +1,21 @@
-# Standard library imports
+# ------------------------------
+# Standard Library Imports
+# ------------------------------
+import io
+import os
+import json
+import logging
+from datetime import datetime
+from pathlib import Path
+
+# ------------------------------
+# Flask Imports
+# ------------------------------
 from flask import Flask, request, send_file
+
+# ------------------------------
+# ReportLab Core Imports
+# ------------------------------
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -7,34 +23,28 @@ from reportlab.platypus import (
     Table,
     TableStyle,
     Image,
-    Flowable
+    Flowable,
+    KeepTogether
 )
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT
 from reportlab.lib import colors
-from reportlab.graphics import renderPDF
-from svglib.svglib import svg2rlg
-import io, os
-from pathlib import Path
-
-import json
-import logging
-import os
-from datetime import datetime
-from pathlib import Path
-
-from reportlab.graphics import renderPDF
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import inch
+from reportlab.lib.units import inch, mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Flowable, Image, Paragraph, Spacer, Table, TableStyle
 
-# Third-party imports for SVG handling
+# ------------------------------
+# ReportLab Graphics Imports
+# ------------------------------
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics import renderPDF, renderPM
+
+# ------------------------------
+# SVG Handling
+# ------------------------------
 from svglib.svglib import svg2rlg
+
 
 # ------------------------------------------------------------------------------
 # Logger configuration
@@ -104,6 +114,9 @@ pdfmetrics.registerFont(
 pdfmetrics.registerFont(
     TTFont("Inter-Bold", "staticfiles/fonts/inter/Inter-Bold.ttf")
 )
+
+
+
 class FullPageWidthHRFlowable(Flowable):
     """
     Draws a horizontal line across the entire page width (ignoring margins).
@@ -215,6 +228,7 @@ class PrescriptionOnlySVGImage(Flowable):
         """
         super().__init__()
         # Convert SVG to ReportLab drawing
+        self.filename = svg_path
         self.svg = svg2rlg(svg_path)
         self.svg_width = self.svg.width
         self.svg_height = self.svg.height
@@ -635,6 +649,18 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 wordWrap="CJK",
             )
         )
+        # self.styles.add(
+        #     ParagraphStyle(
+        #         name="RowNumber",
+        #         fontName="Courier",        # Monospaced font
+        #         fontSize=9,                # Bigger for visibility
+        #         alignment=TA_CENTER,
+        #         textColor=PMX_GREEN,
+        #         leading=12,
+        #         spaceBefore=0,
+        #         spaceAfter=0
+        #     )
+        # )
         # Row number style - prevents character splitting
         self.styles.add(
             ParagraphStyle(
@@ -784,6 +810,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             ("BOTTOMPADDING", (0, 1), (-1, -1), 15),
             ("LEFTPADDING", (0, 0), (-1, -1), TABLE_PADDING),
             ("RIGHTPADDING", (0, 0), (-1, -1), TABLE_PADDING),
+
             # Grid and Borders
             ("GRID", (0, 0), (-1, -1), 0.5, PMX_TABLE_GRID),
             ("LINEBELOW", (0, 0), (-1, 0), 1, PMX_TABLE_HEADER_BORDER),
@@ -817,17 +844,17 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         # Format the combined text
         if age and gender:
-            combined_text = f"{name} <font size=9>({age} years, {gender})</font>"
+            combined_text = f"{name} <font size=9>{age} , {gender}</font>"
         elif age:
-            combined_text = f"{name} <font size=9>({age} years)</font>"
+            combined_text = f"{name} <font size=9>{age} </font>"
         elif gender:
-            combined_text = f"{name} <font size=9>({gender})</font>"
+            combined_text = f"{name} <font size=9>{gender}</font>"
         else:
             combined_text = name
 
         logger.info(f"Patient info text: {combined_text}")
 
-        current_date = datetime.now().strftime("%d-%m-%Y")
+        current_date = datetime.now().strftime("%d/%m/%Y")
 
         name_date_data = [
             [
@@ -939,7 +966,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
             # Assemble row
             row = [
-                Paragraph(f'<nobr>{str(i).zfill(2)}</nobr>', self.styles["RowNumber"]),
+                Paragraph(f'<nobr><font size="8">{str(i).zfill(2)}</font></nobr>', self.styles["RowNumber"]),
                 supplement_cell,
                 dose_cell,
                 frequency_cell,
@@ -951,7 +978,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         # Set 6 column widths matching the layout in the screenshot
         col_widths = [
-            0.05 * AVAILABLE_WIDTH,  # Number
+            0.055 * AVAILABLE_WIDTH,  # Number
             0.30 * AVAILABLE_WIDTH,  # Supplements
             0.13 * AVAILABLE_WIDTH,  # Dose
             0.17 * AVAILABLE_WIDTH,  # Frequency
@@ -1456,20 +1483,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         return story
 
-    def draw_logo_bottom_left(canvas, doc, logo_drawing):
-        if logo_drawing:
-            # Scale logo to 60pt width
-            desired_width = 60
-            scale = desired_width / logo_drawing.width
-            logo_drawing.width = desired_width
-            logo_drawing.height *= scale
-            logo_drawing.scale(scale, scale)
-
-            x = doc.leftMargin
-            y = 15  # points from bottom
-
-            renderPDF.draw(logo_drawing, canvas, x, y)
-
     def _create_other_sections(self, data: dict) -> list:
         """Create additional sections of the prescription excluding diagnoses."""
         elements = []
@@ -1530,6 +1543,85 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         return elements
 
+    def _add_logo_to_bottom_left(self, canvas, doc):
+        """
+        Draws the PMX logo at the bottom-left corner,
+        adds 'www.pmxhealth.com' to its right,
+        and adds doctor details above them on the last page.
+        """
+        logo_x = 30
+        logo_y = 20
+        text_padding = 370  # space between logo and website text
+        logo_width = 0
+        # ---- Logo Drawing ----
+        logo = self._get_logo()
+        if isinstance(logo, PrescriptionOnlySVGImage):
+            drawing = svg2rlg(logo.filename)
+            if drawing:
+                logo_width = drawing.width
+                renderPDF.draw(drawing, canvas, x=logo_x, y=logo_y)
+        elif isinstance(logo, Image):
+            logo_width = logo.drawWidth
+            canvas.drawImage(
+                logo.filename,
+                x=logo_x,
+                y=logo_y,
+                width=logo.drawWidth,
+                height=logo.drawHeight,
+                mask='auto'
+            )
+        else:
+            canvas.setFont(FONT_INTER_BOLD, 10)
+            canvas.setFillColor(PMX_GREEN)
+            fallback_text = "PMX Health"
+            canvas.drawString(logo_x, logo_y, fallback_text)
+            logo_width = canvas.stringWidth(fallback_text, FONT_INTER_BOLD, 10)
+
+        # ---- Website Text ----
+        footer_text = "www.pmxhealth.com"
+        canvas.setFont(FONT_INTER_REGULAR, 8)
+        canvas.setFillColorRGB(0.4, 0.4, 0.4)
+        text_x = logo_x + logo_width + text_padding
+        text_y = logo_y + 5
+        canvas.drawString(text_x, text_y, footer_text)
+    
+    def get_footer_flowables(self):
+        """
+        Returns a list of Platypus flowables representing the footer content:
+        - Signature image (optional)
+        - Doctor information
+        """
+
+        flowables = []
+
+
+        # Doctor Information
+        style_bold = ParagraphStyle(
+            name="Bold",
+            fontName=FONT_INTER_MEDIUM,
+            fontSize=8,
+            textColor=colors.black,
+            alignment=TA_LEFT
+        )
+        style_light = ParagraphStyle(
+            name="Light",
+            fontName=FONT_INTER_LIGHT,
+            fontSize=8,
+            textColor=colors.black,
+            alignment=TA_LEFT
+        )
+
+        doctor_name = Paragraph("Dr. Samatha Tulla (MBBS, MD Internal Medicine)", style_bold)
+        reg_no = Paragraph("Reg no: 68976 Telangana State Medical Council", style_light)
+
+        flowables.append(doctor_name)
+        flowables.append(Spacer(0, 60))
+        flowables.append(reg_no)
+        flowables.append(Spacer(0, 6))
+
+        return [KeepTogether(flowables)]
+
+    
 # ------------------ Flask App ------------------
 app = Flask(__name__)
 
@@ -1540,7 +1632,16 @@ def generate_pdf():
     doc = SimpleDocTemplate(buffer)
     template = PrescriptionPage()
     flowables = template.generate(data)
-    doc.build(flowables)
+
+    # Add footer ONLY to the last page
+    footer = template.get_footer_flowables()  # should return a list
+    flowables.extend(footer)
+
+    doc.build(
+        flowables,
+        onFirstPage=template._add_logo_to_bottom_left,
+        onLaterPages=template._add_logo_to_bottom_left
+    )
     with open("output_from_buffer.pdf", "wb") as f:
         f.write(buffer.getvalue())
 
@@ -1549,3 +1650,5 @@ def generate_pdf():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
