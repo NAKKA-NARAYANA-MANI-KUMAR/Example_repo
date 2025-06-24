@@ -130,7 +130,7 @@ class FullPageWidthHRFlowable(Flowable):
         self.thickness = thickness
         self.color = color
         self.spaceAfter = spaceAfter
-        self.height = self.thickness + self.spaceAfter + 1  # Ensure enough vertical room
+        self.height = self.thickness + self.spaceAfter 
 
     def wrap(self, availWidth, availHeight):
         # Let the layout engine know how much vertical space this flowable takes
@@ -141,7 +141,7 @@ class FullPageWidthHRFlowable(Flowable):
         c.saveState()
 
         # Move canvas left to start at the absolute left edge of the page
-        c.translate(-self.left_margin, 0)
+        c.translate(self.left_margin-107.5, 0)
 
         # Draw the line slightly above the flowable base to avoid clipping
         y = self.thickness + 0.5  # Draw at 1.5 pts above the flowable's bottom
@@ -547,7 +547,7 @@ class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
             )
         )
         elements.append(table)
-        elements.append(Spacer(1, 17))
+        elements.append(Spacer(1, 10))
         # elements.append(
         #     PrescriptionOnlyHRFlowable(
         #         width="100%", thickness=0.5, color=PMX_GREEN, spaceAfter=5
@@ -563,7 +563,7 @@ class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
                 spaceAfter=10
             )
         )
-        elements.append(Spacer(1, 17))
+        elements.append(Spacer(1, 10))
         return elements
 
     def generate(self, data=None):
@@ -674,7 +674,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             ParagraphStyle(
                 "PrescriptionTitle",
                 fontName=FONT_INTER_REGULAR,
-                fontSize=FONT_SIZE_LARGE_MEDIUM,
+                fontSize=FONT_SIZE_LARGE,
                 textColor=PMX_GREEN,
                 leading=10,
                 alignment=TA_LEFT,
@@ -923,21 +923,25 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 Paragraph(f"Date: {current_date}", self.styles["DateStyle"]),
             ]
         ]
+        PAGE_WIDTH = A4[0]  # A4 width in points
+        LEFT_MARGIN = 40
+        RIGHT_MARGIN = 20
+        AVAILABLE_WIDTH = PAGE_WIDTH - LEFT_MARGIN - RIGHT_MARGIN
         name_date_table = Table(
             name_date_data, colWidths=[AVAILABLE_WIDTH * 0.75, AVAILABLE_WIDTH * 0.25]
         )
         name_date_table.setStyle(
-            TableStyle(
-                [
-                    ("ALIGN", (0, 0), (0, 0), "LEFT"),
-                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                    ("LEFTPADDING", (0, 0), (0, 0), 10),  # Added 10 points padding
-                    ("RIGHTPADDING", (0, 0), (0, 0), 0),
-                    ("TOPPADDING", (0, 0), (-1, -1), -15),
-                ]
-            )
+            TableStyle([
+                ("ALIGN", (0, 0), (0, 0), "LEFT"),
+                ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ])
         )
+
         elements.append(name_date_table)
         elements.append(Spacer(1, 5))
         return elements
@@ -1534,16 +1538,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             )
             diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
 
-            # # Standard bullet point list for diagnoses
-            # for item in diagnosis_data:
-            #     if isinstance(item, dict) and "name" in item:
-            #         diagnosis_elements.append(
-            #             Paragraph(f"• {item['name']}", self.styles["PMXBodyText"])
-            #         )
-            #     else:
-            #         diagnosis_elements.append(
-            #             Paragraph(f"• {item}", self.styles["PMXBodyText"])
-            #         )
             diagnosis_elements.append(self._create_diagnosis(diagnosis_data))
             diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
         # Add diagnosis section first
@@ -1695,7 +1689,13 @@ app = Flask(__name__)
 def generate_pdf():
     data = request.get_json()
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer)
+    doc = SimpleDocTemplate(buffer,
+            pagesize=A4,
+            leftMargin=30,     # adjust this to control left edge space
+            rightMargin=20,
+            topMargin=50,
+            bottomMargin=90
+            )
     template = PrescriptionPage()
     flowables = template.generate(data)
 
