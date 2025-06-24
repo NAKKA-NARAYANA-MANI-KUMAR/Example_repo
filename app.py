@@ -152,6 +152,52 @@ class FullPageWidthHRFlowable(Flowable):
 
         c.restoreState()
 
+class StyledDiagnosis(Flowable):
+    def __init__(self, text, width=85 * mm, height=14 * mm):
+        super().__init__()
+        self.text = str(text['name'])  # Ensures it's always a string
+        self.width = width
+        self.height = height
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        c: canvas.Canvas = self.canv
+        radius = 17  # Rounded corner box
+
+        # Rounded rectangle background
+        c.setStrokeColor(colors.HexColor("#D9E9E6"))
+        c.setFillColor(colors.white)
+        c.roundRect(0, 0, self.width, self.height, radius, stroke=1, fill=1)
+
+        # Bullet center position
+        center_x = 6 * mm
+        center_y = self.height / 2
+
+        # 1. Outer glow circle – #D0F0EE
+        c.setFillColor(colors.HexColor("#D0F0EE"))
+        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
+
+        # 2. Middle circle – #71C1BD
+        c.setFillColor(colors.HexColor("#71C1BD"))
+        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
+
+        # 3. Thin white ring – #FFFFFF
+        c.setFillColor(colors.white)
+        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
+
+        # 4. Innermost circle – #23968D
+        c.setFillColor(colors.HexColor("#23968D"))
+        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
+
+        # Text in black
+        c.setFillColor(PMX_GREEN)
+        c.setFont("Helvetica", 12)
+        text_x = center_x + 4.2 * mm + 3 * mm
+        text_y = self.height / 2 - 3
+        c.drawString(text_x, text_y, self.text)
+
 class PrescriptionOnlyPMXBasePage:
     """Base page class that provides common functionality for generating page content.
     Handles style initialization and base path setup for assets.
@@ -568,6 +614,21 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
     def init_styles(self):
         """Initialize all custom text styles used in the prescription."""
+
+        #PrescriptionEnds here
+        self.styles.add(
+            ParagraphStyle(
+                "PrescriptionEnds",
+                fontName=FONT_INTER_REGULAR,
+                fontSize=FONT_SIZE_SMALL,
+                textColor=colors.gray,
+                leading=10,
+                alignment=TA_CENTER,  
+                spaceBefore=10,
+                spaceAfter=10,
+                leftIndent=0,
+            )
+        )
         # Patient name style
         self.styles.add(
             ParagraphStyle(
@@ -1169,6 +1230,30 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         ]
         return self._build_styled_table(table_data, col_widths)
 
+    def _create_diagnosis(self, diagnoses: list) -> Table:
+        # Create styled pills
+        pills = [StyledDiagnosis(text) for text in diagnoses]
+
+        # Build rows of 2 pills each
+        rows = []
+        for i in range(0, len(pills), 2):
+            row = pills[i:i+2]
+            if len(row) < 2:
+                row.append(Spacer(85 * mm, 14 * mm))
+            rows.append(row)
+
+        # Create table
+        table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
+        table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ]))
+
+        return table  
+
+
     def _create_additional_sections(self, data: dict) -> list:
         """Create additional sections of the prescription."""
         elements = []
@@ -1351,50 +1436,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         # Add patient info
         story.extend(self._create_patient_info(data))
 
-        # Extract diagnosis section first
-        diagnosis_elements = []
-        diagnosis_data = []
-
-        # Try direct access
-        if "diagnoses" in data and data.get("diagnoses"):
-            diagnosis_data = data.get("diagnoses", [])
-        # Try nested reference_data
-        elif "consultation" in data and "reference_data" in data.get(
-            "consultation", {}
-        ):
-            ref_diagnosis = (
-                data.get("consultation", {})
-                .get("reference_data", {})
-                .get("diagnoses", [])
-            )
-            if ref_diagnosis:
-                # Extract just the names
-                diagnosis_data = [
-                    item.get("name", "") for item in ref_diagnosis if "name" in item
-                ]
-
-        if diagnosis_data:
-            diagnosis_elements.append(
-                Paragraph("Diagnoses:", self.styles["PrescriptionTitle"])
-            )
-            diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
-
-            # Standard bullet point list for diagnoses
-            for item in diagnosis_data:
-                if isinstance(item, dict) and "name" in item:
-                    diagnosis_elements.append(
-                        Paragraph(f"• {item['name']}", self.styles["PMXBodyText"])
-                    )
-                else:
-                    diagnosis_elements.append(
-                        Paragraph(f"• {item}", self.styles["PMXBodyText"])
-                    )
-
-            diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
-
-        # Add diagnosis section first
-        story.extend(diagnosis_elements)
-
         # Add prescription title
         story.append(Paragraph("Prescription", self.styles["PrescriptionTitle"]))
         story.append(Spacer(1, self.PAGE_MARGIN / 4))
@@ -1433,7 +1474,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         if medications:
             story.append(self._create_prescription_table(medications))
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
-
+        
         # Handle therapies from different possible sources
         therapies = []
         if "therapies" in data:
@@ -1462,6 +1503,52 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
             story.append(self._create_therapies_table(therapies))
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
+        if therapies or medications:
+            story.append(Paragraph("prescription ends here", self.styles["PrescriptionEnds"]))
+            story.append(Spacer(1, self.PAGE_MARGIN / 4))
+        # Extract diagnosis section first
+        diagnosis_elements = []
+        diagnosis_data = []
+
+        # Try direct access
+        if "diagnoses" in data and data.get("diagnoses"):
+            diagnosis_data = data.get("diagnoses", [])
+        # Try nested reference_data
+        elif "consultation" in data and "reference_data" in data.get(
+            "consultation", {}
+        ):
+            ref_diagnosis = (
+                data.get("consultation", {})
+                .get("reference_data", {})
+                .get("diagnoses", [])
+            )
+            if ref_diagnosis:
+                # Extract just the names
+                diagnosis_data = [
+                    item.get("name", "") for item in ref_diagnosis if "name" in item
+                ]
+
+        if diagnosis_data:
+            diagnosis_elements.append(
+                Paragraph("Diagnoses:", self.styles["PrescriptionTitle"])
+            )
+            diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+            # # Standard bullet point list for diagnoses
+            # for item in diagnosis_data:
+            #     if isinstance(item, dict) and "name" in item:
+            #         diagnosis_elements.append(
+            #             Paragraph(f"• {item['name']}", self.styles["PMXBodyText"])
+            #         )
+            #     else:
+            #         diagnosis_elements.append(
+            #             Paragraph(f"• {item}", self.styles["PMXBodyText"])
+            #         )
+            diagnosis_elements.append(self._create_diagnosis(diagnosis_data))
+            diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+        # Add diagnosis section first
+        story.extend(diagnosis_elements)
+
 
         # Add other additional sections (excluding diagnoses which we already added)
         other_sections = self._create_other_sections(data)
@@ -1553,6 +1640,22 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         logo_y = 20
         text_padding = 370  # space between logo and website text
         logo_width = 0
+
+        # ---- Doctor Info Above Footer ----
+        canvas.setFont(FONT_INTER_LIGHT, 8)
+        canvas.setFillColor(colors.black)
+        doctor_text_y = logo_y + 50
+        canvas.setFont(FONT_INTER_MEDIUM, 8)
+        canvas.drawString(logo_x, doctor_text_y, "Dr. Samatha Tulla (MBBS, MD Internal Medicine)")
+        canvas.setFont(FONT_INTER_LIGHT, 8)
+        canvas.drawString(logo_x, doctor_text_y - 12, "Reg no: 68976 Telangana State Medical Council")
+
+        # ---- Optional Signature Image (above doctor info) ----
+        try:
+            signature_path = "staticfiles/images/signature.png"  # <-- Update to your actual path
+            canvas.drawImage(signature_path, logo_x, doctor_text_y + 10, width=80, height=25, mask='auto')
+        except:
+            pass
         # ---- Logo Drawing ----
         logo = self._get_logo()
         if isinstance(logo, PrescriptionOnlySVGImage):
@@ -1585,43 +1688,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         text_y = logo_y + 5
         canvas.drawString(text_x, text_y, footer_text)
     
-    def get_footer_flowables(self):
-        """
-        Returns a list of Platypus flowables representing the footer content:
-        - Signature image (optional)
-        - Doctor information
-        """
-
-        flowables = []
-
-
-        # Doctor Information
-        style_bold = ParagraphStyle(
-            name="Bold",
-            fontName=FONT_INTER_MEDIUM,
-            fontSize=8,
-            textColor=colors.black,
-            alignment=TA_LEFT
-        )
-        style_light = ParagraphStyle(
-            name="Light",
-            fontName=FONT_INTER_LIGHT,
-            fontSize=8,
-            textColor=colors.black,
-            alignment=TA_LEFT
-        )
-
-        doctor_name = Paragraph("Dr. Samatha Tulla (MBBS, MD Internal Medicine)", style_bold)
-        reg_no = Paragraph("Reg no: 68976 Telangana State Medical Council", style_light)
-
-        flowables.append(doctor_name)
-        flowables.append(Spacer(0, 60))
-        flowables.append(reg_no)
-        flowables.append(Spacer(0, 6))
-
-        return [KeepTogether(flowables)]
-
-    
 # ------------------ Flask App ------------------
 app = Flask(__name__)
 
@@ -1632,10 +1698,6 @@ def generate_pdf():
     doc = SimpleDocTemplate(buffer)
     template = PrescriptionPage()
     flowables = template.generate(data)
-
-    # Add footer ONLY to the last page
-    footer = template.get_footer_flowables()  # should return a list
-    flowables.extend(footer)
 
     doc.build(
         flowables,
