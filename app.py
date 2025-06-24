@@ -89,7 +89,10 @@ TABLE_COL_STANDARD = 0.15  # Width ratio for standard columns
 
 # Available width for content (total width minus margins)
 AVAILABLE_WIDTH = (8.5 * inch) - (1.5 * inch)
-
+PAGE_WIDTH = A4[0]  # A4 width in points
+LEFT_MARGIN = 40
+RIGHT_MARGIN = 20
+AVAILABLE_WIDTH = PAGE_WIDTH - LEFT_MARGIN - RIGHT_MARGIN
 # Default Doctor Information
 DEFAULT_DOCTOR_NAME = "Dr. Samatha Tulla"
 DEFAULT_SPECIALIZATION = "Internal Medicine Physician"
@@ -923,10 +926,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 Paragraph(f"Date: {current_date}", self.styles["DateStyle"]),
             ]
         ]
-        PAGE_WIDTH = A4[0]  # A4 width in points
-        LEFT_MARGIN = 40
-        RIGHT_MARGIN = 20
-        AVAILABLE_WIDTH = PAGE_WIDTH - LEFT_MARGIN - RIGHT_MARGIN
+        
         name_date_table = Table(
             name_date_data, colWidths=[AVAILABLE_WIDTH * 0.75, AVAILABLE_WIDTH * 0.25]
         )
