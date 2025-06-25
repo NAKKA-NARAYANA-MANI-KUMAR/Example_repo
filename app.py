@@ -1159,7 +1159,9 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             0.22 * AVAILABLE_WIDTH,  # Remarks
         ]
 
+
         return self._build_styled_table(table_data, col_widths)
+
 
     def _create_therapies_table(self, therapies: list) -> Table:
         """Build the therapies table.
@@ -1544,8 +1546,8 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             diagnosis_elements.append(self._create_diagnosis(diagnosis_data))
             diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
         # Add diagnosis section first
-        story.extend(diagnosis_elements)
-
+        #story.extend(diagnosis_elements)
+        story.append(KeepTogether(diagnosis_elements))
         additional_diagnosis_elements = []
         additional_diagnosis_data = []
 
