@@ -12,7 +12,7 @@ from pathlib import Path
 # Flask Imports
 # ------------------------------
 from flask import Flask, request, send_file
-
+from reportlab.pdfbase.pdfmetrics import stringWidth
 # ------------------------------
 # ReportLab Core Imports
 # ------------------------------
@@ -155,6 +155,87 @@ class FullPageWidthHRFlowable(Flowable):
 
         c.restoreState()
 
+
+class StyledAdditionalDiagnosis(Flowable):
+    def __init__(self, diagnosis, styles, width=85 * mm, height=18 * mm):
+        super().__init__()
+        self.name = str(diagnosis["name"])
+        self.location = diagnosis.get("location", "")
+        self.styles = styles  # Save full stylesheet
+        self.width = width
+        self.height = height
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+        
+    def draw(self):
+        c = self.canv
+        radius = 10
+
+        # Background box
+        c.setStrokeColor(colors.HexColor("#D9E9E6"))
+        c.setFillColor(colors.white)
+        c.roundRect(0, 0, self.width, self.height, radius, stroke=1, fill=1)
+
+        # Center points
+        center_x = 6 * mm
+        center_y = self.height / 2
+
+        # Bullet layers
+        c.setFillColor(colors.HexColor("#D0F0EE"))  # Outer glow
+        c.circle(center_x, center_y, 4.0 * mm, fill=1, stroke=0)
+
+        c.setFillColor(colors.HexColor("#71C1BD"))  # Middle circle
+        c.circle(center_x, center_y, 2.8 * mm, fill=1, stroke=0)
+
+        c.setFillColor(colors.white)  # White ring
+        c.circle(center_x, center_y, 2.05 * mm, fill=1, stroke=0)
+
+        c.setFillColor(colors.HexColor("#23968D"))  # Innermost dot
+        c.circle(center_x, center_y, 2.0 * mm, fill=1, stroke=0)
+
+        # Diagnosis name
+        text_x = center_x + 4.5 * mm + 3 * mm
+        text_y = self.height - 21  # From top
+
+        c.setFont(FONT_INTER_REGULAR, 12)
+        c.setFillColor(colors.HexColor("#00473C"))  # PMX_GREEN
+        c.drawString(text_x, text_y, self.name)
+
+
+        if self.location:
+            tag_text = self.location.strip()
+            font_size = 8
+            padding_left = 8
+            padding_right = 8
+
+            # Calculate button width
+            tag_text_width = stringWidth(tag_text, FONT_INTER_REGULAR, font_size)
+            button_width = tag_text_width + padding_left + padding_right
+
+            # Build Paragraph
+            tag_para = Paragraph(tag_text, self.styles["PMXAvailableButton"])
+
+            # Create Table
+            tag_table = Table([[tag_para]], colWidths=[button_width])
+            tag_table.setStyle(
+                TableStyle([
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 3),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ])
+            )
+
+            # Render the table at desired location inside canvas
+            tag_x = text_x
+            tag_y = 3.5  # vertical offset from bottom
+
+            w, h = tag_table.wrapOn(c, self.width, self.height)
+            tag_table.drawOn(c, tag_x, tag_y)
+
 class StyledDiagnosis(Flowable):
     def __init__(self, text, width=85 * mm, height=14 * mm):
         super().__init__()
@@ -196,7 +277,7 @@ class StyledDiagnosis(Flowable):
 
         # Text in black
         c.setFillColor(PMX_GREEN)
-        c.setFont("Helvetica", 12)
+        c.setFont(FONT_INTER_REGULAR, 12)
         text_x = center_x + 4.2 * mm + 3 * mm
         text_y = self.height / 2 - 3
         c.drawString(text_x, text_y, self.text)
@@ -226,7 +307,6 @@ class PrescriptionOnlyPMXBasePage:
         elements = []
         elements.extend(content_elements)
         return elements
-
 
 class PrescriptionOnlyHRFlowable(Flowable):
     """A custom horizontal line flowable for visual separation between sections.
@@ -262,7 +342,6 @@ class PrescriptionOnlyHRFlowable(Flowable):
         self.canv.setLineWidth(self.thickness)
         self.canv.setStrokeColor(self.color)
         self.canv.line(0, self.thickness, self.calcWidth, self.thickness)
-
 
 class PrescriptionOnlySVGImage(Flowable):
     """A custom flowable for handling SVG images in the PDF.
@@ -566,7 +645,7 @@ class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
                 spaceAfter=10
             )
         )
-        elements.append(Spacer(1, 10))
+        elements.append(Spacer(1, 5))
         return elements
 
     def generate(self, data=None):
@@ -637,7 +716,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             ParagraphStyle(
                 "PatientName",
                 fontName=FONT_INTER_REGULAR,
-                fontSize=FONT_SIZE_LARGE_MEDIUM,
+                fontSize=FONT_SIZE_LARGE,
                 textColor=PMX_GREEN,
                 leading=10,
                 alignment=TA_LEFT,
@@ -809,7 +888,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 backColor=PMX_BUTTON_BG,
                 borderPadding=3,
                 borderRadius=10,
-                borderWidth=1,
+                borderWidth=0.5,
                 borderColor=PMX_GREEN,
                 leading=10,
                 wordWrap="LTR",  # Prevent text wrapping
@@ -957,7 +1036,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         # Header row
         headers = [
             Paragraph(h, self.styles["TableHeader"])
-            for h in ["", "Supplements", "Dose", "Frequency", "Duration", "Remarks"]
+            for h in ["", "Medications", "Dose", "Frequency", "Duration", "Remarks"]
         ]
         table_data = [headers]
 
@@ -965,14 +1044,44 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             name = med.get("name", "")
             strength = med.get("strength", "")
             active_ingredients = med.get("active_ingredients", "")
-
+            supplement_flowables = []
             # Supplement name with strength or type below (like Mixed, 500 mg)
             if strength or active_ingredients:
-                supplement_text = f'<font name="Inter-Bold" >{name.upper()}</font>\n<font size=8>{strength or active_ingredients}</font>'
+                supplement_text = f'<font name="Inter-Bold" >{name.upper()}</font>\n<font size=8>{strength or active_ingredients}</font>' 
+                if name:
+                    supplement_flowables.append(
+                        Paragraph(name, self.styles["TableCell"])
+                    )
+                if strength:
+
+                    # Calculate text width
+                    text_width = stringWidth(strength, FONT_INTER_REGULAR, 8)
+
+                    padding_left = 8
+                    padding_right = 8
+                    button_width = text_width + padding_left + padding_right
+
+                    button = Paragraph(f"{strength}", self.styles["PMXAvailableButton"])
+
+                    # Create a table with the computed width
+                    button_table = Table([[button]], colWidths=[button_width])                    
+                    button_table.setStyle(
+                        TableStyle([
+                            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                            ("TOPPADDING", (0, 0), (-1, -1), 3),
+                            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                        ])
+                    )
+                    supplement_flowables.append(button_table)
+
+                
             else:
                 supplement_text = f'<b>{name.upper()}</b>'
-
-            supplement_cell = Paragraph(supplement_text, self.styles["TableCell"])
+            
+            supplement_cell = supplement_flowables if supplement_flowables else Paragraph(supplement_text, self.styles["TableCell"])
 
             # Dose (like 1 tablet)
             dosage = med.get("dosage", "")
@@ -996,9 +1105,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             else:
                 frequency_cell = Paragraph(format_frequency_with_gray_dots(frequency_raw), self.styles["TableCell"])
 
-            # frequency_text = f"{format_frequency_with_gray_dots(frequency_raw)}<br/>{timing}" if timing else format_frequency_with_gray_dots(frequency_raw)
-            
-            # frequency_cell = Paragraph(frequency_text, self.styles["TableCell"])
 
             # Duration
             duration_cell = Paragraph(med.get("duration", ""), self.styles["TableCell"])
@@ -1006,7 +1112,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             # Remarks (Instructions + How to Buy button if needed)
             instructions = med.get("instructions", "")
             available_in_clinic = med.get("available_in_clinic", False)
-
+            external_url = med.get("external_url","")
             remarks_flowables = []
             if instructions:
                 remarks_flowables.append(
@@ -1014,18 +1120,20 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 )
             if available_in_clinic:
                 button = Paragraph("Available at PMX", self.styles["PMXAvailableButton"])
-                button_table = Table([[button]], colWidths=[90])
-                button_table.setStyle(
-                    TableStyle([
-                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-                        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                        ("TOPPADDING", (0, 0), (-1, -1), 1),
-                        ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
-                    ])
-                )
-                remarks_flowables.append(button_table)
+            else:
+                button = Paragraph(f'<link href="{external_url}">Buy Now</link>', self.styles["PMXAvailableButton"])
+            button_table = Table([[button]], colWidths=[90])
+            button_table.setStyle(
+                TableStyle([
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 1),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                ])
+            )
+            remarks_flowables.append(button_table)
 
             remarks_cell = remarks_flowables if remarks_flowables else Paragraph("", self.styles["TableCell"])
 
@@ -1052,134 +1160,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         ]
 
         return self._build_styled_table(table_data, col_widths)
-
-    # def _create_prescription_table(self, medications: list) -> Table:
-    #     """Build the prescription table for medications.
-
-    #     Args:
-    #         medications (list): List of medication dictionaries with structure:
-    #         [
-    #             {
-    #                 "name": "Medication Name",
-    #                 "strength": "10mg",
-    #                 "dosage": "1 tablet",
-    #                 "frequency": "Twice daily",
-    #                 "duration": "7 days",
-    #                 "instructions": "Take after meals",
-    #                 "start_from": "2023-01-01",
-    #                 "timing": "Morning",
-    #                 "available_in_clinic": True,
-    #                 "external_url": "https://www.google.com"
-    #             },
-    #             ...
-    #         ]
-
-    #     Returns:
-    #         Table: Styled table containing medication information
-    #     """
-    #     if not medications:
-    #         return None
-
-    #     headers = [
-    #         Paragraph(h, self.styles["TableHeader"])
-    #         for h in [
-    #             "",
-    #             "Suplements",
-    #             "Dosage",
-    #             "Frequency",
-    #             "Duration",
-    #             "Remarks",
-    #         ]
-    #     ]
-    #     table_data = [headers]
-
-    #     for i, med in enumerate(medications, 1):
-    #         name = med.get("name", "")
-    #         active_ingredients = med.get("active_ingredients", "")
-    #         medication = (
-    #             f"<i>{name}</i>\n<i><font size=7>({active_ingredients})</font></i>"
-    #             if active_ingredients
-    #             else f"<i>{name}</i>"
-    #         )
-
-    #         # Create dosage with strength below it
-    #         dosage = med.get("dosage", "")
-    #         strength = med.get("strength", "")
-    #         dosage_strength = f"{dosage}\n{strength}" if strength else dosage
-    #         timing = med.get("timing", "")
-    #         # How to Buy column logic
-    #         available_in_clinic = med.get("available_in_clinic", False)
-    #         external_url = med.get("external_url", "")
-    #         how_to_buy_cell = None
-    #         if available_in_clinic:
-    #             button = Paragraph("Available @ PMX", self.styles["PMXAvailableButton"])
-    #             button_table = Table([[button]], colWidths=[80])
-    #             button_table.setStyle(
-    #                 TableStyle(
-    #                     [
-    #                         ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-    #                         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-    #                         ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    #                         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-    #                     ]
-    #                 )
-    #             )
-    #             how_to_buy_cell = button_table
-    #         elif external_url:
-    #             link_style = ParagraphStyle(
-    #                 "LinkStyle",
-    #                 parent=self.styles["TableCell"],
-    #                 alignment=TA_CENTER,
-    #                 textColor=colors.HexColor("#007bff"),
-    #                 underline=True,
-    #             )
-    #             link_html = f'<link href="{external_url}">Link to buy</link>'
-    #             how_to_buy_cell = Paragraph(link_html, link_style)
-    #         else:
-    #             how_to_buy_cell = Paragraph("", self.styles["TableCell"])
-
-    #         # Remarks column: only instructions/notes
-    #         instructions = med.get("instructions", "")
-    #         remarks_cell = (
-    #             Paragraph(
-    #                 instructions,
-    #                 ParagraphStyle(
-    #                     "RemarksCell",
-    #                     parent=self.styles["TableCell"],
-    #                     alignment=TA_CENTER,
-    #                 ),
-    #             )
-    #             if instructions
-    #             else Paragraph("", self.styles["TableCell"])
-    #         )
-
-    #         row = [
-    #             Paragraph(str(i), self.styles["RowNumber"]),
-    #             Paragraph(medication, self.styles["TableCell"]),
-    #             Paragraph(dosage_strength, self.styles["TableCell"]),
-    #             Paragraph(med.get("frequency", ""), self.styles["TableCell"]),
-    #             Paragraph(med.get("timing", ""), self.styles["TableCell"]),
-    #             Paragraph(med.get("duration", ""), self.styles["TableCell"]),
-    #             Paragraph(med.get("start_from", ""), self.styles["TableCell"]),
-    #             how_to_buy_cell,
-    #             remarks_cell,
-    #         ]
-    #         table_data.append(row)
-
-    #     col_widths = [
-    #         TABLE_COL_NUMBER
-    #         * AVAILABLE_WIDTH
-    #         * 1.5,  # Number column (increased by 50%)
-    #         0.16 * AVAILABLE_WIDTH,  # Medications column (16%)
-    #         0.10 * AVAILABLE_WIDTH,  # Dosage column (10%)
-    #         0.11 * AVAILABLE_WIDTH,  # Frequency column (11%)
-    #         0.10 * AVAILABLE_WIDTH,  # Timing column (10%)
-    #         0.10 * AVAILABLE_WIDTH,  # Duration column (10%)
-    #         0.08 * AVAILABLE_WIDTH,  # Start From column (8%)
-    #         0.15 * AVAILABLE_WIDTH,  # How to Buy column (15%)
-    #         0.20 * AVAILABLE_WIDTH,  # Remarks column (20%)
-    #     ]
-    #     return self._build_styled_table(table_data, col_widths)
 
     def _create_therapies_table(self, therapies: list) -> Table:
         """Build the therapies table.
@@ -1256,6 +1236,29 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         ]))
 
         return table  
+    
+    def _create_additional_diagnosis(self, diagnoses: list) -> Table:
+        # Create styled pills
+        pills = [StyledAdditionalDiagnosis(text, self.styles) for text in diagnoses]
+
+        # Build rows of 2 pills each
+        rows = []
+        for i in range(0, len(pills), 2):
+            row = pills[i:i+2]
+            if len(row) < 2:
+                row.append(Spacer(85 * mm, 14 * mm))
+            rows.append(row)
+
+        # Create table
+        table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
+        table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ]))
+
+        return table
 
 
     def _create_additional_sections(self, data: dict) -> list:
@@ -1542,6 +1545,24 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
         # Add diagnosis section first
         story.extend(diagnosis_elements)
+
+        additional_diagnosis_elements = []
+        additional_diagnosis_data = []
+
+        # Try direct access
+        if "additional_diagnoses" in data and data.get("additional_diagnoses"):
+            additional_diagnosis_data = data.get("additional_diagnoses", [])
+
+        if additional_diagnosis_data:
+            additional_diagnosis_elements.append(
+                Paragraph("Additional Diagnoses:", self.styles["PrescriptionTitle"])
+            )
+            additional_diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+            additional_diagnosis_elements.append(self._create_additional_diagnosis(additional_diagnosis_data))
+            additional_diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+        # Add diagnosis section first
+        story.append(KeepTogether(additional_diagnosis_elements))
 
 
         # Add other additional sections (excluding diagnoses which we already added)
