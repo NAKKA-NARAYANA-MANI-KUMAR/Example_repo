@@ -377,7 +377,7 @@ class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
         )
         self.pmx_green = PMX_GREEN
         self.pmx_green_light = PMX_GREEN_LIGHT
-
+    
     def _get_logo(self):
         """Load and return the clinic logo as an SVG image flowable.
 
