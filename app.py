@@ -1060,18 +1060,13 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             
             supplement_cell = supplement_flowables if supplement_flowables else Paragraph(supplement_text, self.styles["TableCell"])
 
-            # Dose (like 1 tablet)
             dosage = med.get("dosage", "")
             dose_cell = Paragraph(dosage, self.styles["TableCell"])
 
-            # Frequency (like 1 • 0 • 1 \n After Food)
             frequency_raw = med.get("frequency", "")
             timing = med.get("timing", "")
 
             def format_frequency_with_gray_dots(frequency: str) -> str:
-                """
-                Converts "1-0-1" to '1 <gray>•</gray> 0 <gray>•</gray> 1' for PDF rendering
-                """
                 parts = frequency.strip().split("-")
                 # Insert gray dot between values
                 return ' <font color="#CCCCCC">•</font> '.join(parts)
@@ -1083,10 +1078,8 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 frequency_cell = Paragraph(format_frequency_with_gray_dots(frequency_raw), self.styles["TableCell"])
 
 
-            # Duration
             duration_cell = Paragraph(med.get("duration", ""), self.styles["TableCell"])
 
-            # Remarks (Instructions + How to Buy button if needed)
             instructions = med.get("instructions", "")
             available_in_clinic = med.get("available_in_clinic", False)
             external_url = med.get("external_url","")
@@ -1114,7 +1107,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
             remarks_cell = remarks_flowables if remarks_flowables else Paragraph("", self.styles["TableCell"])
 
-            # Assemble row
             row = [
                 Paragraph(f'<nobr><font size="8">{str(i).zfill(2)}</font></nobr>', self.styles["RowNumber"]),
                 supplement_cell,
