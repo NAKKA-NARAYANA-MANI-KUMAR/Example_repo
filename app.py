@@ -1,6 +1,3 @@
-# ------------------------------
-# Standard Library Imports
-# ------------------------------
 import io
 import os
 import json
@@ -8,14 +5,8 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
-# ------------------------------
-# Flask Imports
-# ------------------------------
 from flask import Flask, request, send_file
 from reportlab.pdfbase.pdfmetrics import stringWidth
-# ------------------------------
-# ReportLab Core Imports
-# ------------------------------
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -34,24 +25,12 @@ from reportlab.lib.units import inch, mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# ------------------------------
-# ReportLab Graphics Imports
-# ------------------------------
 from reportlab.graphics.shapes import Drawing
 from reportlab.graphics import renderPDF, renderPM
 
-# ------------------------------
-# SVG Handling
-# ------------------------------
 from svglib.svglib import svg2rlg
 
-
-# ------------------------------------------------------------------------------
-# Logger configuration
 logger = logging.getLogger(__name__)
-
-# ------------------------------------------------------------------------------
-# Visual Style Constants
 
 # Brand Colors
 PMX_GREEN = colors.HexColor("#00625B")  # Primary brand color
@@ -119,7 +98,6 @@ pdfmetrics.registerFont(
 )
 
 
-
 class FullPageWidthHRFlowable(Flowable):
     """
     Draws a horizontal line across the entire page width (ignoring margins).
@@ -154,7 +132,6 @@ class FullPageWidthHRFlowable(Flowable):
         c.line(0, y, self.page_width, y)
 
         c.restoreState()
-
 
 class StyledAdditionalDiagnosis(Flowable):
     def __init__(self, diagnosis, styles, width=85 * mm, height=18 * mm):
@@ -1565,7 +1542,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             additional_diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
         # Add diagnosis section first
         story.append(KeepTogether(additional_diagnosis_elements))
-
 
         # Add other additional sections (excluding diagnoses which we already added)
         other_sections = self._create_other_sections(data)
