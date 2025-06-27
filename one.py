@@ -30,7 +30,7 @@ from reportlab.graphics import renderPDF, renderPM
 from reportlab.lib import colors
 from reportlab.lib.colors import Color
 from svglib.svglib import svg2rlg
-
+from reportlab.graphics import renderPDF
 logger = logging.getLogger(__name__)
 
 # Brand Colors
@@ -224,6 +224,69 @@ class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
             "static/reports/pmx_health.svg",
             "staticfiles/icons/pmx_health.svg",
             "static/icons/pmx_health.svg",
+        ]
+
+        for logo_path in possible_paths:
+            try:
+                if os.path.exists(logo_path):
+                    # Try to load SVG
+                    svg = svg2rlg(logo_path)
+                    if svg is not None:
+                        return PrescriptionOnlySVGImage(logo_path, width=60)
+                    # If SVG loading failed, try to load as regular image
+                    return Image(logo_path, width=60, height=60)
+            except Exception:
+                continue
+
+        # If all attempts fail, return a placeholder text
+        return Paragraph(
+            "PMX Health",
+            ParagraphStyle(
+                "LogoPlaceholder",
+                fontName=FONT_INTER_BOLD,
+                fontSize=16,
+                textColor=PMX_GREEN,
+                alignment=TA_LEFT,
+            ),
+        )
+
+    def _get_toc(self):
+        """Load and return the clinic logo as an SVG image flowable.
+
+        Returns:
+            PrescriptionOnlySVGImage: Logo image sized appropriately for the header
+        """
+        # Try multiple possible paths for the logo
+        possible_paths = [
+            str(self.base_path / "toc.svg"),
+            str(
+                Path(__file__).parent.parent.parent.parent.parent
+                / "static"
+                / "reports"
+                / "toc.svg"
+            ),
+            str(
+                Path(__file__).parent.parent.parent.parent.parent
+                / "staticfiles"
+                / "reports"
+                / "toc.svg"
+            ),
+            str(
+                Path(__file__).parent.parent.parent.parent.parent
+                / "static"
+                / "icons"
+                / "toc.svg"
+            ),
+            str(
+                Path(__file__).parent.parent.parent.parent.parent
+                / "staticfiles"
+                / "icons"
+                / "toc.svg"
+            ),
+            "staticfiles/reports/toc.svg",
+            "static/reports/toc.svg",
+            "staticfiles/icons/toc.svg",
+            "static/icons/toc.svg",
         ]
 
         for logo_path in possible_paths:
@@ -537,7 +600,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         return story
 
     
-    def _add_logo_to_bottom_left(self, canvas, doc):
+    # def _add_logo_to_bottom_left(self, canvas, doc):
         """
         Draws the PMX logo at the bottom-left corner,
         adds 'www.pmxhealth.com' to its right,
@@ -555,6 +618,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
        
         # ---- Logo Drawing ----
         logo = self._get_logo()
+        toc = self._get_toc
         if isinstance(logo, PrescriptionOnlySVGImage):
             drawing = svg2rlg(logo.filename)
             if drawing:
@@ -577,6 +641,72 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             canvas.drawString(logo_x, logo_y, fallback_text)
             logo_width = canvas.stringWidth(fallback_text, FONT_INTER_BOLD, 10)
 
+
+    def _add_logo_to_bottom_left(self, canvas, doc):
+        """
+        Draws the PMX logo at the bottom-left corner,
+        adds 'www.pmxhealth.com' to its right,
+        and adds doctor details above them on the last page,
+        and draws a toc.svg as background.
+        """
+        logo_x = 30
+        logo_y = 20
+        text_padding = 370
+        logo_width = 0
+
+        # --- Draw toc.svg as background ---
+        try:
+            toc_drawing = svg2rlg("staticfiles/reports/toc.svg")
+            if toc_drawing:
+                # Recursively reduce opacity for all elements
+                def apply_opacity(drawing, alpha):
+                    for elem in drawing.contents:
+                        if hasattr(elem, 'fillOpacity'):
+                            elem.fillOpacity = alpha
+                        if hasattr(elem, 'strokeOpacity'):
+                            elem.strokeOpacity = alpha
+                        if hasattr(elem, 'contents'):  # Nested groups
+                            apply_opacity(elem, alpha)
+
+                apply_opacity(toc_drawing, 0.3)  # 10% opacity
+
+                # Draw on canvas
+                renderPDF.draw(toc_drawing, canvas, x=0, y=0)
+
+        except Exception as e:
+            print("Failed to load toc.svg:", e)
+
+
+        # --- Draw logo (SVG or Image) ---
+        logo = self._get_logo()
+        if isinstance(logo, PrescriptionOnlySVGImage):
+            drawing = svg2rlg(logo.filename)
+            if drawing:
+                logo_width = drawing.width
+                renderPDF.draw(drawing, canvas, x=logo_x, y=logo_y)
+        elif isinstance(logo, Image):
+            logo_width = logo.drawWidth
+            canvas.drawImage(
+                logo.filename,
+                x=logo_x,
+                y=logo_y,
+                width=logo.drawWidth,
+                height=logo.drawHeight,
+                mask='auto'
+            )
+        else:
+            canvas.setFont(FONT_INTER_BOLD, 10)
+            canvas.setFillColor(PMX_GREEN)
+            fallback_text = "PMX Health"
+            canvas.drawString(logo_x, logo_y, fallback_text)
+            logo_width = canvas.stringWidth(fallback_text, FONT_INTER_BOLD, 10)
+        # ---- Website Text ----
+        header_text = "Thrive Limitless"
+        canvas.setFont(FONT_INTER_REGULAR, 8)
+        canvas.setFillColorRGB(0.4, 0.4, 0.4)
+        text_x = 474
+        text_y = 792.64
+        canvas.drawString(text_x, text_y, header_text)
     
 # ------------------ Flask App ------------------
 app = Flask(__name__)
