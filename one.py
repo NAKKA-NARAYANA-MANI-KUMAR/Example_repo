@@ -340,7 +340,6 @@ class StyledDiagnosis(Flowable):
         c.setFillColor(colors.HexColor("#00625B"))
         c.circle(center_x, center_y, 1.0 * mm, fill=1, stroke=0)
 
-
 class PrescriptionPage(PrescriptionOnlyTemplate):
     """Generates a prescription PDF page with:
     - Header (logo, doctor info, address)
