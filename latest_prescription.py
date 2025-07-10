@@ -26,7 +26,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.shapes import Drawing,Circle, String
 from reportlab.graphics import renderPDF, renderPM
 
 from svglib.svglib import svg2rlg
@@ -1144,61 +1144,259 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         drawing.height = height
         return drawing
     
-    def _get_forms_(self, data: dict) -> list:
-        """Create the patient information section with name, age, gender, and date."""
-        elements = []
-        forms = data.get("forms", {})
+    # def _get_forms_(self, data: dict) -> list:
+    #     """Create the patient information section with name, age, gender, and date."""
+    #     elements = []
+    #     forms = data.get("forms", {})
         
+    #     row = []
+    #     col_widths = []
+
+    #     for idx, item in enumerate(forms):
+    #         icon_path = os.path.join("staticfiles", "icons", f"{item.lower()}.svg")
+
+    #         pill = RoundedPill(
+    #             text=item,
+    #             bg_color=colors.HexColor("#FFFFFF"),
+    #             radius=16,
+    #             width=123,
+    #             height=23,
+    #             font_size=8,
+    #             text_color=PMX_GREEN,
+    #             border_color=PMX_GREEN,
+    #             border_width=0.2,
+    #             font_name=FONT_INTER_REGULAR,
+    #             icon_path=icon_path,
+    #             icon_width=metric[item.lower()]["width"],
+    #             icon_height=metric[item.lower()]["height"]
+    #         )
+
+    #         row.append(pill)
+    #         col_widths.append(pill.width)
+
+    #         # Add horizontal padding (4 units) after each pill except the last
+    #         if idx < len(forms) - 1:
+    #             spacer = Spacer(width=4, height=0)
+    #             row.append(spacer)
+    #             col_widths.append(4)
+
+    #     forms_table_ = Table([row], colWidths=col_widths)
+
+    #     forms_table_.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+    #     forms_table = Table([[forms_table_]], colWidths=[A4[0]-64])
+
+    #     forms_table.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 5.5),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 5.5),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     return forms_table
+
+    # def _get_forms_(self, data: dict) -> Table:
+    #     """Create the patient information section with name, age, gender, and date."""
+    #     elements = []
+    #     forms = data.get("forms", [])
+        
+    #     if not forms:
+    #         return Spacer(1, 0)  # Return empty spacer if no forms available
+
+    #     row = []
+    #     col_widths = []
+
+    #     for idx, item in enumerate(forms):
+    #         item_lower = item.lower()
+    #         icon_path = os.path.join("staticfiles", "icons", f"{item_lower}.svg")
+
+    #         # Defensive check: ensure item exists in metric dictionary
+    #         if item_lower not in metric:
+    #             continue  # skip this form if no metric is defined
+
+    #         icon = self.svg_icon(
+    #             icon_path,
+    #             width=metric[item_lower]["width"],
+    #             height=metric[item_lower]["height"]
+    #         )
+    #         icon_val = Paragraph(item, self.styles["TableCell"])
+
+    #         row.append(icon)
+    #         col_widths.append(icon.width)
+
+    #         row.append(icon_val)
+    #         col_widths.append(icon_val.wrap(0, 0)[0])  # Get proper width
+
+    #         # Add horizontal spacer (4 units) between items (except after last)
+    #         if idx < len(forms) - 1:
+    #             spacer = Spacer(width=4, height=0)
+    #             row.append(spacer)
+    #             col_widths.append(4)
+
+    #     # Wrap everything into a single-row table
+    #     forms_table_inner = Table([row], colWidths=col_widths)
+    #     forms_table_inner.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     # Wrap again to handle alignment/margins on full width
+    #     forms_table = Table([[forms_table_inner]], colWidths=[A4[0] - 64])
+    #     forms_table.setStyle(TableStyle([
+    #         # ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         # ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         # ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         # ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #         ("ALIGN",(0,0),(-1,-1),"RIGHT")
+    #     ]))
+
+    #     return forms_table
+
+
+    # def _get_forms_(self, data: dict) -> Table:
+    #     """Create the patient information section with icons and labels (e.g., syrup, tablet)."""
+    #     forms = data.get("forms", [])
+
+    #     if not forms:
+    #         return Spacer(1, 0)  # Empty fallback
+
+    #     row = []
+    #     forms_starting = data.get("forms_starting", [])
+    #     row.append(Paragraph(forms_starting, self.styles["TableCell"]))
+    #     row.append(Spacer(width=4, height=0))
+    #     col_widths = []
+
+    #     for idx, item in enumerate(forms):
+    #         item_lower = item.lower()
+    #         icon_path = os.path.join("staticfiles", "icons", f"{item_lower}.svg")
+
+    #         # Ensure metric data is available
+    #         if item_lower not in metric:
+    #             continue
+
+    #         # Load SVG icon using your custom function
+    #         icon = self.svg_icon(
+    #             icon_path,
+    #             width=metric[item_lower]["width"],
+    #             height=metric[item_lower]["height"]
+    #         )
+
+    #         # Create Paragraph safely
+    #         icon_val = Paragraph(item, self.styles["TableCell"])
+
+    #         # Append icon and estimated width
+    #         row.append(icon)
+    #         # col_widths.append(icon.width)
+
+    #         # # Calculate width properly using wrapOn (prevents zero width error)
+    #         # wrapped_width, _ = icon_val.wrapOn(None, 200, 20)
+    #         row.append(icon_val)
+    #         #col_widths.append(wrapped_width)
+
+    #         # Add spacing between items except after the last one
+    #         if idx < len(forms) - 1:
+    #             spacer = Spacer(width=4, height=0)
+    #             row.append(spacer)
+    #             #col_widths.append(4)
+
+    #     # Inner table (actual icon+text+spacer row)
+    #     forms_table_inner = Table([row])
+    #     forms_table_inner.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    #     ]))
+
+    #     # Wrap outer table for margins
+    #     forms_table = Table([[forms_table_inner]], colWidths=[A4[0] - 64])
+    #     forms_table.setStyle(TableStyle([
+    #         ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
+    #         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    #         # Uncomment below if needed
+    #         # ("LEFTPADDING", (0, 0), (-1, -1), 5.5),
+    #         # ("RIGHTPADDING", (0, 0), (-1, -1), 5.5),
+    #     ]))
+
+    #     return forms_table
+
+
+
+    def _get_forms_(self, data: dict) -> Table:
+
+        forms = data.get("forms", [])
+        forms_starting = data.get("forms_starting", "")
+
+        if not forms:
+            return Spacer(1, 0)
+
         row = []
         col_widths = []
 
-        for idx, item in enumerate(forms):
-            icon_path = os.path.join("staticfiles", "icons", f"{item.lower()}.svg")
+        if forms_starting:
+            intro_para = Paragraph(forms_starting,ParagraphStyle(
+                "frequency_duration",  # Custom left-aligned
+                parent=self.styles["TableCell"],
+                fontSize=FONT_SIZE_SMALL,
+            ))
+            intro_width= stringWidth(forms_starting, FONT_INTER_REGULAR , FONT_SIZE_SMALL)
+            row.append(intro_para)
+            col_widths.append(intro_width)
 
-            pill = RoundedPill(
-                text=item,
-                bg_color=colors.HexColor("#FFFFFF"),
-                radius=16,
-                width=123,
-                height=23,
-                font_size=8,
-                text_color=PMX_GREEN,
-                border_color=PMX_GREEN,
-                border_width=0.2,
-                font_name=FONT_INTER_REGULAR,
-                icon_path=icon_path,
-                icon_width=metric[item.lower()]["width"],
-                icon_height=metric[item.lower()]["height"]
+            row.append(Spacer(8, 0))
+            col_widths.append(8)
+
+        for idx, item in enumerate(forms):
+            item_lower = item.lower()
+            icon_path = os.path.join("staticfiles", "icons", f"{item_lower}.svg")
+
+            if item_lower not in metric:
+                continue
+
+            icon = self.svg_icon(
+                icon_path,
+                width=metric[item_lower]["width"],
+                height=metric[item_lower]["height"]
             )
 
-            row.append(pill)
-            col_widths.append(pill.width)
+            para = Paragraph(item, self.styles["TableCell"])
+            para_width = stringWidth(item, FONT_INTER_REGULAR , FONT_SIZE_VERY_SMALL)
 
-            # Add horizontal padding (4 units) after each pill except the last
+            row.append(icon)
+            col_widths.append(icon.width)
+
+            row.append(Spacer(4, 0))  # 4pt between icon and text
+            col_widths.append(4)
+
+            row.append(para)
+            col_widths.append(para_width)
+
             if idx < len(forms) - 1:
-                spacer = Spacer(width=4, height=0)
-                row.append(spacer)
-                col_widths.append(4)
+                row.append(Spacer(8, 0))  # 8pt between icon–text pairs
+                col_widths.append(8)
 
-        forms_table_ = Table([row], colWidths=col_widths)
-
-        forms_table_.setStyle(TableStyle([
+        forms_table_inner = Table([row], colWidths=col_widths, hAlign="RIGHT")
+        forms_table_inner.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ]))
-        forms_table = Table([[forms_table_]], colWidths=[A4[0]-64])
 
+        forms_table = Table([[forms_table_inner]], colWidths=[A4[0] - 64])
         forms_table.setStyle(TableStyle([
-            ("LEFTPADDING", (0, 0), (-1, -1), 5.5),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 5.5),
-            ("TOPPADDING", (0, 0), (-1, -1), 0),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ]))
-
         return forms_table
-
 
     # def _create_prescription_table(self, medications: list) -> Table:
     #     """
@@ -1600,7 +1798,29 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         return self._build_styled_table(table_data, col_widths)
 
+    
 
+    def get_circular_icon_flowable(self,bg_color="#E7F5F3",text_color="#00625B",border_color="#00625B",text="P",radius=6.9,font_size=6.5) -> Drawing:
+
+        size = radius * 2  
+        d = Drawing(size, size)
+
+        # Background circle
+        circle = Circle(radius, radius, radius)
+        circle.fillColor = colors.HexColor(bg_color)
+        circle.strokeColor = colors.HexColor(border_color)
+        circle.strokeWidth = 0.2
+        d.add(circle)
+
+        # Centered text
+        text_obj = String(radius, radius - font_size * 0.3, text,
+                        fontName=FONT_INTER_REGULAR,
+                        fontSize=font_size,
+                        fillColor=colors.HexColor(text_color),
+                        textAnchor="middle")
+        d.add(text_obj)
+
+        return d
 
     def _create_therapies_table(self, therapies: list) -> Table:
         """Build the therapies table.
@@ -1631,13 +1851,13 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         headers = [
             Paragraph("", self.styles["TableHeader"]),  # First column (number)
             Paragraph("Therapy", self.styles["TableHeader"]),
-            Paragraph("Start From", ParagraphStyle(  # Custom left-aligned
-                "StartFromHeader",
+            Paragraph("Start From", ParagraphStyle(
+                "Start From",  # Custom left-aligned
                 parent=self.styles["TableHeader"],
                 alignment=TA_CENTER
             )),
-            Paragraph("Frequency & Duration", ParagraphStyle(  # Custom left-aligned
-                "FreqDurHeader",
+            Paragraph("Frequency & Duration", ParagraphStyle(
+                "Frequency & Duration",  # Custom left-aligned
                 parent=self.styles["TableHeader"],
                 alignment=TA_CENTER
             )),
@@ -1648,13 +1868,25 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         for i, therapy in enumerate(therapies, 1):
             name=therapy.get("name", "")
             start_from_cell=Paragraph(therapy.get("start_from", ""), self.styles["TableCell"]),
-            #frequency=therapy.get("frequency", "")
-            frequency_cell=Paragraph(therapy.get("frequency", ""), self.styles["TableCell"]),
+            frequency=therapy.get("frequency", "")
+            #frequency_cell=Paragraph(therapy.get("frequency", ""), self.styles["TableCell"]),
             session_days=therapy.get("session_days", "")
-            session_time=therapy.get("session_time", "")
-            duration_cell=Paragraph(therapy.get("duration", ""), self.styles["TableCell"]),
+            session_time=Paragraph(therapy.get("session_time", ""), ParagraphStyle(
+                "frequency_duration",  # Custom left-aligned
+                parent=self.styles["TableCell"],
+                textColor=colors.HexColor("#667085")
+            )),
+            duration=therapy.get("duration", "")
+        
+            frequency_duration=Paragraph(f"{frequency} |{duration}",ParagraphStyle(
+                "frequency_duration",  # Custom left-aligned
+                parent=self.styles["TableCell"],
+                textColor=colors.HexColor("#667085")
+            ))
             remarks_cell=Paragraph(therapy.get("remarks", ""), self.styles["TableCell"]),
             
+
+
             # metrics = {
             #     "h-bot": {"width": 15, "height": 14.09},
             #     "sauna": {"width": 15, "height": 15},
@@ -1688,13 +1920,52 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                     ])
                 )
 
+            days_list = []
+            days_dict = {"Mon": "M", "Tue": "T", "Wed": "W", "Thu": "Th", "Fri": "F", "Sat": "S", "Sun": "Su"}
 
-    
+            for index, day in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
+                if day in session_days:
+                    icon = self.get_circular_icon_flowable(
+                        text=days_dict[day],
+                        bg_color="#80C6C0",
+                        text_color="#FFFFFF",
+                        border_color="#00625B"
+                    )
+                else:
+                    icon = self.get_circular_icon_flowable(
+                        text=days_dict[day],
+                        bg_color="#E7F5F3",
+                        text_color="#00625B",
+                        border_color="#00625B"
+                    )
+
+                days_list.append(icon)
+
+                # Add 5pt horizontal spacer between each icon, except after the last one
+                if index < 6:
+                    days_list.append(Spacer(width=5, height=0))
+
+            # Create the table with a single row
+            days_table = Table(
+                [days_list],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE")
+                ]
+            )
+            frequency_duration_table = Table(
+                [[days_table],
+                [session_time],
+                [frequency_duration]],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE")
+                ]
+            )
+
             row = [
                 Paragraph(f'<nobr><font size="7">{str(i).zfill(2)}</font></nobr>', self.styles["RowNumber"]),
                 content_table,
                 start_from_cell,
-                frequency_cell,
+                frequency_duration_table,
                 remarks_cell,
             ]
 
@@ -1747,7 +2018,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         ]))
 
         return table
-
 
     def _create_additional_sections(self, data: dict) -> list:
         """Create additional sections of the prescription."""
@@ -2223,10 +2493,10 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
     # def _add_logo_to_bottom_left(self, canvas, doc):
     #     logo_x = 26
     #     logo_y = 16
-    #     text_padding = 370  # Space between logo and text
+    #     text_padding = 370
     #     logo_width = 0
 
-    #     # ---- Logo Drawing ----
+    #     # Draw PMX logo
     #     logo = self._get_logo()
     #     if isinstance(logo, PrescriptionOnlySVGImage):
     #         drawing = svg2rlg(logo.filename)
@@ -2244,46 +2514,64 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
     #             mask='auto'
     #         )
     #     else:
+    #         fallback_text = "PMX Health"
     #         canvas.setFont(FONT_INTER_BOLD, 10)
     #         canvas.setFillColor(PMX_GREEN)
-    #         fallback_text = "PMX Health"
     #         canvas.drawString(logo_x, logo_y, fallback_text)
     #         logo_width = canvas.stringWidth(fallback_text, FONT_INTER_BOLD, 10)
 
-    #     # ---- Page Number Instead of Website ----
+    #     # --- Page Number Format: Page 01 - 03 ---
     #     current_page = canvas.getPageNumber()
-    #     footer_text = f"Page {current_page}"
+    #     total_pages = getattr(self, "total_pages", 0)
+    #     page_text = f"Page {str(current_page).zfill(2)} - {str(total_pages).zfill(2)}"
+
     #     canvas.setFont(FONT_INTER_REGULAR, 8)
     #     canvas.setFillColorRGB(0.4, 0.4, 0.4)
     #     text_x = logo_x + logo_width + text_padding
     #     text_y = logo_y + 5
-    #     canvas.drawString(text_x, text_y, footer_text)
+    #     canvas.drawString(text_x, text_y, page_text)
 
-    #     # ---- Page Check ----
-    #     is_last_page = getattr(self, "total_pages", 0) == current_page
+    #     # --- Footer Logic ---
+    #     is_last_page = (current_page == total_pages)
 
     #     if is_last_page:
-    #         # Signature + doctor details
+    #         # Doctor info and signature only on last page
     #         doctor_text_y = logo_y + 50
     #         canvas.setFont(FONT_INTER_MEDIUM, 8)
     #         canvas.setFillColor(colors.black)
     #         canvas.drawString(logo_x, doctor_text_y, "Dr. Samatha Tulla (MBBS, MD Internal Medicine)")
     #         canvas.setFont(FONT_INTER_LIGHT, 8)
     #         canvas.drawString(logo_x, doctor_text_y - 12, "Reg no: 68976 Telangana State Medical Council")
-
     #         try:
-    #             signature_path = "staticfiles/images/signature.png"
-    #             canvas.drawImage(signature_path, logo_x, doctor_text_y + 10, width=80, height=25, mask='auto')
-    #         except:
-    #             pass
+    #             signature_svg = "staticfiles/icons/dr_samatha_sign.svg"
+    #             drawing = svg2rlg(signature_svg)
+
+    #             # Target size
+    #             target_width = 77
+    #             target_height = 21.12
+
+    #             # Scaling factors
+    #             scale_x = target_width / drawing.width
+    #             scale_y = target_height / drawing.height
+
+    #             # Apply scaling
+    #             drawing.scale(scale_x, scale_y)
+
+    #             # Render the scaled SVG at desired location
+    #             renderPDF.draw(drawing, canvas, x=logo_x, y=doctor_text_y + 10)
+    #         except Exception as e:
+    #             print(f"SVG load failed: {e}")
+
+
     #     else:
-    #         # "Prescription continued..." note for non-last pages
+    #         # Show "Prescription continued..." on all non-last pages
+    #         canvas.setFont(FONT_INTER_REGULAR, 10.459)
+    #         canvas.setFillColor(colors.HexColor("#667085"))
     #         message = "Prescription continued on next page"
-    #         canvas.setFont(FONT_INTER_REGULAR, 9)
-    #         canvas.setFillColor(colors.HexColor("#333333"))
+
     #         page_width, _ = A4
-    #         text_width = stringWidth(message, FONT_INTER_REGULAR, 9)
-    #         x = 32 + ((page_width - 64) - text_width) / 2  # 32pt padding on both sides
+    #         text_width = stringWidth(message, FONT_INTER_REGULAR, 10.459)
+    #         x = 32 + ((page_width - 64) - text_width) / 2  # 32pt left & right margin
     #         y = 154.76
     #         canvas.drawString(x, y, message)
 
@@ -2332,25 +2620,19 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         is_last_page = (current_page == total_pages)
 
         if is_last_page:
-            # Doctor info and signature only on last page
-            doctor_text_y = logo_y + 50
+            # Bottom-aligned position
+            base_y = 90  # from bottom
+            left_margin = 32
+
+            # Doctor info (above signature)
             canvas.setFont(FONT_INTER_MEDIUM, 8)
             canvas.setFillColor(colors.black)
-            canvas.drawString(logo_x, doctor_text_y, "Dr. Samatha Tulla (MBBS, MD Internal Medicine)")
-            canvas.setFont(FONT_INTER_LIGHT, 8)
-            canvas.drawString(logo_x, doctor_text_y - 12, "Reg no: 68976 Telangana State Medical Council")
+            canvas.drawString(left_margin, base_y + 21.12 + 12, "Dr. Samatha Tulla (MBBS, MD Internal Medicine)")
 
-            # try:
-            #     icon_path = os.path.join("staticfiles", "icons", f"{name_.lower()}.svg")
-            #     icon=self.svg_icon(
-            #         icon_path,
-            #         width=77,
-            #         height=21.12
-            #     )
-            #     signature_path = "staticfiles/icons/dr_samatha_sign.jpeg"
-            #     canvas.drawImage(signature_path, logo_x, doctor_text_y + 10, width=80, height=25, mask='auto')
-            # except:
-            #     pass
+            canvas.setFont(FONT_INTER_LIGHT, 8)
+            canvas.drawString(left_margin, base_y + 21.12, "Reg no: 68976 Telangana State Medical Council")
+
+            # Signature at the bottom
             try:
                 signature_svg = "staticfiles/icons/dr_samatha_sign.svg"
                 drawing = svg2rlg(signature_svg)
@@ -2366,12 +2648,10 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 # Apply scaling
                 drawing.scale(scale_x, scale_y)
 
-                # Render the scaled SVG at desired location
-                renderPDF.draw(drawing, canvas, x=logo_x, y=doctor_text_y + 10)
+                # Render at final position (base_y from bottom)
+                renderPDF.draw(drawing, canvas, x=left_margin, y=base_y)
             except Exception as e:
                 print(f"SVG load failed: {e}")
-
-
         else:
             # Show "Prescription continued..." on all non-last pages
             canvas.setFont(FONT_INTER_REGULAR, 10.459)
