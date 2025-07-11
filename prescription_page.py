@@ -950,7 +950,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         headers = [
             Paragraph(h, self.styles["TableHeader"])
-            for h in ["", "Therapy", "Frequency", "Duration", "Instructions", "Notes"]
+            for h in ["", "Therapies","Start From", "Frequency", "Duration", "Remarks"]
         ]
         table_data = [headers]
 
