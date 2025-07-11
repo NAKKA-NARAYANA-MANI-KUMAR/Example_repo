@@ -15,7 +15,10 @@ from reportlab.platypus import (
     TableStyle,
     Image,
     Flowable,
-    KeepTogether
+    KeepTogether,
+    Frame,
+    BaseDocTemplate,
+    PageTemplate
 )
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
@@ -1903,13 +1906,13 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         # Ensure we're using the content template
         story = []
      
-        story.extend(self.add_bottom_left_image("x_logo.png",x=-6,y=-74))
+        #story.extend(self.add_bottom_left_image("x_logo.png",x=-6,y=-74))
         # Add header and content with proper spacing
-        story.extend(self._create_header(data))
-        #story.append(Spacer(1, self.PAGE_MARGIN / 2))  # Add space after header
+        # story.extend(self._create_header(data))
+        # #story.append(Spacer(1, self.PAGE_MARGIN / 2))  # Add space after header
 
-        # Add patient info
-        story.extend(self._create_patient_info(data))
+        # # Add patient info
+        # story.extend(self._create_patient_info(data))
 
         # Add prescription title
         #story.append(Paragraph("Prescription", self.styles["PrescriptionTitle"]))
@@ -2060,21 +2063,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         story.append(KeepTogether(additional_diagnosis_elements))
 
         # Add other additional sections (excluding diagnoses which we already added)
-        other_sections = self._create_other_sections(data)
-        story.extend(other_sections)
-
-        # Handle follow-up data
-        follow_up = self._get_follow_up_data(data)
-        if follow_up:
-            story.extend(self._create_follow_up_section(follow_up))
-
-        # Handle notes and instructions
-        notes = self._get_notes_data(data)
-        if notes:
-            story.extend(self._create_notes_section(notes))
-
-        # Remove the spacer at the bottom that's causing the empty page
-        logger.info("Prescription page generation complete")
 
 
         return story
@@ -2216,35 +2204,68 @@ app = Flask(__name__)
 def generate_prescription():
     data = request.get_json()
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer,
-            pagesize=A4,
-            leftMargin=0,     
-            rightMargin=0,
-            topMargin=0,
-            bottomMargin=169
-            )
-    template = PrescriptionPage()
-    flowables = template.generate(data)
 
-    # doc.build(
-    #     flowables,
-    #     onFirstPage=template._add_logo_to_bottom_left,
-    #     onLaterPages=template._add_logo_to_bottom_left
-    # )
+    template = PrescriptionPage()
+
+    content_frame = Frame(
+        x1=0,
+        y1=169,
+        width=A4[0],
+        height=A4[1] - 169 - 134,
+        leftPadding=0,
+        rightPadding=0,
+        topPadding=0,
+        bottomPadding=0,
+    )
+
+    def draw_every_page(canvas, doc):
+        canvas.saveState()
+        
+        header_flowables = (
+            template.add_bottom_left_image("x_logo.png",x=-6,y=-74)+
+            template._create_header(data)
+            + template._create_patient_info(data)
+        )
+
+        header_frame = Frame(
+            x1=0,
+            y1=A4[1] - 134,
+            width=595,
+            height=134,
+            leftPadding=0,
+            rightPadding=0,
+            topPadding=0,
+            bottomPadding=0,
+        )
+        header_frame.addFromList(header_flowables, canvas)
+        canvas.restoreState()
+
+    doc = BaseDocTemplate(
+        buffer,
+        pagesize=A4,
+        leftMargin=0,
+        rightMargin=0,
+        topMargin=0,
+        bottomMargin=169,
+    )
+    doc.addPageTemplates([
+        PageTemplate(id="PrescriptionPage", frames=[content_frame], onPage=draw_every_page)
+    ])
+
     def canvasmaker(filename, **kwargs):
         c = NumberedCanvas(filename, **kwargs)
-        c._template = template  # Link template to canvas
+        c._template = template
         return c
 
-    doc.build(
-        flowables,
-        canvasmaker=canvasmaker
-    )
+    flowables = template.generate(data)
+    doc.build(flowables, canvasmaker=canvasmaker)
     with open("output_from_buffer__.pdf", "wb") as f:
         f.write(buffer.getvalue())
-
+        
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name="prescription.pdf", mimetype="application/pdf")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
