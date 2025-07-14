@@ -83,8 +83,7 @@ TABLE_COL_NUMBER = 0.05
 TABLE_PADDING = 8
 TABLE_HEADER_PADDING = 12
 
-
-
+svg_dir = "staticfiles/icons/"
 # === Base Classes ===
 class ThriveRoadmapOnlySVGImage:
     def __init__(self, filename, width=None, height=None):
@@ -366,6 +365,78 @@ class RoundedBox(Flowable):
         self.canv.restoreState()
 
 
+class StyledTextDiagnosis(Flowable):
+    def __init__(self, text, width=65 * mm, height=10 * mm):
+        super().__init__()
+        self.text = str(text)  # Ensures it's always a string
+        self.width = width
+        self.height = height
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        c: canvas.Canvas = self.canv
+
+        # Bullet center position
+        center_x = 6 * mm
+        center_y = self.height / 2
+
+        # 1. Outer glow circle – #D0F0EE
+        c.setFillColor(colors.HexColor("#D0F0EE"))
+        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
+
+        # 2. Middle circle – #71C1BD
+        c.setFillColor(colors.HexColor("#71C1BD"))
+        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
+
+        # 3. Thin white ring – #FFFFFF
+        c.setFillColor(colors.white)
+        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
+
+        # 4. Innermost circle – #23968D
+        c.setFillColor(colors.HexColor("#23968D"))
+        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
+
+        # Text in black
+        c.setFillColor(colors.HexColor("#003632"))
+        c.setFont(FONT_INTER_REGULAR, 12)
+        # text_x = center_x + 4.2 * mm + 3 * mm
+        # text_y = self.height / 2 - 3
+        c.drawString(text_x, text_y, self.text)
+
+class DiagnosisBulletIcon(Flowable):
+    def __init__(self, width=12 * mm, height=10 * mm):
+        super().__init__()
+        self.width = width
+        self.height = height
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        c: canvas.Canvas = self.canv
+
+        # Bullet center position
+        center_x = 6 * mm
+        center_y = self.height / 2
+
+        # 1. Outer glow circle – #D0F0EE
+        c.setFillColor(colors.HexColor("#D0F0EE"))
+        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
+
+        # 2. Middle circle – #71C1BD
+        c.setFillColor(colors.HexColor("#71C1BD"))
+        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
+
+        # 3. Thin white ring – #FFFFFF
+        c.setFillColor(colors.white)
+        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
+
+        # 4. Innermost circle – #23968D
+        c.setFillColor(colors.HexColor("#23968D"))
+        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
+
 class ThriveRoadmapTemplate:
     def __init__(self):
         self.styles = getSampleStyleSheet()
@@ -512,6 +583,33 @@ class ThriveRoadmapTemplate:
             spaceAfter=0,
             spaceBefore=0   
         )),
+        self.styles.add(ParagraphStyle(
+            "header_data_style",
+            fontName=FONT_INTER_REGULAR,                   
+            fontSize=12,
+            leading=16,                         
+            textColor=colors.HexColor("#667085"),
+            spaceAfter=0,
+            spaceBefore=0,
+            alignment=0,                        
+        ))
+        self.styles.add(ParagraphStyle(
+            "SvgBulletTitle",
+            fontName=FONT_INTER_MEDIUM,               # Make sure Inter is registered
+            fontSize=16,
+            leading=24,                     # 150% line height
+            textColor=PMX_GREEN,
+        ))
+        self.styles.add(ParagraphStyle(
+            "bullet_after_text",
+            fontName=FONT_INTER_REGULAR,                   # Make sure Inter-Regular is registered
+            fontSize=12,
+            leading=18,                         # Equivalent to line-height: 18px
+            textColor=colors.HexColor("#003632"),     # Brand-800
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
+
 
     def svg_icon(self, path, width=12, height=12):
         try:
@@ -1040,6 +1138,780 @@ class ThriveRoadmapTemplate:
         ]))
         return section_table2
 
+    def inner_rounded_table_data(self,symptoms,title,icon,width=A4[0]-64):    
+        bullets = []
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+
+        bullets.append([
+            icon,
+            Spacer(1,10),
+            title_para
+        ])
+        bullets.append([Spacer(1,16)])
+        icon_path = os.path.join(svg_dir,"bullet.svg")  
+        icon_bullet = self.svg_icon(icon_path, width=16, height=16)
+        for i, item in enumerate(symptoms):
+            bullets.append([
+                icon_bullet,
+                Spacer(1, 10),
+                Paragraph(item, self.styles["bullet_after_text"]),
+            ])
+            if i != len(symptoms) - 1:  # Only add spacer if not the last item
+                bullets.append([Spacer(1, 16)])
+
+        if bullets:
+            bullet_table = Table(bullets,colWidths=[16,10,width-16-16-16-10])
+            
+            bullet_table.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+            ]))
+
+            # Inner table with 16pt padding inside box
+            inner_table = Table([[bullet_table]])
+            inner_table.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+            ]))
+
+            rounded_box = RoundedBox(
+                width=width,
+                height=None,
+                content=inner_table,
+                corner_radius=16,
+                border_radius=0.1,
+                fill_color=colors.white,
+                stroke_color=colors.HexColor("#D9E9E6")
+            )
+            return rounded_box
+        return None
+
+    def get_current_symptoms_conditions(self,current_symptoms_conditions):
+
+        section = []
+        header=current_symptoms_conditions.get("header","")
+        csc=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([csc])
+        section.append([Spacer(1,8)])
+        header_data=current_symptoms_conditions.get("header_data","")
+        csc_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([csc_data])
+        section.append([Spacer(1,40)])
+        
+        icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        # ---------- Bullet Points: Current Symptoms ----------
+        symptoms = current_symptoms_conditions.get("symptoms_data", {}).get("title_data", [])
+        title =  current_symptoms_conditions.get("symptoms_data", {}).get("title", "")
+        section.append([self.inner_rounded_table_data(symptoms,title,icon)])
+        section.append([Spacer(1, 8)])
+        symptoms = current_symptoms_conditions.get("conditions_data", {}).get("title_data", [])
+        title =  current_symptoms_conditions.get("conditions_data", {}).get("title", "")
+        section.append([self.inner_rounded_table_data(symptoms,title,icon)])
+
+        section_table = Table(section, colWidths=[A4[0]])
+        section_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        return section_table
+    
+    def get_your_current_stack(self,your_current_stack):
+
+        section = []
+        header=your_current_stack.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([cs])
+        section.append([Spacer(1,8)])
+        header_data=your_current_stack.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([cs_data])
+        section.append([Spacer(1,32)])
+        
+        icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        # ---------- Bullet Points: Current Symptoms ----------
+        medications = your_current_stack.get("medications", {}).get("title_data", [])
+        title =  your_current_stack.get("medications", {}).get("title", "")
+        section.append([self.inner_rounded_table_data(medications,title,icon)])
+        section.append([Spacer(1, 8)])
+        supplements = your_current_stack.get("supplements", {}).get("title_data", [])
+        title =  your_current_stack.get("supplements", {}).get("title", "")
+        section.append([self.inner_rounded_table_data(supplements,title,icon)])
+
+        section_table = Table(section, colWidths=[A4[0]])
+        section_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        return section_table
+
+    def get_family_past_histories(self, family_past_histories):
+        section = []
+
+        # 1. Header and Subheader
+        header = family_past_histories.get("header", "")
+        section.append([Paragraph(header, self.styles["TOCTitleStyle"])])
+        section.append([Spacer(1, 8)])
+
+        header_data = family_past_histories.get("header_data", "")
+        section.append([Paragraph(header_data, self.styles["header_data_style"])])
+        section.append([Spacer(1, 24)])
+
+        # 2. Extract data
+        title = family_past_histories.get("family_history", {}).get("title", "")
+        mother_data = family_past_histories.get("family_history", {}).get("mother_side", {}).get("title_data", [])
+        mother_title = family_past_histories.get("family_history", {}).get("mother_side", {}).get("title", "")
+        father_data = family_past_histories.get("family_history", {}).get("father_side", {}).get("title_data", [])
+        father_title = family_past_histories.get("family_history", {}).get("father_side", {}).get("title", "")
+
+        # 3. Icons
+        svg_dir = "staticfiles/icons/"
+        icon_family = self.svg_icon(os.path.join(svg_dir, "family.svg"), width=24, height=24)
+        icon_male = self.svg_icon(os.path.join(svg_dir, "gender_male.svg"), width=24, height=24)
+        icon_female = self.svg_icon(os.path.join(svg_dir, "gender_female2.svg"), width=24, height=24)
+
+        # 4. Inner Tables
+        left_stack = self.inner_rounded_table_data(mother_data, mother_title, icon_female, width=246)
+        right_stack = self.inner_rounded_table_data(father_data, father_title, icon_male, width=246)
+
+        # 5. Total Stack (side-by-side)
+        total_stack = Table([[left_stack,Spacer(1,8), right_stack]], colWidths=[246,8, 246])
+        total_stack.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        # 6. Title row
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+        family_header_row = [icon_family, Spacer(1, 10), title_para]
+
+        # 7. Combine Title Row and Total Stack into one table
+        family_history_table = Table([
+            family_header_row,
+            [total_stack, '', '']  # fill empty cells for spanning
+        ], colWidths=[24, 10, A4[0] - 64 - 34])  # match widths with padding considered
+
+        family_history_table.setStyle(TableStyle([
+            ("SPAN", (0, 1), (2, 1)),  # Span across all 3 columns in 2nd row
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        # 8. Wrap it in rounded box
+        total_table = Table([[family_history_table]], colWidths=[A4[0] - 64])
+        total_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+        ]))
+
+        rounded_box = RoundedBox(
+            width=A4[0] - 64,
+            height=None,
+            content=total_table,
+            corner_radius=16,
+            border_radius=0.4,
+            fill_color=colors.white,
+            stroke_color=colors.HexColor("#D9E9E6")
+        )
+
+        section.append([rounded_box])
+        section.append([Spacer(1, 8)])
+
+        # 9. Past History Section
+        icon = self.svg_icon(os.path.join(svg_dir, "bullet_text_icon.svg"), width=24, height=24)
+        symptoms = family_past_histories.get("past_history", {}).get("title_data", [])
+        title = family_past_histories.get("past_history", {}).get("title", "")
+        section.append([self.inner_rounded_table_data(symptoms, title, icon)])
+        
+        menstrual_history=family_past_histories.get("menstrual_history",{})
+        if menstrual_history:
+            section.append([Spacer(1, 8)])
+
+            bullets = []
+            title_para = Paragraph(menstrual_history.get("title",""), self.styles["SvgBulletTitle"])
+            
+            title_table=Table([
+                [icon,
+                Spacer(1, 10),
+                title_para]
+            ],colWidths=[24,10,None])
+            bullets.append([title_table])
+
+            icon_path = os.path.join(svg_dir, "bullet.svg")  
+            icon_bullet = self.svg_icon(icon_path, width=16, height=16)
+
+            bullets_ = []
+            
+            for i, item in enumerate(menstrual_history.get("title_data","")):
+                bullets_.extend([
+                    icon_bullet,
+                    Spacer(1, 10),
+                    Paragraph(item, self.styles["bullet_after_text"]),
+                ])
+                if i != len(symptoms) - 1:
+                    bullets_.extend([Spacer(1, 8)])  # flat spacer for horizontal space between items
+
+            if bullets_:
+                # Wrap the extended list into a single table row (horizontal layout)
+                bullet_table = Table([bullets_],colWidths=[16,10,130,8,16,10,164,8,16,10,112])  # List inside a list = single row
+                bullet_table.setStyle(TableStyle([
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+                ]))
+                # Inner table with padding around the content
+                inner_table = Table([[bullet_table]])
+                inner_table.setStyle(TableStyle([
+                    ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                    ("TOPPADDING", (0, 0), (-1, -1), 16),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+                ]))
+                bullets.append([inner_table])
+                bullets_table=Table(bullets)
+                rounded_box = RoundedBox(
+                    width=A4[0] - 64,
+                    height=None,
+                    content=bullets_table,
+                    corner_radius=16,
+                    border_radius=0.1,
+                    fill_color=colors.white,
+                    stroke_color=colors.HexColor("#D9E9E6")
+                )
+
+                section.append([rounded_box])
+        
+        # 10. Wrap all in final section table
+        section_table = Table(section, colWidths=[A4[0]])
+        section_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return section_table
+
+    def get_health_goals(self,health_goals_data):
+        section = []
+        header=health_goals_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([cs])
+        section.append([Spacer(1,8)])
+        header_data=health_goals_data.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([cs_data])
+        section.append([Spacer(1,40)])
+        
+        icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        # ---------- Bullet Points: Current Symptoms ----------
+        goals_data = health_goals_data.get("goals_data", [])
+        title =  health_goals_data.get("title", "")
+        section.append([self.inner_rounded_table_data(goals_data,title,icon)])
+
+        section_table = Table(section, colWidths=[A4[0]])
+        section_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        return section_table
+
+    # def inner_rounded_table_data__(self, symptoms):
+    #     bullets = []
+
+    #     for item in symptoms:
+    #         name = item.get("name", "")
+    #         data_lines = item.get("data", [])
+
+    #         # 1. Main bullet row
+    #         bullets.append([StyledTextDiagnosis({"name": name})])
+
+    #         # 2. Subtext rows (with 40pt left padding)
+    #         for line in data_lines:
+    #             if not isinstance(line, str):
+    #                 line = str(line)
+
+    #             # Apply formatting
+    #             if "Fair" in line:
+    #                 formatted = line.replace("Fair", "<font color='#F79009'><b>Fair</b></font>")
+    #             elif "Moderate" in line:
+    #                 formatted = line.replace("Moderate", "<font color='#F79009'><b>Moderate</b></font>")
+    #             elif "/" in line and len(line) <= 10:
+    #                 formatted = f"<font color='#17B26A'><b>{line}</b></font>"
+    #             else:
+    #                 formatted = line
+
+    #             # Wrap formatted line in a Table to apply left padding
+    #             padded_line = Table(
+    #                 [[Paragraph(formatted, self.styles["LifestyleLabelData"])]],
+    #                 colWidths=[AVAILABLE_WIDTH - 121.2 - 32 - 38]  # Adjust width
+    #             )
+    #             padded_line.setStyle(TableStyle([
+    #                 ("LEFTPADDING", (0, 0), (-1, -1), 40),
+    #             ]))
+    #             bullets.append([padded_line])
+
+    #     # Outer wrapper for all bullet items
+    #     bullet_table = Table(bullets, colWidths=[None])
+    #     bullet_table.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     # Wrap in inner padding
+    #     adjusted_width = AVAILABLE_WIDTH - 121.2
+    #     inner_table = Table([[bullet_table]], colWidths=[adjusted_width - 32])
+    #     inner_table.setStyle(TableStyle([
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
+    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     return inner_table
+
+    # def get_lifestyle_trends(self, data: dict):
+        section = []
+        header=health_goals_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([cs])
+        section.append([Spacer(1,8)])
+        header_data=health_goals_data.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([cs_data])
+        section.append([Spacer(1,40)])
+        
+        # ---------- Extract Data ----------
+        icon_path = os.path.join("staticfiles/icons/", "lifestyle.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        symptoms = data.get("life_style_trends", {}).get("symptoms", [])
+        title = data.get("life_style_trends", {}).get("title", "")
+
+        # ---------- Overall Section Heading (Icon + Title) ----------
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+        svg_heading_row = Table([[SvgTitleRow(icon, title_para)]], colWidths=[AVAILABLE_WIDTH])
+        svg_heading_row.setStyle(TableStyle([
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+        ]))
+
+        # ---------- Left Column (Bulleted Symptoms) ----------
+        left_column = self.inner_rounded_table_data__(symptoms)  # Don't pass title/icon here
+
+        # ---------- Right Column Status Cards ----------
+        def make_status_card(title, desc, icon_file, status_text, color):
+            icon = self.svg_icon(os.path.join("staticfiles/icons/", icon_file), width=18, height=18)
+            title_para = Paragraph(f"<b>{title}</b>", self.styles["LifestyleCardTitle"])
+            desc_para = Paragraph(desc, self.styles["LifestyleCardDescription"])
+            status_para = RoundedPill(status_text, color)
+            status_table = Table([[status_para]], colWidths=[60])
+
+            card = Table([
+                [Table([[icon]], colWidths=[121.2 - 32], style=TableStyle([
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+                ]))],
+                [title_para],
+                [desc_para],
+                [status_table]
+            ], colWidths=[121.2 - 32])
+
+            card.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("VALIGN", (0, 0), (-1, -1), "TOP")
+            ]))
+
+            padded = Table([[card]], colWidths=[121.2 - 32])
+            padded.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+            ]))
+            return padded
+
+        smoking_card = make_status_card(
+            "Smoking Status",
+            "Overview of your smoking habits to assess risks and guide health recommendations.",
+            "smoking.svg", "Non Smoker", colors.HexColor("#17B26A")
+        )
+
+        alcohol_card = make_status_card(
+            "Alcohol Status",
+            "Overview of your alcohol consumption to assess risks and guide recommendations.",
+            "alcohol.svg", "Weekly", colors.HexColor("#F79009")
+        )
+
+        # Stack right-side cards with 48pt top padding
+        right_cards_table = Table([
+            [smoking_card],
+            [alcohol_card]
+        ], colWidths=[121.2 - 40])
+        right_cards_table.setStyle(TableStyle([
+            ("TOPPADDING", (0, 1), (0, 1), 0),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        right_box = RoundedBox(
+            width=105,
+            height=None,
+            content=right_cards_table,
+            corner_radius=10,
+            fill_color=colors.white,
+            stroke_color=colors.HexColor("#D9E9E6")
+        )
+
+        # ---------- Combined Row ----------
+        full_row = Table(
+            [[left_column, right_box]],
+            colWidths=[AVAILABLE_WIDTH - 121.2, 121.2],
+        )
+        full_row.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        # ---------- Outer Box ----------
+        outer = RoundedBox(
+            width=AVAILABLE_WIDTH,
+            height=None,
+            content=Table([
+                [svg_heading_row],
+                [full_row]
+            ], colWidths=[AVAILABLE_WIDTH]),
+            corner_radius=10,
+            fill_color=colors.white,
+            stroke_color=colors.HexColor("#D9E9E6")
+        )
+
+        section.append(outer)
+        return section
+ 
+    def get_vital_params(self, data: dict):
+        section = []
+
+        # ---------- Heading ----------
+        heading = Paragraph("Comprehensive Vital Parameters", self.styles["HealthSectionHeading"])
+        section.append(heading)
+        section.append(Spacer(1, 10))
+
+        # ---------- Description Paragraph ----------
+        content = (
+            "<font name='Inter-Bold'>Purpose:</font> Provides a detailed snapshot of key health indicators.<br/>"
+            "<font name='Inter-Bold'>Key Factors:</font> Includes blood pressure, blood sugar, and other vital metrics.<br/>"
+            "<font name='Inter-Bold'>Importance:</font> Identifies potential health risks and tracks progress over time.<br/>"
+            "<font name='Inter-Bold'>Outcome:</font> Supports preventive care and personalized health management."
+        )
+        section.append(Paragraph(content, self.styles["HealthConcernsParagraph"]))
+
+        # ---------- SVG Title ----------
+        svg_dir = "staticfiles/icons/"
+        icon_path = os.path.join(svg_dir, "lifestyle.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        title = data.get("vital_params", {}).get("title", "")
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+        section.append(Spacer(1, 24))
+        section.append(SvgTitleRow(icon, title_para))
+
+        def pill(text, bg_color):
+            return RoundedPill(text, bg_color)
+
+        # ---------- Vital Parameters ----------
+        metrics = [
+            {"icon": "temperature.svg", "title": "", "value": "29.00", "suff": "Fahrenheit", "pill": ("Optimal", colors.HexColor("#488F31")), "footer": "97 - 98.6 F"},
+            {"icon": ".svg", "title": "", "value": "37.35", "suff": "Fahrenheit", "pill": ("Sub Optimal", colors.HexColor("#F4CE5C")), "footer": "95-100%"},
+            {"icon": "blood_pressure_left.svg", "title": "", "value": "55.2", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60-120/80mmHG"},
+            {"icon": "blood_pressure_right.svg", "title": "", "value": "59", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60 - 120/80 mm HG"},
+            {"icon": "cognitive.svg", "title": "Cognitive", "value": "129/200", "suff": "Fahrenheit", "pill": "Sub Optimal", pill_color:"#F4CE5C", "footer": "200"},
+            {"icon": "blood_pressure_right.svg", "title": "Blood Pressure (Right Arm)", "value": "59", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60 - 120/80 mm HG"},
+            {"icon": "blood_pressure_right.svg", "title": "Eye Screening","left_eye_score": ("06/06", colors.HexColor("#488F31")),"right_eye_score": ("06/06", colors.HexColor("#488F31")),"below_data":"Diabetic Retinopathy Screening identifies early signs of diabetes-related eye damage, helping protect vision and overall health."}
+        ]
+
+        story = []
+        icon_paths={
+            "Body Temperature":"temperature.svg",
+            "Blood Oxygen":"blood_oxygen.svg",    
+            "Blood Pressure (Left Arm)"  :"blood_pressure_left.svg",  
+            "Blood Pressure (Right Arm)" : "blood_pressure_right.svg",
+            "Cognitive"   :"Cognitive.svg",
+            "Cognitive"   :"Cognitive.svg",
+            "Cognitive"   :"Cognitive.svg"
+        }
+        section = []
+        for idx,metric in enumerate(metrics):
+            # Top: title + pill
+            title_para = Paragraph(metric['title'], self.styles["box_title_style"])
+            pill_para = RoundedPill(metric["pill"], colors.HexColor(metric["pill_color"]), 8, 80, 18, 8, colors.HexColor("#EFEFEF"))
+
+            top_stack = Table(
+                [[title_para, pill_para]],
+                colWidths=[106,80],
+                style=[
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (0, 0), "LEFT"),
+                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                ]
+            )
+
+            # Bottom: merged major + minor value + footer
+            value = metric['value']
+            suff = metric.get('suff', '')
+
+            # Inline-styled paragraph
+            value_inline = Paragraph(value,self.styles["box_value_style"])
+            suff_inline=Paragraph(suff,self.styles["box_decimal_style"])
+            footer_para = Paragraph(metric["footer"], self.styles["box_footer_style"]) if metric.get("footer") else Spacer(1, 0)
+            suff_box = Table(
+                [[suff_inline]],
+                style=[
+                    ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (0, 0), 0),
+                    ("RIGHTPADDING", (0, 0), (0, 0), 0),
+                    ("TOPPADDING", (0, 0), (0, 0), 0),
+                    ("BOTTOMPADDING", (0, 0), (0, 0), 0),
+                ]
+            )
+            text_width = stringWidth(value, self.styles["box_value_style"].fontName, self.styles["box_value_style"].fontSize)
+            bottom_stack = Table(
+                [[value_inline, Spacer(1, 3), suff_box, footer_para]],
+                colWidths=[text_width, 3, 12, None],
+                style=[
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (0, 0), "LEFT"),
+                    ("ALIGN", (2, 0), (2, 0), "LEFT"),
+                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                ]
+            )
+
+
+            # Combine top and bottom into inner card
+            inner_table = Table(
+                [[top_stack], [bottom_stack]],
+                colWidths=[192]
+            )
+            icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],""))
+
+            icon = self.svg_icon(icon_path, width=24, height=24)
+
+            total_table=Table([[icon,Spacer(0,8),inner_table]],colWidths=[24,8,192])
+            total_table.setStyle(TableStyle([
+                ("VALIGN",(0,0),(0,0),"MIDDLE"),
+                ("ALIGN",(0,0),(-1,-1),"CENTER"),
+                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+            ]))
+
+            padded_inner = Table([[total_table]], colWidths=[250])
+            padded_inner.setStyle(TableStyle([
+                ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 8),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 6),
+                ("BOTTOMPADDING", (0, 0), (-1, -1),6),
+                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+            ]))
+
+            rounded_card = RoundedBox(
+                width=250,
+                height=68,
+                content=padded_inner,
+                corner_radius=16,
+                border_radius=0.4
+            )
+
+            section.append(rounded_card)
+            if idx < len(metrics) - 1:
+                section.append(Spacer(1, 16))
+        section_table = Table([[section]])
+        section_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+
+        ]))
+        for metric in metrics:
+            icon_path = os.path.join(svg_dir, metric["icon"])
+            icon = self.svg_icon(icon_path, width=20, height=20)
+
+
+            # Title
+            title_para = Paragraph(f"<b>{metric['title']}</b>", self.styles["title_style"])
+
+            if metric['title']=="Eye Screening":
+                title_para = Paragraph(f"<b>{metric['title']}</b>", self.styles["title_style_"])
+            # Value + suffix in one line
+            if metric.get("suff"):
+                major = Paragraph(f"<b>{metric['value']}</b>", self.styles["value_style"])
+                minor = Paragraph(f"{metric['suff']}", self.styles["decimal_style"])
+                value_para = Table(
+                    [[major, minor]],
+                    style=[
+                        ("VALIGN", (0, 0), (-1, -1), "BOTTOM"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ]
+                )
+            elif metric.get("value"):
+                value_para = Paragraph(f"<b>{metric['value']}</b>", self.styles["value_style"])
+            elif metric.get("below_data"):
+                value_para=Paragraph(metric.get("below_data"),self.styles["decimal_style_"])
+            
+            left_stack_style = [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]
+
+            # Conditionally add bottom line if title is "mani"
+            if metric['title']=="Eye Screening":
+                title_para = Paragraph(f"<b>{metric['title']}</b>",self.styles["title_style_"])
+                left_stack_style.extend([("BOTTOMPADDING", (0, 2), (-1, 2), 10),("LINEBELOW", (0, 2), (-1, 2), 0.01, colors.HexColor("#00625B"))])
+                left_title_para = Paragraph(f"<b>Left Eye Vision Score</b>", self.styles["title_style_"])
+                right_title_para = Paragraph(f"<b>Right Eye Vision Score</b>",self.styles["title_style_"])
+                inner_table = Table(
+                    [[left_title_para, right_title_para],
+                    [pill(*metric["left_eye_score"]),pill(*metric["right_eye_score"])]],
+                    colWidths=[218, 218]
+                )
+                inner_table.setStyle(TableStyle([
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+                    ("TOPPADDING", (0, 0), (-1, -1), 8),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ]))
+                left_stack = Table([
+                    [title_para],
+                    [Spacer(1, 6)],
+                    [value_para],
+                    [inner_table]
+                ], style=left_stack_style)
+            else:
+                left_stack = Table([
+                    [title_para],
+                    [Spacer(1, 6)],
+                    [value_para]
+                ], style=left_stack_style)
+
+            
+
+            if metric.get("footer"):
+                # Right column: Pill + Footer, bottom-right aligned
+                pill_para = pill(*metric["pill"])
+                footer_para = Paragraph(metric["footer"], self.styles["footer_style"]) if metric["footer"] else Spacer(1, 1)
+
+                right_stack = Table([
+                    [pill_para],
+                    [Spacer(1, 6)],
+                    [footer_para]
+                ], colWidths=[70], style=[
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 2), (0, 2), "RIGHT"),
+                    ("VALIGN", (0, 2), (0, 2), "BOTTOM"),
+                    ("VALIGN", (0, 0), (0, 0), "TOP"),
+                ])
+
+                # Combine into inner table (card content)
+                inner_table = Table(
+                    [[icon, left_stack, right_stack]],
+                    colWidths=[22, 140, 78]
+                )
+                inner_table.setStyle(TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 8),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+                    ("TOPPADDING", (0, 0), (-1, -1), 12),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
+                ]))
+
+                # Wrap with rounded box
+                rounded_card = RoundedBox(
+                    width=250.8,
+                    height=68.8,
+                    content=inner_table,
+                    corner_radius=12
+                )
+                story.append(rounded_card)
+            else:
+                inner_table = Table(
+                    [[icon, left_stack]],
+                    colWidths=[22, 500]
+                )
+                inner_table.setStyle(TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),  # align from top
+                    ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                    ("TOPPADDING", (0, 0), (-1, -1), 16),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+                ]))
+
+                rounded_card = RoundedBox(
+                    width=531.8,
+                    height=142.8,
+                    content=inner_table,
+                    corner_radius=12
+                )
+                story.append(rounded_card)
+
+        # ---------- Two-column layout ----------
+        rows = []
+        for i in range(0, len(story), 2):
+            row = story[i:i+2]
+            if len(row) < 2:
+                row.append(Spacer(85 * mm, 14 * mm))
+            rows.append(row)
+
+        rows_table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
+        rows_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ]))
+
+        section.append(rows_table)
+        return section
+     
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -1055,6 +1927,28 @@ class ThriveRoadmapTemplate:
         if profile_card_data:
             story.append(Spacer(1, 12))
             story.append(self.get_health_metrics_left_column(profile_card_data,data))
+        current_symptoms_conditions=data.get("current_symptoms_conditions",{})
+        if current_symptoms_conditions:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
+        your_current_stack=data.get("your_current_stack",{})
+        if your_current_stack:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_your_current_stack(your_current_stack))
+
+        family_and_past_histories=data.get("family_and_past_histories",{})
+        if family_and_past_histories:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_family_past_histories(family_and_past_histories))
+
+        health_goals=data.get("health_goals",{})
+        if health_goals:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_health_goals(health_goals))
         # story.append(PageBreak())
         # story.append(Spacer(1,22))   
         # story.extend(self.get_health_concerns_section(data))
