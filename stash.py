@@ -364,79 +364,6 @@ class RoundedBox(Flowable):
 
         self.canv.restoreState()
 
-
-class StyledTextDiagnosis(Flowable):
-    def __init__(self, text, width=65 * mm, height=10 * mm):
-        super().__init__()
-        self.text = str(text)  # Ensures it's always a string
-        self.width = width
-        self.height = height
-
-    def wrap(self, availWidth, availHeight):
-        return self.width, self.height
-
-    def draw(self):
-        c: canvas.Canvas = self.canv
-
-        # Bullet center position
-        center_x = 6 * mm
-        center_y = self.height / 2
-
-        # 1. Outer glow circle – #D0F0EE
-        c.setFillColor(colors.HexColor("#D0F0EE"))
-        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
-
-        # 2. Middle circle – #71C1BD
-        c.setFillColor(colors.HexColor("#71C1BD"))
-        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
-
-        # 3. Thin white ring – #FFFFFF
-        c.setFillColor(colors.white)
-        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
-
-        # 4. Innermost circle – #23968D
-        c.setFillColor(colors.HexColor("#23968D"))
-        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
-
-        # Text in black
-        c.setFillColor(colors.HexColor("#003632"))
-        c.setFont(FONT_INTER_REGULAR, 12)
-        # text_x = center_x + 4.2 * mm + 3 * mm
-        # text_y = self.height / 2 - 3
-        c.drawString(text_x, text_y, self.text)
-
-class DiagnosisBulletIcon(Flowable):
-    def __init__(self, width=12 * mm, height=10 * mm):
-        super().__init__()
-        self.width = width
-        self.height = height
-
-    def wrap(self, availWidth, availHeight):
-        return self.width, self.height
-
-    def draw(self):
-        c: canvas.Canvas = self.canv
-
-        # Bullet center position
-        center_x = 6 * mm
-        center_y = self.height / 2
-
-        # 1. Outer glow circle – #D0F0EE
-        c.setFillColor(colors.HexColor("#D0F0EE"))
-        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
-
-        # 2. Middle circle – #71C1BD
-        c.setFillColor(colors.HexColor("#71C1BD"))
-        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
-
-        # 3. Thin white ring – #FFFFFF
-        c.setFillColor(colors.white)
-        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
-
-        # 4. Innermost circle – #23968D
-        c.setFillColor(colors.HexColor("#23968D"))
-        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
-
 class ThriveRoadmapTemplate:
     def __init__(self):
         self.styles = getSampleStyleSheet()
@@ -609,7 +536,15 @@ class ThriveRoadmapTemplate:
             spaceBefore=0,
             spaceAfter=0,
         ))
-
+        self.styles.add(ParagraphStyle(
+            "eye_screening_desc_style",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=10,
+            leading=16,  # line-height: 160% of 10px = 16px
+            textColor=colors.HexColor("#667085"),
+            spaceBefore=0,
+            spaceAfter=0
+        ))
 
     def svg_icon(self, path, width=12, height=12):
         try:
@@ -1493,138 +1428,232 @@ class ThriveRoadmapTemplate:
 
     #     return inner_table
 
-    # def get_lifestyle_trends(self, data: dict):
-        section = []
-        header=health_goals_data.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([cs])
-        section.append([Spacer(1,8)])
-        header_data=health_goals_data.get("header_data","")
-        cs_data=Paragraph(header_data, self.styles["header_data_style"])
-        section.append([cs_data])
-        section.append([Spacer(1,40)])
+    # # def get_lifestyle_trends(self, data: dict):
+    #     section = []
+    #     header=health_goals_data.get("header","")
+    #     cs=Paragraph(header, self.styles["TOCTitleStyle"])
+    #     section.append([cs])
+    #     section.append([Spacer(1,8)])
+    #     header_data=health_goals_data.get("header_data","")
+    #     cs_data=Paragraph(header_data, self.styles["header_data_style"])
+    #     section.append([cs_data])
+    #     section.append([Spacer(1,40)])
         
-        # ---------- Extract Data ----------
-        icon_path = os.path.join("staticfiles/icons/", "lifestyle.svg")
-        icon = self.svg_icon(icon_path, width=24, height=24)
-        symptoms = data.get("life_style_trends", {}).get("symptoms", [])
-        title = data.get("life_style_trends", {}).get("title", "")
+    #     # ---------- Extract Data ----------
+    #     icon_path = os.path.join("staticfiles/icons/", "lifestyle.svg")
+    #     icon = self.svg_icon(icon_path, width=24, height=24)
+    #     symptoms = data.get("life_style_trends", {}).get("symptoms", [])
+    #     title = data.get("life_style_trends", {}).get("title", "")
 
-        # ---------- Overall Section Heading (Icon + Title) ----------
-        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
-        svg_heading_row = Table([[SvgTitleRow(icon, title_para)]], colWidths=[AVAILABLE_WIDTH])
-        svg_heading_row.setStyle(TableStyle([
-            ("TOPPADDING", (0, 0), (-1, -1), 16),
-            ("LEFTPADDING", (0, 0), (-1, -1), 16),
-        ]))
+    #     # ---------- Overall Section Heading (Icon + Title) ----------
+    #     title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+    #     svg_heading_row = Table([[SvgTitleRow(icon, title_para)]], colWidths=[AVAILABLE_WIDTH])
+    #     svg_heading_row.setStyle(TableStyle([
+    #         ("TOPPADDING", (0, 0), (-1, -1), 16),
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 16),
+    #     ]))
 
-        # ---------- Left Column (Bulleted Symptoms) ----------
-        left_column = self.inner_rounded_table_data__(symptoms)  # Don't pass title/icon here
+    #     # ---------- Left Column (Bulleted Symptoms) ----------
+    #     left_column = self.inner_rounded_table_data__(symptoms)  # Don't pass title/icon here
 
-        # ---------- Right Column Status Cards ----------
-        def make_status_card(title, desc, icon_file, status_text, color):
-            icon = self.svg_icon(os.path.join("staticfiles/icons/", icon_file), width=18, height=18)
-            title_para = Paragraph(f"<b>{title}</b>", self.styles["LifestyleCardTitle"])
-            desc_para = Paragraph(desc, self.styles["LifestyleCardDescription"])
-            status_para = RoundedPill(status_text, color)
-            status_table = Table([[status_para]], colWidths=[60])
+    #     # ---------- Right Column Status Cards ----------
+    #     def make_status_card(title, desc, icon_file, status_text, color):
+    #         icon = self.svg_icon(os.path.join("staticfiles/icons/", icon_file), width=18, height=18)
+    #         title_para = Paragraph(f"<b>{title}</b>", self.styles["LifestyleCardTitle"])
+    #         desc_para = Paragraph(desc, self.styles["LifestyleCardDescription"])
+    #         status_para = RoundedPill(status_text, color)
+    #         status_table = Table([[status_para]], colWidths=[60])
 
-            card = Table([
-                [Table([[icon]], colWidths=[121.2 - 32], style=TableStyle([
-                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-                ]))],
-                [title_para],
-                [desc_para],
-                [status_table]
-            ], colWidths=[121.2 - 32])
+    #         card = Table([
+    #             [Table([[icon]], colWidths=[121.2 - 32], style=TableStyle([
+    #                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+    #                 ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    #                 ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+    #             ]))],
+    #             [title_para],
+    #             [desc_para],
+    #             [status_table]
+    #         ], colWidths=[121.2 - 32])
 
-            card.setStyle(TableStyle([
+    #         card.setStyle(TableStyle([
+    #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #             ("VALIGN", (0, 0), (-1, -1), "TOP")
+    #         ]))
+
+    #         padded = Table([[card]], colWidths=[121.2 - 32])
+    #         padded.setStyle(TableStyle([
+    #             ("LEFTPADDING", (0, 0), (-1, -1), 16),
+    #             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+    #             ("TOPPADDING", (0, 0), (-1, -1), 16),
+    #             ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+    #         ]))
+    #         return padded
+
+    #     smoking_card = make_status_card(
+    #         "Smoking Status",
+    #         "Overview of your smoking habits to assess risks and guide health recommendations.",
+    #         "smoking.svg", "Non Smoker", colors.HexColor("#17B26A")
+    #     )
+
+    #     alcohol_card = make_status_card(
+    #         "Alcohol Status",
+    #         "Overview of your alcohol consumption to assess risks and guide recommendations.",
+    #         "alcohol.svg", "Weekly", colors.HexColor("#F79009")
+    #     )
+
+    #     # Stack right-side cards with 48pt top padding
+    #     right_cards_table = Table([
+    #         [smoking_card],
+    #         [alcohol_card]
+    #     ], colWidths=[121.2 - 40])
+    #     right_cards_table.setStyle(TableStyle([
+    #         ("TOPPADDING", (0, 1), (0, 1), 0),
+    #         ("BOTTOMPADDING", (0, -1), (-1, -1), 0),
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     right_box = RoundedBox(
+    #         width=105,
+    #         height=None,
+    #         content=right_cards_table,
+    #         corner_radius=10,
+    #         fill_color=colors.white,
+    #         stroke_color=colors.HexColor("#D9E9E6")
+    #     )
+
+    #     # ---------- Combined Row ----------
+    #     full_row = Table(
+    #         [[left_column, right_box]],
+    #         colWidths=[AVAILABLE_WIDTH - 121.2, 121.2],
+    #     )
+    #     full_row.setStyle(TableStyle([
+    #         ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
+    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    #     ]))
+
+    #     # ---------- Outer Box ----------
+    #     outer = RoundedBox(
+    #         width=AVAILABLE_WIDTH,
+    #         height=None,
+    #         content=Table([
+    #             [svg_heading_row],
+    #             [full_row]
+    #         ], colWidths=[AVAILABLE_WIDTH]),
+    #         corner_radius=10,
+    #         fill_color=colors.white,
+    #         stroke_color=colors.HexColor("#D9E9E6")
+    #     )
+
+    #     section.append(outer)
+    #     return section
+    
+    def get_eye_screening_card(self, eye_data: dict, icon_paths: dict) -> Flowable:
+    
+        title = eye_data.get("title", "Eye Screening")
+        below_data = eye_data.get("below_data", "")
+
+        left_eye_score = eye_data.get("left_eye").get("left_eye_score", "")
+        left_eye_color = eye_data.get("left_eye").get("left_eye_score_color", "")
+        left_eye_title = eye_data.get("left_eye").get("title", "")
+
+        right_eye_score = eye_data.get("right_eye").get("right_eye_score", "")
+        right_eye_color = eye_data.get("right_eye").get("right_eye_score_color", "")
+        right_eye_title = eye_data.get("right_eye").get("title", "")
+
+        # Load icon
+        icon_info = icon_paths.get(title, {})
+        icon_path = os.path.join(svg_dir, icon_info.get("path", ""))
+        icon = self.svg_icon(icon_path, width=icon_info.get("width", 20), height=icon_info.get("height", 20))
+
+        # Title and description
+        title_para = Paragraph(title, self.styles["box_title_style"])
+        desc_para = Paragraph(below_data, self.styles["eye_screening_desc_style"])
+
+        # Eye score title and pills
+        left_title = Paragraph(left_eye_title, self.styles["box_title_style"])
+        right_title = Paragraph(right_eye_title, self.styles["box_title_style"])
+
+        left_pill = RoundedPill(left_eye_score, colors.HexColor(left_eye_color), 8, 80, 18, 8)
+        right_pill = RoundedPill(right_eye_score, colors.HexColor(right_eye_color), 8, 80, 18, 8)
+
+        # Scores table
+        score_table = Table(
+            [[left_title, right_title], [left_pill, right_pill]],
+            colWidths=[217.5, 217.5],
+            style=[
                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                ("VALIGN", (0, 0), (-1, -1), "TOP")
-            ]))
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+            ]
+        )
 
-            padded = Table([[card]], colWidths=[121.2 - 32])
-            padded.setStyle(TableStyle([
+        # Left column content
+        left_stack = Table(
+            [[title_para],[Spacer(1,3)] ,[desc_para], [Spacer(1, 8)], [score_table]],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1,-1), 0),
+                ("LINEBELOW", (0, 3), (-1, 3), 0.01, colors.HexColor("#00625B")),
+                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+            ],
+            colWidths=[467]
+        )
+
+        # Combine icon and left stack
+        inner_table = Table(
+            [[icon,Spacer(1,8), left_stack]],
+            colWidths=[24,8, 467],
+            style=[
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 16),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 16),
                 ("TOPPADDING", (0, 0), (-1, -1), 16),
                 ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
-            ]))
-            return padded
+                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
 
-        smoking_card = make_status_card(
-            "Smoking Status",
-            "Overview of your smoking habits to assess risks and guide health recommendations.",
-            "smoking.svg", "Non Smoker", colors.HexColor("#17B26A")
+            ]
         )
 
-        alcohol_card = make_status_card(
-            "Alcohol Status",
-            "Overview of your alcohol consumption to assess risks and guide recommendations.",
-            "alcohol.svg", "Weekly", colors.HexColor("#F79009")
-        )
-
-        # Stack right-side cards with 48pt top padding
-        right_cards_table = Table([
-            [smoking_card],
-            [alcohol_card]
-        ], colWidths=[121.2 - 40])
-        right_cards_table.setStyle(TableStyle([
-            ("TOPPADDING", (0, 1), (0, 1), 0),
-            ("BOTTOMPADDING", (0, -1), (-1, -1), 0),
-            ("LEFTPADDING", (0, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        ]))
-
-        right_box = RoundedBox(
-            width=105,
+        rounded_box = RoundedBox(
+            width=A4[0]-64,
             height=None,
-            content=right_cards_table,
-            corner_radius=10,
-            fill_color=colors.white,
-            stroke_color=colors.HexColor("#D9E9E6")
+            content=inner_table,
+            corner_radius=16,
         )
+        return rounded_box
 
-        # ---------- Combined Row ----------
-        full_row = Table(
-            [[left_column, right_box]],
-            colWidths=[AVAILABLE_WIDTH - 121.2, 121.2],
-        )
-        full_row.setStyle(TableStyle([
-            ("VALIGN", (0, 0), (-1, -1), "TOP"),
-            ("LEFTPADDING", (0, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        ]))
-
-        # ---------- Outer Box ----------
-        outer = RoundedBox(
-            width=AVAILABLE_WIDTH,
-            height=None,
-            content=Table([
-                [svg_heading_row],
-                [full_row]
-            ], colWidths=[AVAILABLE_WIDTH]),
-            corner_radius=10,
-            fill_color=colors.white,
-            stroke_color=colors.HexColor("#D9E9E6")
-        )
-
-        section.append(outer)
-        return section
- 
     def get_vital_params(self, vital_params_data: dict):
         
-        section = []
+        section_ = []
         header=vital_params_data.get("header","")
         cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section.append([cs])
-        # section.append([Spacer(1,8)])
+        section_.append([cs])
+        section_.append([Spacer(1,8)])
         header_data=vital_params_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
-        # section.append([cs_data])
-        # section.append([Spacer(1,40)])
+        section_.append([cs_data])
+        section_.append([Spacer(1,32)])
+
+        title=vital_params_data.get("metrics","").get("title","")
+        icon_path=os.path.join(svg_dir,"lifestyle.svg")
+
+        icon_lifestyle=self.svg_icon(icon_path,width=24,height=24)
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+        family_header_row = [icon_lifestyle, Spacer(1, 10), title_para]
+        section_.append([Table([family_header_row],colWidths=[None,10,None], 
+        style=[("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ])])
+        section_.append([Spacer(1,14)])
         # ---------- Vital Parameters ----------
 
         icon_paths={
@@ -1658,9 +1687,15 @@ class ThriveRoadmapTemplate:
                 "width":17.02,
                 "height":18
             },
-            "Eye Screening"   :"Cognitive.svg"
+            "Eye Screening"   :{
+                "path":"HRV.svg",
+                "width":24,
+                "height":24
+            }
         }
         metrics=vital_params_data.get("metrics",{}).get("metrics_data",[])
+
+        section=[]
         for idx,metric in enumerate(metrics):
             # Top: title + pill
             title_para = Paragraph(metric['title'], self.styles["box_title_style"])
@@ -1677,7 +1712,7 @@ class ThriveRoadmapTemplate:
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
                     ("ALIGN", (1, 0), (1, 0), "LEFT"),
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                    ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                    #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
                 ]
             )
 
@@ -1724,7 +1759,6 @@ class ThriveRoadmapTemplate:
 
             bottom_stack = Table(
                 [[value_inline, Spacer(1, 3),suff_box , footer_stack]],
-                #colWidths=[text_width, 3,suff_width, None],
                 colWidths =[text_width, 3, suff_width, 192 - (text_width + 9 + suff_width)],
                 style=[
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -1736,8 +1770,6 @@ class ThriveRoadmapTemplate:
                     ("ALIGN", (-1, 0), (-1, -1), "RIGHT"),
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                     ("VALIGN", (2, 0), (2, -1), "BOTTOM"),
-                    ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-                    # ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
                 ]
             )
 
@@ -1765,7 +1797,6 @@ class ThriveRoadmapTemplate:
                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                 ("TOPPADDING", (0, 0), (-1, -1), 0),
                 ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-                # ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
             ]))
 
             padded_inner = Table([[total_table]], colWidths=[250])
@@ -1775,7 +1806,6 @@ class ThriveRoadmapTemplate:
                 ("RIGHTPADDING", (0, 0), (-1, -1), 16),
                 ("TOPPADDING", (0, 0), (-1, -1), 16),
                 ("BOTTOMPADDING", (0, 0), (-1, -1),12),
-                ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
             ]))
 
             rounded_card = RoundedBox(
@@ -1787,14 +1817,37 @@ class ThriveRoadmapTemplate:
             )
 
             section.append(rounded_card)
-        rows=[]
+        # rows = []
+        # for i in range(0, len(section), 2):
+        #     row = section[i:i+2]
+        #     # if len(row) < 2:
+        #     #     row.append(Spacer(1, 15))  # Add spacer to the row (not section!)
+        #     rows.append(row)
+        #     rows.append([Spacer(1, 11)])
+        rows = []
         for i in range(0, len(section), 2):
             row = section[i:i+2]
-            if len(row) < 2:
-                section.append(Spacer(1, 16))
+            # Apply spacing only between elements, not from inside
+            if len(row) == 2:
+                row = [Table([[row[0]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 0),
+                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 0)]),
+                    Table([[row[1]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 0),
+                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 0)])]
+            else:
+                row[0] = Table([[row[0]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 8),
+                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 8)])
+                #row.append(Spacer(1, 15))
             rows.append(row)
-        section_table = Table([[rows]])
+            #rows.append([Spacer(1, 11)])
+
+
+        eye_screening=vital_params_data.get("metrics",{}).get("eye_screening",[])
+
+        #rows.append([self.get_eye_screening_card(eye_screening,icon_paths)])
+
+        section_table = Table(rows)
         section_table.setStyle(TableStyle([
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
             ("TOPPADDING", (0, 0), (-1, -1), 0),
@@ -1802,153 +1855,16 @@ class ThriveRoadmapTemplate:
             #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
 
         ]))
-        # for metric in metrics:
-        #     icon_path = os.path.join(svg_dir, metric["icon"])
-        #     icon = self.svg_icon(icon_path, width=20, height=20)
-
-
-        #     # Title
-        #     title_para = Paragraph(f"<b>{metric['title']}</b>", self.styles["title_style"])
-
-        #     if metric['title']=="Eye Screening":
-        #         title_para = Paragraph(f"<b>{metric['title']}</b>", self.styles["title_style_"])
-        #     # Value + suffix in one line
-        #     if metric.get("suff"):
-        #         major = Paragraph(f"<b>{metric['value']}</b>", self.styles["value_style"])
-        #         minor = Paragraph(f"{metric['suff']}", self.styles["decimal_style"])
-        #         value_para = Table(
-        #             [[major, minor]],
-        #             style=[
-        #                 ("VALIGN", (0, 0), (-1, -1), "BOTTOM"),
-        #                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #                 ("TOPPADDING", (0, 0), (-1, -1), 0),
-        #                 ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #             ]
-        #         )
-        #     elif metric.get("value"):
-        #         value_para = Paragraph(f"<b>{metric['value']}</b>", self.styles["value_style"])
-        #     elif metric.get("below_data"):
-        #         value_para=Paragraph(metric.get("below_data"),self.styles["decimal_style_"])
-            
-        #     left_stack_style = [
-        #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #         ("TOPPADDING", (0, 0), (-1, -1), 0),
-        #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #     ]
-
-        #     # Conditionally add bottom line if title is "mani"
-        #     if metric['title']=="Eye Screening":
-        #         title_para = Paragraph(f"<b>{metric['title']}</b>",self.styles["title_style_"])
-        #         left_stack_style.extend([("BOTTOMPADDING", (0, 2), (-1, 2), 10),("LINEBELOW", (0, 2), (-1, 2), 0.01, colors.HexColor("#00625B"))])
-        #         left_title_para = Paragraph(f"<b>Left Eye Vision Score</b>", self.styles["title_style_"])
-        #         right_title_para = Paragraph(f"<b>Right Eye Vision Score</b>",self.styles["title_style_"])
-        #         inner_table = Table(
-        #             [[left_title_para, right_title_para],
-        #             [pill(*metric["left_eye_score"]),pill(*metric["right_eye_score"])]],
-        #             colWidths=[218, 218]
-        #         )
-        #         inner_table.setStyle(TableStyle([
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 8),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #         ]))
-        #         left_stack = Table([
-        #             [title_para],
-        #             [Spacer(1, 6)],
-        #             [value_para],
-        #             [inner_table]
-        #         ], style=left_stack_style)
-        #     else:
-        #         left_stack = Table([
-        #             [title_para],
-        #             [Spacer(1, 6)],
-        #             [value_para]
-        #         ], style=left_stack_style)
-
-            
-
-        #     if metric.get("footer"):
-        #         # Right column: Pill + Footer, bottom-right aligned
-        #         pill_para = pill(*metric["pill"])
-        #         footer_para = Paragraph(metric["footer"], self.styles["footer_style"]) if metric["footer"] else Spacer(1, 1)
-
-        #         right_stack = Table([
-        #             [pill_para],
-        #             [Spacer(1, 6)],
-        #             [footer_para]
-        #         ], colWidths=[70], style=[
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 0),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #             ("ALIGN", (0, 2), (0, 2), "RIGHT"),
-        #             ("VALIGN", (0, 2), (0, 2), "BOTTOM"),
-        #             ("VALIGN", (0, 0), (0, 0), "TOP"),
-        #         ])
-
-        #         # Combine into inner table (card content)
-        #         inner_table = Table(
-        #             [[icon, left_stack, right_stack]],
-        #             colWidths=[22, 140, 78]
-        #         )
-        #         inner_table.setStyle(TableStyle([
-        #             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 8),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 8),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 12),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
-        #         ]))
-
-        #         # Wrap with rounded box
-        #         rounded_card = RoundedBox(
-        #             width=250.8,
-        #             height=68.8,
-        #             content=inner_table,
-        #             corner_radius=12
-        #         )
-        #         story.append(rounded_card)
-        #     else:
-        #         inner_table = Table(
-        #             [[icon, left_stack]],
-        #             colWidths=[22, 500]
-        #         )
-        #         inner_table.setStyle(TableStyle([
-        #             ("VALIGN", (0, 0), (-1, -1), "TOP"),  # align from top
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 16),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 16),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
-        #         ]))
-
-        #         rounded_card = RoundedBox(
-        #             width=531.8,
-        #             height=142.8,
-        #             content=inner_table,
-        #             corner_radius=12
-        #         )
-        #         story.append(rounded_card)
-
-        # ---------- Two-column layout ----------
-        # rows = []
-        # for i in range(0, len(story), 2):
-        #     row = story[i:i+2]
-        #     if len(row) < 2:
-        #         row.append(Spacer(85 * mm, 14 * mm))
-        #     rows.append(row)
-
-        # rows_table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
-        # rows_table.setStyle(TableStyle([
-        #     ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #     ("TOPPADDING", (0, 0), (-1, -1), 4),
-        #     ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-        # ]))
-
-        #section.append(rows_table)
-        return section_table
+        section_.append([section_table])
+        final_table = Table(section_, colWidths=[A4[0]])  # Adjust width as needed
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        return final_table
      
     def generate(self, data: dict) -> list:
         story = []
