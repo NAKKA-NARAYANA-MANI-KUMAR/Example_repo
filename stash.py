@@ -1615,56 +1615,27 @@ class ThriveRoadmapTemplate:
         return section
  
     def get_vital_params(self, data: dict):
+        
         section = []
-
-        # ---------- Heading ----------
-        heading = Paragraph("Comprehensive Vital Parameters", self.styles["HealthSectionHeading"])
-        section.append(heading)
-        section.append(Spacer(1, 10))
-
-        # ---------- Description Paragraph ----------
-        content = (
-            "<font name='Inter-Bold'>Purpose:</font> Provides a detailed snapshot of key health indicators.<br/>"
-            "<font name='Inter-Bold'>Key Factors:</font> Includes blood pressure, blood sugar, and other vital metrics.<br/>"
-            "<font name='Inter-Bold'>Importance:</font> Identifies potential health risks and tracks progress over time.<br/>"
-            "<font name='Inter-Bold'>Outcome:</font> Supports preventive care and personalized health management."
-        )
-        section.append(Paragraph(content, self.styles["HealthConcernsParagraph"]))
-
-        # ---------- SVG Title ----------
-        svg_dir = "staticfiles/icons/"
-        icon_path = os.path.join(svg_dir, "lifestyle.svg")
-        icon = self.svg_icon(icon_path, width=24, height=24)
-        title = data.get("vital_params", {}).get("title", "")
-        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
-        section.append(Spacer(1, 24))
-        section.append(SvgTitleRow(icon, title_para))
-
-        def pill(text, bg_color):
-            return RoundedPill(text, bg_color)
-
+        header=health_goals_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([cs])
+        section.append([Spacer(1,8)])
+        header_data=health_goals_data.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([cs_data])
+        section.append([Spacer(1,40)])
         # ---------- Vital Parameters ----------
-        metrics = [
-            {"icon": "temperature.svg", "title": "", "value": "29.00", "suff": "Fahrenheit", "pill": ("Optimal", colors.HexColor("#488F31")), "footer": "97 - 98.6 F"},
-            {"icon": ".svg", "title": "", "value": "37.35", "suff": "Fahrenheit", "pill": ("Sub Optimal", colors.HexColor("#F4CE5C")), "footer": "95-100%"},
-            {"icon": "blood_pressure_left.svg", "title": "", "value": "55.2", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60-120/80mmHG"},
-            {"icon": "blood_pressure_right.svg", "title": "", "value": "59", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60 - 120/80 mm HG"},
-            {"icon": "cognitive.svg", "title": "Cognitive", "value": "129/200", "suff": "Fahrenheit", "pill": "Sub Optimal", pill_color:"#F4CE5C", "footer": "200"},
-            {"icon": "blood_pressure_right.svg", "title": "Blood Pressure (Right Arm)", "value": "59", "suff": "Fahrenheit", "pill": ("Low", colors.HexColor("#F49E5C")), "footer": "110/60 - 120/80 mm HG"},
-            {"icon": "blood_pressure_right.svg", "title": "Eye Screening","left_eye_score": ("06/06", colors.HexColor("#488F31")),"right_eye_score": ("06/06", colors.HexColor("#488F31")),"below_data":"Diabetic Retinopathy Screening identifies early signs of diabetes-related eye damage, helping protect vision and overall health."}
-        ]
 
-        story = []
         icon_paths={
             "Body Temperature":"temperature.svg",
             "Blood Oxygen":"blood_oxygen.svg",    
             "Blood Pressure (Left Arm)"  :"blood_pressure_left.svg",  
             "Blood Pressure (Right Arm)" : "blood_pressure_right.svg",
-            "Cognitive"   :"Cognitive.svg",
-            "Cognitive"   :"Cognitive.svg",
-            "Cognitive"   :"Cognitive.svg"
+            "Heart Rate"   :"Cognitive.svg",
+            "Respiratory Rate"   :"Cognitive.svg",
+            "Eye Screening"   :"Cognitive.svg"
         }
-        section = []
         for idx,metric in enumerate(metrics):
             # Top: title + pill
             title_para = Paragraph(metric['title'], self.styles["box_title_style"])
