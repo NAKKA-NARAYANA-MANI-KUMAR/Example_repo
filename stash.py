@@ -1619,21 +1619,45 @@ class ThriveRoadmapTemplate:
         section = []
         header=vital_params_data.get("header","")
         cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([cs])
-        section.append([Spacer(1,8)])
+        # section.append([cs])
+        # section.append([Spacer(1,8)])
         header_data=vital_params_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
-        section.append([cs_data])
-        section.append([Spacer(1,40)])
+        # section.append([cs_data])
+        # section.append([Spacer(1,40)])
         # ---------- Vital Parameters ----------
 
         icon_paths={
-            "Body Temperature":"temperature.svg",
-            "Blood Oxygen":"blood_oxygen.svg",    
-            "Blood Pressure (Left Arm)"  :"blood_pressure_left.svg",  
-            "Blood Pressure (Right Arm)" : "blood_pressure_right.svg",
-            "Heart Rate"   :"Cognitive.svg",
-            "Respiratory Rate"   :"Cognitive.svg",
+            "Body Temperature":{
+                "path":"temperature.svg",
+                "width":9,
+                "height":18
+            },
+            "Blood Oxygen":{
+                "path":"blood_oxygen.svg",    
+                "width":11.88,
+                "height":18
+            },
+            "Blood Pressure (Left Arm)"  :{
+                "path":"left.svg",
+                "width":24,
+                "height":24
+            },
+            "Blood Pressure (Right Arm)" : {
+                "path":"right.svg",
+                "width":24,
+                "height":24
+            },
+            "Heart Rate"   :{
+                "path":"HRV.svg",
+                "width":24,
+                "height":24
+            },
+            "Respiratory Rate"   :{
+                "path":"respiratory_rate.svg",
+                "width":17.02,
+                "height":18
+            },
             "Eye Screening"   :"Cognitive.svg"
         }
         metrics=vital_params_data.get("metrics",{}).get("metrics_data",[])
@@ -1644,15 +1668,16 @@ class ThriveRoadmapTemplate:
 
             top_stack = Table(
                 [[title_para, pill_para]],
-                colWidths=[106,80],
+                colWidths=[106,6,80],
                 style=[
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                     ("TOPPADDING", (0, 0), (-1, -1), 0),
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
-                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("ALIGN", (1, 0), (1, 0), "LEFT"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
                 ]
             )
 
@@ -1663,21 +1688,44 @@ class ThriveRoadmapTemplate:
             # Inline-styled paragraph
             value_inline = Paragraph(value,self.styles["box_value_style"])
             suff_inline=Paragraph(suff,self.styles["box_decimal_style"])
-            footer_para = Paragraph(metric["footer"], self.styles["box_footer_style"]) if metric.get("footer") else Spacer(1, 0)
+            if metric.get("footer"):
+                footer_text = Paragraph(
+                    f'<para alignment="right">{metric["footer"]}</para>',
+                    self.styles["box_footer_style"]
+                )
+
+                footer_stack = Table(
+                    [[Spacer(1, 8)], [footer_text]],
+                    colWidths=[192],  # Force full width to let right align take effect
+                    style=[
+                        ("VALIGN", (0, 1), (-1, -1), "BOTTOM"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ]
+                )
+
+            else:
+                footer_stack = Spacer(1, 0)            
             suff_box = Table(
-                [[suff_inline]],
+                [[Spacer(1, 4)], [suff_inline]],
                 style=[
-                    ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
-                    ("LEFTPADDING", (0, 0), (0, 0), 0),
-                    ("RIGHTPADDING", (0, 0), (0, 0), 0),
-                    ("TOPPADDING", (0, 0), (0, 0), 0),
-                    ("BOTTOMPADDING", (0, 0), (0, 0), 0),
+                    ("VALIGN", (0, 1), (-1, -1), "BOTTOM"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                 ]
             )
+
             text_width = stringWidth(value, self.styles["box_value_style"].fontName, self.styles["box_value_style"].fontSize)
+            suff_width = stringWidth(suff, self.styles["box_decimal_style"].fontName, self.styles["box_decimal_style"].fontSize)
+
             bottom_stack = Table(
-                [[value_inline, Spacer(1, 3), suff_box, footer_para]],
-                colWidths=[text_width, 3,None, None],
+                [[value_inline, Spacer(1, 3),suff_box , footer_stack]],
+                #colWidths=[text_width, 3,suff_width, None],
+                colWidths =[text_width, 3, suff_width, 192 - (text_width + 9 + suff_width)],
                 style=[
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -1685,7 +1733,11 @@ class ThriveRoadmapTemplate:
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
                     ("ALIGN", (2, 0), (2, 0), "LEFT"),
-                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("ALIGN", (-1, 0), (-1, -1), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("VALIGN", (2, 0), (2, -1), "BOTTOM"),
+                    ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                    # ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
                 ]
             )
 
@@ -1695,15 +1747,25 @@ class ThriveRoadmapTemplate:
                 [[top_stack], [bottom_stack]],
                 colWidths=[192]
             )
-            icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],""))
+            inner_table.setStyle(TableStyle([
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],"").get("path",""))
 
-            icon = self.svg_icon(icon_path, width=24, height=24)
+            icon = self.svg_icon(icon_path, width=icon_paths.get(metric['title'],"").get("width",""), height=icon_paths.get(metric['title'],"").get("height",""))
 
             total_table=Table([[icon,Spacer(0,8),inner_table]],colWidths=[24,8,192])
             total_table.setStyle(TableStyle([
                 ("VALIGN",(0,0),(0,0),"MIDDLE"),
                 ("ALIGN",(0,0),(-1,-1),"CENTER"),
-                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
             ]))
 
             padded_inner = Table([[total_table]], colWidths=[250])
@@ -1711,13 +1773,13 @@ class ThriveRoadmapTemplate:
                 ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 8),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 16),
-                ("TOPPADDING", (0, 0), (-1, -1), 6),
-                ("BOTTOMPADDING", (0, 0), (-1, -1),6),
-                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1),12),
+                ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
             ]))
 
             rounded_card = RoundedBox(
-                width=250,
+                width=248,
                 height=68,
                 content=padded_inner,
                 corner_radius=16,
@@ -1725,9 +1787,13 @@ class ThriveRoadmapTemplate:
             )
 
             section.append(rounded_card)
-            if idx < len(metrics) - 1:
+        rows=[]
+        for i in range(0, len(section), 2):
+            row = section[i:i+2]
+            if len(row) < 2:
                 section.append(Spacer(1, 16))
-        section_table = Table([[section]])
+            rows.append(row)
+        section_table = Table([[rows]])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
