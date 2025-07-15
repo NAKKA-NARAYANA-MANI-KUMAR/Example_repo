@@ -22,7 +22,10 @@ from reportlab.lib.units import inch, mm, cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase.pdfmetrics import stringWidth
-from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.shapes import Drawing,Rect, String, Line
+from reportlab.lib.colors import Color,HexColor, white, black
+from reportlab.lib.utils import ImageReader
+from PIL import Image as PILImage
 
 # SVG Rendering
 from reportlab.graphics import renderPDF
@@ -364,11 +367,299 @@ class RoundedBox(Flowable):
 
         self.canv.restoreState()
 
+class GradientScoreBar:
+    def __init__(
+        self,
+        width=478,
+        height=6,
+        score=102,
+        data_min=80,
+        data_max=120,
+        units=None,
+        label_text="Very Low",
+        top_labels=None,
+        bottom_labels_2=None,
+        bottom_labels=None,
+        gradient_colors=None,
+        label_margin=15
+    ):
+        self.width = width
+        self.height = height
+        self.score = score
+        self.data_min = data_min
+        self.data_max = data_max
+        self.label_text = label_text
+        self.top_labels = top_labels or []
+        self.bottom_labels = bottom_labels or []
+        self.bottom_labels_2=bottom_labels_2 or []
+        self.label_margin = label_margin
+        self.units=units
+
+        default_gradient = [
+            (0.0, "#ED005F"),
+            (0.351, "#F49E5C"),
+            (0.7019, "#F4CE5C"),
+            (1.0, "#488F31"),
+        ]
+        raw_gradient = gradient_colors or default_gradient
+        self.gradient_colors = [(pos, self.hex_to_color(color)) for pos, color in raw_gradient]
+
+    def hex_to_color(self, hex_code):
+        hex_code = hex_code.lstrip("#")
+        return Color(int(hex_code[0:2], 16) / 255.0,
+                     int(hex_code[2:4], 16) / 255.0,
+                     int(hex_code[4:6], 16) / 255.0)
+
+    def interpolate_color(self, c1, c2, t):
+        r = c1.red + (c2.red - c1.red) * t
+        g = c1.green + (c2.green - c1.green) * t
+        b = c1.blue + (c2.blue - c1.blue) * t
+        return Color(r, g, b)
+
+    def lighten_color(self, color, factor=0.4):
+        return Color(
+            color.red + (1.0 - color.red) * factor,
+            color.green + (1.0 - color.green) * factor,
+            color.blue + (1.0 - color.blue) * factor
+        )
+
+    def get_multicolor_gradient(self, t):
+        for i in range(len(self.gradient_colors) - 1):
+            if self.gradient_colors[i][0] <= t <= self.gradient_colors[i + 1][0]:
+                t_local = (t - self.gradient_colors[i][0]) / (self.gradient_colors[i + 1][0] - self.gradient_colors[i][0])
+                return self.interpolate_color(self.gradient_colors[i][1], self.gradient_colors[i + 1][1], t_local)
+        return self.gradient_colors[-1][1]
+
+    def draw(self):
+        radius = 16
+        pill_h = 20
+        padding = 15
+        label_font = FONT_INTER_REGULAR
+        font_color = colors.HexColor("#667085")
+
+        total_label_height = 0
+        if self.top_labels:
+            total_label_height += padding
+        if self.bottom_labels:
+            total_label_height += padding
+
+        total_height = pill_h + self.height + total_label_height
+        d = Drawing(self.width, total_height)
+
+        if self.units:
+            y = total_height - padding
+            count = len(self.units)
+            for i, text in enumerate(self.units):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                d.add(String(x, y, text, fontName=label_font, fontSize=9, fillColor=black))
+        # Top labels
+        if self.top_labels:
+            if self.units==None:
+                y = total_height - padding
+            else:
+                y = total_height 
+            count = len(self.top_labels)
+            for i, text in enumerate(self.top_labels):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+
+                if i == 0:
+                    pass  # left align
+                elif i == count - 1:
+                    x -= text_width  # right align
+                else:
+                    x -= text_width / 2  # center align
+
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
+
+        # Bar
+        bar_y = total_height - self.height - (padding if self.top_labels else 0) - pill_h // 2
+        d.add(Rect(0, bar_y, self.width, self.height, rx=radius, ry=radius, fillColor=white, strokeColor=None))
+
+        # Gradient segments
+        segments = 600
+        for i in range(segments):
+            t = i / (segments - 1)
+            color = self.get_multicolor_gradient(t)
+            x = t * self.width
+            seg_width = self.width / segments
+            d.add(Rect(x, bar_y, seg_width + 1, self.height, fillColor=color, strokeColor=None))
+
+        # Bottom labels
+        if self.bottom_labels:
+            y = bar_y - padding
+            count = len(self.bottom_labels)
+            for i, text in enumerate(self.bottom_labels):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+
+                if i == 0:
+                    pass  # left align
+                elif i == count - 1:
+                    x -= text_width  # right align
+                else:
+                    x -= text_width / 2  # center align
+
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
+        if self.bottom_labels_2:
+            if self.bottom_labels==None:
+                y = bar_y - padding
+            else:
+                y = bar_y - padding -padding
+            count = len(self.bottom_labels_2)
+            for i, text in enumerate(self.bottom_labels_2):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+
+                if i == 0:
+                    pass  # left align
+                elif i == count - 1:
+                    x -= text_width  # right align
+                else:
+                    x -= text_width / 2  # center align
+
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))  
+
+        # Score position clamping
+        score_ratio = (self.score - self.data_min) / (self.data_max - self.data_min)
+        clamped_ratio = min(max(score_ratio, 0), 1)
+        score_color = self.get_multicolor_gradient(clamped_ratio)
+
+        pill_w = 38
+        score_x = clamped_ratio * self.width
+        score_x = max(min(score_x, self.width - pill_w / 2), pill_w / 2)
+
+        pill_y = bar_y + self.height / 2 - pill_h / 2
+        score_fill = self.lighten_color(score_color)
+
+        d.add(Rect(score_x - pill_w / 2, pill_y, pill_w, pill_h,
+                   rx=pill_h / 2, ry=pill_h / 2,
+                   fillColor=score_fill, strokeColor=score_color, strokeWidth=1))
+
+        score_text = str(self.score)
+        score_text_x = score_x - (len(score_text) * 5 / 2)
+        d.add(String(score_text_x, pill_y + 6, score_text,
+                     fontName=label_font, fontSize=10.435, fillColor=colors.HexColor("#003632")))
+
+        return d, score_color
+
+# class ImageWithOverlayText(Flowable):
+#     def __init__(self, image_path, width, height, text_data, styles):
+#         super().__init__()
+#         self.width = width
+#         self.height = height
+#         self.text_data = text_data  # List of tuples: (text, x, y, style_name)
+#         self.image_stream = self.flatten_image_to_white(image_path)
+#         self.styles = styles
+#         self.styles = getSampleStyleSheet()
+#         self.init_styles()
+
+#     def init_styles(self):
+#         self.styles.add(ParagraphStyle(
+#             "ear_screening_title",
+#             fontName=FONT_INTER_SEMI_BOLD,    # Make sure this is registered
+#             fontSize=12,
+#             leading=24,
+#             textColor=PMX_GREEN,
+#             backColor=None,  
+#         ))
+#     def flatten_image_to_white(self, image_path):
+#         img = PILImage.open(image_path)
+#         if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+#             bg = PILImage.new("RGB", img.size, (255, 255, 255))  # White background
+#             bg.paste(img, mask=img.split()[3])  # Paste using alpha as mask
+#         else:
+#             bg = img.convert("RGB")
+
+#         img_buffer = io.BytesIO()
+#         bg.save(img_buffer, format='PNG')
+#         img_buffer.seek(0)
+#         return img_buffer
+
+#     def draw(self):
+#         img = ImageReader(self.image_stream)
+#         self.canv.drawImage(img, 0, 0, width=self.width, height=self.height)
+
+#         for text, x, y, style_name in self.text_data:
+#             style = self.styles[style_name] if style_name in self.styles else self.styles["Normal"]
+#             para = Paragraph(text, style)
+#             w, h = para.wrapOn(self.canv, self.width, self.height)
+#             para.drawOn(self.canv, x, y - h)
+
+class ImageWithOverlayText(Flowable):
+    def __init__(self, image_path, width, height, text_data, styles):
+        super().__init__()
+        self.width = width
+        self.height = height
+        self.text_data = text_data  # List of tuples: (text, x, y, style_name)
+        self.image_stream = self.flatten_image_to_white(image_path)
+        self.styles = getSampleStyleSheet()
+        self.init_styles()
+
+    def flatten_image_to_white(self, image_path):
+        img = PILImage.open(image_path)
+        if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+            bg = PILImage.new("RGB", img.size, (255, 255, 255))  # White background
+            bg.paste(img, mask=img.split()[-1])  # Use alpha as mask
+        else:
+            bg = img.convert("RGB")
+
+        buffer = io.BytesIO()
+        bg.save(buffer, format='PNG')
+        buffer.seek(0)
+        return buffer
+
+    def init_styles(self):
+        self.styles.add(ParagraphStyle(
+            name="ear_screening_title",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=12,
+            leading=24,
+            textColor=PMX_GREEN,
+            backColor=None,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="ear_screening_unit",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=8,
+            leading=18,
+            textColor=colors.HexColor("#667085"),
+            spaceBefore=0,
+            spaceAfter=0
+        ))
+
+    def draw(self):
+        img = ImageReader(self.image_stream)
+        self.canv.drawImage(img, 0, 0, width=self.width, height=self.height)
+
+        for text, x, y, style_name in self.text_data:
+            val_unit = text.strip().split()
+
+            if len(val_unit) == 2:
+                val, unit = val_unit
+                inline_text = (
+                    f'<font name="{FONT_INTER_SEMI_BOLD}" color="{PMX_GREEN}" size="12">{val}</font> '
+                    f'<font name="{FONT_INTER_REGULAR}" color="#667085" size="8">{unit}</font>'
+                )
+            else:
+                val = val_unit[0]
+                inline_text = (
+                    f'<font name="{FONT_INTER_SEMI_BOLD}" color="{PMX_GREEN}" size="12">{val}</font>'
+                )
+
+            para = Paragraph(inline_text, self.styles[style_name])
+            w, h = para.wrapOn(self.canv, self.width, self.height)
+            para.drawOn(self.canv, x, y - h)
+
+
+
 class ThriveRoadmapTemplate:
     def __init__(self):
         self.styles = getSampleStyleSheet()
         self.base_path = Path("staticfiles/icons")
         self.init_styles()
+        self.svg_dir = "staticfiles/icons/"
 
     def _get_logo(self):
         possible_paths = [
@@ -544,6 +835,52 @@ class ThriveRoadmapTemplate:
             textColor=colors.HexColor("#667085"),
             spaceBefore=0,
             spaceAfter=0
+        ))
+        self.styles.add(ParagraphStyle(
+            "ear_screening_title",
+            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontSize=12,
+            leading=18,  # line height
+            textColor=PMX_GREEN,
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
+        self.styles.add(ParagraphStyle(
+            "BrainScoreTitle",
+            fontName=FONT_RALEWAY_SEMI_BOLD, 
+            fontSize=18.936,
+            leading=28.404,
+            textColor=PMX_GREEN,
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
+        self.styles.add(ParagraphStyle(
+            "BrainScoreStyle",
+            fontName=FONT_INTER_SEMI_BOLD,  
+            fontSize=16,
+            leading=24,
+            textColor=colors.HexColor("#003632"),
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
+        self.styles.add(ParagraphStyle(
+            "BrainScoreRange",
+            fontName=FONT_RALEWAY_SEMI_BOLD,  # You must register this font
+            fontSize=12,
+            leading=18,
+            textColor=colors.HexColor("#344054"),
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
+        self.styles.add(ParagraphStyle(
+            "circle_fallback_style",
+            fontName=FONT_INTER_REGULAR,  # built-in and supports Unicode
+            fontSize=10,
+            leading=10,
+            textColor=PMX_GREEN,
+            spaceAfter=0,
+            spaceBefore=0,
+            alignment=1,  
         ))
 
     def svg_icon(self, path, width=12, height=12):
@@ -1633,27 +1970,37 @@ class ThriveRoadmapTemplate:
         section_ = []
         header=vital_params_data.get("header","")
         cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append([cs])
-        section_.append([Spacer(1,8)])
+        section_.append(cs)
+        section_.append(Spacer(1,8))
         header_data=vital_params_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
-        section_.append([cs_data])
-        section_.append([Spacer(1,32)])
+        section_.append(cs_data)
+        section_.append(Spacer(1,32))
 
         title=vital_params_data.get("metrics","").get("title","")
         icon_path=os.path.join(svg_dir,"lifestyle.svg")
 
-        icon_lifestyle=self.svg_icon(icon_path,width=24,height=24)
+
+        icon_lifestyle = self.svg_icon(icon_path, width=24, height=24)
         title_para = Paragraph(title, self.styles["SvgBulletTitle"])
         family_header_row = [icon_lifestyle, Spacer(1, 10), title_para]
-        section_.append([Table([family_header_row],colWidths=[None,10,None], 
-        style=[("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+
+        section_.append(
+            Table(
+                [family_header_row],
+                colWidths=[24, 10, A4[0]-24-10-64],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                     ("TOPPADDING", (0, 0), (-1, -1), 0),
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        ])])
-        section_.append([Spacer(1,14)])
+                    #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                ],
+            )
+        )
+        section_.append(Spacer(1, 14))
+
         # ---------- Vital Parameters ----------
 
         icon_paths={
@@ -1712,7 +2059,6 @@ class ThriveRoadmapTemplate:
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
                     ("ALIGN", (1, 0), (1, 0), "LEFT"),
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                    #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
                 ]
             )
 
@@ -1817,33 +2163,16 @@ class ThriveRoadmapTemplate:
             )
 
             section.append(rounded_card)
-        # rows = []
-        # for i in range(0, len(section), 2):
-        #     row = section[i:i+2]
-        #     # if len(row) < 2:
-        #     #     row.append(Spacer(1, 15))  # Add spacer to the row (not section!)
-        #     rows.append(row)
-        #     rows.append([Spacer(1, 11)])
         rows = []
         for i in range(0, len(section), 2):
             row = section[i:i+2]
-            # Apply spacing only between elements, not from inside
-            if len(row) == 2:
-                row = [Table([[row[0]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 0),
-                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 0)]),
-                    Table([[row[1]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 0),
-                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 0)])]
-            else:
-                row[0] = Table([[row[0]]], colWidths=[250], style=[("LEFTPADDING", (0, 0), (-1, -1), 8),
-                                                                ("RIGHTPADDING", (0, 0), (-1, -1), 8)])
-                #row.append(Spacer(1, 15))
+            if len(row) < 2:
+                row.append(Spacer(1, 15))  # Add spacer to the row (not section!)
             rows.append(row)
-            #rows.append([Spacer(1, 11)])
-
+            rows.append([Spacer(1, 11)])
 
         eye_screening=vital_params_data.get("metrics",{}).get("eye_screening",[])
 
-        #rows.append([self.get_eye_screening_card(eye_screening,icon_paths)])
 
         section_table = Table(rows)
         section_table.setStyle(TableStyle([
@@ -1855,8 +2184,10 @@ class ThriveRoadmapTemplate:
             #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
 
         ]))
-        section_.append([section_table])
-        final_table = Table(section_, colWidths=[A4[0]])  # Adjust width as needed
+        section_.append(section_table)
+        section_.append(self.get_eye_screening_card(eye_screening,icon_paths))
+        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -1865,7 +2196,488 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
         ]))
         return final_table
-     
+
+    def ear_card(self, title, val,color="#488F31"):
+        content = Table(
+            [[Paragraph(title, self.styles["ear_screening_title"]),
+            RoundedPill(val,color, 6, 121.5, 24)]],
+            colWidths=[84.5, 121.5]
+        )
+        content.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 8),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+            ("TOPPADDING", (0, 0), (-1, -1), 8),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            #("BOX",(0,0),(-1,-1),0.5,colors.black)
+        ]))
+        return RoundedBox(width=221.5, height=40, content=content, corner_radius=8,border_radius=0.1)
+    
+    def examination_card(self, ear_data, label="Left Ear"):
+        rows = [
+            [Paragraph(label, self.styles["ear_screening_title"])],
+            # [""],  # Line separator
+        ]
+        for item in ear_data.get("data", [])[:3]:
+            rows.append([Paragraph(item.get("name", ""), self.styles["ear_screening_title"])])
+            rows.append([Paragraph(f"• {item.get('val', '')}", self.styles["eye_screening_desc_style"])])
+
+        content_ = Table(rows, colWidths=[163])
+        content_.setStyle(TableStyle([
+            ("LINEBELOW", (0, 0), (-1, 0), 0.1, colors.HexColor("#00625B")),
+        ]))
+
+        wrapper = Table([[content_]], colWidths=[163])
+        wrapper.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+        ]))
+
+        return RoundedBox(width=194.5, height=None, content=wrapper, corner_radius=16,border_radius=0.1)
+
+    def get_ear_screening(self, ear_screening_data: dict):
+        section_ = []
+        header=ear_screening_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section_.append(cs)
+        section_.append(Spacer(1,8))
+        header_data=ear_screening_data.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section_.append(cs_data)
+        section_.append(Spacer(1,32))
+
+
+        # ---------- Vital Parameters ----------
+    
+        icon_path = os.path.join(svg_dir, "ear.svg")
+        icon = self.svg_icon(icon_path, width=12, height=18)
+
+        title_para = Paragraph(ear_screening_data['title'], self.styles["ear_screening_title"])
+        value_para_ = Paragraph(ear_screening_data["title_data"], self.styles["eye_screening_desc_style"])
+        left_stack_rows = [[title_para],[value_para_], [Spacer(1, 8)]]
+
+        ear_screening_list = ear_screening_data.get("ear_screening_list", {})
+        for item in ear_screening_list:
+            header = item.get("header", "")
+            left_ear = item.get("left_ear", {})
+            right_ear = item.get("right_ear", {})
+            bullet = self.svg_icon(os.path.join(svg_dir, "bullet.svg"), width=16, height=16)
+            title__=Paragraph(header, self.styles["ear_screening_title"])
+            value_para = Paragraph(item.get("header_data", ""), self.styles["eye_screening_desc_style"])
+
+            if header == "Examination":
+                left_card = self.examination_card(left_ear, label="Left Ear")
+                right_card = self.examination_card(right_ear, label="Right Ear")
+            else:
+                left_card = self.ear_card(left_ear.get("name", "Left Ear"), left_ear.get("val", "Clear"),left_ear.get("color", ""))
+                right_card = self.ear_card(right_ear.get("name", "Right Ear"), right_ear.get("val", "Clear"),right_ear.get("color", ""))
+
+            left_right = Table([[left_card, Spacer(8, 1), right_card]], colWidths=[221.5, 8, 221.5])
+            left_right.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            inner_table_2 = Table([[value_para]])
+            inner_table_2.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            entry_table = Table([[title__], [inner_table_2],[Spacer(1,8)] ,[left_right]])
+            entry_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            
+            entry_table_ = Table([[bullet,Spacer(8,1),entry_table]],colWidths=[16,8,None])
+            entry_table_.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ]))
+
+            left_stack_rows.append([entry_table_])
+
+        left_stack = Table(left_stack_rows)
+        left_stack.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1),0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        inner_table = Table([[icon,Spacer(8,1) ,left_stack]],colWidths=[12,8,None])
+        inner_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            #("BOX",(0,0),(-1,-1),0.5,colors.black)
+        ]))
+
+        rows_table = Table([[inner_table]])
+        rows_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1),16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+            #("BOX",(0,0),(-1,-1),0.5,colors.black)
+        ]))
+
+        section_.append(RoundedBox(width=A4[0]-64, height=None, content=rows_table, corner_radius=16))
+
+        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        return final_table
+    
+    def get_brain_function_screen(self, brain_function_score: dict):
+        section_ = []
+        
+        # Header Section
+        header = brain_function_score.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section_.append(cs)
+        section_.append(Spacer(1, 16))
+
+        header_data = brain_function_score.get("header_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section_.append(cs_data)
+        section_.append(Spacer(1, 32))
+
+        # Icon and Data
+        icon_path = os.path.join(svg_dir, "Cognitive.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+
+        brain_score = brain_function_score.get("brain_score_data", [])
+        title_text = brain_function_score.get("title", "")
+        score_text = brain_function_score.get("score", "")
+        range_color = brain_function_score.get("color", "#000000")
+        range_text = brain_function_score.get("range", "")
+        gradient_colors=brain_function_score.get("gradient_colors", "")
+        min_score=brain_function_score.get("min_score", "")
+        max_score=brain_function_score.get("max_score", "")
+        bottom_labels = brain_function_score.get("bottom_labels", "")
+
+
+        # Paragraphs
+        title_para = Paragraph(title_text, self.styles["BrainScoreTitle"])
+        score_para = Paragraph(score_text, self.styles["BrainScoreStyle"])
+        circle_para = Paragraph(f'<font color="{range_color}">&#9679;</font>', self.styles["circle_fallback_style"])
+        # circle_para = Paragraph(circle_html, self.styles["box_title_style"])
+        range_para = Paragraph(range_text, self.styles["BrainScoreRange"])
+
+        # Widths for accurate layout
+        title_width = stringWidth(title_text, self.styles["BrainScoreTitle"].fontName, self.styles["BrainScoreTitle"].fontSize)
+        score_width = stringWidth(score_text, self.styles["BrainScoreStyle"].fontName, self.styles["BrainScoreStyle"].fontSize)
+        range_width = stringWidth(range_text, self.styles["BrainScoreRange"].fontName, self.styles["BrainScoreRange"].fontSize)
+
+        # Brain Score Table
+        row_items = [icon, Spacer(1, 6), title_para, Spacer(1, 12), score_para, Spacer(1, 6), circle_para, Spacer(1, 6), range_para,""]
+        col_widths = [24, 6, title_width, 12, score_width, 6, 6, 6, range_width,None]
+
+        brain_score_table = Table([row_items], colWidths=col_widths)
+        brain_score_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("LINEBELOW", (0, 0), (-1, 0), 0.3, colors.HexColor("#00625B"))
+        ]))
+        full_brain_score_table = Table([[brain_score_table]], colWidths=[478])
+
+        draw_list = [full_brain_score_table]
+
+        # Body Cards with Gradient Bar
+        for idx, item in enumerate(brain_score):
+            title = item.get("title", "")
+            title_data = item.get("title_data", "")
+            score = item.get("score", 0)
+
+            title_ = Paragraph(title, self.styles["ear_screening_title"])
+            title_data_para = Paragraph(title_data, self.styles["eye_screening_desc_style"])
+
+            drawing, color__ = GradientScoreBar(score=int(score), data_min=min_score, data_max=max_score,
+                                                bottom_labels=bottom_labels,
+                                                gradient_colors=gradient_colors).draw()
+
+            def color_to_hex(color):
+                r = int(color.red * 255)
+                g = int(color.green * 255)
+                b = int(color.blue * 255)
+                return '#{:02X}{:02X}{:02X}'.format(r, g, b)
+
+            hex_color = color_to_hex(color__)
+
+            desc_block = Table([
+                [title_],
+                [Spacer(1, 2)],
+                [title_data_para]
+            ], colWidths=[478], rowHeights=[None, 2, None])
+
+            card = Table([
+                [desc_block, RoundedPill('low', hex_color, 8, 80, 18, 8, colors.HexColor('#EFEFEF'))]
+            ], colWidths=[390, 88])
+            card.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            content = Table([
+                [card],
+                [drawing]
+            ], colWidths=[478])
+            content.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            wrapper = Table([[content]], colWidths=[478])
+            # if idx != len(brain_score) - 1:
+            #     wrapper.setStyle(TableStyle([
+            #         ("LINEBELOW", (0, 0), (-1, 0), 0.01, colors.HexColor("#00625B"))
+            #     ]))
+
+            draw_list.append(wrapper)
+
+        # Outer Wrapper Box
+        drawlist_table = Table([[draw_list]], colWidths=[478])
+        drawlist_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+        ]))
+
+        rounded_container = RoundedBox(width=A4[0] - 85, height=None, content=drawlist_table, corner_radius=12)
+        section_.append(rounded_container)
+
+        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
+    def get_body_mass_index(self,bmi_data: dict,data):
+        section_ = []
+        section=[]
+        # Header Section
+        header = bmi_data.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section_.append(cs)
+        section_.append(Spacer(1, 16))
+
+        header_data = bmi_data.get("header_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section_.append(cs_data)
+        section_.append(Spacer(1, 32))
+
+        
+        icon_path = os.path.join(self.svg_dir,"BMI.svg")  
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        # ---------- Bullet Points: Current Symptoms ----------
+        
+        title=bmi_data.get("title","")
+        title_data=bmi_data.get("title_data","")
+        title_data_text = Paragraph(title_data, self.styles["eye_screening_desc_style"])        
+        title_para = Paragraph(title, self.styles["SvgBulletTitle"])
+
+        title_data= Table([
+            [title_para],
+            [title_data_text]
+            ], colWidths=[445])
+        title_data.setStyle(TableStyle([
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        svg_heading_row = Table([[icon,Spacer(1,8), title_data]], colWidths=[24,8,445])
+        svg_heading_row.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("VALIGN", (0, 0), (0, 0), "TOP"),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        svg_dir = "staticfiles/icons/"
+        if data.get("gender").lower()=="male":
+            icon_path = os.path.join(svg_dir,'bmi_malee.png')
+        elif data.get("gender").lower()=="female":
+            icon_path = os.path.join(svg_dir,'bmi_femalee.png')
+        # icon_bmi=Image(icon_path, width=271, height=326)
+        
+        Height=bmi_data.get("Height","00 cms")
+        Waist=bmi_data.get("Waist","00 inch")
+        Hip=bmi_data.get("Hip","00 inch")
+        weight=bmi_data.get("weight","00 kg")
+        WTH_Ratio=bmi_data.get("WTH_Ratio","00")
+        gradient_colors=bmi_data.get("gradient_colors",[])
+        min_val=bmi_data.get("min_val","")
+        max_val=bmi_data.get("max_val","")
+        top_labels=bmi_data.get("top_labels",[])
+        bottom_labels=bmi_data.get("bottom_labels",[])
+
+        text_data = [
+            (Height, 95, 300, "ear_screening_title"),       # Height
+            (Waist, 6, 175, "ear_screening_title"),        # Waist
+            (Hip, 10, 120, "ear_screening_title"),        # Hip
+            (WTH_Ratio, 228, 150, "ear_screening_title"),          # Waist to Hip Ratio
+            (weight, 92, 5, "ear_screening_title"),        # Weight
+        ]
+
+        icon_bmi = ImageWithOverlayText(
+            image_path=icon_path,
+            width=271,
+            height=326,
+            text_data=text_data,
+            styles=self.styles["ear_screening_title"]
+        )
+        drawing,color__ = GradientScoreBar(
+                score=float(weight.split(" ")[0]),
+                data_min=min_val,
+                data_max=max_val,
+                top_labels=top_labels,
+                bottom_labels=bottom_labels,
+                gradient_colors=gradient_colors
+            ).draw()
+        icon_row=Table([[icon_bmi]], colWidths=[271],rowHeights=[None])
+        icon_row.setStyle(TableStyle([
+
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 103),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 103),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        bmi_row_=Table([
+            [svg_heading_row],
+            [icon_row],
+            [Spacer(1,8)],
+            [drawing]
+        ], colWidths=[477])
+        bmi_row_.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        bmi_row=Table([
+            [bmi_row_]
+        ], colWidths=[A4[0]-86])
+        bmi_row.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+            #("BOX",(0,0),(-1,-1),0.3,colors.black)
+        ]))
+        
+        rounded_box=RoundedBox(width=A4[0]-86, height=None, content=bmi_row, corner_radius=12)
+
+        section_.append(rounded_box)        
+        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("LEFTPADDING", (0, -1), (-1, -1), 43),
+            ("RIGHTPADDING", (0, -1), (-1, -1), 43),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
+    def get_fitness_assesment(self, data: dict):
+        section = []
+
+        fitness_assesment = data.get("fitness_assesment", {})
+        title = fitness_assesment.get("title", "")
+        fitness_assesment_data = fitness_assesment.get("fitness_assesment_data", [])
+
+        # ---------- Heading ----------
+        heading = Paragraph(title, self.styles["HealthSectionHeading"])
+        section.append(heading)
+        section.append(Spacer(1, 8))
+
+        # ---------- Description Paragraph ----------
+        content = []
+        for item in fitness_assesment_data:
+            header = item.get("header", "")
+            value = item.get("value")
+            content.append(f"<font name='Inter-Bold'>{header}:</font> {value}<br/>")
+        full_paragraph = ''.join(content)
+        section.append(Paragraph(full_paragraph, self.styles["HealthConcernsParagraph"]))
+        section.append(Spacer(1, 14))
+
+        # ---------- Fitness Table ----------
+        fitness_table_data = fitness_assesment.get("fitness_table_data", [])
+        headers = [
+            Paragraph(h, self.styles["TableHeader"])
+            for h in [
+                "Test Name",
+                "Your Score",
+                "Optimal Score"
+            ]
+        ]
+        table_data = [headers]
+
+        for ftd in fitness_table_data:
+            test_name = ftd.get("test_name", "")
+            your_score = ftd.get("your_score", "")
+            optimal_score = ftd.get("optimal_score", "")
+
+            your_score_pill = RoundedPill(your_score, colors.HexColor("#E6F4F3"), 8, 40, 18, 8, "#003632","#17B26A")
+            optimal_score_pill = RoundedPill(optimal_score, colors.HexColor("#E6F4F3"), 8, 40, 18, 8, "#003632","#17B26A")
+
+            row = [
+                Paragraph(test_name, self.styles["TableCell"]),
+                your_score_pill,        
+                optimal_score_pill       
+            ]
+            table_data.append(row)
+
+        col_widths = [AVAILABLE_WIDTH / 3] * 3
+        section.append(self._build_styled_table(table_data, col_widths))
+
+        return section
+
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -1909,7 +2721,25 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_vital_params(vital_params))
+        
+        ear_screening=data.get("ear_screening",{})
+        if ear_screening:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_ear_screening(ear_screening))
             
+
+        brain_function_score=data.get("brain_score",{})
+        if brain_function_score:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_brain_function_screen(brain_function_score))
+
+        bmi=data.get("bmi",{})
+        if bmi:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_body_mass_index(bmi,data))
         # story.append(PageBreak())
         # story.append(Spacer(1,22))   
         # story.extend(self.get_health_concerns_section(data))
