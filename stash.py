@@ -790,17 +790,6 @@ class ThriveRoadmapTemplate:
             spaceAfter=0,
             spaceBefore=0
         )),
-
-        self.styles.add(ParagraphStyle(
-            "box_footer_style",
-            fontName=FONT_INTER_REGULAR,            
-            fontSize=8,
-            leading=18,                   
-            textColor=colors.HexColor("#667085"),
-            alignment=TA_RIGHT,  
-            spaceAfter=0,
-            spaceBefore=0   
-        )),
         self.styles.add(ParagraphStyle(
             "header_data_style",
             fontName=FONT_INTER_REGULAR,                   
@@ -904,6 +893,15 @@ class ThriveRoadmapTemplate:
                 spaceBefore=0,
                 spaceAfter=0,
             ))
+        self.styles.add(ParagraphStyle(
+            "homair",
+            fontName=FONT_RALEWAY_MEDIUM,        # You must register this font first
+            fontSize=30,
+            leading=38,                # Equivalent to line-height
+            textColor=PMX_GREEN,
+            spaceAfter=0,
+            spaceBefore=0
+        ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -1359,6 +1357,98 @@ class ThriveRoadmapTemplate:
             "Cognitive"   :"Cognitive.svg"
         }
         section = []
+        # for idx,metric in enumerate(metrics):
+        #     # Top: title + pill
+        #     title_para = Paragraph(metric['title'], self.styles["box_title_style"])
+        #     pill_para = RoundedPill(metric["pill"], colors.HexColor(metric["pill_color"]), 8, 80, 18, 8, colors.HexColor("#EFEFEF"))
+
+        #     top_stack = Table(
+        #         [[title_para, pill_para]],
+        #         colWidths=[106,80],
+        #         style=[
+        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        #             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        #             ("TOPPADDING", (0, 0), (-1, -1), 0),
+        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        #             ("ALIGN", (0, 0), (0, 0), "LEFT"),
+        #             ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+        #             ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+        #         ]
+        #     )
+
+        #     # Bottom: merged major + minor value + footer
+        #     value = metric['value']
+        #     suff = metric.get('suff', '')
+
+        #     # Inline-styled paragraph
+        #     value_inline = Paragraph(value,self.styles["box_value_style"])
+        #     suff_inline=Paragraph(suff,self.styles["box_decimal_style"])
+        #     footer_para = Paragraph(metric["footer"], self.styles["box_decimal_style"]) if metric.get("footer") else Spacer(1, 0)
+        #     suff_box = Table(
+        #         [[suff_inline]],
+        #         style=[
+        #             ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
+        #             ("LEFTPADDING", (0, 0), (0, 0), 0),
+        #             ("RIGHTPADDING", (0, 0), (0, 0), 0),
+        #             ("TOPPADDING", (0, 0), (0, 0), 0),
+        #             ("BOTTOMPADDING", (0, 0), (0, 0), 0),
+        #         ]
+        #     )
+        #     text_width = stringWidth(value, self.styles["box_value_style"].fontName, self.styles["box_value_style"].fontSize)
+        #     bottom_stack = Table(
+        #         [[value_inline, Spacer(1, 3), suff_box, footer_para]],
+        #         colWidths=[text_width, 3, 12, None],
+        #         style=[
+        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        #             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        #             ("TOPPADDING", (0, 0), (-1, -1), 0),
+        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        #             ("ALIGN", (0, 0), (0, 0), "LEFT"),
+        #             ("ALIGN", (2, 0), (2, 0), "LEFT"),
+        #             ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+        #         ]
+        #     )
+
+
+        #     # Combine top and bottom into inner card
+        #     inner_table = Table(
+        #         [[top_stack], [bottom_stack]],
+        #         colWidths=[192]
+        #     )
+        #     icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],""))
+
+        #     icon = self.svg_icon(icon_path, width=24, height=24)
+
+        #     total_table=Table([[icon,Spacer(0,8),inner_table]],colWidths=[24,8,192])
+        #     total_table.setStyle(TableStyle([
+        #         ("VALIGN",(0,0),(0,0),"MIDDLE"),
+        #         ("ALIGN",(0,0),(-1,-1),"CENTER"),
+        #         #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+        #     ]))
+
+        #     padded_inner = Table([[total_table]], colWidths=[250])
+        #     padded_inner.setStyle(TableStyle([
+        #         ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+        #         ("LEFTPADDING", (0, 0), (-1, -1), 8),
+        #         ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+        #         ("TOPPADDING", (0, 0), (-1, -1), 6),
+        #         ("BOTTOMPADDING", (0, 0), (-1, -1),6),
+        #         #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+        #     ]))
+
+        #     rounded_card = RoundedBox(
+        #         width=250,
+        #         height=68,
+        #         content=padded_inner,
+        #         corner_radius=16,
+        #         border_radius=0.4
+        #     )
+
+        #     section.append(rounded_card)
+        #     if idx < len(metrics) - 1:
+        #         section.append(Spacer(1, 16))
+        
+        # section=[]
         for idx,metric in enumerate(metrics):
             # Top: title + pill
             title_para = Paragraph(metric['title'], self.styles["box_title_style"])
@@ -1366,15 +1456,15 @@ class ThriveRoadmapTemplate:
 
             top_stack = Table(
                 [[title_para, pill_para]],
-                colWidths=[106,80],
+                colWidths=[106,6,80],
                 style=[
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                     ("TOPPADDING", (0, 0), (-1, -1), 0),
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
-                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("ALIGN", (1, 0), (1, 0), "LEFT"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                 ]
             )
 
@@ -1385,21 +1475,43 @@ class ThriveRoadmapTemplate:
             # Inline-styled paragraph
             value_inline = Paragraph(value,self.styles["box_value_style"])
             suff_inline=Paragraph(suff,self.styles["box_decimal_style"])
-            footer_para = Paragraph(metric["footer"], self.styles["box_footer_style"]) if metric.get("footer") else Spacer(1, 0)
+            if metric.get("footer"):
+                footer_text = Paragraph(
+                    f'<para alignment="right">{metric["footer"]}</para>',
+                    self.styles["box_decimal_style"]
+                )
+
+                footer_stack = Table(
+                    [[Spacer(1, 8)], [footer_text]],
+                    colWidths=[192],  # Force full width to let right align take effect
+                    style=[
+                        ("VALIGN", (0, 1), (-1, -1), "BOTTOM"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ]
+                )
+
+            else:
+                footer_stack = Spacer(1, 0)            
             suff_box = Table(
-                [[suff_inline]],
+                [[Spacer(1, 4)], [suff_inline]],
                 style=[
-                    ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
-                    ("LEFTPADDING", (0, 0), (0, 0), 0),
-                    ("RIGHTPADDING", (0, 0), (0, 0), 0),
-                    ("TOPPADDING", (0, 0), (0, 0), 0),
-                    ("BOTTOMPADDING", (0, 0), (0, 0), 0),
+                    ("VALIGN", (0, 1), (-1, -1), "BOTTOM"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                 ]
             )
+
             text_width = stringWidth(value, self.styles["box_value_style"].fontName, self.styles["box_value_style"].fontSize)
+            suff_width = stringWidth(suff, self.styles["box_decimal_style"].fontName, self.styles["box_decimal_style"].fontSize)
+
             bottom_stack = Table(
-                [[value_inline, Spacer(1, 3), suff_box, footer_para]],
-                colWidths=[text_width, 3, 12, None],
+                [[value_inline, Spacer(1, 3),suff_box , footer_stack]],
+                colWidths =[text_width, 3, suff_width, 192 - (text_width + 9 + suff_width)],
                 style=[
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -1407,7 +1519,9 @@ class ThriveRoadmapTemplate:
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
                     ("ALIGN", (2, 0), (2, 0), "LEFT"),
-                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("ALIGN", (-1, 0), (-1, -1), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("VALIGN", (2, 0), (2, -1), "BOTTOM"),
                 ]
             )
 
@@ -1417,7 +1531,13 @@ class ThriveRoadmapTemplate:
                 [[top_stack], [bottom_stack]],
                 colWidths=[192]
             )
-            icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],""))
+            inner_table.setStyle(TableStyle([
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric["title"],""))
 
             icon = self.svg_icon(icon_path, width=24, height=24)
 
@@ -1425,7 +1545,10 @@ class ThriveRoadmapTemplate:
             total_table.setStyle(TableStyle([
                 ("VALIGN",(0,0),(0,0),"MIDDLE"),
                 ("ALIGN",(0,0),(-1,-1),"CENTER"),
-                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             ]))
 
             padded_inner = Table([[total_table]], colWidths=[250])
@@ -1433,13 +1556,12 @@ class ThriveRoadmapTemplate:
                 ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 8),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 16),
-                ("TOPPADDING", (0, 0), (-1, -1), 6),
-                ("BOTTOMPADDING", (0, 0), (-1, -1),6),
-                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1),12),
             ]))
 
             rounded_card = RoundedBox(
-                width=250,
+                width=248,
                 height=68,
                 content=padded_inner,
                 corner_radius=16,
@@ -1449,6 +1571,7 @@ class ThriveRoadmapTemplate:
             section.append(rounded_card)
             if idx < len(metrics) - 1:
                 section.append(Spacer(1, 16))
+
         section_table = Table([[section]])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -1975,7 +2098,7 @@ class ThriveRoadmapTemplate:
             if metric.get("footer"):
                 footer_text = Paragraph(
                     f'<para alignment="right">{metric["footer"]}</para>',
-                    self.styles["box_footer_style"]
+                    self.styles["box_decimal_style"]
                 )
 
                 footer_stack = Table(
@@ -2526,6 +2649,205 @@ class ThriveRoadmapTemplate:
 
         return final_table
 
+    def get_body_composition(self, data: dict):
+
+        body_composition = data.get("body_composition", {})
+        title = body_composition.get("title", "")
+        section=[]
+        # ---------- Heading ----------
+        heading = Paragraph(title, self.styles["TOCTitleStyle"])
+        section.append(heading)
+        section.append(Spacer(1, 2))
+
+        # ---------- Icon and Title Data ----------
+        icon_path = os.path.join(svg_dir, "BMI.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+
+        title_data = body_composition.get("title_data", "")
+        title_data_text = Paragraph(title_data, self.styles["profile_card_otherstyles"])
+
+        icon_path_bmi = os.path.join(svg_dir, "diagnosis_image.svg")
+        icon_bmi = self.svg_icon(icon_path_bmi, width=250, height=294)
+
+
+        image_data_val = Paragraph(
+            "<para align='center'><font color='#26968D'>Image is not for diagnosis</font></para>",
+            self.styles["box_decimal_style"]  # Or self.styles["decimal_style_"] if defined
+        )
+        body_weight = Paragraph(
+            f'<para align="right">'
+            f'<font name="{self.styles["box_decimal_style"].fontName}" size="{self.styles["box_decimal_style"].fontSize}"><b>56</b></font> '
+            f'<font name="{self.styles["box_decimal_style"].fontName}" size="{self.styles["box_decimal_style"].fontSize}">kg</font>'
+            f'</para>',
+            self.styles["box_decimal_style"]
+        )
+
+        body_weight_title = Paragraph(
+            '<para align="center"><font color="#00625B">Body Weight</font></para>',
+            self.styles["box_decimal_style"]
+        )
+
+        body_weight_row = Table([
+                [body_weight_title, body_weight]
+            ],
+            colWidths=[150, 100],  # Adjust widths as needed
+        )
+        body_weight_row.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+        ])
+        )
+        body_weight_row=RoundedBox(width=250, height=44, content=body_weight_row, corner_radius=16)
+        svg_heading_row = Table(
+            [
+                [icon, "", title_data_text],
+                [icon_bmi,"",""],
+                [image_data_val, "", ""],
+                [""],
+                [body_weight_row,"",""],
+                [""]  # placeholder cells to match column count
+            ],
+            colWidths=[28, 4, 218],
+            rowHeights=[None, None,25,None,None,50]
+        )
+
+        # Set table style with a span across the second row (0,1) to (2,1)
+        svg_heading_row.setStyle(TableStyle([
+            ("SPAN", (0, 1), (2, 1)),
+            ("SPAN", (0, 2), (2, 2)),
+            ("SPAN", (0, 3), (2, 3)),          # Span full width on second row
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ]))
+        # ---------- Body Composition Metrics ----------
+        metrics = body_composition.get("metrics", "") 
+
+        story = []
+        for metric in metrics:
+            # Top: title + pill
+            title_para = Paragraph(f"<b>{metric['title']}</b>", self.styles["box_title_style"])
+            pill_para = RoundedPill(metric["pill"], colors.HexColor(metric["pill_color"]), 8, 80, 18, 8, colors.HexColor("#EFEFEF"))
+
+            top_stack = Table(
+                [[title_para, pill_para]],
+                style=[
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (0, 0), "LEFT"),
+                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, -1), "CENTER"),
+                ]
+            )
+
+            # Bottom: merged major + minor value + footer
+            value = metric['value']
+            suff = metric.get('suff', '')
+
+            # Inline-styled paragraph
+            value_inline = Paragraph(
+                f'<font name="{self.styles["box_value_style"].fontName}" size="{self.styles["box_value_style"].fontSize}"><b>{value}</b></font>'
+                f'<font name="{self.styles["box_decimal_style"].fontName}" size="{self.styles["box_decimal_style"].fontSize}">{suff}</font>',
+                self.styles["box_value_style"]
+            )
+
+            footer_para = Paragraph(metric["footer"], self.styles["box_decimal_style"]) if metric.get("footer") else Spacer(1, 0)
+
+            bottom_stack = Table(
+                [[value_inline, footer_para]],
+                colWidths=[None, None],
+                style=[
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (0, 0), "LEFT"),
+                    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, 0), "BOTTOM"),
+                ]
+            )
+
+            # Combine top and bottom into inner card
+            inner_table = Table(
+                [[top_stack], [bottom_stack]],
+                colWidths=[194]
+            )
+
+            padded_inner = Table([[inner_table]], colWidths=[194])
+            padded_inner.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
+            ]))
+
+            rounded_card = RoundedBox(
+                width=230.8,
+                height=68.8,
+                content=padded_inner,
+                corner_radius=12
+            )
+
+            story.append(rounded_card)
+            story.append(Spacer(1, 4))
+
+        # Final layout with left icon and right cards
+        body_comp_row = Table([[svg_heading_row, Spacer(1,38),story]], colWidths=[262,38, 230], rowHeights=[None])
+        body_comp_row.setStyle(TableStyle([
+            ("VALIGN",(0,0),(-1,-1),"TOP")
+        ]))
+        section.append(body_comp_row)
+        tscore_val=body_composition.get("tscore_val","")
+
+        gradient_colors = [
+                (0.0, "#488F31"),
+                (0.35, "#F4CE5C"),
+                (0.70, "#F49E5C"),
+                (1.0, "#ED005F")
+            ]
+        drawing,color__ = GradientScoreBar(
+                score=tscore_val,
+                width=513,
+                data_min=0.78,
+                data_max=1.34,
+                units=["BMD (g/cm2)",""],
+                top_labels=["0.78","0.86","0.94", "1.02", "1.10", "1.18","1.26","1.34"],
+                bottom_labels=["Osteoporosis","Osteopenia", "Normal"],
+                bottom_labels_2=["-5","-4", "-3", "-2", "-1", "0","1","2","3"],
+                gradient_colors=gradient_colors
+            ).draw()
+
+
+        tscore_title=body_composition.get("tscore","")
+        tscore_data=body_composition.get("tscore_data","")
+        
+        title_=Paragraph(tscore_title, self.styles["profile_card_otherstyles"])
+        title_data=Paragraph(tscore_data, self.styles["box_decimal_style"])
+        
+        rows = [
+            [title_],
+            [""],
+            [title_data],
+            [""],
+            [drawing]
+        ]
+        content_ = Table(rows, colWidths=[529],rowHeights=[None, 8, None,8,None])
+        
+    
+        content_.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            
+        ]))
+
+    
+        section.append(content_)
+        return section
+
     def get_fitness_assesment(self, fitness_assesment_data: dict):
         section_ = []
         # Header Section
@@ -2582,6 +2904,206 @@ class ThriveRoadmapTemplate:
         ]))
 
         return final_table
+
+    def get_homa_ir(self, homa_ir_data: dict):
+        section = []
+
+        title = homa_ir_data.get("title", "")
+        sub_title = homa_ir_data.get("sub_title", "")
+    
+        homa_ir_score = homa_ir_data.get("homa_ir_score", "")
+        home_ir_box_title=homa_ir_data.get("home_ir_box_title", "")
+        gradient_colors=homa_ir_data.get("gradient_colors", "")  
+        min_val=homa_ir_data.get("min_val", "")  
+        max_val=homa_ir_data.get("max_val", "")  
+        top_labels=homa_ir_data.get("top_labels", "")  
+        bottom_labels=homa_ir_data.get("bottom_labels", "")
+        pill_text=homa_ir_data.get("pill_text","")  
+
+        # ---------- Heading ----------
+        header = f'''
+        <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
+        <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
+        '''
+        heading = Paragraph(header, self.styles["homair"])
+        section.append(heading)
+        section.append(Spacer(1, 16))
+        
+        # ---------- Description Paragraph ----------
+        header_data = homa_ir_data.get("title_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section.append(cs_data)
+        section.append(Spacer(1, 32))
+        
+        
+        value_inline = Paragraph(f"<b>{str(homa_ir_score)}</b>", self.styles["BrainScoreStyle"])
+        drawing,color__ = GradientScoreBar(
+                score=homa_ir_score,
+                width=499,
+                data_min=min_val,
+                data_max=max_val,
+                top_labels=top_labels,
+                bottom_labels=bottom_labels,
+                gradient_colors=gradient_colors
+            ).draw()
+
+        top_stack = Table([[value_inline,RoundedPill(pill_text, color__, 8, 80, 18)]], colWidths=[250,249])
+
+        top_stack.setStyle(TableStyle([
+            ("ALIGN",(1,0),(1,-1),"RIGHT"),
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black),
+            ("LINEBELOW", (0, 0), (-1, -1), 0.01, colors.HexColor("#00625B"))
+        ]))
+        data = [
+            [top_stack],
+            [""],
+            [Paragraph(f'<font color="#00625B">{home_ir_box_title}</font>', self.styles["ear_screening_title"])],           
+            [drawing],          # Bottom content
+        ]
+
+        bottom_stack = Table(data, colWidths=[499])
+        bottom_stack.setStyle(TableStyle([
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            # ("BOX",(0,0),(-1,-1),0.2,colors.black),
+        ]))
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_.setStyle(TableStyle([
+
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            #("BOTTOMPADDING", (0, 0), (0, 2), 8),
+            ("BOTTOMPADDING", (0, 0), (-1,-1), 16),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black)
+        ]))
+
+
+        rounded_card = RoundedBox(
+                width=A4[0]-64,
+                height=None,
+                content=bottom_stack_,
+                corner_radius=16
+            )
+        section.append(rounded_card)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
+    def get_framingham_risk_score(self, framingham_risk_data: dict):
+        section = []
+
+        title = framingham_risk_data.get("title", "")    
+        fr_risk_score = framingham_risk_data.get("fr_risk_score", "")
+        fr_risk_box_title=framingham_risk_data.get("fr_risk_box_title", "")
+        gradient_colors=framingham_risk_data.get("gradient_colors", "")  
+        min_val=framingham_risk_data.get("min_val", "")  
+        max_val=framingham_risk_data.get("max_val", "")  
+        top_labels=framingham_risk_data.get("top_labels", "")  
+        bottom_labels=framingham_risk_data.get("bottom_labels", "")
+        pill_text=framingham_risk_data.get("pill_text","")  
+
+        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        header_data = framingham_risk_data.get("title_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section.append(cs_data)
+        section.append(Spacer(1, 32))
+        
+        
+        value_inline = Paragraph(
+            f'<font>{fr_risk_score}%</font>'
+            f'<font name="{self.styles["box_decimal_style"].fontName}" size="{self.styles["box_decimal_style"].fontSize}" color="{self.styles["box_decimal_style"].textColor}">percent</font>',
+            self.styles["BrainScoreStyle"]
+        )
+
+        drawing,color__ = GradientScoreBar(
+                score=fr_risk_score,
+                width=499,
+                data_min=min_val,
+                data_max=max_val,
+                top_labels=top_labels,
+                bottom_labels=bottom_labels,
+                gradient_colors=gradient_colors
+            ).draw()
+
+        top_stack = Table([[value_inline,RoundedPill(pill_text, color__, 8, 80, 18)]], colWidths=[250,249])
+
+        top_stack.setStyle(TableStyle([
+            ("ALIGN",(1,0),(1,-1),"RIGHT"),
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black),
+            ("LINEBELOW", (0, 0), (-1, -1), 0.01, colors.HexColor("#00625B"))
+        ]))
+        data = [
+            [top_stack],
+            [""],
+            [Paragraph(f'<font color="#00625B">{fr_risk_box_title}</font>', self.styles["ear_screening_title"])],           
+            [drawing],          # Bottom content
+        ]
+
+        bottom_stack = Table(data, colWidths=[499])
+        bottom_stack.setStyle(TableStyle([
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            # ("BOX",(0,0),(-1,-1),0.2,colors.black),
+        ]))
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_.setStyle(TableStyle([
+
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            #("BOTTOMPADDING", (0, 0), (0, 2), 8),
+            ("BOTTOMPADDING", (0, 0), (-1,-1), 16),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black)
+        ]))
+
+
+        rounded_card = RoundedBox(
+                width=A4[0]-64,
+                height=None,
+                content=bottom_stack_,
+                corner_radius=16
+            )
+        section.append(rounded_card)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
 
     def generate(self, data: dict) -> list:
         story = []
@@ -2645,6 +3167,12 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_body_mass_index(bmi,data))
+
+        # body_composition=data.get("body_composition",{})
+        # if body_composition:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.extend(self.get_body_composition(data))
         
         fitness_assesment=data.get("fitness_assesment",{})
         if fitness_assesment:
@@ -2652,42 +3180,19 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.append(self.get_fitness_assesment(fitness_assesment))
 
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))   
-        # story.extend(self.get_health_concerns_section(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_current_stack(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_family_and_history(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_health_goals(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_lifestyle_trends(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_vital_params(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_vital_params_(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_brain_function_screen(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_body_mass_index(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_body_composition(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_fitness_assesment(data))
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_homa_ir(data))
+
+        homa_ir=data.get("homa_ir",{})
+        if homa_ir:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_homa_ir(homa_ir))
+        
+        framingham_risk_score=data.get("framingham_risk_score",{})
+        if framingham_risk_score:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_framingham_risk_score(framingham_risk_score))
+
         # story.append(PageBreak())
         # story.append(Spacer(1,22))
         # story.extend(self.get_framingham_risk_score(data))
