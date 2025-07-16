@@ -111,7 +111,6 @@ class PrescriptionOnlyPMXBasePage:
         elements.extend(content_elements)
         return elements
 
-
 class PrescriptionOnlyHRFlowable(Flowable):
     """A custom horizontal line flowable for visual separation between sections.
     Supports percentage-based widths and custom styling.
@@ -146,7 +145,6 @@ class PrescriptionOnlyHRFlowable(Flowable):
         self.canv.setLineWidth(self.thickness)
         self.canv.setStrokeColor(self.color)
         self.canv.line(0, self.thickness, self.calcWidth, self.thickness)
-
 
 class PrescriptionOnlySVGImage(Flowable):
     """A custom flowable for handling SVG images in the PDF.
@@ -190,10 +188,8 @@ class PrescriptionOnlySVGImage(Flowable):
         """Render the SVG on the PDF canvas."""
         renderPDF.draw(self.svg, self.canv, 0, 0)
 
-
 # ------------------------------------------------------------------------------
 # Template Classes
-
 
 class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
     """Base template for prescription pages. Handles header generation with logo,
