@@ -11,7 +11,7 @@ from typing import List
 # ReportLab Core
 from reportlab.platypus import (
     BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, Table, TableStyle,
-    Image, Flowable, KeepTogether, PageBreak, SimpleDocTemplate
+    Image, Flowable, KeepTogether, PageBreak, SimpleDocTemplate, ListItem, ListFlowable,Indenter
 )
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
@@ -543,49 +543,6 @@ class GradientScoreBar:
 
         return d, score_color
 
-# class ImageWithOverlayText(Flowable):
-#     def __init__(self, image_path, width, height, text_data, styles):
-#         super().__init__()
-#         self.width = width
-#         self.height = height
-#         self.text_data = text_data  # List of tuples: (text, x, y, style_name)
-#         self.image_stream = self.flatten_image_to_white(image_path)
-#         self.styles = styles
-#         self.styles = getSampleStyleSheet()
-#         self.init_styles()
-
-#     def init_styles(self):
-#         self.styles.add(ParagraphStyle(
-#             "ear_screening_title",
-#             fontName=FONT_INTER_SEMI_BOLD,    # Make sure this is registered
-#             fontSize=12,
-#             leading=24,
-#             textColor=PMX_GREEN,
-#             backColor=None,  
-#         ))
-#     def flatten_image_to_white(self, image_path):
-#         img = PILImage.open(image_path)
-#         if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
-#             bg = PILImage.new("RGB", img.size, (255, 255, 255))  # White background
-#             bg.paste(img, mask=img.split()[3])  # Paste using alpha as mask
-#         else:
-#             bg = img.convert("RGB")
-
-#         img_buffer = io.BytesIO()
-#         bg.save(img_buffer, format='PNG')
-#         img_buffer.seek(0)
-#         return img_buffer
-
-#     def draw(self):
-#         img = ImageReader(self.image_stream)
-#         self.canv.drawImage(img, 0, 0, width=self.width, height=self.height)
-
-#         for text, x, y, style_name in self.text_data:
-#             style = self.styles[style_name] if style_name in self.styles else self.styles["Normal"]
-#             para = Paragraph(text, style)
-#             w, h = para.wrapOn(self.canv, self.width, self.height)
-#             para.drawOn(self.canv, x, y - h)
-
 class ImageWithOverlayText(Flowable):
     def __init__(self, image_path, width, height, text_data, styles):
         super().__init__()
@@ -901,6 +858,22 @@ class ThriveRoadmapTemplate:
             textColor=PMX_GREEN,
             spaceAfter=0,
             spaceBefore=0
+        ))
+        self.styles.add(ParagraphStyle(
+            'BulletStyle',
+            fontSize=10,
+            leading=16,
+            leftIndent=0,
+            bulletIndent=0,
+            textColor=colors.HexColor("#667085"),
+            spaceAfter=6
+        ))
+        self.styles.add(ParagraphStyle(
+            name="AerobicStyle",
+            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontSize=12,
+            leading=18,  # Line height
+            textColor=colors.HexColor("#000000"),
         ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
@@ -3104,7 +3077,262 @@ class ThriveRoadmapTemplate:
 
         return final_table
 
+    def get_oligo_scan(self, oligo_scan_data: dict):
+        section = []
 
+        title = oligo_scan_data.get("title", "")    
+
+        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        header_data = oligo_scan_data.get("title_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section.append(cs_data)
+        section.append(Spacer(1, 16))
+
+        heavy_metal_report=oligo_scan_data.get("heavy_metal_report","")
+        cs = Paragraph(heavy_metal_report.get("title",""), self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 8))
+
+        img_path = os.path.join("staticfiles", "icons", "heavy_metal_report.png")        
+        img = Image(img_path, width=561, height=342)
+
+        section.append(img)
+        bullet_items = []
+
+        for finding in heavy_metal_report["findings"]:
+            metals = finding["metals"]
+            level = finding["level"]
+            color_=finding["level_color"]
+            sources_text = finding.get("sources", "")
+
+            # Styled metal names
+            metal_str = ", ".join(metals)
+            metal_styled = f'<font name="Inter-Bold" color="#667085">{metal_str}</font>'
+
+            # Styled level
+            level_styled = f'<font name="Inter-Bold" color="{color_}">{level}</font>'
+
+            if len(metals)==1:
+                final_text = f'{metal_styled} is {level_styled}. {sources_text}'
+            else:
+                final_text = f'{metal_styled} are {level_styled}. {sources_text}'
+            bullet_items.append(ListItem(Paragraph(final_text, self.styles["BulletStyle"])))
+
+        # Add to document
+        section.append(ListFlowable(bullet_items, bulletType='bullet', start='•'))
+        # section.append(Spacer(1, 12))
+        
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("LEFTPADDING", (0, 6), (-1, 6), 17),
+            ("RIGHTPADDING", (0, 6), (-1, 6), 17),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
+    def get_domain_in_focus(self, domain_in_focus_data: dict):
+        flowables = []
+
+        title = domain_in_focus_data.get("title", "")
+        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+
+        # --- Page 1 ---        
+        # Title with 32pt indent
+        flowables.append(Indenter(left=32, right=32))
+        flowables.append(cs)
+        flowables.append(Spacer(1, 8))
+        flowables.append(Indenter(left=-32, right=-32))  # close title indent
+
+        # Image with 17pt indent
+        img_path1 = os.path.join("staticfiles", "icons", "domain_in_focus_1.png")
+        img1 = Image(img_path1, width=559, height=594)
+        flowables.append(Indenter(left=17, right=17))
+        flowables.append(img1)
+        flowables.append(Indenter(left=-17, right=-17))
+
+        flowables.append(PageBreak())
+
+        # --- Page 2 ---
+        flowables.append(Spacer(1, 8))
+        
+        flowables.append(Indenter(left=32, right=32))
+        flowables.append(cs)
+        flowables.append(Spacer(1, 8))
+        flowables.append(Indenter(left=-32, right=-32))
+
+        img_path2 = os.path.join("staticfiles", "icons", "domain_in_focus_2.png")
+        img2 = Image(img_path2, width=559, height=594)
+        flowables.append(Indenter(left=17, right=17))
+        flowables.append(img2)
+        flowables.append(Indenter(left=-17, right=-17))
+
+        return flowables
+
+    def get_minerals_test_ratio(self, minerals_test_ratio_data: dict):
+        section = []
+
+        title = minerals_test_ratio_data.get("title", "")    
+
+        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+        
+        section.append(Indenter(left=32, right=32))
+        section.append(cs)
+        section.append(Spacer(1, 16))        
+        section.append(Indenter(left=-32, right=-32))
+
+        img_path = os.path.join("staticfiles", "icons", "mineral_test_ratio_report.png")        
+        img = Image(img_path, width=558, height=531)
+        section.append(Indenter(left=17, right=17))
+        section.append(img)
+        section.append(Indenter(left=-17, right=-17))
+        
+        
+        section.append(Indenter(left=32, right=32))
+        section.append(Spacer(1, 16))  
+        bullet_items = []
+        findings=minerals_test_ratio_data.get("findings","")
+        for finding in findings:
+            metals = finding["metals"]
+            level = finding["level"]
+            color_=finding["level_color"]
+            sources_text = finding.get("sources", "")
+
+            # Styled metal names
+            metal_str = ", ".join(metals)
+            metal_styled = f'<font name="Inter-Bold" color="#667085">{metal_str}</font>'
+
+            # Styled level
+            level_styled = f'<font name="Inter-Bold" color="{color_}">{level}</font>'
+
+            if len(metals)==1:
+                final_text = f'{metal_styled} is {level_styled}. {sources_text}'
+            else:
+                final_text = f'{metal_styled} are {level_styled}. {sources_text}'
+            bullet_items.append(ListItem(Paragraph(final_text, self.styles["BulletStyle"])))
+
+        # Add to document
+        section.append(ListFlowable(bullet_items, bulletType='bullet', start='•'))
+        section.append(Indenter(left=-32, right=-32))
+        
+        return section
+
+    def get_aerobic_capacity(self, aerobic_data: dict):
+        section = []
+
+        title = aerobic_data.get("title", "")
+        sub_title = aerobic_data.get("sub_title", "")
+    
+        aerobic_score = aerobic_data.get("aerobic_score", "")
+        aerobic_box_title=aerobic_data.get("aerobic_box_title", "")
+        aerobic_unit=aerobic_data.get("aerobic_unit", "")
+        gradient_colors=aerobic_data.get("gradient_colors", "")  
+        min_val=aerobic_data.get("min_val", "")  
+        max_val=aerobic_data.get("max_val", "")  
+        top_labels=aerobic_data.get("top_labels", "")  
+        bottom_labels=aerobic_data.get("bottom_labels", "")
+        pill_text=aerobic_data.get("pill_text","")  
+
+        # ---------- Heading ----------
+        header = f'''
+        <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
+        <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
+        '''
+        heading = Paragraph(header, self.styles["homair"])
+        section.append(heading)
+        section.append(Spacer(1, 16))
+        
+        # ---------- Description Paragraph ----------
+        header_data = aerobic_data.get("title_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section.append(cs_data)
+        section.append(Spacer(1, 32))
+        
+        
+        value_inline = Paragraph(
+            f'<font>{aerobic_score}</font>'
+            f'<font name="{self.styles["box_decimal_style"].fontName}" size="{self.styles["box_decimal_style"].fontSize}" color="{self.styles["box_decimal_style"].textColor}">{aerobic_unit}</font>',
+            self.styles["BrainScoreStyle"]
+        )
+
+        drawing,color__ = GradientScoreBar(
+                score=aerobic_score,
+                width=499,
+                data_min=min_val,
+                data_max=max_val,
+                top_labels=top_labels,
+                bottom_labels=bottom_labels,
+                gradient_colors=gradient_colors
+            ).draw()
+
+        top_stack = Table([[value_inline,RoundedPill(pill_text, color__, 8, 80, 18)]], colWidths=[250,249])
+
+        top_stack.setStyle(TableStyle([
+            ("ALIGN",(1,0),(1,-1),"RIGHT"),
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black),
+            ("LINEBELOW", (0, 0), (-1, -1), 0.01, colors.HexColor("#00625B"))
+        ]))
+        data = [
+            [top_stack], 
+            [""],
+            [Paragraph(aerobic_box_title, self.styles["AerobicStyle"])], 
+            [""],          
+            [drawing],          # Bottom content
+        ]
+
+        bottom_stack = Table(data, colWidths=[499])
+        bottom_stack.setStyle(TableStyle([
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            # ("BOX",(0,0),(-1,-1),0.2,colors.black),
+        ]))
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_.setStyle(TableStyle([
+
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            #("BOTTOMPADDING", (0, 0), (0, 2), 8),
+            ("BOTTOMPADDING", (0, 0), (-1,-1), 16),
+            #("BOX",(0,0),(-1,-1),0.2,colors.black)
+        ]))
+
+
+        rounded_card = RoundedBox(
+                width=A4[0]-64,
+                height=None,
+                content=bottom_stack_,
+                corner_radius=16
+            )
+        section.append(rounded_card)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+
+        
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -3193,9 +3421,31 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.append(self.get_framingham_risk_score(framingham_risk_score))
 
-        # story.append(PageBreak())
-        # story.append(Spacer(1,22))
-        # story.extend(self.get_framingham_risk_score(data))
+        oligo_scan=data.get("oligo_scan",{})
+        if oligo_scan:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_oligo_scan(oligo_scan))
+
+        domain_in_focus=data.get("domain_in_focus",{})
+        if domain_in_focus:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_domain_in_focus(domain_in_focus))
+
+        minerals_test_ratio=data.get("minerals_test_ratio",{})
+        if minerals_test_ratio:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_minerals_test_ratio(minerals_test_ratio))
+        
+        aerobic_capacity=data.get("aerobic_capacity",{})
+        if aerobic_capacity:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_aerobic_capacity(aerobic_capacity))
+        
+        
         # story.append(PageBreak())
         # story.extend(self.get_understanding_biomarker(data))
         # story.append(PageBreak())
