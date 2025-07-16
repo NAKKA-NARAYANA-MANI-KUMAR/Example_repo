@@ -3336,23 +3336,28 @@ class ThriveRoadmapTemplate:
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
+        
         toc_data=data.get("toc_items",[])
         if toc_data:
             story.append(PageBreak())
             story.extend(self.toc_table(toc_data))
+        
         user_profile_card=data.get("user_profile_card",{})
         if user_profile_card:
             story.append(PageBreak())
             story.append(self.get_user_profile_card(user_profile_card))
+        
         profile_card_data=data.get("profile_card_data",{})
         if profile_card_data:
             story.append(Spacer(1, 12))
             story.append(self.get_health_metrics_left_column(profile_card_data,data))
+        
         current_symptoms_conditions=data.get("current_symptoms_conditions",{})
         if current_symptoms_conditions:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
+        
         your_current_stack=data.get("your_current_stack",{})
         if your_current_stack:
             story.append(PageBreak())
@@ -3382,7 +3387,6 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_ear_screening(ear_screening))
-            
 
         brain_function_score=data.get("brain_score",{})
         if brain_function_score:
@@ -3407,7 +3411,6 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_fitness_assesment(fitness_assesment))
-
 
         homa_ir=data.get("homa_ir",{})
         if homa_ir:
@@ -3444,7 +3447,6 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_aerobic_capacity(aerobic_capacity))
-        
         
         # story.append(PageBreak())
         # story.extend(self.get_understanding_biomarker(data))
