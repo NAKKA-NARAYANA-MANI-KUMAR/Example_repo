@@ -18,7 +18,8 @@ from reportlab.platypus import (
     KeepTogether,
     Frame,
     BaseDocTemplate,
-    PageTemplate
+    PageTemplate,
+    Indenter
 )
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
@@ -121,6 +122,44 @@ metric = {
     "tablet": {"width": 15, "height": 15.03}
 }
 
+class RoundedBox(Flowable):
+    def __init__(self, width, height=None, content=None, corner_radius=8,border_radius=0.4,stroke_color=PMX_GREEN,fill_color=colors.white ):
+        super().__init__()
+        self.width = width
+        self.height = height  
+        self.content = content
+        self.corner_radius = corner_radius
+        self.fill_color = fill_color
+        self.stroke_color = stroke_color
+        self.border_radius=border_radius
+
+    def wrap(self, availWidth, availHeight):
+        if self.content:
+            content_width, content_height = self.content.wrap(availWidth, availHeight)
+        else:
+            content_width, content_height = 0, 0
+
+        # If no fixed height is given, use content height
+        self.width = self.width or content_width
+        self.height = self.height or content_height
+
+        return self.width, self.height
+
+    def draw(self):
+        self.canv.saveState()
+
+        # Draw background box
+        self.canv.setFillColor(self.fill_color)
+        self.canv.setStrokeColor(self.stroke_color)
+        self.canv.setLineWidth(self.border_radius)
+        self.canv.roundRect(0, 0, self.width, self.height, self.corner_radius, fill=1, stroke=1)
+
+        # Draw the content inside the box (0,0 origin)
+        if self.content:
+            self.content.wrapOn(self.canv, self.width, self.height)
+            self.content.drawOn(self.canv, 0, 0)
+
+        self.canv.restoreState()
 
 class FullPageWidthHRFlowable(Flowable):
     """
@@ -156,132 +195,6 @@ class FullPageWidthHRFlowable(Flowable):
         c.line(0, y, self.page_width, y)
 
         c.restoreState()
-
-class StyledAdditionalDiagnosis(Flowable):
-    def __init__(self, diagnosis, styles, width=85 * mm, height=18 * mm):
-        super().__init__()
-        self.name = str(diagnosis["name"])
-        self.location = diagnosis.get("location", "")
-        self.styles = styles  # Save full stylesheet
-        self.width = width
-        self.height = height
-
-    def wrap(self, availWidth, availHeight):
-        return self.width, self.height
-        
-    def draw(self):
-        c = self.canv
-        radius = 10
-
-        # Background box
-        c.setStrokeColor(colors.HexColor("#D9E9E6"))
-        c.setFillColor(colors.white)
-        c.roundRect(0, 0, self.width, self.height, radius, stroke=1, fill=1)
-
-        # Center points
-        center_x = 6 * mm
-        center_y = self.height / 2
-
-        # Bullet layers
-        c.setFillColor(colors.HexColor("#D0F0EE"))  # Outer glow
-        c.circle(center_x, center_y, 4.0 * mm, fill=1, stroke=0)
-
-        c.setFillColor(colors.HexColor("#71C1BD"))  # Middle circle
-        c.circle(center_x, center_y, 2.8 * mm, fill=1, stroke=0)
-
-        c.setFillColor(colors.white)  # White ring
-        c.circle(center_x, center_y, 2.05 * mm, fill=1, stroke=0)
-
-        c.setFillColor(colors.HexColor("#23968D"))  # Innermost dot
-        c.circle(center_x, center_y, 2.0 * mm, fill=1, stroke=0)
-
-        # Diagnosis name
-        text_x = center_x + 4.5 * mm + 3 * mm
-        text_y = self.height - 21  # From top
-
-        c.setFont(FONT_INTER_REGULAR, 12)
-        c.setFillColor(colors.HexColor("#00473C"))  # PMX_GREEN
-        c.drawString(text_x, text_y, self.name)
-
-
-        if self.location:
-            tag_text = self.location.strip()
-            font_size = 8
-            padding_left = 8
-            padding_right = 8
-
-            # Calculate button width
-            tag_text_width = stringWidth(tag_text, FONT_INTER_REGULAR, font_size)
-            button_width = tag_text_width + padding_left + padding_right
-
-            # Build Paragraph
-            tag_para = Paragraph(tag_text, self.styles["PMXAvailableButton"])
-
-            # Create Table
-            tag_table = Table([[tag_para]], colWidths=[button_width])
-            tag_table.setStyle(
-                TableStyle([
-                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                    ("TOPPADDING", (0, 0), (-1, -1), 3),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-                ])
-            )
-
-            # Render the table at desired location inside canvas
-            tag_x = text_x
-            tag_y = 3.5  # vertical offset from bottom
-
-            w, h = tag_table.wrapOn(c, self.width, self.height)
-            tag_table.drawOn(c, tag_x, tag_y)
-
-class StyledDiagnosis(Flowable):
-    def __init__(self, text, width=85 * mm, height=14 * mm):
-        super().__init__()
-        self.text = str(text['name'])  # Ensures it's always a string
-        self.width = width
-        self.height = height
-
-    def wrap(self, availWidth, availHeight):
-        return self.width, self.height
-
-    def draw(self):
-        c: canvas.Canvas = self.canv
-        radius = 17  # Rounded corner box
-
-        # Rounded rectangle background
-        c.setStrokeColor(colors.HexColor("#D9E9E6"))
-        c.setFillColor(colors.white)
-        c.roundRect(0, 0, self.width, self.height, radius, stroke=1, fill=1)
-
-        # Bullet center position
-        center_x = 6 * mm
-        center_y = self.height / 2
-
-        # 1. Outer glow circle – #D0F0EE
-        c.setFillColor(colors.HexColor("#D0F0EE"))
-        c.circle(center_x, center_y, 3.2 * mm, fill=1, stroke=0)
-
-        # 2. Middle circle – #71C1BD
-        c.setFillColor(colors.HexColor("#71C1BD"))
-        c.circle(center_x, center_y, 2.3 * mm, fill=1, stroke=0)
-
-        # 3. Thin white ring – #FFFFFF
-        c.setFillColor(colors.white)
-        c.circle(center_x, center_y, 1.65 * mm, fill=1, stroke=0)
-
-        # 4. Innermost circle – #23968D
-        c.setFillColor(colors.HexColor("#23968D"))
-        c.circle(center_x, center_y, 1.6 * mm, fill=1, stroke=0)
-
-        # Text in black
-        c.setFillColor(PMX_GREEN)
-        c.setFont(FONT_INTER_REGULAR, 12)
-        text_x = center_x + 4.2 * mm + 3 * mm
-        text_y = self.height / 2 - 3
-        c.drawString(text_x, text_y, self.text)
 
 class PrescriptionOnlyPMXBasePage:
     """Base page class that provides common functionality for generating page content.
@@ -386,7 +299,6 @@ class PrescriptionOnlySVGImage(Flowable):
     def draw(self):
         """Render the SVG on the PDF canvas."""
         renderPDF.draw(self.svg, self.canv, 0, 0)
-
 
 class PrescriptionOnlyTemplate(PrescriptionOnlyPMXBasePage):
     """Base template for prescription pages. Handles header generation with logo,
@@ -770,6 +682,123 @@ class RoundedPill(Flowable):
 
         self.canv.restoreState()
 
+class RoundedPill1(Flowable):
+    def __init__(
+        self,
+        text,
+        bg_color,
+        radius=None,
+        width=None,
+        height=None,
+        font_size=8,
+        text_color=colors.white,
+        border_color=None,
+        border_width=0.2,
+        font_name=FONT_INTER_REGULAR,
+        icon_path=None,
+        icon_width=0,
+        icon_height=0,
+        icon_text_padding=4,
+        left_padding=8,
+        right_padding=8,
+        top_padding=6,
+        bottom_padding=6,
+    ):
+        super().__init__()
+        self.text = str(text)
+        self.bg_color = bg_color
+        self.radius = radius
+        self.width = width
+        self.height = height
+        self.font_size = font_size
+        self.text_color = text_color
+        self.border_color = border_color
+        self.border_width = border_width
+        self.font_name = font_name
+
+        # Padding
+        self.left_padding = left_padding
+        self.right_padding = right_padding
+        self.top_padding = top_padding
+        self.bottom_padding = bottom_padding
+
+        # Icon handling
+        self.icon_path = icon_path
+        self.icon_width = icon_width
+        self.icon_height = icon_height
+        self.icon_text_padding = icon_text_padding
+
+        self.icon_drawing = None
+        if self.icon_path and os.path.exists(self.icon_path):
+            try:
+                drawing = svg2rlg(self.icon_path)
+                if drawing.width > 0 and drawing.height > 0:
+                    scale_x = self.icon_width / drawing.width
+                    scale_y = self.icon_height / drawing.height
+                    drawing.scale(scale_x, scale_y)
+                    self.icon_drawing = drawing
+            except Exception as e:
+                print(f"Error loading SVG: {e}")
+                self.icon_drawing = None
+
+    def wrap(self, availWidth, availHeight):
+        # Measure text width using pdfmetrics
+        text_width = stringWidth(self.text, self.font_name, self.font_size)
+        content_width = text_width + self.left_padding + self.right_padding
+
+        if self.icon_drawing:
+            content_width += self.icon_width + self.icon_text_padding
+
+        # Estimate height
+        content_height = max(self.font_size, self.icon_height) + self.top_padding + self.bottom_padding
+
+        self.width = self.width if self.width is not None else content_width
+        self.height = self.height if self.height is not None else content_height
+        self.radius = self.radius if self.radius is not None else self.height / 2
+
+        return self.width, self.height
+
+    def draw(self):
+        self.canv.saveState()
+
+        # Draw pill background
+        radius = min(self.radius, self.height / 2, self.width / 2)
+        self.canv.setFillColor(self.bg_color)
+
+        if self.border_color:
+            self.canv.setStrokeColor(self.border_color)
+            self.canv.setLineWidth(self.border_width)
+            stroke_val = 1
+        else:
+            self.canv.setStrokeColor(self.bg_color)
+            stroke_val = 0
+
+        self.canv.roundRect(0, 0, self.width, self.height, radius, fill=1, stroke=stroke_val)
+
+        # Set font and compute string width
+        self.canv.setFont(self.font_name, self.font_size)
+        text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
+
+        content_width = text_width
+        if self.icon_drawing:
+            content_width += self.icon_width + self.icon_text_padding
+
+        start_x = (self.width - content_width) / 2
+        center_y = self.height / 2
+
+        # Draw icon if exists
+        if self.icon_drawing:
+            icon_y = center_y - self.icon_height / 2
+            renderPDF.draw(self.icon_drawing, self.canv, start_x, icon_y)
+            start_x += self.icon_width + self.icon_text_padding
+
+        # Draw text
+        text_y = center_y - self.font_size / 4  # adjust vertically
+        self.canv.setFillColor(self.text_color)
+        self.canv.drawString(start_x, text_y, self.text)
+
+        self.canv.restoreState()
+
 # ------------------ Subclass with Content ------------------
 
 class PrescriptionPage(PrescriptionOnlyTemplate):
@@ -981,6 +1010,13 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 wordWrap="LTR",  # Prevent text wrapping
             )
         )
+        self.styles.add(ParagraphStyle(
+            "BoxInsideData",
+            fontName=FONT_INTER_REGULAR,  # Ensure 'Inter' is registered; use 'Helvetica' if fallback needed
+            fontSize=12,
+            leading=18,  # Line height
+            textColor=PMX_GREEN,
+        ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -1147,61 +1183,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         drawing.height = height
         return drawing
     
-    # def _get_forms_(self, data: dict) -> list:
-    #     """Create the patient information section with name, age, gender, and date."""
-    #     elements = []
-    #     forms = data.get("forms", {})
-        
-    #     row = []
-    #     col_widths = []
-
-    #     for idx, item in enumerate(forms):
-    #         icon_path = os.path.join("staticfiles", "icons", f"{item.lower()}.svg")
-
-    #         pill = RoundedPill(
-    #             text=item,
-    #             bg_color=colors.HexColor("#FFFFFF"),
-    #             radius=16,
-    #             width=123,
-    #             height=23,
-    #             font_size=8,
-    #             text_color=PMX_GREEN,
-    #             border_color=PMX_GREEN,
-    #             border_width=0.2,
-    #             font_name=FONT_INTER_REGULAR,
-    #             icon_path=icon_path,
-    #             icon_width=metric[item.lower()]["width"],
-    #             icon_height=metric[item.lower()]["height"]
-    #         )
-
-    #         row.append(pill)
-    #         col_widths.append(pill.width)
-
-    #         # Add horizontal padding (4 units) after each pill except the last
-    #         if idx < len(forms) - 1:
-    #             spacer = Spacer(width=4, height=0)
-    #             row.append(spacer)
-    #             col_widths.append(4)
-
-    #     forms_table_ = Table([row], colWidths=col_widths)
-
-    #     forms_table_.setStyle(TableStyle([
-    #         ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    #         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
-    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-    #     ]))
-    #     forms_table = Table([[forms_table_]], colWidths=[A4[0]-64])
-
-    #     forms_table.setStyle(TableStyle([
-    #         ("LEFTPADDING", (0, 0), (-1, -1), 5.5),
-    #         ("RIGHTPADDING", (0, 0), (-1, -1), 5.5),
-    #         ("TOPPADDING", (0, 0), (-1, -1), 0),
-    #         ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-    #     ]))
-
-    #     return forms_table
-
     def _get_forms_(self, data: dict) -> Table:
 
         forms = data.get("forms", [])
@@ -1270,133 +1251,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ]))
         return forms_table
-
-    # def _create_prescription_table(self, medications: list) -> Table:
-    #     """
-    #     Builds the prescription table styled as per the provided screenshot.
-    #     Only 6 columns: Number, Supplements, Dose, Frequency, Duration, Remarks.
-    #     """
-    #     if not medications:
-    #         return None
-
-    #     # Header row
-    #     headers = [
-    #         Paragraph(h, self.styles["TableHeader"])
-    #         for h in ["", "Medications", "Frequency", "Duration", "Remarks"]
-    #     ]
-    #     table_data = [headers]
-
-    #     for i, med in enumerate(medications, 1):
-    #         name = med.get("name", "").upper()
-    #         strength = med.get("strength", "")
-    #         active_ingredients = med.get("active_ingredients", "")
-    #         supplement_flowables = []
-    #         # Supplement name with strength or type below (like Mixed, 500 mg)
-    #         if strength or active_ingredients:
-    #             supplement_text = f'<font name={FONT_INTER_BOLD} >{name.upper()}</font>\n<font size=8>{strength or active_ingredients}</font>' 
-    #             if name:
-    #                 supplement_flowables.append(
-    #                     Paragraph(name, self.styles["TableCell"])
-    #                 )
-    #             if strength:
-
-    #                 # Calculate text width
-    #                 text_width = stringWidth(strength, FONT_INTER_REGULAR, 8)
-
-    #                 padding_left = 8
-    #                 padding_right = 8
-    #                 button_width = text_width + padding_left + padding_right
-
-    #                 button = Paragraph(f"{strength}", self.styles["PMXAvailableButton"])
-
-    #                 # Create a table with the computed width
-    #                 button_table = Table([[button]], colWidths=[button_width])                    
-    #                 button_table.setStyle(
-    #                     TableStyle([
-    #                         ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-    #                         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-    #                         ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    #                         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-    #                         ("TOPPADDING", (0, 0), (-1, -1), 3),
-    #                         ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-    #                     ])
-    #                 )
-    #                 supplement_flowables.append(button_table)
-
-                
-    #         else:
-    #             supplement_text = f'<b>{name.upper()}</b>'
-            
-    #         supplement_cell = supplement_flowables if supplement_flowables else Paragraph(supplement_text, self.styles["TableCell"])
-
-    #         dosage = med.get("dosage", "")
-    #         dose_cell = Paragraph(dosage, self.styles["TableCell"])
-
-    #         frequency_raw = med.get("frequency", "")
-    #         timing = med.get("timing", "")
-
-    #         def format_frequency_with_gray_dots(frequency: str) -> str:
-    #             parts = frequency.strip().split("-")
-    #             # Insert gray dot between values
-    #             return ' <font color="#CCCCCC">•</font> '.join(parts)
-            
-    #         if timing:
-    #             combined_text = f"{format_frequency_with_gray_dots(frequency_raw)}<br/><font color='#4D4D4D'>{timing}</font>"
-    #             frequency_cell = Paragraph(combined_text, self.styles["TableCell"])
-    #         else:
-    #             frequency_cell = Paragraph(format_frequency_with_gray_dots(frequency_raw), self.styles["TableCell"])
-
-
-    #         duration_cell = Paragraph(med.get("duration", ""), self.styles["TableCell"])
-
-    #         instructions = med.get("instructions", "")
-    #         available_in_clinic = med.get("available_in_clinic", False)
-    #         external_url = med.get("external_url","")
-    #         remarks_flowables = []
-    #         if instructions:
-    #             remarks_flowables.append(
-    #                 Paragraph(instructions, self.styles["TableCell"])
-    #             )
-    #         if available_in_clinic:
-    #             button = Paragraph("Available at PMX", self.styles["PMXAvailableButton"])
-    #         else:
-    #             button = Paragraph(f'<link href="{external_url}">Buy Now</link>', self.styles["PMXAvailableButton"])
-    #         button_table = Table([[button]], colWidths=[90])
-    #         button_table.setStyle(
-    #             TableStyle([
-    #                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-    #                 ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-    #                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    #                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-    #                 ("TOPPADDING", (0, 0), (-1, -1), 1),
-    #                 ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
-    #             ])
-    #         )
-    #         remarks_flowables.append(button_table)
-
-    #         remarks_cell = remarks_flowables if remarks_flowables else Paragraph("", self.styles["TableCell"])
-
-    #         row = [
-    #             Paragraph(f'<nobr><font size="8">{str(i).zfill(2)}</font></nobr>', self.styles["RowNumber"]),
-    #             supplement_cell,
-    #             frequency_cell,
-    #             duration_cell,
-    #             remarks_cell,
-    #         ]
-
-    #         table_data.append(row)
-
-    #     # Set 6 column widths matching the layout in the screenshot
-    #     col_widths = [
-    #         0.055 * AVAILABLE_WIDTH,  # Number
-    #         0.43 * AVAILABLE_WIDTH,  # Supplements
-    #         0.17 * AVAILABLE_WIDTH,  # Frequency
-    #         0.13 * AVAILABLE_WIDTH,  # Duration
-    #         0.22 * AVAILABLE_WIDTH,  # Remarks
-    #     ]
-
-
-    #     return self._build_styled_table(table_data, col_widths)
 
     def build_prescription_tables_per_page(self, full_table_data, col_widths, rows_per_chunk=7):
         """Split table into chunks per page and always apply rounded-corner style."""
@@ -1842,18 +1696,39 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
     def _create_diagnosis(self, diagnoses: list) -> Table:
         # Create styled pills
-        pills = [StyledDiagnosis(text) for text in diagnoses]
+        bullet = self.svg_icon(os.path.join("staticfiles","icons", "bullet.svg"), width=16, height=16)
+        section=[]
+        for val in diagnoses:
+            val_para=Paragraph(val,self.styles["BoxInsideData"])
+            entry_table_ = Table([[bullet,Spacer(8,1),val_para]],colWidths=[16,8,None])
+            entry_table_.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            entry_table = Table([[entry_table_]],colWidths=[240])
+            entry_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 10),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                #("BOX",(0,0),(-1,-1),0.2,colors.HexColor("#000000"))
+            ]))
+            section.append(RoundedBox(width=240, height=None, content=entry_table, corner_radius=16,border_radius=0.2))
 
-        # Build rows of 2 pills each
         rows = []
-        for i in range(0, len(pills), 2):
-            row = pills[i:i+2]
-            if len(row) < 2:
-                row.append(Spacer(85 * mm, 14 * mm))
+        for i in range(0, len(section), 2):
+            item1 = section[i]
+            item2 = section[i + 1] if i + 1 < len(section) else Spacer(1, 4)
+
+            row = [item1, Spacer(8, 1), item2]  # Spacer of 16pt between columns
             rows.append(row)
 
         # Create table
-        table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
+        table = Table(rows, colWidths=[240,8, 240], hAlign='LEFT')
         table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -1865,18 +1740,124 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
     
     def _create_additional_diagnosis(self, diagnoses: list) -> Table:
         # Create styled pills
-        pills = [StyledAdditionalDiagnosis(text, self.styles) for text in diagnoses]
+        bullet = self.svg_icon(os.path.join("staticfiles","icons", "bullet.svg"), width=24, height=24)
+        section=[]
+        for val in diagnoses:
+            name=val.get("name")
+            location=val.get("location")
+            location_pill= RoundedPill1(
+                text=location,
+                bg_color=colors.HexColor("#E6F4F3"),
+                radius=46.622,
+                width=None,
+                height=None,
+                font_size=8,
+                text_color=colors.HexColor("#003632"),
+                border_color=colors.HexColor("#26968D"),
+                border_width=0.2,
+                font_name=FONT_INTER_REGULAR,
+            )
+            val_para=Paragraph(name,self.styles["BoxInsideData"])
+            # entry_table_ = Table([[bullet,Spacer(8,1),val_para],
+            #                     [location_pill]],colWidths=[16,8,None])
+            # entry_table_.setStyle(TableStyle([
+            #     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            #     ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            #     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            #     ("TOPPADDING", (0, 0), (-1, -1), 0),
+            #     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            # ]))
+            entry_table_ = Table(
+                [
+                    [bullet,Spacer(1,16) ,val_para],
+                    ["","",""],
+                    ["",Spacer(1,16), location_pill]
+                ],
+                colWidths=[16,16, None]
+            )
+
+            entry_table_.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (0, 1), "MIDDLE"),     # Center bullet vertically across 2 rows
+                ("SPAN", (0, 0), (0, 1)),                # Merge bullet cell vertically
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+
+            entry_table = Table([[entry_table_]],colWidths=[240])
+            entry_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 10),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                #("BOX",(0,0),(-1,-1),0.2,colors.HexColor("#000000"))
+            ]))
+            section.append(RoundedBox(width=240, height=None, content=entry_table, corner_radius=16,border_radius=0.2))
 
         # Build rows of 2 pills each
         rows = []
-        for i in range(0, len(pills), 2):
-            row = pills[i:i+2]
-            if len(row) < 2:
-                row.append(Spacer(85 * mm, 14 * mm))
+        for i in range(0, len(section), 2):
+            item1 = section[i]
+            item2 = section[i + 1] if i + 1 < len(section) else Spacer(1, 4)
+
+            row = [item1, Spacer(8, 1), item2]  # Spacer of 16pt between columns
             rows.append(row)
 
         # Create table
-        table = Table(rows, colWidths=[90 * mm, 90 * mm], hAlign='LEFT')
+        table = Table(rows, colWidths=[240,8, 240], hAlign='LEFT')
+        table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ]))
+
+        return table 
+
+    def create_diagnosis_pill_table(self, diagnoses: list) -> Table:
+        bullet = self.svg_icon(os.path.join("staticfiles", "icons", "bullet.svg"), width=16, height=16)
+        section = []
+
+        for val in diagnoses:
+            val_para = Paragraph(val, self.styles["BoxInsideData"])
+            entry_table_ = Table([[bullet, Spacer(8, 1), val_para]], colWidths=[16, 8, None])
+            entry_table_.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            rounded_box = RoundedBox(
+                width=240,
+                height=None,
+                content=Table([[entry_table_]], colWidths=[240], style=TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                    ("TOPPADDING", (0, 0), (-1, -1), 10),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                ])),
+                corner_radius=16,
+                border_radius=0.2
+            )
+
+            section.append(rounded_box)
+
+        # Group into rows of 2 with a spacer between
+        rows = []
+        for i in range(0, len(section), 2):
+            item1 = section[i]
+            item2 = section[i + 1] if i + 1 < len(section) else Spacer(1, 4)
+            row = [item1, Spacer(8, 1), item2]
+            rows.append(row)
+
+        # Final table
+        table = Table(rows, colWidths=[240, 8, 240], hAlign='LEFT')
         table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -1885,6 +1866,150 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         ]))
 
         return table
+
+    def _create_other_sections(self, data: dict) -> list:
+        """Create additional sections of the prescription excluding diagnoses."""
+        elements = []
+
+        # Process sections in order (excluding diagnoses which is handled separately)
+        sections_to_process = [
+            ("symptoms", "Symptoms:", None),
+            ("signs", "Signs:", None),
+            ("lab_recommendations", "Advanced Investigation Recommendations:", None),
+            ("advices", "Advice:", None),
+        ]
+
+        for section_key, title, custom_handler in sections_to_process:
+            section_data = []
+
+            # Try direct access
+            if section_key in data and data.get(section_key):
+                section_data = data.get(section_key, [])
+            # Try nested reference_data
+            elif "consultation" in data and "reference_data" in data.get(
+                "consultation", {}
+            ):
+                ref_section = (
+                    data.get("consultation", {})
+                    .get("reference_data", {})
+                    .get(section_key, [])
+                )
+                if ref_section:
+                    # Extract just the names
+                    section_data = [
+                        item.get("name", "") for item in ref_section if "name" in item
+                    ]
+
+            if section_data:
+                elements.append(Paragraph(title, self.styles["PrescriptionTitle"]))
+                elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+                if custom_handler:
+                    # Use custom handler for special sections like therapies
+                    table = custom_handler(section_data)
+                    if table:
+                        elements.append(table)
+                else:
+                    # Standard bullet point list for other sections
+                    # for item in section_data:
+                    #     if isinstance(item, dict) and "name" in item:
+                    #         elements.append(
+                    #             Paragraph(
+                    #                 f"• {item['name']}", self.styles["PMXBodyText"]
+                    #             )
+                    #         )
+                    #     else:
+                    #         elements.append(
+                    #             Paragraph(f"• {item}", self.styles["PMXBodyText"])
+                    #         )
+                    elements.append(self.create_diagnosis_pill_table(section_data))
+                elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+        return elements
+
+    def _get_follow_up_data(self, data: dict) -> dict:
+        """Get follow-up data from various sources."""
+        follow_up = {}
+        if "follow_up" in data and data.get("follow_up"):
+            follow_up = data.get("follow_up", {})
+        elif "consultation" in data:
+            follow_up_date = data.get("consultation", {}).get("follow_up_date")
+            follow_up_notes = data.get("consultation", {}).get("follow_up_notes")
+            if follow_up_date or follow_up_notes:
+                follow_up = {
+                    "next_visit_on": follow_up_date.split("T")[0]
+                    if follow_up_date
+                    else "",
+                    "notes": follow_up_notes,
+                }
+        return follow_up
+
+    def _create_follow_up_section(self, follow_up: dict) -> list:
+        """Create the follow-up section."""
+        elements = []
+        if follow_up.get("next_visit_on", "") or follow_up.get("notes", ""):
+            elements.append(Paragraph("Follow-up:", self.styles["PrescriptionTitle"]))
+            if follow_up.get("next_visit_on", ""):
+                elements.append(
+                    Paragraph(
+                        f"Next visit on: {follow_up.get('next_visit_on')}",
+                        self.styles["PMXBodyText"],
+                    )
+                )
+            if follow_up.get("notes", ""):
+                elements.append(
+                    Paragraph(
+                        f"Notes: {follow_up.get('notes')}", self.styles["PMXBodyText"]
+                    )
+                )
+            elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+        return elements
+
+    def _get_notes_data(self, data: dict) -> dict:
+        """Get notes and instructions data."""
+        notes = {}
+
+        # Get public notes
+        if "public_notes" in data and data.get("public_notes"):
+            notes["public_notes"] = data.get("public_notes", {}).get("notes")
+        elif "consultation" in data and data.get("consultation", {}).get(
+            "public_notes"
+        ):
+            notes["public_notes"] = data.get("consultation", {}).get("public_notes")
+
+        # Get instructions
+        if "instructions" in data and data.get("instructions"):
+            notes["instructions"] = data.get("instructions", {}).get("instructions")
+        elif "consultation" in data and data.get("consultation", {}).get(
+            "instructions"
+        ):
+            notes["instructions"] = data.get("consultation", {}).get("instructions")
+
+        return notes
+
+    def _create_notes_section(self, notes: dict) -> list:
+        """Create the notes and instructions section."""
+        elements = []
+
+        if notes.get("public_notes"):
+            elements.append(
+                Paragraph("Past Medical History:", self.styles["PrescriptionTitle"])
+            )
+            elements.append(
+                Paragraph(notes["public_notes"], self.styles["PMXBodyText"])
+            )
+            elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+        if notes.get("instructions"):
+            elements.append(
+                Paragraph("Instructions:", self.styles["PrescriptionTitle"])
+            )
+            elements.append(
+                Paragraph(notes["instructions"], self.styles["PMXBodyText"])
+            )
+            elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+
+        return elements
 
     def generate(self, data: dict) -> list:
         """Generate the full prescription page with proper margins and footer.
@@ -1905,19 +2030,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
         # Ensure we're using the content template
         story = []
-     
-        #story.extend(self.add_bottom_left_image("x_logo.png",x=-6,y=-74))
-        # Add header and content with proper spacing
-        # story.extend(self._create_header(data))
-        # #story.append(Spacer(1, self.PAGE_MARGIN / 2))  # Add space after header
-
-        # # Add patient info
-        # story.extend(self._create_patient_info(data))
-
-        # Add prescription title
-        #story.append(Paragraph("Prescription", self.styles["PrescriptionTitle"]))
-        #story.append(Spacer(1, self.PAGE_MARGIN / 4))
-
+        
         # Handle medications from different possible sources
         story.append(self._get_forms_(data))
         story.append(Spacer(1, 16))
@@ -2012,6 +2125,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             story.append(Paragraph("prescription ends here", self.styles["PrescriptionEnds"]))
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
         # Extract diagnosis section first
+    
         diagnosis_elements = []
         diagnosis_data = []
 
@@ -2034,6 +2148,8 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 ]
 
         if diagnosis_data:
+            diagnosis_elements.append(Indenter(left=32, right=32))
+           
             diagnosis_elements.append(
                 Paragraph("Diagnoses:", self.styles["PrescriptionTitle"])
             )
@@ -2041,9 +2157,12 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
             diagnosis_elements.append(self._create_diagnosis(diagnosis_data))
             diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+            diagnosis_elements.append(Indenter(left=-32, right=-32))
+
         # Add diagnosis section first
         #story.extend(diagnosis_elements)
         story.append(KeepTogether(diagnosis_elements))
+
         additional_diagnosis_elements = []
         additional_diagnosis_data = []
 
@@ -2052,18 +2171,33 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             additional_diagnosis_data = data.get("additional_diagnoses", [])
 
         if additional_diagnosis_data:
+            additional_diagnosis_elements.append(Indenter(left=32, right=32))
+        
             additional_diagnosis_elements.append(
-                Paragraph("Additional Diagnoses:", self.styles["PrescriptionTitle"])
+                Paragraph("Additional Diagnostics:", self.styles["PrescriptionTitle"])
             )
             additional_diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
 
             additional_diagnosis_elements.append(self._create_additional_diagnosis(additional_diagnosis_data))
             additional_diagnosis_elements.append(Spacer(1, self.PAGE_MARGIN / 4))
+            additional_diagnosis_elements.append(Indenter(left=-32, right=-32)) 
+
         # Add diagnosis section first
         story.append(KeepTogether(additional_diagnosis_elements))
 
-        # Add other additional sections (excluding diagnoses which we already added)
+        other_sections = self._create_other_sections(data)
+        story.append(Indenter(left=32, right=32))
+        story.extend(other_sections)
+        story.append(Indenter(left=-32, right=-32))
+        # # Handle follow-up data
+        # follow_up = self._get_follow_up_data(data)
+        # if follow_up:
+        #     story.extend(self._create_follow_up_section(follow_up))
 
+        # # Handle notes and instructions
+        # notes = self._get_notes_data(data)
+        # if notes:
+        #     story.extend(self._create_notes_section(notes))
 
         return story
 
@@ -2144,17 +2278,17 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 renderPDF.draw(drawing, canvas, x=left_margin, y=base_y)
             except Exception as e:
                 print(f"SVG load failed: {e}")
-        else:
-            # Show "Prescription continued..." on all non-last pages
-            canvas.setFont(FONT_INTER_REGULAR, 10.459)
-            canvas.setFillColor(colors.HexColor("#667085"))
-            message = "Prescription continued on next page"
+        # else:
+        #     # Show "Prescription continued..." on all non-last pages
+        #     canvas.setFont(FONT_INTER_REGULAR, 10.459)
+        #     canvas.setFillColor(colors.HexColor("#667085"))
+        #     message = "Prescription continued on next page"
 
-            page_width, _ = A4
-            text_width = stringWidth(message, FONT_INTER_REGULAR, 10.459)
-            x = 32 + ((page_width - 64) - text_width) / 2  # 32pt left & right margin
-            y = 154.76
-            canvas.drawString(x, y, message)
+        #     page_width, _ = A4
+        #     text_width = stringWidth(message, FONT_INTER_REGULAR, 10.459)
+        #     x = 32 + ((page_width - 64) - text_width) / 2  # 32pt left & right margin
+        #     y = 154.76
+        #     canvas.drawString(x, y, message)
 
     def add_bottom_left_image(self, image_path,x,y, width=34.7, height=80) -> list:
         """
