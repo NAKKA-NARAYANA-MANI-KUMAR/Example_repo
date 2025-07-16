@@ -1807,7 +1807,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             rows.append(row)
 
         # Create table
-        table = Table(rows, colWidths=[240,8, 240], hAlign='LEFT')
+        table = Table(rows, colWidths=[240,8,240], hAlign='LEFT')
         table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -2398,8 +2398,6 @@ def generate_prescription():
         
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name="prescription.pdf", mimetype="application/pdf")
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
