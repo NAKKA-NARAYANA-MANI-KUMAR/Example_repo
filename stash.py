@@ -10,7 +10,7 @@ from typing import List
 
 # ReportLab Core
 from reportlab.platypus import (
-    BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, Table, TableStyle,
+    BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, Table, TableStyle,KeepInFrame,
     Image, Flowable, KeepTogether, PageBreak, SimpleDocTemplate, ListItem, ListFlowable,Indenter
 )
 from reportlab.pdfgen.canvas import Canvas
@@ -691,6 +691,15 @@ class ThriveRoadmapTemplate:
             alignment=TA_LEFT,
         )),
         self.styles.add(ParagraphStyle(
+            name="ear_screening_unit",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=8,
+            leading=18,
+            textColor=colors.HexColor("#667085"),
+            spaceBefore=0,
+            spaceAfter=0
+        ))
+        self.styles.add(ParagraphStyle(
             "TOCEntryText",
             fontName=FONT_INTER_REGULAR,
             fontSize=14,
@@ -729,6 +738,15 @@ class ThriveRoadmapTemplate:
             spaceAfter=0,
             spaceBefore=0
         )),
+        self.styles.add(ParagraphStyle(
+            name="LSTStyles",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=12,
+            leading=18,
+            textColor=colors.HexColor("#667085"),
+            spaceBefore=0,
+            spaceAfter=0
+        ))
         self.styles.add(ParagraphStyle(
             "box_value_style",
             fontName=FONT_INTER_MEDIUM,  
@@ -874,6 +892,15 @@ class ThriveRoadmapTemplate:
             fontSize=12,
             leading=18,  # Line height
             textColor=colors.HexColor("#000000"),
+        ))
+        self.styles.add(ParagraphStyle(
+            "DigestiveHealthStyle",
+            fontName=FONT_RALEWAY_MEDIUM,  # Ensure this matches your registered font
+            fontSize=12,
+            leading=18,
+            textColor=PMX_GREEN,
+            spaceBefore=0,
+            spaceAfter=0,
         ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
@@ -1885,6 +1912,160 @@ class ThriveRoadmapTemplate:
         ]))
         return section_table
 
+    def get_lifestyle_trends(self, lifestyle_data: dict):
+
+        section = []
+        header=lifestyle_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append([cs])
+        section.append([Spacer(1,8)])
+
+        header_data=lifestyle_data.get("header_data","")
+        cs_data=Paragraph(header_data, self.styles["header_data_style"])
+        section.append([cs_data])
+        section.append([Spacer(1,40)])
+        
+        icon_path = os.path.join(svg_dir,"bullet.svg")  
+        icon_bullet = self.svg_icon(icon_path, width=16, height=16)
+
+        icon_path = os.path.join("staticfiles/icons/", "lifestyle.svg")
+        icon_lifestyle = self.svg_icon(icon_path, width=24, height=24)
+        
+        lifestyle_trends_data_=lifestyle_data.get("lifestyle_trends_data","")
+
+        total_height = 473  # Fixed total height
+        available_width = 346  # 160 + 32 + 160 (two columns + spacer)
+
+        row_tables = []
+        temp_row = []
+
+        # Step 1: Prepare item tables
+        for item in lifestyle_trends_data_:
+            name = item.get("name", "")
+            data = item.get("data", [])
+            data_str = ", ".join(str(d) for d in data)
+
+            name_para = Paragraph(name, self.styles["bullet_after_text"])
+            data_para = Paragraph(data_str, self.styles["LSTStyles"])
+
+            item_table = Table([
+                [icon_bullet, Spacer(1, 8), name_para],
+                ["", Spacer(1, 8), data_para]
+            ], colWidths=[16, 8, None])
+
+            item_table.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            temp_row.append(item_table)
+            if len(temp_row) == 2:
+                row_tables.append(temp_row)
+                temp_row = []
+
+        # Handle last odd item
+        if temp_row:
+            if len(temp_row) == 1:
+                temp_row.append(Spacer(1, 1))
+            row_tables.append(temp_row)
+
+        # Build rows with column spacers
+        lifestyle_rows = []
+        for row in row_tables:
+            lifestyle_rows.append([row[0], Spacer(1, 26), row[1]])
+
+        # Create the table to overlay inside fixed height
+        final_table_ = Table(lifestyle_rows, colWidths=[160, 26, 160])
+        final_table_.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("TOPPADDING", (0, 0), (-1,-1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        img_path = os.path.join(svg_dir,"smoking_status.png")  
+        smoking_bg = Image(img_path, width=89, height=212.5)
+
+        img_path = os.path.join(svg_dir,"alcohol_status.png")  
+        alcohol_bg = Image(img_path, width=83, height=212.5)
+
+        # Stack right-side cards with 48pt top padding
+        right_cards_table = Table([
+            [smoking_bg],
+            [alcohol_bg]
+        ], colWidths=[121])
+        right_cards_table.setStyle(TableStyle([
+            ("TOPPADDING", (0, 0), (-1,-1), 8),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ("TOPPADDING", (0, 0), (0, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+            ("LINEBELOW",(0,0),(0,0),0.1,PMX_GREEN)
+        ]))
+
+        right_box = RoundedBox(
+            width=121,
+            height=None,
+            content=right_cards_table,
+            corner_radius=10,
+            border_radius=0.1,
+            fill_color=colors.white,
+            stroke_color=PMX_GREEN
+        )
+        # ---------- Combined Row ----------
+        full_row = Table(
+            [[final_table_,Spacer(1,32), right_box]],
+            colWidths=[346,32, 121],
+        )
+        full_row.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        full_row_ = Table(
+            [[full_row]],
+            colWidths=[A4[0]-64],
+        )
+        full_row_.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+        ]))
+
+
+        outer = RoundedBox(
+            width=A4[0]-64,
+            height=None,
+            content=full_row_,
+            corner_radius=10,
+            fill_color=colors.white,
+            stroke_color=colors.HexColor("#D9E9E6")
+        )
+
+        section.append(outer)
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+        # return section
+
     def get_eye_screening_card(self, eye_data: dict, icon_paths: dict) -> Flowable:
     
         title = eye_data.get("title", "Eye Screening")
@@ -2034,9 +2215,9 @@ class ThriveRoadmapTemplate:
                 "height":18
             },
             "Eye Screening"   :{
-                "path":"HRV.svg",
-                "width":24,
-                "height":24
+                "path":"eye.svg",
+                "width":18,
+                "height":9.15
             }
         }
         metrics=vital_params_data.get("metrics",{}).get("metrics_data",[])
@@ -3332,7 +3513,506 @@ class ThriveRoadmapTemplate:
 
         return final_table
 
+    def get_resting_health(self, resting_health_data: dict):
+        section_ = []
         
+        # Header Section
+        header = resting_health_data.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section_.append(cs)
+        section_.append(Spacer(1, 16))
+
+        header_data = resting_health_data.get("header_data", "")
+        cs_data = Paragraph(header_data, self.styles["header_data_style"])
+        section_.append(cs_data)
+        section_.append(Spacer(1, 32))
+
+        # Icon and Data
+        icon_path = os.path.join(svg_dir, "calorie.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+
+        resting_health_data_ = resting_health_data.get("resting_health_data", [])
+        draw_list = []
+
+        title = Paragraph(resting_health_data.get("title", ""),self.styles["ear_screening_title"])
+        title_data = Paragraph(resting_health_data.get("title_data", ""),self.styles["eye_screening_desc_style"])
+        draw_list.append([title])
+        draw_list.append([title_data])
+
+        resting_health_val = resting_health_data.get("resting_health_val", "")
+        resting_health_unit = resting_health_data.get("resting_health_unit", "")
+        
+
+        # Combine both with inline styling
+        resting_health_para = Paragraph(
+            f'<font name="{self.styles["BrainScoreStyle"].fontName}" size="{self.styles["BrainScoreStyle"].fontSize}" color="{self.styles["BrainScoreStyle"].textColor}">{resting_health_val}</font>'
+            f'<font name="{self.styles["ear_screening_unit"].fontName}" size="{self.styles["ear_screening_unit"].fontSize}" color="{self.styles["ear_screening_unit"].textColor}"> {resting_health_unit}</font>',
+            self.styles["BrainScoreStyle"]
+        )
+        draw_list.append([resting_health_para])
+        draw_list.append([Spacer(1, 16)])
+
+        # # Body Cards with Gradient Bar
+        for idx, item in enumerate(resting_health_data_):
+            title = item.get("title", "")
+            title_data = item.get("title_data", "")
+            score = item.get("score", 0)
+            gradient_colors=item.get("gradient_colors", [])
+            min_score=item.get("min_val", 0)
+            max_score=item.get("max_val", 0)
+            pill_text=item.get("pill_text","")
+            bottom_labels = item.get("bottom_labels", "")
+
+            title_ = Paragraph(title, self.styles["ear_screening_title"])
+            title_data_para = Paragraph(title_data, self.styles["eye_screening_desc_style"])
+
+            drawing, color__ = GradientScoreBar(width=467,score=float(score), data_min=min_score, data_max=max_score,
+                                                bottom_labels=bottom_labels,
+                                                gradient_colors=gradient_colors).draw()
+
+            def color_to_hex(color):
+                r = int(color.red * 255)
+                g = int(color.green * 255)
+                b = int(color.blue * 255)
+                return '#{:02X}{:02X}{:02X}'.format(r, g, b)
+
+            hex_color = color_to_hex(color__)
+
+            desc_block = Table([
+                [title_],
+                [title_data_para]
+            ], colWidths=[387])
+            desc_block.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+            if pill_text:
+                card = Table([
+                    [desc_block, RoundedPill(pill_text, hex_color, 8, 80, 18, 8, colors.HexColor('#EFEFEF'))]
+                ], colWidths=[387, 80])
+            else:
+                card = Table([
+                    [desc_block]
+                ], colWidths=[467])
+            card.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            content = Table([
+                [card],
+                [drawing]
+            ], colWidths=[467])
+            content.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            wrapper = Table([[content]], colWidths=[467])
+            
+            # wrapper.setStyle(TableStyle([
+            #     ("LINEABOVE", (0, 0), (-1, 0), 0.01, colors.HexColor("#00625B")),
+            #     ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            #     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            #     ("TOPPADDING", (0, 0), (-1, -1), 8),
+            #     ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            # ]))
+            # if idx==1:
+            table_styles = [
+                ("LINEABOVE", (0, 0), (-1, 0), 0.01, colors.HexColor("#00625B")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ]
+
+            if idx == 0:
+                table_styles.extend([
+                    ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ])
+            else:
+                table_styles.extend([
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ])
+            wrapper.setStyle(TableStyle(table_styles))
+
+
+
+            draw_list.append(wrapper)
+
+        draw_list_=Table([[icon,Spacer(1,8),draw_list]], colWidths=[24,8,None])
+        draw_list_.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, 0), 0),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 0),
+            # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+
+        ]))
+        # Outer Wrapper Box
+        drawlist_table = Table([[draw_list_]], colWidths=[A4[0] - 64])
+        drawlist_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+        ]))
+
+        rounded_container = RoundedBox(width=A4[0] - 64, height=None, content=drawlist_table, corner_radius=12)
+        section_.append(rounded_container)
+
+        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+    
+    def get_fatty_acid(self, fatty_acid_data: dict):
+        section = []
+        
+        # Header Section
+        header = fatty_acid_data.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        header_data = fatty_acid_data.get("header_data", "")
+        content = []
+        for item in header_data:
+            header = item.get("header", "")
+            value = item.get("value")
+            content.append(f"<font name='Inter-Bold'>{header}:</font> {value}<br/>")
+        full_paragraph = ''.join(content)
+        section.append(Paragraph(full_paragraph, self.styles["eye_screening_desc_style"]))
+        section.append(Spacer(1, 24))
+        # Icon and Data
+        icon_path = os.path.join(svg_dir, "calorie.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+
+        fatty_acid_data_ = fatty_acid_data.get("fatty_acid_data", [])
+        draw_list = []
+
+        # # Body Cards with Gradient Bar
+        for idx, item in enumerate(fatty_acid_data_):
+            title = item.get("title", "")
+            title_data = item.get("title_data", "")
+            score = item.get("score", 0)
+            gradient_colors=item.get("gradient_colors", [])
+            min_score=item.get("min_val", 0)
+            max_score=item.get("max_val", 0)
+            pill_text=item.get("pill_text","")
+            bottom_labels = item.get("bottom_labels", "")
+            top_labels = item.get("top_labels", "")
+
+            title_ = Paragraph(title, self.styles["ear_screening_title"])
+            title_data_para = Paragraph(title_data, self.styles["eye_screening_desc_style"])
+
+            drawing, color__ = GradientScoreBar(width=483,score=float(score), data_min=min_score, data_max=max_score,
+                                                bottom_labels=bottom_labels,
+                                                top_labels=top_labels,
+                                                gradient_colors=gradient_colors).draw()
+
+            def color_to_hex(color):
+                r = int(color.red * 255)
+                g = int(color.green * 255)
+                b = int(color.blue * 255)
+                return '#{:02X}{:02X}{:02X}'.format(r, g, b)
+
+            hex_color = color_to_hex(color__)
+
+            desc_block = Table([
+                [title_],
+                [title_data_para]
+            ], colWidths=[403])
+            desc_block.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+            if pill_text:
+                card = Table([
+                    [desc_block, RoundedPill(pill_text, hex_color, 8, 80, 18, 8, colors.HexColor('#EFEFEF'))]
+                ], colWidths=[403, 80])
+            else:
+                card = Table([
+                    [desc_block]
+                ], colWidths=[483])
+            card.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            content = Table([
+                [card],
+                [drawing]
+            ], colWidths=[483])
+            content.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            wrapper = Table([[content]], colWidths=[483])
+            
+            table_styles = [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]
+            wrapper.setStyle(TableStyle(table_styles))
+
+
+
+            draw_list.append(wrapper)
+
+        
+        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+        ]))
+
+        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        section.append(rounded_container)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+    
+    def get_digestive_health(self, digestive_health_data: dict):
+        section = []
+        
+        # Header Section
+        header = digestive_health_data.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        header_data = digestive_health_data.get("header_data", "")
+        content = []
+        for item in header_data:
+            header = item.get("header", "")
+            value = item.get("value")
+            content.append(f"<font name='Inter-Bold'>{header}:</font> {value}<br/>")
+        full_paragraph = ''.join(content)
+        section.append(Paragraph(full_paragraph, self.styles["eye_screening_desc_style"]))
+        section.append(Spacer(1, 24))
+
+        digestive_health_data_ = digestive_health_data.get("digestive_health_data", [])
+        draw_list = []
+
+        # # Body Cards with Gradient Bar
+        for idx, item in enumerate(digestive_health_data_):
+            title = item.get("title", "")
+            title_data = item.get("title_data", "")
+            score = item.get("score", 0)
+            gradient_colors=item.get("gradient_colors", [])
+            min_score=item.get("min_val", 0)
+            max_score=item.get("max_val", 0)
+            pill_text=item.get("pill_text","")
+            bottom_labels = item.get("bottom_labels", "")
+
+            title_ = Paragraph(title, self.styles["ear_screening_title"])
+            title_data_para = Paragraph(title_data, self.styles["eye_screening_desc_style"])
+
+            drawing, color__ = GradientScoreBar(width=467,score=float(score), data_min=min_score, data_max=max_score,
+                                                bottom_labels=bottom_labels,
+                                                gradient_colors=gradient_colors).draw()
+
+            def color_to_hex(color):
+                r = int(color.red * 255)
+                g = int(color.green * 255)
+                b = int(color.blue * 255)
+                return '#{:02X}{:02X}{:02X}'.format(r, g, b)
+
+            hex_color = color_to_hex(color__)
+
+            desc_block = Table([
+                [title_],
+                [title_data_para]
+            ], colWidths=[403])
+            desc_block.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            desc_block_2 = Table([
+                [Paragraph(f'<para alignment="right">{str(score)}</para>', self.styles["BrainScoreStyle"])],
+                [RoundedPill(pill_text, hex_color, 8, 80, 18, 8, colors.HexColor('#EFEFEF'))]
+            ], colWidths=[80])
+            desc_block_2.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1,-1), "MIDDLE"),
+                ("ALIGN",(0,0),(-1,-1),"RIGHT"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+            if pill_text:
+                card = Table([
+                    [desc_block, desc_block_2]
+                ], colWidths=[403, 80])
+            else:
+                card = Table([
+                    [desc_block]
+                ], colWidths=[483])
+            card.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            content = Table([
+                [card],
+                [Spacer(1,8)],
+                [drawing]
+            ], colWidths=[483])
+            content.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            wrapper = Table([[content]], colWidths=[483])
+            
+            table_styles = [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]
+            wrapper.setStyle(TableStyle(table_styles))
+
+
+
+            draw_list.append(wrapper)
+            draw_list.append(Spacer(1,8))
+        
+        microbiome_data = digestive_health_data.get("microbiome_data", [])
+        microbiome_title= microbiome_data.get("title", [])
+        microbiome_title_data= microbiome_data.get("title_data", [])
+
+        title_ = Paragraph(microbiome_title, self.styles["ear_screening_title"])
+        title_data_para = Paragraph(microbiome_title_data, self.styles["eye_screening_desc_style"])
+        draw_list.append(Spacer(1,8))
+        draw_list.append(title_)
+        draw_list.append(title_data_para)
+        draw_list.append(Spacer(1,8))
+        microbiome_data_ = microbiome_data.get("microbiome_data_", [])
+        microbiome_data_title = microbiome_data.get("microbiome_data_title", "")
+        if microbiome_data_title:
+            title_data_para_ = Paragraph(microbiome_data_title, self.styles["ear_screening_title"])
+            draw_list.append(Spacer(1,8))
+            draw_list.append(title_data_para_)
+            draw_list.append(Spacer(1,8))
+        key_list=[]
+        val_list=[]
+        for item in microbiome_data_:
+            key=Paragraph(item.get("key",""),self.styles["DigestiveHealthStyle"])
+            val=item.get("val","")
+            unit=item.get("val_unit","")
+            microbiome_data_para = Paragraph(
+                f'<font name="{self.styles["BrainScoreStyle"].fontName}" size="{self.styles["BrainScoreStyle"].fontSize}" color="{self.styles["BrainScoreStyle"].textColor}">{val}</font>'
+                f'<font name="{self.styles["ear_screening_unit"].fontName}" size="{self.styles["ear_screening_unit"].fontSize}" color="{self.styles["ear_screening_unit"].textColor}"> {unit}</font>',
+                self.styles["BrainScoreStyle"]
+            )
+            key_list.append(key)
+            val_list.append(microbiome_data_para)
+
+        rows = []
+
+        for key, val in zip(key_list, val_list):
+            row = [key, Spacer(1, 8), val]
+            rows.append(row)
+            rows.append([Spacer(1, 10)])  # Row spacing after each row
+
+        # Remove the last spacer after the final row
+        if rows and isinstance(rows[-1][0], Spacer):
+            rows.pop()
+
+        # Create the table
+        microbiome_table = Table(rows, colWidths=[226, 8, None])
+
+        # Optional: Style the table (vertical alignment, padding)
+        microbiome_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        draw_list.append(microbiome_table)
+        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+        ]))
+
+        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        section.append(rounded_container)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+  
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -3375,6 +4055,12 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_health_goals(health_goals))
+        
+        lifestyle_trends=data.get("lifestyle_trends",{})
+        if lifestyle_trends:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_lifestyle_trends(lifestyle_trends))
         
         vital_params=data.get("vital_params",{})
         if vital_params:
@@ -3447,6 +4133,30 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.append(self.get_aerobic_capacity(aerobic_capacity))
+               
+        resting_health=data.get("resting_health",{})
+        if resting_health:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_resting_health(resting_health))
+        
+        fatty_acid=data.get("fatty_acid",{})
+        if fatty_acid:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_fatty_acid(fatty_acid))
+        
+        digestive_health=data.get("digestive_health",{})
+        if digestive_health:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestive_health(digestive_health))
+        
+        disease_susceptibility=data.get("disease_susceptibility",{})
+        if disease_susceptibility:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestive_health(disease_susceptibility))
         
         # story.append(PageBreak())
         # story.extend(self.get_understanding_biomarker(data))
