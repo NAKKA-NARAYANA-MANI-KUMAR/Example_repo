@@ -26,6 +26,7 @@ from reportlab.graphics.shapes import Drawing,Rect, String, Line
 from reportlab.lib.colors import Color,HexColor, white, black
 from reportlab.lib.utils import ImageReader
 from PIL import Image as PILImage
+from reportlab.graphics.shapes import Group
 
 # SVG Rendering
 from reportlab.graphics import renderPDF
@@ -610,6 +611,187 @@ class ImageWithOverlayText(Flowable):
             para.drawOn(self.canv, x, y - h)
 
 
+class GradientScoreBarr:
+    def __init__(
+        self,
+        width=478,
+        height=6,
+        pill_text="102",
+        bottom_labels=None,
+        target_label=None,
+        top_labels=None,
+        bottom_labels_2=None,
+        gradient_colors=None,
+        units=None,
+        label_text="Very Low",
+        label_margin=15
+    ):
+        self.width = width
+        self.height = height
+        self.pill_text = pill_text
+        self.label_text = label_text
+        self.top_labels = top_labels or []
+        self.bottom_labels = bottom_labels or []
+        self.bottom_labels_2 = bottom_labels_2 or []
+        self.label_margin = label_margin
+        self.units = units
+        self.target_label = target_label
+
+        default_gradient = [
+            (0.0, "#ED005F"),
+            (0.351, "#F49E5C"),
+            (0.7019, "#F4CE5C"),
+            (1.0, "#488F31"),
+        ]
+        raw_gradient = gradient_colors or default_gradient
+        self.gradient_colors = [(pos, self.hex_to_color(color)) for pos, color in raw_gradient]
+
+    def hex_to_color(self, hex_code):
+        hex_code = hex_code.lstrip("#")
+        return Color(int(hex_code[0:2], 16) / 255.0,
+                     int(hex_code[2:4], 16) / 255.0,
+                     int(hex_code[4:6], 16) / 255.0)
+
+    def interpolate_color(self, c1, c2, t):
+        r = c1.red + (c2.red - c1.red) * t
+        g = c1.green + (c2.green - c1.green) * t
+        b = c1.blue + (c2.blue - c1.blue) * t
+        return Color(r, g, b)
+
+    def lighten_color(self, color, factor=0.4):
+        return Color(
+            color.red + (1.0 - color.red) * factor,
+            color.green + (1.0 - color.green) * factor,
+            color.blue + (1.0 - color.blue) * factor
+        )
+
+    def get_multicolor_gradient(self, t):
+        for i in range(len(self.gradient_colors) - 1):
+            if self.gradient_colors[i][0] <= t <= self.gradient_colors[i + 1][0]:
+                t_local = (t - self.gradient_colors[i][0]) / (self.gradient_colors[i + 1][0] - self.gradient_colors[i][0])
+                return self.interpolate_color(self.gradient_colors[i][1], self.gradient_colors[i + 1][1], t_local)
+        return self.gradient_colors[-1][1]
+
+    def draw(self):
+        radius = 16
+        pill_h = 20
+        padding = 15
+        label_font = FONT_INTER_REGULAR
+        font_color = colors.HexColor("#667085")
+
+        total_label_height = 0
+        if self.top_labels:
+            total_label_height += padding
+        if self.bottom_labels:
+            total_label_height += padding
+
+        total_height = pill_h + self.height + total_label_height
+        d = Drawing(self.width, total_height)
+
+        # Units
+        if self.units:
+            y = total_height - padding
+            count = len(self.units)
+            for i, text in enumerate(self.units):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                d.add(String(x, y, text, fontName=label_font, fontSize=9, fillColor=black))
+
+        # Top Labels
+        if self.top_labels:
+            y = total_height if self.units else total_height - padding
+            count = len(self.top_labels)
+            for i, text in enumerate(self.top_labels):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+                if i == 0:
+                    pass
+                elif i == count - 1:
+                    x -= text_width
+                else:
+                    x -= text_width / 2
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
+
+        # Bar
+        bar_y = total_height - self.height - (padding if self.top_labels else 0) - pill_h // 2
+        d.add(Rect(0, bar_y, self.width, self.height, rx=radius, ry=radius, fillColor=white, strokeColor=None))
+
+        # Gradient rendering
+        segments = 600
+        for i in range(segments):
+            t = i / (segments - 1)
+            color = self.get_multicolor_gradient(t)
+            x = t * self.width
+            seg_width = self.width / segments
+            d.add(Rect(x, bar_y, seg_width + 1, self.height, fillColor=color, strokeColor=None))
+
+        # Bottom labels
+        if self.bottom_labels:
+            y = bar_y - padding
+            count = len(self.bottom_labels)
+            for i, text in enumerate(self.bottom_labels):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+                if i == 0:
+                    pass
+                elif i == count - 1:
+                    x -= text_width
+                else:
+                    x -= text_width / 2
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
+
+        # Second bottom row
+        if self.bottom_labels_2:
+            y = bar_y - (padding * 2 if self.bottom_labels else padding)
+            count = len(self.bottom_labels_2)
+            for i, text in enumerate(self.bottom_labels_2):
+                x = i * (self.width / (count - 1)) if count > 1 else self.width / 2
+                text_width = len(text) * 4.5
+                if i == 0:
+                    pass
+                elif i == count - 1:
+                    x -= text_width
+                else:
+                    x -= text_width / 2
+                d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
+
+        # ------------------- Pill Placement Logic (with centered text) -------------------
+        if self.target_label and self.target_label in self.bottom_labels:
+            index = self.bottom_labels.index(self.target_label)
+            segment_count = len(self.bottom_labels)
+            segment_width = self.width / segment_count
+            score_x = (index + 0.5) * segment_width
+            normalized_x = score_x / self.width
+        else:
+            # fallback to center if no match
+            score_x = self.width / 2
+            normalized_x = 0.5
+
+        score_color = self.get_multicolor_gradient(normalized_x)
+        score_fill = self.lighten_color(score_color)
+
+        pill_w = 38
+        pill_font_size = 10.435
+        font_name = FONT_INTER_BOLD
+
+        score_x = max(min(score_x, self.width - pill_w / 2), pill_w / 2)
+        pill_y = bar_y + self.height / 2 - pill_h / 2
+
+        # Pill shape
+        d.add(Rect(score_x - pill_w / 2, pill_y, pill_w, pill_h,
+                   rx=pill_h / 2, ry=pill_h / 2,
+                   fillColor=score_fill, strokeColor=score_color, strokeWidth=1))
+
+        # Accurate text width and vertical position
+        text_width = stringWidth(self.pill_text, font_name, pill_font_size)
+        score_text_x = score_x - (text_width / 2)
+        score_text_y = pill_y + (pill_h - pill_font_size) / 2 + 1
+
+        d.add(String(score_text_x, score_text_y, self.pill_text,
+                     fontName=font_name,
+                     fontSize=pill_font_size,
+                     fillColor=colors.HexColor("#003632")))
+
+        return d, score_color
 
 class ThriveRoadmapTemplate:
     def __init__(self):
@@ -902,6 +1084,54 @@ class ThriveRoadmapTemplate:
             spaceBefore=0,
             spaceAfter=0,
         ))
+        self.styles.add(ParagraphStyle(
+            "BiomarkersStyle",
+            fontName=FONT_RALEWAY_MEDIUM,               
+            fontSize=16,
+            leading=24,                       
+            textColor=colors.HexColor("#00625B")   
+        ))
+        self.styles.add(ParagraphStyle(
+            "BiomarkerHeader",
+            fontName=FONT_INTER_SEMI_BOLD,  
+            fontSize= FONT_SIZE_MEDIUM,
+            leading=24,  
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+            caseChange=1  
+        )),
+        self.styles.add(ParagraphStyle(
+            "BiomarkerValue",
+            fontName=FONT_INTER_SEMI_BOLD,          # Make sure this font is registered
+            fontSize=FONT_SIZE_MEDIUM,
+            leading=24,                         # Line height = 24px (200% of 12px)
+            textColor=colors.HexColor("#003632"),
+            alignment=TA_RIGHT
+        )),
+        self.styles.add(ParagraphStyle(
+            "BiomarkerUnit",
+            fontName=FONT_INTER_REGULAR,          # Ensure this is registered
+            fontSize=10,
+            leading=18,                         # 180% of 10px
+            textColor=colors.HexColor("#667085")
+        ))
+        self.styles.add(ParagraphStyle(
+            "BiomarkerHeaderData",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=10,
+            leading=14,  # line-height: 14px
+            textColor=colors.HexColor("#667085"),
+            alignment=TA_LEFT
+        )),
+        self.styles.add(ParagraphStyle(
+            "AreasOfConcern",
+            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontSize=12,
+            leading=18,  # line height
+            textColor=PMX_GREEN,
+            spaceBefore=0,
+            spaceAfter=0,
+        ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -1020,7 +1250,6 @@ class ThriveRoadmapTemplate:
         return [BottomLeftImageFlowable(image_path, width, height)]
 
     def build_main_section(self, data):
-        # --- 1. Icons and Graphics ---
         section=[]
         img_path_1 = os.path.join("staticfiles", "icons", "converted_pattern_2.png") 
         img_path_2 = os.path.join("staticfiles", "icons", "converted_pattern_3.png") 
@@ -4012,154 +4241,621 @@ class ThriveRoadmapTemplate:
         ]))
 
         return final_table
-  
+    
+    def get_digestion_potential(self, digestion_potential_data: dict):
+        section = []
+        
+        # Header Section
+        header = digestion_potential_data.get("header", "")
+        cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        header_data = digestion_potential_data.get("header_data", "")
+        content = []
+        for item in header_data:
+            header = item.get("header", "")
+            value = item.get("value")
+            content.append(f"<font name='Inter-Bold'>{header}:</font> {value}<br/>")
+        full_paragraph = ''.join(content)
+        section.append(Paragraph(full_paragraph, self.styles["eye_screening_desc_style"]))
+        section.append(Spacer(1, 24))
+
+        digestion_potential_data_ = digestion_potential_data.get("digestion_potential_data", [])
+        draw_list = []
+
+        # # Body Cards with Gradient Bar
+        for idx, item in enumerate(digestion_potential_data_):
+            title = item.get("title", "")
+            title_data = item.get("title_data", "")
+            score = item.get("score", 0)
+            gradient_colors=item.get("gradient_colors", [])
+            pill_text=item.get("pill_text","")
+            bottom_labels = item.get("bottom_labels", "")
+            top_labels = item.get("top_labels", "")
+
+            title_ = Paragraph(title, self.styles["ear_screening_title"])
+            title_data_para = Paragraph(title_data, self.styles["eye_screening_desc_style"])
+
+            drawing,color__ = GradientScoreBarr(width=467,
+                                                height=6,
+                                                target_label=pill_text,
+                                                pill_text=score,                    
+                                                bottom_labels=bottom_labels,
+                                                gradient_colors=gradient_colors).draw()
+
+
+            def color_to_hex(color):
+                r = int(color.red * 255)
+                g = int(color.green * 255)
+                b = int(color.blue * 255)
+                return '#{:02X}{:02X}{:02X}'.format(r, g, b)
+
+            hex_color = color_to_hex(color__)
+
+            desc_block = Table([
+                [title_],
+                [title_data_para]
+            ], colWidths=[403])
+            desc_block.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+            if pill_text:
+                card = Table([
+                    [desc_block, RoundedPill(pill_text,hex_color , 8, 80, 18, 8, colors.HexColor('#EFEFEF'))]
+                ], colWidths=[403, 80])
+            else:
+                card = Table([
+                    [desc_block]
+                ], colWidths=[483])
+            card.setStyle(TableStyle([
+                ("VALIGN", (1, 0), (1, 0), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            content = Table([
+                [card],
+                [drawing]
+            ], colWidths=[483])
+            content.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]))
+
+            wrapper = Table([[content]], colWidths=[483])
+            
+            table_styles = [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+            ]
+            wrapper.setStyle(TableStyle(table_styles))
+
+
+
+            draw_list.append(wrapper)
+
+        
+        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, 0), 16),
+            ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            # ("BOX",(0,0),(-1,-1),0.3,colors.black)
+        ]))
+
+        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        section.append(rounded_container)
+
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        return final_table
+    
+    def get_understanding_biomarker(self, biomarkers_range: dict):
+        section = []
+
+        title = biomarkers_range.get("title", "")
+        biomarkers_range_data = biomarkers_range.get("biomarkers_range_data", [])
+        biomarkers_data = biomarkers_range.get("biomarkers_data", [])
+        heading = Paragraph(title, self.styles["TOCTitleStyle"])
+
+        section.append(heading)
+        section.append(Spacer(1, 16))
+        icon_path = os.path.join(svg_dir, "bullet_point.svg")  
+        icon = self.svg_icon(icon_path, width=16, height=16)
+
+        # Extract headers and values
+        header1 = biomarkers_range_data[0].get("header", "")
+        val1    = biomarkers_range_data[0].get("value", "")
+
+        header2 = biomarkers_range_data[1].get("header", "")
+        val21   = biomarkers_range_data[1].get("value1", "")
+        val22   = biomarkers_range_data[1].get("value2", "")
+
+        header3 = biomarkers_range_data[2].get("header", "")
+        val3    = biomarkers_range_data[2].get("value", "")
+
+        # Table data (fixed commas and row structure)
+        table_data = [
+            [icon, Spacer(1, 10), Paragraph(header1, self.styles["BiomarkersStyle"])],
+            ["", "", ""],
+            [Paragraph(val1, self.styles["LSTStyles"]), '', ''],
+
+            ["", "", ""],
+            [icon, Spacer(1, 10), Paragraph(header2, self.styles["BiomarkersStyle"])],
+            ["", "", ""],
+            [Paragraph(f"• {val21}", self.styles["LSTStyles"]), '', ''],
+            [Paragraph(f"• {val22}", self.styles["LSTStyles"]), '', ''],
+
+            ["", "", ""],
+            [icon, Spacer(1, 10), Paragraph(header3, self.styles["BiomarkersStyle"])],
+            ["", "", ""],
+            [Paragraph(val3, self.styles["LSTStyles"]), '', '']
+        ]
+
+        row_heights = [None, 8, None, 8, None, 8, None, None, 8, None, 8, None]
+
+        header_data = Table(table_data, colWidths=[16, 10, 505], rowHeights=row_heights)
+        header_data.setStyle(TableStyle([
+            # Span value rows
+            ("SPAN", (0, 2), (2, 2)),
+            ("SPAN", (0, 6), (2, 6)),
+            ("SPAN", (0, 7), (2, 7)),
+            ("SPAN", (0, 11), (2, 11)),
+
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+
+        box_title     = Paragraph(biomarkers_data.get("title", ""),self.styles["BiomarkerHeader"])
+        box_subtitle  = Paragraph(biomarkers_data.get("title_data", ""),self.styles["BiomarkerHeaderData"])
+        box_category  = RoundedPill(biomarkers_data.get("title_pill", ""), colors.HexColor("#FFFCF5"), 8, 82, 18,8,colors.HexColor("#4E1D09"),colors.HexColor("#4E1D09"),0.4,FONT_INTER_REGULAR) 
+        box_pill      = RoundedPill(biomarkers_data.get("pill", ""), colors.HexColor("#F4CE5C"), 8, 80, 18,8,colors.HexColor("#0C111D"))
+        box_range     = biomarkers_data.get("footer", "")
+        inner_left_stack=Table([
+            [box_title],
+            [Spacer(1,4)],
+            [box_subtitle],
+            [Spacer(1,8)],
+            [box_category]
+        ],colWidths=[None])
+        inner_left_stack.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        combined_value_unit = Paragraph(
+            f'<font name="{FONT_INTER_BOLD}" size="12" color="#003632">{biomarkers_data.get("value", "")}</font>'
+            f'<font size="1"> </font>'  # This creates ~3pt space visually
+            f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{biomarkers_data.get("suff", "")}</font>',
+            self.styles["BiomarkerValue"]
+        )
+        upper_right_stack = Table([
+            [combined_value_unit, Spacer(4, 1),box_pill]
+        ], colWidths=[None, 4,None])
+        upper_right_stack.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE") ,
+        ]))
+
+        combined_value_unit_ = Paragraph(
+            f'<para alignment="right">'
+            f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{box_range}</font>'
+            f'<font size="1"> </font>'
+            f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{biomarkers_data.get("suff", "")}</font>'
+            f'</para>',
+            self.styles["BiomarkerUnit"]
+        )
+
+        outer_left_stack = Table(
+            [[inner_left_stack,upper_right_stack],
+            ["",combined_value_unit_]],
+            colWidths=[321,178],
+        )
+        outer_left_stack.setStyle(TableStyle([
+            ("SPAN", (0, 0), (0, 1)), 
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1),0),
+            ("ALIGN", (1, 0), (1, 0), "RIGHT"),   # Upper at top-right
+            ("VALIGN", (1, 0), (1, 0), "TOP"),
+
+            ("ALIGN", (1,-1), (1, -1), "RIGHT"),   # Bottom at bottom-right
+            ("VALIGN", (1, -1), (1, -1), "BOTTOM")
+        ]))
+        outer_left_stack_ = Table(
+            [[outer_left_stack]],
+            colWidths=[A4[0]-64],
+        )
+        outer_left_stack_.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 16),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+            ("TOPPADDING", (0, 0), (-1, -1), 16),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+        ]))
+
+
+        rounded_card = RoundedBox(
+                width=A4[0]-64,
+                height=None,
+                content=outer_left_stack_,
+                corner_radius=12,
+                border_radius=0.25
+            )
+
+        section.append(header_data)
+        section.append(Spacer(1,16))
+        section.append(rounded_card)
+        icon_path = os.path.join(svg_dir, "vitamin_b12.svg")  
+        vitamin_b12_icon = self.svg_icon(icon_path, width=295, height=258)
+        # img_path = os.path.join("staticfiles", "icons", "mineral_test_ratio_report.png")        
+        # img = Image(img_path, width=558, height=531)
+        section.append(Spacer(1,8))
+        section.append(vitamin_b12_icon)
+        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 32),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ]))
+
+        return final_table
+        # return section
+
+    def get_areas_of_concern(self, areas_of_concern: dict):
+        section = []
+        section.append(Indenter(left=32, right=32))
+        title = areas_of_concern.get("title", "")
+        title_data = areas_of_concern.get("title_data", "")
+
+        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+        section.append(cs)
+        section.append(Spacer(1, 16))
+
+        cs_data = Paragraph(title_data, self.styles["header_data_style"])
+        section.append(cs_data)
+        section.append(Spacer(1, 32))
+
+        areas_of_concern_data_=areas_of_concern.get("areas_of_concern_data",[])
+
+        for item in areas_of_concern_data_:
+            pill_color     = item.get("pill_color", "")
+            box_title     = Paragraph(item.get("title", ""),self.styles["BiomarkerHeader"])
+            box_subtitle  = Paragraph(item.get("title_data", ""),self.styles["BiomarkerHeaderData"])
+            box_category  = item.get("title_pill", [])
+            box_pill      = RoundedPill(item.get("pill", ""), pill_color, 8, 80, 18,8,colors.HexColor("#0C111D"))
+            box_range     = item.get("footer", "")
+           
+            inner_box_list=[]
+            col_widths=[]
+            for inner_item in box_category:
+                inner_box_category=RoundedPill(inner_item, colors.HexColor("#FFFCF5"), 8, 82, 18,8,colors.HexColor("#4E1D09"),colors.HexColor("#4E1D09"),0.4,FONT_INTER_REGULAR) 
+                inner_box_list.append(inner_box_category)
+                col_widths.append(82)
+                inner_box_list.append(Spacer(width=4,height=0))
+                col_widths.append(4)
+            inner_box_table=Table(
+                [inner_box_list],
+                colWidths=col_widths
+            )
+            inner_box_table.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            inner_left_stack=Table([
+                [box_title],
+                [Spacer(1,4)],
+                [box_subtitle],
+                [Spacer(1,8)],
+                [inner_box_table]
+            ],colWidths=[None])
+            inner_left_stack.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+            combined_value_unit = Paragraph(
+                f'<font name="{FONT_INTER_BOLD}" size="12" color="#003632">{item.get("value", "")}</font>'
+                f'<font size="1"> </font>'  # This creates ~3pt space visually
+                f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{item.get("suff", "")}</font>',
+                self.styles["BiomarkerValue"]
+            )
+            upper_right_stack = Table([
+                [combined_value_unit, Spacer(4, 1),box_pill]
+            ], colWidths=[None, 4,None])
+            upper_right_stack.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE") ,
+            ]))
+
+            combined_value_unit_ = Paragraph(
+                f'<para alignment="right">'
+                f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{box_range}</font>'
+                f'<font size="1"> </font>'
+                f'<font name="{FONT_INTER_REGULAR}" size="10" color="#667085">{item.get("suff", "")}</font>'
+                f'</para>',
+                self.styles["BiomarkerUnit"]
+            )
+
+            outer_left_stack = Table(
+                [[inner_left_stack,upper_right_stack],
+                ["",combined_value_unit_]],
+                colWidths=[321,178],
+            )
+            outer_left_stack.setStyle(TableStyle([
+                ("SPAN", (0, 0), (0, 1)), 
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1),0),
+                ("ALIGN", (1, 0), (1, 0), "RIGHT"),   # Upper at top-right
+                ("VALIGN", (1, 0), (1, 0), "TOP"),
+
+                ("ALIGN", (1,-1), (1, -1), "RIGHT"),   # Bottom at bottom-right
+                ("VALIGN", (1, -1), (1, -1), "BOTTOM")
+            ]))
+            outer_left_stack_ = Table(
+                [[outer_left_stack]],
+                colWidths=[A4[0]-64],
+            )
+            outer_left_stack_.setStyle(TableStyle([
+                ("LEFTPADDING", (0, 0), (-1, -1), 16),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                ("TOPPADDING", (0, 0), (-1, -1), 16),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+            ]))
+
+
+            rounded_card = RoundedBox(
+                    width=A4[0]-64,
+                    height=None,
+                    content=outer_left_stack_,
+                    corner_radius=12,
+                    border_radius=0.25,
+                    stroke_color="#999999"
+                )
+            section.append(rounded_card)
+            section.append(Spacer(1,17))
+
+        section.append(Indenter(left=-32, right=-32))
+        return section
+
+    
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
         
-        toc_data=data.get("toc_items",[])
-        if toc_data:
-            story.append(PageBreak())
-            story.extend(self.toc_table(toc_data))
+        # toc_data=data.get("toc_items",[])
+        # if toc_data:
+        #     story.append(PageBreak())
+        #     story.extend(self.toc_table(toc_data))
         
-        user_profile_card=data.get("user_profile_card",{})
-        if user_profile_card:
-            story.append(PageBreak())
-            story.append(self.get_user_profile_card(user_profile_card))
+        # user_profile_card=data.get("user_profile_card",{})
+        # if user_profile_card:
+        #     story.append(PageBreak())
+        #     story.append(self.get_user_profile_card(user_profile_card))
         
-        profile_card_data=data.get("profile_card_data",{})
-        if profile_card_data:
-            story.append(Spacer(1, 12))
-            story.append(self.get_health_metrics_left_column(profile_card_data,data))
+        # profile_card_data=data.get("profile_card_data",{})
+        # if profile_card_data:
+        #     story.append(Spacer(1, 12))
+        #     story.append(self.get_health_metrics_left_column(profile_card_data,data))
         
-        current_symptoms_conditions=data.get("current_symptoms_conditions",{})
-        if current_symptoms_conditions:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
-        
-        your_current_stack=data.get("your_current_stack",{})
-        if your_current_stack:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_your_current_stack(your_current_stack))
-
-        family_and_past_histories=data.get("family_and_past_histories",{})
-        if family_and_past_histories:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_family_past_histories(family_and_past_histories))
-
-        health_goals=data.get("health_goals",{})
-        if health_goals:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_health_goals(health_goals))
-        
-        lifestyle_trends=data.get("lifestyle_trends",{})
-        if lifestyle_trends:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_lifestyle_trends(lifestyle_trends))
-        
-        vital_params=data.get("vital_params",{})
-        if vital_params:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_vital_params(vital_params))
-        
-        ear_screening=data.get("ear_screening",{})
-        if ear_screening:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_ear_screening(ear_screening))
-
-        brain_function_score=data.get("brain_score",{})
-        if brain_function_score:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_brain_function_screen(brain_function_score))
-
-        bmi=data.get("bmi",{})
-        if bmi:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_body_mass_index(bmi,data))
-
-        # body_composition=data.get("body_composition",{})
-        # if body_composition:
+        # current_symptoms_conditions=data.get("current_symptoms_conditions",{})
+        # if current_symptoms_conditions:
         #     story.append(PageBreak())
         #     story.append(Spacer(1, 8))
-        #     story.extend(self.get_body_composition(data))
+        #     story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
         
-        fitness_assesment=data.get("fitness_assesment",{})
-        if fitness_assesment:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_fitness_assesment(fitness_assesment))
+        # your_current_stack=data.get("your_current_stack",{})
+        # if your_current_stack:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_your_current_stack(your_current_stack))
 
-        homa_ir=data.get("homa_ir",{})
-        if homa_ir:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_homa_ir(homa_ir))
+        # family_and_past_histories=data.get("family_and_past_histories",{})
+        # if family_and_past_histories:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_family_past_histories(family_and_past_histories))
+
+        # health_goals=data.get("health_goals",{})
+        # if health_goals:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_health_goals(health_goals))
         
-        framingham_risk_score=data.get("framingham_risk_score",{})
-        if framingham_risk_score:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_framingham_risk_score(framingham_risk_score))
-
-        oligo_scan=data.get("oligo_scan",{})
-        if oligo_scan:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_oligo_scan(oligo_scan))
-
-        domain_in_focus=data.get("domain_in_focus",{})
-        if domain_in_focus:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.extend(self.get_domain_in_focus(domain_in_focus))
-
-        minerals_test_ratio=data.get("minerals_test_ratio",{})
-        if minerals_test_ratio:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.extend(self.get_minerals_test_ratio(minerals_test_ratio))
+        # lifestyle_trends=data.get("lifestyle_trends",{})
+        # if lifestyle_trends:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_lifestyle_trends(lifestyle_trends))
         
-        aerobic_capacity=data.get("aerobic_capacity",{})
-        if aerobic_capacity:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_aerobic_capacity(aerobic_capacity))
+        # vital_params=data.get("vital_params",{})
+        # if vital_params:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_vital_params(vital_params))
+        
+        # ear_screening=data.get("ear_screening",{})
+        # if ear_screening:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_ear_screening(ear_screening))
+
+        # brain_function_score=data.get("brain_score",{})
+        # if brain_function_score:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_brain_function_screen(brain_function_score))
+
+        # bmi=data.get("bmi",{})
+        # if bmi:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_body_mass_index(bmi,data))
+
+        # # body_composition=data.get("body_composition",{})
+        # # if body_composition:
+        # #     story.append(PageBreak())
+        # #     story.append(Spacer(1, 8))
+        # #     story.extend(self.get_body_composition(data))
+        
+        # fitness_assesment=data.get("fitness_assesment",{})
+        # if fitness_assesment:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_fitness_assesment(fitness_assesment))
+
+        # homa_ir=data.get("homa_ir",{})
+        # if homa_ir:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_homa_ir(homa_ir))
+        
+        # framingham_risk_score=data.get("framingham_risk_score",{})
+        # if framingham_risk_score:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_framingham_risk_score(framingham_risk_score))
+
+        # oligo_scan=data.get("oligo_scan",{})
+        # if oligo_scan:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_oligo_scan(oligo_scan))
+
+        # domain_in_focus=data.get("domain_in_focus",{})
+        # if domain_in_focus:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.extend(self.get_domain_in_focus(domain_in_focus))
+
+        # minerals_test_ratio=data.get("minerals_test_ratio",{})
+        # if minerals_test_ratio:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.extend(self.get_minerals_test_ratio(minerals_test_ratio))
+        
+        # aerobic_capacity=data.get("aerobic_capacity",{})
+        # if aerobic_capacity:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_aerobic_capacity(aerobic_capacity))
                
-        resting_health=data.get("resting_health",{})
-        if resting_health:
+        # resting_health=data.get("resting_health",{})
+        # if resting_health:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_resting_health(resting_health))
+        
+        # fatty_acid=data.get("fatty_acid",{})
+        # if fatty_acid:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_fatty_acid(fatty_acid))
+        
+        # digestive_health=data.get("digestive_health",{})
+        # if digestive_health:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestive_health(digestive_health))
+        
+        # disease_susceptibility=data.get("disease_susceptibility",{})
+        # if disease_susceptibility:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestive_health(disease_susceptibility))
+        
+        # digestion_potential=data.get("digestion_potential",{})
+        # if digestion_potential:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestion_potential(digestion_potential))
+       
+        # lipid_digestion=data.get("lipid_digestion",{})
+        # if lipid_digestion:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestion_potential(lipid_digestion))
+        
+        # short_chain_fatty_acid=data.get("short_chain_fatty_acid",{})
+        # if short_chain_fatty_acid:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestion_potential(short_chain_fatty_acid))
+        
+        # gases=data.get("gases",{})
+        # if gases:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestion_potential(gases))
+        
+        # neurotransmitters=data.get("neurotransmitters",{})
+        # if neurotransmitters:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_digestion_potential(neurotransmitters))
+        
+        # vitamins=data.get("vitamins",{})
+        # if vitamins:
+            # story.append(PageBreak())
+            # story.append(Spacer(1, 8))
+            # story.append(self.get_digestion_potential(vitamins))
+        
+        understanding_biomarker=data.get("biomarkers_range",{})
+        if understanding_biomarker:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            story.append(self.get_resting_health(resting_health))
+            story.append(self.get_understanding_biomarker(understanding_biomarker))
         
-        fatty_acid=data.get("fatty_acid",{})
-        if fatty_acid:
+        areas_of_concern=data.get("areas_of_concern",{})
+        if areas_of_concern:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            story.append(self.get_fatty_acid(fatty_acid))
+            story.extend(self.get_areas_of_concern(areas_of_concern))
         
-        digestive_health=data.get("digestive_health",{})
-        if digestive_health:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_digestive_health(digestive_health))
         
-        disease_susceptibility=data.get("disease_susceptibility",{})
-        if disease_susceptibility:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_digestive_health(disease_susceptibility))
-        
-        # story.append(PageBreak())
-        # story.extend(self.get_understanding_biomarker(data))
         # story.append(PageBreak())
         # story.extend(self.get_areas_of_concern(data))
         # story.append(PageBreak())
@@ -4195,10 +4891,6 @@ async def generate_pdf(request: Request):
     doc.addPageTemplates([
         PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer)
     ])
-    print("Left Margin:", doc.leftMargin)
-    print("Right Margin:", doc.rightMargin)
-    print("Top Margin:", doc.topMargin)
-    print("Bottom Margin:", doc.bottomMargin)
     flowables = template.generate(data)  
     doc.build(flowables, canvasmaker=NumberedCanvas)
     with open("output_from_buffer_stash.pdf", "wb") as f:
