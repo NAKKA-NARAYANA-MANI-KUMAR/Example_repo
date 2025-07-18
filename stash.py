@@ -610,6 +610,37 @@ class ImageWithOverlayText(Flowable):
             w, h = para.wrapOn(self.canv, self.width, self.height)
             para.drawOn(self.canv, x, y - h)
 
+class SvgTitleRow(Flowable):
+    def __init__(self, icon, text_para, gap=6):
+        super().__init__()
+        self.icon = icon
+        self.text_para = text_para
+        self.gap = gap
+
+        # Get icon dimensions
+        self.icon_width = icon.width
+        self.icon_height = icon.height
+
+        # Wrap paragraph to compute height
+        self.text_para.wrap(500, 0)
+        self.text_width = self.text_para.width
+        self.text_height = self.text_para.height
+
+        # Determine total dimensions
+        self.width = self.icon_width + self.gap + self.text_width
+        self.height = max(self.icon_height, self.text_height)
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        # Center the icon vertically
+        icon_y = (self.height - self.icon_height) / 2
+        text_y = (self.height - self.text_height) / 2
+
+        # Draw icon and text
+        self.icon.drawOn(self.canv, 0, icon_y)
+        self.text_para.drawOn(self.canv, self.icon_width + self.gap, text_y)
 
 class GradientScoreBarr:
     def __init__(
@@ -1132,6 +1163,42 @@ class ThriveRoadmapTemplate:
             spaceBefore=0,
             spaceAfter=0,
         ))
+        self.styles.add(ParagraphStyle(
+            name="RoutineStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=12,                 # or FONT_SIZE_MEDIUM
+            leading=18,
+            textColor=colors.HexColor("#003632"),
+            spaceAfter=0,
+        ))
+
+        self.styles.add(ParagraphStyle(
+            name="RoutineBulletStyle",
+            parent=self.styles["RoutineStyle"],
+            leftIndent=16,           # total indent for all lines (bullet + text)
+            firstLineIndent=-8,      # bullet "hangs" to the left
+            bulletFontName=FONT_INTER_REGULAR,  # preserve your font
+            bulletFontSize=12,
+            fontSize=12
+        ))
+
+        self.styles.add(ParagraphStyle(
+            name="RoutineSubBulletStyle",
+            parent=self.styles["RoutineStyle"],
+            leftIndent=24,           # deeper indent
+            firstLineIndent=-8,
+            bulletFontName=FONT_INTER_REGULAR,  # preserve your font
+            bulletFontSize=11,
+            fontSize=11
+        ))
+        self.styles.add(ParagraphStyle(
+            name="RoutineTitleStyle",
+            fontName=FONT_INTER_SEMI_BOLD,            # Inter Semibold
+            fontSize= FONT_SIZE_LARGE_MEDIUM,                          # 16px
+            leading=24,                           # Line height: 150%
+            textColor=colors.HexColor("#00625B"), # Brand-50                       # Optional spacing after paragraph
+        ))
+
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -4600,7 +4667,79 @@ class ThriveRoadmapTemplate:
         section.append(Indenter(left=-32, right=-32))
         return section
 
-    
+    def get_morning_routine_protocol(self, morning_routine_protocol: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = morning_routine_protocol.get("header", "")
+        title_data = morning_routine_protocol.get("header_data", "")
+        routine_items = morning_routine_protocol.get("morning_routine_protocol_data", [])
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 4))
+
+        # Section Subheading
+        section.append(Paragraph(title_data, self.styles["RoutineStyle"]))
+        section.append(Spacer(1, 4))
+
+        pills = []
+
+        for item in routine_items:
+            pill_content = []
+
+            # Icon and Title
+            icon_path = os.path.join(svg_dir, "bullet_point_1.svg")
+            icon = self.svg_icon(icon_path, width=16, height=16)
+
+            title_text = item.get("title", "")
+            title_para = Paragraph(title_text, self.styles["RoutineTitleStyle"])
+
+            pill_content.append(SvgTitleRow(icon, title_para))
+            pill_content.append(Spacer(1, 4))
+
+            # Bullet descriptions
+            title_data_list = item.get("title_data", [])
+            for entry in title_data_list:
+                desc = entry.get("description", "")
+                pill_content.append(Paragraph(desc, self.styles["RoutineBulletStyle"], bulletText='•'))
+
+                for subdesc in entry.get("sub_description", []):
+                    pill_content.append(
+                        Paragraph(f"- {subdesc}", self.styles["RoutineSubBulletStyle"])
+                    )
+
+            pills.append(pill_content)
+
+        # Arrange 2 pills per row
+        rows = []
+        for i in range(0, len(pills), 2):
+            row = pills[i:i+2]
+            if len(row) < 2:
+                row.append(Spacer(258, 0))  # fill empty cell if only 1 pill
+            rows.append(row)
+
+        # Create table for each row
+        for row in rows:
+            section.append(
+                Table(
+                    [row],
+                    colWidths=[258, 258],
+                    hAlign="LEFT",
+                    style=TableStyle([
+                        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 16),
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 16),
+                    ])
+                )
+            )
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -4794,11 +4933,11 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.extend(self.get_areas_of_concern(areas_of_concern))
         
-        # areas_of_concern=data.get("areas_of_concern",{})
-        # if areas_of_concern:
+        # morning_routine_protocol=data.get("morning_routine_protocol",{})
+        # if morning_routine_protocol:
         #     story.append(PageBreak())
         #     story.append(Spacer(1, 8))
-        #     story.extend(self.get_areas_of_concern(areas_of_concern))
+        #     story.extend(self.get_morning_routine_protocol(morning_routine_protocol))
         
         # story.append(PageBreak())
         # story.extend(self.get_morning_routine_protocol(data))
