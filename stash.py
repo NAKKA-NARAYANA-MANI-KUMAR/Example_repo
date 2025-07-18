@@ -1586,98 +1586,6 @@ class ThriveRoadmapTemplate:
             "Cognitive"   :"Cognitive.svg"
         }
         section = []
-        # for idx,metric in enumerate(metrics):
-        #     # Top: title + pill
-        #     title_para = Paragraph(metric['title'], self.styles["box_title_style"])
-        #     pill_para = RoundedPill(metric["pill"], colors.HexColor(metric["pill_color"]), 8, 80, 18, 8, colors.HexColor("#EFEFEF"))
-
-        #     top_stack = Table(
-        #         [[title_para, pill_para]],
-        #         colWidths=[106,80],
-        #         style=[
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 0),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #             ("ALIGN", (0, 0), (0, 0), "LEFT"),
-        #             ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-        #             ("VALIGN", (0, 0), (-1, -1), "CENTER"),
-        #         ]
-        #     )
-
-        #     # Bottom: merged major + minor value + footer
-        #     value = metric['value']
-        #     suff = metric.get('suff', '')
-
-        #     # Inline-styled paragraph
-        #     value_inline = Paragraph(value,self.styles["box_value_style"])
-        #     suff_inline=Paragraph(suff,self.styles["box_decimal_style"])
-        #     footer_para = Paragraph(metric["footer"], self.styles["box_decimal_style"]) if metric.get("footer") else Spacer(1, 0)
-        #     suff_box = Table(
-        #         [[suff_inline]],
-        #         style=[
-        #             ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
-        #             ("LEFTPADDING", (0, 0), (0, 0), 0),
-        #             ("RIGHTPADDING", (0, 0), (0, 0), 0),
-        #             ("TOPPADDING", (0, 0), (0, 0), 0),
-        #             ("BOTTOMPADDING", (0, 0), (0, 0), 0),
-        #         ]
-        #     )
-        #     text_width = stringWidth(value, self.styles["box_value_style"].fontName, self.styles["box_value_style"].fontSize)
-        #     bottom_stack = Table(
-        #         [[value_inline, Spacer(1, 3), suff_box, footer_para]],
-        #         colWidths=[text_width, 3, 12, None],
-        #         style=[
-        #             ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        #             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        #             ("TOPPADDING", (0, 0), (-1, -1), 0),
-        #             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        #             ("ALIGN", (0, 0), (0, 0), "LEFT"),
-        #             ("ALIGN", (2, 0), (2, 0), "LEFT"),
-        #             ("VALIGN", (0, 0), (-1, -1), "CENTER"),
-        #         ]
-        #     )
-
-
-        #     # Combine top and bottom into inner card
-        #     inner_table = Table(
-        #         [[top_stack], [bottom_stack]],
-        #         colWidths=[192]
-        #     )
-        #     icon_path = os.path.join("staticfiles", "icons", icon_paths.get(metric['title'],""))
-
-        #     icon = self.svg_icon(icon_path, width=24, height=24)
-
-        #     total_table=Table([[icon,Spacer(0,8),inner_table]],colWidths=[24,8,192])
-        #     total_table.setStyle(TableStyle([
-        #         ("VALIGN",(0,0),(0,0),"MIDDLE"),
-        #         ("ALIGN",(0,0),(-1,-1),"CENTER"),
-        #         #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-        #     ]))
-
-        #     padded_inner = Table([[total_table]], colWidths=[250])
-        #     padded_inner.setStyle(TableStyle([
-        #         ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-        #         ("LEFTPADDING", (0, 0), (-1, -1), 8),
-        #         ("RIGHTPADDING", (0, 0), (-1, -1), 16),
-        #         ("TOPPADDING", (0, 0), (-1, -1), 6),
-        #         ("BOTTOMPADDING", (0, 0), (-1, -1),6),
-        #         #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-        #     ]))
-
-        #     rounded_card = RoundedBox(
-        #         width=250,
-        #         height=68,
-        #         content=padded_inner,
-        #         corner_radius=16,
-        #         border_radius=0.4
-        #     )
-
-        #     section.append(rounded_card)
-        #     if idx < len(metrics) - 1:
-        #         section.append(Spacer(1, 16))
-        
-        # section=[]
         for idx,metric in enumerate(metrics):
             # Top: title + pill
             title_para = Paragraph(metric['title'], self.styles["box_title_style"])
@@ -1813,13 +1721,28 @@ class ThriveRoadmapTemplate:
         
         gender=data.get("gender","")
         if gender.lower()=="male":
-            ahw_path = os.path.join("staticfiles", "icons", "male_age_ht_wt.png")
+            ahw_path = os.path.join("staticfiles", "icons", "male_age_ht_wt_.png")
+        elif gender.lower()=="female":
+            ahw_path = os.path.join("staticfiles", "icons", "female_age_ht_wt_.png")
         else:
-            ahw_path = os.path.join("staticfiles", "icons", "female_age_ht_wt.png")
-        image_= Image(ahw_path, width=222, height=308)
+            ahw_path = os.path.join("staticfiles", "icons", "other_age_ht_wt.png")
+        # image_= Image(ahw_path, width=222, height=308)
         
+        text_data = [
+            (profile_card_data.get("age","00 yr"), 180, 285, "ear_screening_title"),       # Height
+            (profile_card_data.get("height","00 cm"), 180, 150, "ear_screening_title"),        # Waist
+            (profile_card_data.get("weight","00 kg"), 170, 22, "ear_screening_title")       # Hip
+        ]
 
-        right_metric_table=Table([[image_]])
+        icon_ahw = ImageWithOverlayText(
+            image_path=ahw_path,
+            width=222,
+            height=308,
+            text_data=text_data,
+            styles=self.styles["ear_screening_title"]
+        )
+
+        right_metric_table=Table([[icon_ahw]])
         right_metric_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 15),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -2218,12 +2141,26 @@ class ThriveRoadmapTemplate:
         img_path = os.path.join(svg_dir,"smoking_status.png")  
         smoking_bg = Image(img_path, width=89, height=212.5)
 
+        text_data = [
+            ("A brief overview of your smoking habits to assess potential risks and guide health recommendations.", 0, 100, "ear_screening_unit"),       # Height
+        ]
+
+        icon_bmi = ImageWithOverlayText(
+            image_path=img_path,
+            width=89,
+            height=212.5,
+            text_data=text_data,
+            styles=self.styles["ear_screening_unit"]
+        )
+
         img_path = os.path.join(svg_dir,"alcohol_status.png")  
         alcohol_bg = Image(img_path, width=83, height=212.5)
 
+        
+
         # Stack right-side cards with 48pt top padding
         right_cards_table = Table([
-            [smoking_bg],
+            [icon_bmi],
             [alcohol_bg]
         ], colWidths=[121])
         right_cards_table.setStyle(TableStyle([
@@ -2235,7 +2172,7 @@ class ThriveRoadmapTemplate:
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-            ("LINEBELOW",(0,0),(0,0),0.1,PMX_GREEN)
+            # ("LINEBELOW",(0,0),(0,0),0.1,PMX_GREEN)
         ]))
 
         right_box = RoundedBox(
@@ -2946,6 +2883,8 @@ class ThriveRoadmapTemplate:
             icon_path = os.path.join(svg_dir,'bmi_malee.png')
         elif data.get("gender").lower()=="female":
             icon_path = os.path.join(svg_dir,'bmi_femalee.png')
+        else:
+            icon_path = os.path.join(svg_dir,'other_bmi.png')
         # icon_bmi=Image(icon_path, width=271, height=326)
         
         Height=bmi_data.get("Height","00 cms")
@@ -4431,11 +4370,11 @@ class ThriveRoadmapTemplate:
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
         ]))
-
+        pill_color     = biomarkers_data.get("pill_color", "#FFFFFF")
         box_title     = Paragraph(biomarkers_data.get("title", ""),self.styles["BiomarkerHeader"])
         box_subtitle  = Paragraph(biomarkers_data.get("title_data", ""),self.styles["BiomarkerHeaderData"])
         box_category  = RoundedPill(biomarkers_data.get("title_pill", ""), colors.HexColor("#FFFCF5"), 8, 82, 18,8,colors.HexColor("#4E1D09"),colors.HexColor("#4E1D09"),0.4,FONT_INTER_REGULAR) 
-        box_pill      = RoundedPill(biomarkers_data.get("pill", ""), colors.HexColor("#F4CE5C"), 8, 80, 18,8,colors.HexColor("#0C111D"))
+        box_pill      = RoundedPill(biomarkers_data.get("pill", ""),pill_color, 8, 80, 18,8,colors.HexColor("#0C111D"))
         box_range     = biomarkers_data.get("footer", "")
         inner_left_stack=Table([
             [box_title],
@@ -4553,7 +4492,7 @@ class ThriveRoadmapTemplate:
         areas_of_concern_data_=areas_of_concern.get("areas_of_concern_data",[])
 
         for item in areas_of_concern_data_:
-            pill_color     = item.get("pill_color", "")
+            pill_color     = item.get("pill_color", "#FFFFFF")
             box_title     = Paragraph(item.get("title", ""),self.styles["BiomarkerHeader"])
             box_subtitle  = Paragraph(item.get("title_data", ""),self.styles["BiomarkerHeaderData"])
             box_category  = item.get("title_pill", [])
@@ -4666,44 +4605,44 @@ class ThriveRoadmapTemplate:
         story = []
         story.extend(self.build_main_section(data))       
         
-        # toc_data=data.get("toc_items",[])
-        # if toc_data:
-        #     story.append(PageBreak())
-        #     story.extend(self.toc_table(toc_data))
+        toc_data=data.get("toc_items",[])
+        if toc_data:
+            story.append(PageBreak())
+            story.extend(self.toc_table(toc_data))
         
-        # user_profile_card=data.get("user_profile_card",{})
-        # if user_profile_card:
-        #     story.append(PageBreak())
-        #     story.append(self.get_user_profile_card(user_profile_card))
+        user_profile_card=data.get("user_profile_card",{})
+        if user_profile_card:
+            story.append(PageBreak())
+            story.append(self.get_user_profile_card(user_profile_card))
         
-        # profile_card_data=data.get("profile_card_data",{})
-        # if profile_card_data:
-        #     story.append(Spacer(1, 12))
-        #     story.append(self.get_health_metrics_left_column(profile_card_data,data))
+        profile_card_data=data.get("profile_card_data",{})
+        if profile_card_data:
+            story.append(Spacer(1, 12))
+            story.append(self.get_health_metrics_left_column(profile_card_data,data))
         
-        # current_symptoms_conditions=data.get("current_symptoms_conditions",{})
-        # if current_symptoms_conditions:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
+        current_symptoms_conditions=data.get("current_symptoms_conditions",{})
+        if current_symptoms_conditions:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
         
-        # your_current_stack=data.get("your_current_stack",{})
-        # if your_current_stack:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_your_current_stack(your_current_stack))
+        your_current_stack=data.get("your_current_stack",{})
+        if your_current_stack:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_your_current_stack(your_current_stack))
 
-        # family_and_past_histories=data.get("family_and_past_histories",{})
-        # if family_and_past_histories:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_family_past_histories(family_and_past_histories))
+        family_and_past_histories=data.get("family_and_past_histories",{})
+        if family_and_past_histories:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_family_past_histories(family_and_past_histories))
 
-        # health_goals=data.get("health_goals",{})
-        # if health_goals:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_health_goals(health_goals))
+        health_goals=data.get("health_goals",{})
+        if health_goals:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_health_goals(health_goals))
         
         # lifestyle_trends=data.get("lifestyle_trends",{})
         # if lifestyle_trends:
@@ -4711,137 +4650,137 @@ class ThriveRoadmapTemplate:
         #     story.append(Spacer(1, 8))
         #     story.append(self.get_lifestyle_trends(lifestyle_trends))
         
-        # vital_params=data.get("vital_params",{})
-        # if vital_params:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_vital_params(vital_params))
+        vital_params=data.get("vital_params",{})
+        if vital_params:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_vital_params(vital_params))
         
-        # ear_screening=data.get("ear_screening",{})
-        # if ear_screening:
+        ear_screening=data.get("ear_screening",{})
+        if ear_screening:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_ear_screening(ear_screening))
+
+        brain_function_score=data.get("brain_score",{})
+        if brain_function_score:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_brain_function_screen(brain_function_score))
+
+        bmi=data.get("bmi",{})
+        if bmi:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_body_mass_index(bmi,data))
+
+        # body_composition=data.get("body_composition",{})
+        # if body_composition:
         #     story.append(PageBreak())
         #     story.append(Spacer(1, 8))
-        #     story.append(self.get_ear_screening(ear_screening))
-
-        # brain_function_score=data.get("brain_score",{})
-        # if brain_function_score:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_brain_function_screen(brain_function_score))
-
-        # bmi=data.get("bmi",{})
-        # if bmi:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_body_mass_index(bmi,data))
-
-        # # body_composition=data.get("body_composition",{})
-        # # if body_composition:
-        # #     story.append(PageBreak())
-        # #     story.append(Spacer(1, 8))
-        # #     story.extend(self.get_body_composition(data))
+        #     story.extend(self.get_body_composition(data))
         
-        # fitness_assesment=data.get("fitness_assesment",{})
-        # if fitness_assesment:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_fitness_assesment(fitness_assesment))
+        fitness_assesment=data.get("fitness_assesment",{})
+        if fitness_assesment:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_fitness_assesment(fitness_assesment))
 
-        # homa_ir=data.get("homa_ir",{})
-        # if homa_ir:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_homa_ir(homa_ir))
+        homa_ir=data.get("homa_ir",{})
+        if homa_ir:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_homa_ir(homa_ir))
         
-        # framingham_risk_score=data.get("framingham_risk_score",{})
-        # if framingham_risk_score:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_framingham_risk_score(framingham_risk_score))
+        framingham_risk_score=data.get("framingham_risk_score",{})
+        if framingham_risk_score:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_framingham_risk_score(framingham_risk_score))
 
-        # oligo_scan=data.get("oligo_scan",{})
-        # if oligo_scan:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_oligo_scan(oligo_scan))
+        oligo_scan=data.get("oligo_scan",{})
+        if oligo_scan:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_oligo_scan(oligo_scan))
 
-        # domain_in_focus=data.get("domain_in_focus",{})
-        # if domain_in_focus:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.extend(self.get_domain_in_focus(domain_in_focus))
+        domain_in_focus=data.get("domain_in_focus",{})
+        if domain_in_focus:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_domain_in_focus(domain_in_focus))
 
-        # minerals_test_ratio=data.get("minerals_test_ratio",{})
-        # if minerals_test_ratio:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.extend(self.get_minerals_test_ratio(minerals_test_ratio))
+        minerals_test_ratio=data.get("minerals_test_ratio",{})
+        if minerals_test_ratio:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_minerals_test_ratio(minerals_test_ratio))
         
-        # aerobic_capacity=data.get("aerobic_capacity",{})
-        # if aerobic_capacity:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_aerobic_capacity(aerobic_capacity))
+        aerobic_capacity=data.get("aerobic_capacity",{})
+        if aerobic_capacity:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_aerobic_capacity(aerobic_capacity))
                
-        # resting_health=data.get("resting_health",{})
-        # if resting_health:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_resting_health(resting_health))
+        resting_health=data.get("resting_health",{})
+        if resting_health:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_resting_health(resting_health))
         
-        # fatty_acid=data.get("fatty_acid",{})
-        # if fatty_acid:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_fatty_acid(fatty_acid))
+        fatty_acid=data.get("fatty_acid",{})
+        if fatty_acid:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_fatty_acid(fatty_acid))
         
-        # digestive_health=data.get("digestive_health",{})
-        # if digestive_health:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestive_health(digestive_health))
+        digestive_health=data.get("digestive_health",{})
+        if digestive_health:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestive_health(digestive_health))
         
-        # disease_susceptibility=data.get("disease_susceptibility",{})
-        # if disease_susceptibility:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestive_health(disease_susceptibility))
+        disease_susceptibility=data.get("disease_susceptibility",{})
+        if disease_susceptibility:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestive_health(disease_susceptibility))
         
-        # digestion_potential=data.get("digestion_potential",{})
-        # if digestion_potential:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestion_potential(digestion_potential))
+        digestion_potential=data.get("digestion_potential",{})
+        if digestion_potential:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(digestion_potential))
        
-        # lipid_digestion=data.get("lipid_digestion",{})
-        # if lipid_digestion:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestion_potential(lipid_digestion))
+        lipid_digestion=data.get("lipid_digestion",{})
+        if lipid_digestion:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(lipid_digestion))
         
-        # short_chain_fatty_acid=data.get("short_chain_fatty_acid",{})
-        # if short_chain_fatty_acid:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestion_potential(short_chain_fatty_acid))
+        short_chain_fatty_acid=data.get("short_chain_fatty_acid",{})
+        if short_chain_fatty_acid:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(short_chain_fatty_acid))
         
-        # gases=data.get("gases",{})
-        # if gases:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestion_potential(gases))
+        gases=data.get("gases",{})
+        if gases:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(gases))
         
-        # neurotransmitters=data.get("neurotransmitters",{})
-        # if neurotransmitters:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_digestion_potential(neurotransmitters))
+        neurotransmitters=data.get("neurotransmitters",{})
+        if neurotransmitters:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(neurotransmitters))
         
-        # vitamins=data.get("vitamins",{})
-        # if vitamins:
-            # story.append(PageBreak())
-            # story.append(Spacer(1, 8))
-            # story.append(self.get_digestion_potential(vitamins))
+        vitamins=data.get("vitamins",{})
+        if vitamins:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_digestion_potential(vitamins))
         
         understanding_biomarker=data.get("biomarkers_range",{})
         if understanding_biomarker:
@@ -4855,9 +4794,12 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.extend(self.get_areas_of_concern(areas_of_concern))
         
+        # areas_of_concern=data.get("areas_of_concern",{})
+        # if areas_of_concern:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.extend(self.get_areas_of_concern(areas_of_concern))
         
-        # story.append(PageBreak())
-        # story.extend(self.get_areas_of_concern(data))
         # story.append(PageBreak())
         # story.extend(self.get_morning_routine_protocol(data))
         
