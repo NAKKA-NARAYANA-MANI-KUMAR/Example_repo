@@ -5101,6 +5101,41 @@ class ThriveRoadmapTemplate:
 
         return section
 
+    def get_cognitive_health_recommendations(self,health_recommendations: dict) -> list:
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = health_recommendations.get("header", "")
+        health_recommendations_data_ = health_recommendations.get("health_recommendations_data", [])
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 32))
+
+        for item in health_recommendations_data_:
+            pill_content = []
+
+            # Icon and Title
+            icon_path = os.path.join(svg_dir, "bullet_point_1.svg")
+            icon = self.svg_icon(icon_path, width=16, height=16)
+
+            title_text = item.get("title", "")
+            title_para = Paragraph(title_text, self.styles["RoutineTitleStyle"])
+
+            pill_content.append(SvgTitleRow(icon, title_para))
+            pill_content.append(Spacer(1, 8))
+
+            # Bullet descriptions
+            title_data_list = item.get("title_data", [])
+            for entry in title_data_list:
+                pill_content.append(Paragraph(entry, self.styles["RoutineBulletStyle"], bulletText='•'))
+
+            section.append(KeepTogether(pill_content))
+            section.append(Spacer(1, 16))
+        section.append(Indenter(left=-32, right=-32))
+        return section
+
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -5294,7 +5329,6 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.extend(self.get_areas_of_concern(areas_of_concern))
         
-        
         diagnoses=data.get("diagnoses",{})
         if diagnoses:
             story.append(PageBreak())
@@ -5312,7 +5346,12 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.extend(self.get_morning_routine_protocol(morning_routine_protocol))
         
-    
+        cognitive_health_recommendations=data.get("cognitive_health_recommendations",{})
+        if cognitive_health_recommendations:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_cognitive_health_recommendations(cognitive_health_recommendations))
+
         
         return story
 
