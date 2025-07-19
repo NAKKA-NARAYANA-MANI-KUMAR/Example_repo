@@ -1339,6 +1339,14 @@ class ThriveRoadmapTemplate:
             spaceAfter=0,
             spaceBefore=0,
         ))
+        self.styles.add(ParagraphStyle(
+            "CardioVascularStyle",
+            fontName=FONT_INTER_BOLD,  # Assuming you've registered "Inter-Bold"
+            fontSize=12,
+            leading=18,
+            leftIndent=12,
+            textColor=colors.HexColor("#003632"),
+        ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -5136,6 +5144,104 @@ class ThriveRoadmapTemplate:
         section.append(Indenter(left=-32, right=-32))
         return section
 
+    def get_lifestyle_recommendations(self, lifestyle_recommendations_data: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = lifestyle_recommendations_data.get("header", "")
+        lifestyle_recommendations_data_ = lifestyle_recommendations_data.get("lifestyle_recommendations_data", [])
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 32))
+
+
+        for item in lifestyle_recommendations_data_:
+            pill_content = []
+
+            # Icon and Title
+            icon_path = os.path.join(svg_dir, "bullet_point_1.svg")
+            icon = self.svg_icon(icon_path, width=16, height=16)
+
+            title_text = item.get("title", "")
+            title_para = Paragraph(title_text, self.styles["RoutineTitleStyle"])
+
+            pill_content.append(SvgTitleRow(icon, title_para))
+            pill_content.append(Spacer(1, 8))
+
+            # Bullet descriptions
+            title_data_list = item.get("title_data", [])
+            for entry in title_data_list:
+                desc = entry.get("description", "")
+                
+                if entry.get("video", ""):
+                    desc += f' <a href="{entry.get("video", "")}"><u>Video</u></a>'
+                if entry.get("app", ""):
+                    desc += f', <a href="{entry.get("app", "")}"><u>App</u></a>'
+                
+                pill_content.append(Paragraph(desc, self.styles["RoutineBulletStyle"], bulletText='•'))
+
+                for subdesc in entry.get("sub_description", []):
+                    pill_content.append(
+                        Paragraph(f"- {subdesc}", self.styles["RoutineSubBulletStyle"])
+                    )
+
+            section.append(KeepTogether(pill_content))
+            section.append(Spacer(1,16))
+
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+    
+    def get_cardiovascular_recommendations(self, cardiovascular_recommendations: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = cardiovascular_recommendations.get("header", "")
+        cardiovascular_recommendations_data_ = cardiovascular_recommendations.get("cardiovascular_recommendations_data", "")
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 32))
+
+
+        for item in cardiovascular_recommendations_data_:
+            pill_content = []
+
+            # Icon and Title
+            icon_path = os.path.join(svg_dir, "bullet_point_1.svg")
+            icon = self.svg_icon(icon_path, width=16, height=16)
+
+            title_text = item.get("title", "")
+            title_para = Paragraph(title_text, self.styles["RoutineTitleStyle"])
+
+            pill_content.append(SvgTitleRow(icon, title_para))
+            pill_content.append(Spacer(1, 8))
+
+            # Bullet descriptions
+            title_data_list = item.get("title_data", [])
+            for entry in title_data_list:
+                if entry.get("description",""):
+                    desc = entry.get("description", "")
+                    pill_content.append(Paragraph(desc, self.styles["RoutineBulletStyle"], bulletText='•'))
+                if entry.get("heading",""):
+                    pill_content.append(Spacer(1, 16))
+                    pill_content.append(Paragraph(entry.get("heading",""), self.styles["CardioVascularStyle"]))
+                    
+                for subdesc in entry.get("sub_description", []):
+                    pill_content.append(
+                        Paragraph(f"- {subdesc}", self.styles["RoutineSubBulletStyle"])
+                    )
+
+            section.append(KeepTogether(pill_content))
+            
+        
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+
     def generate(self, data: dict) -> list:
         story = []
         story.extend(self.build_main_section(data))       
@@ -5179,11 +5285,11 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.append(self.get_health_goals(health_goals))
         
-        lifestyle_trends=data.get("lifestyle_trends",{})
-        if lifestyle_trends:
-            story.append(PageBreak())
-            story.append(Spacer(1, 8))
-            story.append(self.get_lifestyle_trends(lifestyle_trends))
+        # lifestyle_trends=data.get("lifestyle_trends",{})
+        # if lifestyle_trends:
+        #     story.append(PageBreak())
+        #     story.append(Spacer(1, 8))
+        #     story.append(self.get_lifestyle_trends(lifestyle_trends))
         
         vital_params=data.get("vital_params",{})
         if vital_params:
@@ -5351,8 +5457,20 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.extend(self.get_cognitive_health_recommendations(cognitive_health_recommendations))
-
         
+        lifestyle_recommendations=data.get("lifestyle_recommendations",{})
+        if lifestyle_recommendations:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_lifestyle_recommendations(lifestyle_recommendations))
+
+        cardiovascular_recommendations=data.get("cardiovascular_recommendations",{})
+        if cardiovascular_recommendations:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_cardiovascular_recommendations(cardiovascular_recommendations))
+
+
         return story
 
 
