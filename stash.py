@@ -77,6 +77,7 @@ FONT_SIZE_BODY = 11
 
 # === Layout Constants ===
 PAGE_WIDTH, PAGE_HEIGHT = A4
+print(PAGE_WIDTH, PAGE_HEIGHT)
 LEFT_MARGIN = 40
 RIGHT_MARGIN = 20
 AVAILABLE_WIDTH = PAGE_WIDTH - LEFT_MARGIN - RIGHT_MARGIN
@@ -726,6 +727,25 @@ class ImageWithOverlayText(Flowable):
             w, h = para.wrapOn(self.canv, self.width, self.height)
             para.drawOn(self.canv, x, y - h)
 
+class VerticalLine(Flowable):
+    def __init__(self, height, x_offset=0, line_color=PMX_GREEN, thickness=1):
+        Flowable.__init__(self)
+        self.height = height
+        self.x_offset = x_offset
+        self.line_color = line_color
+        self.thickness = thickness
+        self.width = 0
+
+    def draw(self):
+        self.canv.saveState()
+        self.canv.setStrokeColor(self.line_color)
+        self.canv.setLineWidth(self.thickness)
+        self.canv.line(self.x_offset, 0, self.x_offset, self.height)
+        self.canv.restoreState()
+
+    def wrap(self, availWidth, availHeight):
+        return 0, self.height
+
 class SvgTitleRow(Flowable):
     def __init__(self, icon, text_para, gap=6):
         super().__init__()
@@ -1034,7 +1054,6 @@ class ThriveRoadmapTemplate:
             fontSize=14,
             textColor=colors.HexColor("#002624"),
             leading=30,
-            #alignment=TA_LEFT
         )),
         self.styles.add(ParagraphStyle(
             "toc_pagenum",
@@ -1347,6 +1366,31 @@ class ThriveRoadmapTemplate:
             leftIndent=12,
             textColor=colors.HexColor("#003632"),
         ))
+        self.styles.add(ParagraphStyle(
+            "SSBUlletBelowStyle",
+            fontName=FONT_INTER_REGULAR,  # Ensure Inter is registered; fallback to 'Helvetica' if not
+            fontSize=7.375,
+            leading=10.536,
+            textColor=HexColor("#004540"),
+            alignment=TA_CENTER,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="OptimizationPhasesStyle",
+            fontName=FONT_INTER_REGULAR,                     # Make sure 'Inter' is registered, else fallback to 'Helvetica'
+            fontSize=7.375,
+            leading=10.536,                       # Line height
+            textColor=colors.HexColor("#475467"),# Equivalent to var(--Gray-600)
+            alignment=1,                          # 0=left, 1=center, 2=right, 4=justify
+        ))
+        self.styles.add(ParagraphStyle(
+            "ActionPlanStyle",
+            fontName=FONT_INTER_SEMI_BOLD,       # You must register this font first
+            fontSize=16,
+            leading=24,                      # This is the line-height (150% of font size)
+            textColor=PMX_GREEN,
+            spaceAfter=0                     # Optional: spacing after paragraph
+        ))
+
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -5036,6 +5080,155 @@ class ThriveRoadmapTemplate:
 
         return section 
 
+    def get_action_plan(self, action_plan: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = action_plan.get("header", "")
+        action_plan_list_ = action_plan.get("action_plan_list", "")
+        
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 10))
+
+        for item in action_plan_list_:
+
+            icon_path = os.path.join(svg_dir, "bullet_point_1.svg")
+            icon = self.svg_icon(icon_path, width=16, height=16)
+
+            section.append(SvgTitleRow(icon, Paragraph(item,self.styles["ActionPlanStyle"])))
+            section.append(Spacer(1, 4))
+        
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+        
+    def get_optimization_phases(self, optimization_phases: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = optimization_phases.get("header", "")
+        title_data = optimization_phases.get("header_data", "")
+        optimization_phases_data_ = optimization_phases.get("optimization_phases_data", "")
+        
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 8))
+        section.append(Paragraph(title_data, self.styles["eye_screening_desc_style"]))
+        section.append(Spacer(1, 17))
+        
+        page_width = A4[0]
+        left_col_width = 126
+        gap_between_columns = 16
+        right_col_width = 322  # 64 = margins
+
+        for item in optimization_phases_data_:
+            # Left stack (vertical)
+            left_stack = []
+
+            day = item.get("day", "00 Phase")
+            name = item.get("name", "")
+            duration = item.get("duration", "")
+            data = item.get("data", "")
+
+            icon_path = os.path.join(svg_dir, "supplement_icon.png")
+            icon = Image(icon_path, width=16, height=16)
+            left_stack.append(icon)
+            left_stack.append(Spacer(1,8))
+
+            text_1 = Paragraph(
+                f'<font fontName={FONT_INTER_BOLD}>{day}</font>',
+                self.styles["OptimizationPhasesStyle"]
+            )
+            left_stack.append(text_1)
+
+            text_2 = Paragraph(
+                name,
+                self.styles["OptimizationPhasesStyle"]
+            )
+            left_stack.append(text_2)
+
+            text_3 = Paragraph(
+                f'({duration})',
+                self.styles["OptimizationPhasesStyle"]
+            )
+            left_stack.append(text_3)
+            # Use nested table to keep pill and paragraph side by side in the right column
+            pill = RoundedPill(
+                day,
+                colors.HexColor("#CCE9E6"),
+                8, 71, 18, 8,
+                colors.HexColor("#003632"),
+                colors.HexColor("#003632"),
+                0.4,
+                FONT_INTER_SEMI_BOLD
+            )
+            name_para = Paragraph(name, self.styles["BiomarkersStyle"])
+            duration_para = Paragraph(f'<font color="#4DAEA6">{duration}</font>', self.styles["bullet_after_text"])
+        
+            name_width = stringWidth(name, self.styles["BiomarkersStyle"].fontName, self.styles["BiomarkersStyle"].fontSize)
+            duration_width = stringWidth(duration, self.styles["bullet_after_text"].fontName, self.styles["bullet_after_text"].fontSize)
+            # Combine pill and para horizontally using inner table
+            if data:
+                left_stack.append(VerticalLine(height=109))
+                inner_table = Table(
+                    [
+                        [pill, Spacer(7, 1), name_para , Spacer(7, 1),duration_para],
+                        [Paragraph(data, self.styles["eye_screening_desc_style"])]
+                    ],
+                    colWidths=[71, 7, name_width,7, 322-71-7-name_width-7]
+                )
+                inner_table.setStyle(TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                    ("SPAN", (0, 1), (4, 1)), 
+                ]))
+            else:
+                inner_table = Table(
+                    [
+                        [pill, Spacer(7, 1), name_para , Spacer(7, 1),duration_para]
+                    ],
+                    colWidths=[71, 7, name_width,7, None]
+                )
+                inner_table.setStyle(TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0)
+                ]))
+            
+            # Combine everything into the final row table with proper column spacing
+            final_table = Table(
+                [[left_stack, Spacer(gap_between_columns, 1), inner_table]],
+                colWidths=[left_col_width, gap_between_columns, right_col_width]
+            )
+
+            final_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (0, -1), "TOP"),
+                ("VALIGN", (1, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+                ("ALIGN", (0, 0), (0, -1), "CENTER"),
+            ]))
+
+            # Add to section
+            section.append(final_table)
+            section.append(Spacer(1, 8))  # Optional gap between entries
+
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+
     def get_morning_routine_protocol(self, morning_routine_protocol: dict):
         section = []
 
@@ -5238,6 +5431,105 @@ class ThriveRoadmapTemplate:
             section.append(KeepTogether(pill_content))
             
         
+        section.append(Indenter(left=-32, right=-32))
+
+        return section
+
+    def get_start_suplements(self, start_suplements: dict):
+        section = []
+
+        section.append(Indenter(left=32, right=32))
+        
+        title = start_suplements.get("header", "")
+        start_suplements_data_ = start_suplements.get("start_suplements_data", "")
+        table_below_data = start_suplements.get("table_below_data", "")
+        table_below_data_ = start_suplements.get("table_below_data_", "")
+
+        # Section Heading
+        section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
+        section.append(Spacer(1, 10))
+
+        page_width = A4[0]
+        left_col_width = 126
+        gap_between_columns = 32
+        right_col_width = page_width - 64 - left_col_width - gap_between_columns  # 64 = margins
+
+        for item in start_suplements_data_:
+            # Left stack (vertical)
+            left_stack = []
+
+            day = item.get("day", "00 day")
+            supple_list = item.get("suple_list", [])
+
+            icon_path = os.path.join(svg_dir, "supplement_icon.png")
+            icon = Image(icon_path, width=16, height=16)
+            left_stack.append(icon)
+            left_stack.append(Spacer(1,8))
+
+            text_1 = Paragraph(
+                f'<font fontName={FONT_INTER_BOLD}>{day}</font>',
+                self.styles["SSBUlletBelowStyle"]
+            )
+            left_stack.append(text_1)
+
+            text_2 = Paragraph(
+                f"{len(supple_list)} Supplement" if len(supple_list) == 1 else f"{len(supple_list)} Supplements",
+                self.styles["SSBUlletBelowStyle"]
+            )
+            left_stack.append(text_2)
+
+            # Use nested table to keep pill and paragraph side by side in the right column
+            supplement_text = " + ".join(supple_list) + " Supplement" if supple_list else "Supplement"
+            pill = RoundedPill(
+                day,
+                colors.HexColor("#CCE9E6"),
+                8, 71, 18, 8,
+                colors.HexColor("#003632"),
+                colors.HexColor("#003632"),
+                0.4,
+                FONT_INTER_SEMI_BOLD
+            )
+            para = Paragraph(supplement_text, self.styles["BiomarkersStyle"])
+
+            # Combine pill and para horizontally using inner table
+            inner_table = Table(
+                [[pill, Spacer(8, 1), para]],
+                colWidths=[71, 8, right_col_width - 71 - 8]
+            )
+            inner_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ]))
+
+            # Combine everything into the final row table with proper column spacing
+            final_table = Table(
+                [[left_stack, Spacer(gap_between_columns, 1), inner_table]],
+                colWidths=[left_col_width, gap_between_columns, right_col_width]
+            )
+
+            final_table.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+                ("ALIGN", (0, 0), (0, -1), "CENTER"),
+            ]))
+
+            # Add to section
+            section.append(final_table)
+            section.append(Spacer(1, 8))  # Optional gap between entries
+
+        section.append(Paragraph(table_below_data,ParagraphStyle(
+            name="BiomarkersStyle_Centered",
+            parent=self.styles["BiomarkersStyle"],
+            alignment=TA_CENTER
+        )))
+        section.append(Spacer(1, 17))
+        section.append(Paragraph(table_below_data_,self.styles["eye_screening_desc_style"]))
         section.append(Indenter(left=-32, right=-32))
 
         return section
@@ -5446,6 +5738,18 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 24))
             story.extend(self._create_additional_diagnosis(additional_diagnoses))
 
+        action_plan=data.get("action_plan",{})
+        if action_plan:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_action_plan(action_plan))
+
+        optimization_phases=data.get("optimization_phases",{})
+        if optimization_phases:
+            story.append(Spacer(1, 16))
+            story.extend(self.get_optimization_phases(optimization_phases))
+
+
         morning_routine_protocol=data.get("morning_routine_protocol",{})
         if morning_routine_protocol:
             story.append(PageBreak())
@@ -5469,8 +5773,16 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.extend(self.get_cardiovascular_recommendations(cardiovascular_recommendations))
-
-
+    
+        start_suplements=data.get("start_suplements",{})
+        if start_suplements:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.extend(self.get_start_suplements(start_suplements))
+            story.append(PageBreak())
+        # img_path = os.path.join(svg_dir, "final_page.svg")
+        # final_page_img = self.svg_icon(img_path, width=595.2755905511812, height=700)
+        # story.append(final_page_img)
         return story
 
 
