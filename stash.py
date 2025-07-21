@@ -960,6 +960,32 @@ class GradientScoreBarr:
 
         return d, score_color
 
+class BackgroundImageCard(Flowable):
+    def __init__(self, card, bg_image_path, width, height):
+        super().__init__()
+        self.card = card
+        self.bg_image = ImageReader(bg_image_path)
+        self.width = width
+        self.height = height
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        # Draw the background image
+        self.canv.drawImage(
+            self.bg_image,
+            0,
+            0,
+            width=self.width,
+            height=self.height,
+            preserveAspectRatio=True,
+            mask='auto'
+        )
+        # Draw the card on top
+        self.card.wrapOn(self.canv, self.width, self.height)
+        self.card.drawOn(self.canv, 0, 0)
+
 class ThriveRoadmapTemplate:
     def __init__(self):
         self.styles = getSampleStyleSheet()
@@ -1297,6 +1323,7 @@ class ThriveRoadmapTemplate:
             textColor=PMX_GREEN,
             spaceBefore=0,
             spaceAfter=0,
+            alignment=TA_CENTER, 
         ))
         self.styles.add(ParagraphStyle(
             name="RoutineStyle",
@@ -1390,7 +1417,14 @@ class ThriveRoadmapTemplate:
             textColor=PMX_GREEN,
             spaceAfter=0                     # Optional: spacing after paragraph
         ))
-
+        self.styles.add(ParagraphStyle(
+            "SADataStyle",
+            fontName=FONT_INTER_REGULAR,           
+            fontSize=8,
+            leading=10,                 
+            textColor=white,            
+            alignment=TA_CENTER,        
+        ))
 
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -2396,42 +2430,77 @@ class ThriveRoadmapTemplate:
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ]))
+ 
 
-        img_path = os.path.join(svg_dir,"smoking_status.png")  
-        smoking_bg = Image(img_path, width=89, height=212.5)
+        def make_status_card(title, desc, icon_file, status_text, color,width,height):
+            icon = self.svg_icon(os.path.join("staticfiles/icons/", icon_file), width=width, height=height)
+            title_para = Paragraph(f'<font color="#FFFFFF">{title}</font>', self.styles["AreasOfConcern"])
+            desc_para = Paragraph(desc, self.styles["SADataStyle"])
+            status_para = RoundedPill(status_text, color, 8, 70, 18, 8)
 
-        text_data = [
-            ("A brief overview of your smoking habits to assess potential risks and guide health recommendations.", 0, 100, "ear_screening_unit"),       # Height
-        ]
 
-        icon_bmi = ImageWithOverlayText(
-            image_path=img_path,
-            width=89,
-            height=212.5,
-            text_data=text_data,
-            styles=self.styles["ear_screening_unit"]
+            card = Table([
+                [icon],
+                [title_para],
+                [desc_para],
+                [Spacer(1,6)],
+                [status_para]
+            ], colWidths=[75])
+
+            card.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (0, -1), 0),
+                ("BOTTOMPADDING", (0, -1), (-1, -1), 0),
+            ]))
+
+            padded = Table([[card]], colWidths=[89])
+            padded.setStyle(TableStyle([
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0,0 ), (0,-1), 16),
+                ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
+            ]))
+            return padded
+
+        smoking_card = make_status_card(
+            "Smoking Status",
+            "A brief overview of your smoking habits to assess potential risks and guide health recommendations.",
+            "smoking_final.svg", "Non Smoker", colors.HexColor("#17B26A"),width=24,height=24
         )
 
-        img_path = os.path.join(svg_dir,"alcohol_status.png")  
-        alcohol_bg = Image(img_path, width=83, height=212.5)
+        alcohol_card = make_status_card(
+            "Alcohol Status",
+            "Overview of your alcohol consumption to assess risks and guide recommendations.",
+            "alcohol_final.svg", "Weekly", colors.HexColor("#F79009"),width=9.13,height=18
+        )
 
-        
+        # Wrap it with a background image
+        img_path_ = os.path.join(svg_dir,"smoking_status.png") 
+        smoking_card_with_bg = BackgroundImageCard(smoking_card, img_path_, width=89, height=212)
 
-        # Stack right-side cards with 48pt top padding
+        img_path = os.path.join(svg_dir,"alcohol_status.png") 
+        alcohol_card_with_bg = BackgroundImageCard(alcohol_card, img_path, width=89, height=212)
+
         right_cards_table = Table([
-            [icon_bmi],
-            [alcohol_bg]
+            [smoking_card_with_bg],
+            [alcohol_card_with_bg]
         ], colWidths=[121])
         right_cards_table.setStyle(TableStyle([
-            ("TOPPADDING", (0, 0), (-1,-1), 8),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-            ("TOPPADDING", (0, 0), (0, 0), 16),
+            ("ALIGN",(0,0),(-1,-1),"CENTER"),
+            ("TOPPADDING", (0,0 ), (0,-1), 16),
             ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
-            ("VALIGN", (0, 0), (-1, -1), "TOP"),
-            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-            # ("LINEBELOW",(0,0),(0,0),0.1,PMX_GREEN)
+            # ("BOX",(0,0),(-1,-1),0.2,black)
         ]))
 
         right_box = RoundedBox(
@@ -2443,12 +2512,30 @@ class ThriveRoadmapTemplate:
             fill_color=colors.white,
             stroke_color=PMX_GREEN
         )
-        # ---------- Combined Row ----------
+        # ---------- Extract Data ----------
+        icon_path = os.path.join(svg_dir, "lifestyle.svg")
+        icon = self.svg_icon(icon_path, width=24, height=24)
+        frst_row = Table(
+            [   
+                [icon,Spacer(1,10),Paragraph("Your Lifestyle Trends", self.styles["SvgBulletTitle"])]
+            ],
+            colWidths=[24,10, None],
+        )
+        frst_row.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
         full_row = Table(
-            [[final_table_,Spacer(1,32), right_box]],
+            [   
+                [frst_row,"",""],
+                [Spacer(1,8)],
+                [final_table_,Spacer(1,32), right_box]],
             colWidths=[346,32, 121],
         )
         full_row.setStyle(TableStyle([
+            ("SPAN", (0, 0), (-1, 0)),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -5577,11 +5664,11 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.append(self.get_health_goals(health_goals))
         
-        # lifestyle_trends=data.get("lifestyle_trends",{})
-        # if lifestyle_trends:
-        #     story.append(PageBreak())
-        #     story.append(Spacer(1, 8))
-        #     story.append(self.get_lifestyle_trends(lifestyle_trends))
+        lifestyle_trends=data.get("lifestyle_trends",{})
+        if lifestyle_trends:
+            story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            story.append(self.get_lifestyle_trends(lifestyle_trends))
         
         vital_params=data.get("vital_params",{})
         if vital_params:
@@ -5780,9 +5867,7 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 8))
             story.extend(self.get_start_suplements(start_suplements))
             story.append(PageBreak())
-        # img_path = os.path.join(svg_dir, "final_page.svg")
-        # final_page_img = self.svg_icon(img_path, width=595.2755905511812, height=700)
-        # story.append(final_page_img)
+        
         return story
 
 
