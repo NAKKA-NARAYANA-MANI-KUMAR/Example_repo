@@ -12,7 +12,7 @@ from io import BytesIO
 # ReportLab Core
 from reportlab.platypus import (
     BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, Table, TableStyle,KeepInFrame,
-    Image, Flowable, KeepTogether, PageBreak, SimpleDocTemplate, ListItem, ListFlowable,Indenter
+    Image, Flowable, KeepTogether, PageBreak, SimpleDocTemplate, ListItem, ListFlowable,Indenter,NextPageTemplate
 )
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
@@ -266,6 +266,8 @@ class NumberedCanvas(Canvas):
     def draw_page_number(self, total_pages):
         page_number = self.getPageNumber()
         if page_number <= 2:
+            return
+        if page_number == total_pages:
             return
         text = f"Page {page_number:02d} - {total_pages:02d}"
         font = FONT_INTER_REGULAR
@@ -995,9 +997,9 @@ class ThriveRoadmapTemplate:
 
     def _get_logo(self):
         possible_paths = [
-            self.base_path / "pmx_health.svg",
-            "staticfiles/reports/pmx_health.svg",
-            "staticfiles/icons/pmx_health.svg",
+            self.base_path / "pmx_green_logo.svg",
+            "staticfiles/reports/pmx_green_logo.svg",
+            "staticfiles/icons/pmx_green_logo.svg",
         ]
         for logo_path in possible_paths:
             if os.path.exists(logo_path):
@@ -5836,7 +5838,6 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 16))
             story.extend(self.get_optimization_phases(optimization_phases))
 
-
         morning_routine_protocol=data.get("morning_routine_protocol",{})
         if morning_routine_protocol:
             story.append(PageBreak())
@@ -5866,7 +5867,6 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.extend(self.get_start_suplements(start_suplements))
-            story.append(PageBreak())
         
         return story
 
@@ -5895,10 +5895,30 @@ async def generate_pdf(request: Request):
 
     )
 
+    image_frame = Frame(
+        x1=0,
+        y1=0,
+        width=A4[0],
+        height=A4[1],
+        id='image',
+        leftPadding=0,
+        bottomPadding=0,
+        rightPadding=0,
+        topPadding=0,
+    )
+
     doc.addPageTemplates([
-        PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer)
+        PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer),
+        PageTemplate(id='image', frames=[image_frame])
     ])
     flowables = template.generate(data)  
+    flowables.append(NextPageTemplate('image'))
+
+    # Full-page image
+    img_path = os.path.join(svg_dir, "final_page.png")
+    full_page_image = Image(img_path, width=A4[0], height=A4[1])
+    full_page_image.hAlign = 'CENTER'
+    flowables.append(full_page_image)
     doc.build(flowables, canvasmaker=NumberedCanvas)
     with open("output_from_buffer_stash.pdf", "wb") as f:
         f.write(buffer.getvalue())
@@ -5906,3 +5926,6 @@ async def generate_pdf(request: Request):
     return StreamingResponse(buffer, media_type="application/pdf", headers={
         "Content-Disposition": "inline; filename=styled_output.pdf"
     })
+
+
+
