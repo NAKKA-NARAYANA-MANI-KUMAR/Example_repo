@@ -101,7 +101,7 @@ class FullPageWidthHRFlowable(Flowable):
     Works in any flowable frame by translating left, and drawing at safe Y-position.
     """
 
-    def __init__(self, page_width=A4[0], left_margin=0, thickness=0.001, color=colors.HexColor("#80C6C0"), spaceAfter=0):
+    def __init__(self, page_width=PAGE_WIDTH, left_margin=0, thickness=0.001, color=colors.HexColor("#80C6C0"), spaceAfter=0):
         super().__init__()
         self.page_width = page_width
         self.left_margin = left_margin
@@ -182,7 +182,7 @@ class ThrivePageRenderer:
             # Draw glow text
             style = PDFStyleConfig()
             x = 100
-            y = A4[1] - 200
+            y = PAGE_HEIGHT - 200
             style.draw_glow_text(canvas, "Thrive Limitless", x, y)
             steps = int(height)
             for i in range(steps):
@@ -219,7 +219,7 @@ class ThrivePageRenderer:
             canvas.setFillColor(PMX_GREEN)
             text = "Thrive Limitless"
             text_width = stringWidth(text, FONT_INTER_REGULAR, FONT_SIZE_MEDIUM)
-            canvas.drawString(A4[0] - 32 - text_width, A4[1] - 31, text)
+            canvas.drawString(PAGE_WIDTH - 32 - text_width, PAGE_HEIGHT - 31, text)
 
         canvas.restoreState()
 
@@ -275,7 +275,7 @@ class NumberedCanvas(Canvas):
         text_width = stringWidth(text, font, size)
         self.setFont(font, size)
         self.setFillColor(PMX_GREEN)
-        self.drawString(A4[0] - 32 - text_width, 31, text)
+        self.drawString(PAGE_WIDTH - 32 - text_width, 31, text)
 
 class RoundedPill(Flowable):
     def __init__(
@@ -1578,7 +1578,7 @@ class ThriveRoadmapTemplate:
             [para],
             [para_1]
         ])
-        table2 = Table([[table1]], colWidths=[A4[0]])
+        table2 = Table([[table1]], colWidths=[PAGE_WIDTH])
         table2.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
@@ -1636,7 +1636,7 @@ class ThriveRoadmapTemplate:
         ]))
 
         # Optional: wrap with outer margin
-        container_table = Table([[layout_table]], colWidths=[A4[0]])
+        container_table = Table([[layout_table]], colWidths=[PAGE_WIDTH])
         container_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 40),
             ("RIGHTPADDING", (0, 0), (-1, -1), 40),
@@ -1682,7 +1682,7 @@ class ThriveRoadmapTemplate:
             ("LEFTPADDING", (1, 0), (-1, -1), 0),
             ("RIGHTPADDING", (1, 0), (-1, -1), 0),
         ]))
-        toc_table2=Table([[toc],[Spacer(1, 8)],[toc_table]],colWidths=[A4[0]])
+        toc_table2=Table([[toc],[Spacer(1, 8)],[toc_table]],colWidths=[PAGE_WIDTH])
         toc_table2.setStyle(TableStyle([
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
@@ -1861,7 +1861,7 @@ class ThriveRoadmapTemplate:
         )
         final_table2 = Table(
             [[final_table]],
-            colWidths=[A4[0]],
+            colWidths=[PAGE_WIDTH],
             style=[
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -2046,7 +2046,7 @@ class ThriveRoadmapTemplate:
             #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
 
         ]))
-        section_table2=Table([[section_table,right_metric_table]],colWidths=[309,A4[0]-309])
+        section_table2=Table([[section_table,right_metric_table]],colWidths=[309,PAGE_WIDTH-309])
         section_table2.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 34),
             ("RIGHTPADDING", (0, 0), (-1, -1), 38.88),
@@ -2060,7 +2060,7 @@ class ThriveRoadmapTemplate:
         ]))
         return section_table2
 
-    def inner_rounded_table_data(self,symptoms,title,icon,width=A4[0]-64):    
+    def inner_rounded_table_data(self,symptoms,title,icon,width=PAGE_WIDTH-64):    
         bullets = []
         title_para = Paragraph(title, self.styles["SvgBulletTitle"])
 
@@ -2137,7 +2137,7 @@ class ThriveRoadmapTemplate:
         title =  current_symptoms_conditions.get("conditions_data", {}).get("title", "")
         section.append([self.inner_rounded_table_data(symptoms,title,icon)])
 
-        section_table = Table(section, colWidths=[A4[0]])
+        section_table = Table(section, colWidths=[PAGE_WIDTH])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
@@ -2169,7 +2169,7 @@ class ThriveRoadmapTemplate:
         title =  your_current_stack.get("supplements", {}).get("title", "")
         section.append([self.inner_rounded_table_data(supplements,title,icon)])
 
-        section_table = Table(section, colWidths=[A4[0]])
+        section_table = Table(section, colWidths=[PAGE_WIDTH])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
@@ -2223,7 +2223,7 @@ class ThriveRoadmapTemplate:
         family_history_table = Table([
             family_header_row,
             [total_stack, '', '']  # fill empty cells for spanning
-        ], colWidths=[24, 10, A4[0] - 64 - 34])  # match widths with padding considered
+        ], colWidths=[24, 10, PAGE_WIDTH - 64 - 34])  # match widths with padding considered
 
         family_history_table.setStyle(TableStyle([
             ("SPAN", (0, 1), (2, 1)),  # Span across all 3 columns in 2nd row
@@ -2233,7 +2233,7 @@ class ThriveRoadmapTemplate:
         ]))
 
         # 8. Wrap it in rounded box
-        total_table = Table([[family_history_table]], colWidths=[A4[0] - 64])
+        total_table = Table([[family_history_table]], colWidths=[PAGE_WIDTH - 64])
         total_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
@@ -2242,7 +2242,7 @@ class ThriveRoadmapTemplate:
         ]))
 
         rounded_box = RoundedBox(
-            width=A4[0] - 64,
+            width=PAGE_WIDTH - 64,
             height=None,
             content=total_table,
             corner_radius=16,
@@ -2310,7 +2310,7 @@ class ThriveRoadmapTemplate:
                 bullets.append([inner_table])
                 bullets_table=Table(bullets)
                 rounded_box = RoundedBox(
-                    width=A4[0] - 64,
+                    width=PAGE_WIDTH - 64,
                     height=None,
                     content=bullets_table,
                     corner_radius=16,
@@ -2322,7 +2322,7 @@ class ThriveRoadmapTemplate:
                 section.append([rounded_box])
         
         # 10. Wrap all in final section table
-        section_table = Table(section, colWidths=[A4[0]])
+        section_table = Table(section, colWidths=[PAGE_WIDTH])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
@@ -2350,7 +2350,7 @@ class ThriveRoadmapTemplate:
         title =  health_goals_data.get("title", "")
         section.append([self.inner_rounded_table_data(goals_data,title,icon)])
 
-        section_table = Table(section, colWidths=[A4[0]])
+        section_table = Table(section, colWidths=[PAGE_WIDTH])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
             ("RIGHTPADDING", (0, 0), (-1, -1), 32),
@@ -2547,7 +2547,7 @@ class ThriveRoadmapTemplate:
 
         full_row_ = Table(
             [[full_row]],
-            colWidths=[A4[0]-64],
+            colWidths=[PAGE_WIDTH-64],
         )
         full_row_.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
@@ -2559,7 +2559,7 @@ class ThriveRoadmapTemplate:
 
 
         outer = RoundedBox(
-            width=A4[0]-64,
+            width=PAGE_WIDTH-64,
             height=None,
             content=full_row_,
             corner_radius=10,
@@ -2568,7 +2568,7 @@ class ThriveRoadmapTemplate:
         )
 
         section.append(outer)
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -2652,7 +2652,7 @@ class ThriveRoadmapTemplate:
         )
 
         rounded_box = RoundedBox(
-            width=A4[0]-64,
+            width=PAGE_WIDTH-64,
             height=None,
             content=inner_table,
             corner_radius=16,
@@ -2682,7 +2682,7 @@ class ThriveRoadmapTemplate:
         section_.append(
             Table(
                 [family_header_row],
-                colWidths=[24, 10, A4[0]-24-10-64],
+                colWidths=[24, 10, PAGE_WIDTH-24-10-64],
                 style=[
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -2880,7 +2880,7 @@ class ThriveRoadmapTemplate:
         ]))
         section_.append(section_table)
         section_.append(self.get_eye_screening_card(eye_screening,icon_paths))
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
 
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
@@ -3033,9 +3033,9 @@ class ThriveRoadmapTemplate:
             #("BOX",(0,0),(-1,-1),0.5,colors.black)
         ]))
 
-        section_.append(RoundedBox(width=A4[0]-64, height=None, content=rows_table, corner_radius=16))
+        section_.append(RoundedBox(width=PAGE_WIDTH-64, height=None, content=rows_table, corner_radius=16))
 
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
 
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
@@ -3170,10 +3170,10 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, -1), (-1, -1), 16),
         ]))
 
-        rounded_container = RoundedBox(width=A4[0] - 85, height=None, content=drawlist_table, corner_radius=12)
+        rounded_container = RoundedBox(width=PAGE_WIDTH - 85, height=None, content=drawlist_table, corner_radius=12)
         section_.append(rounded_container)
 
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -3293,7 +3293,7 @@ class ThriveRoadmapTemplate:
         ]))
         bmi_row=Table([
             [bmi_row_]
-        ], colWidths=[A4[0]-86])
+        ], colWidths=[PAGE_WIDTH-86])
         bmi_row.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("TOPPADDING", (0, 0), (-1, -1), 16),
@@ -3303,10 +3303,10 @@ class ThriveRoadmapTemplate:
             #("BOX",(0,0),(-1,-1),0.3,colors.black)
         ]))
         
-        rounded_box=RoundedBox(width=A4[0]-86, height=None, content=bmi_row, corner_radius=12)
+        rounded_box=RoundedBox(width=PAGE_WIDTH-86, height=None, content=bmi_row, corner_radius=12)
 
         section_.append(rounded_box)        
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -3640,10 +3640,10 @@ class ThriveRoadmapTemplate:
             ]
             table_data.append(row)
 
-        col_widths = [(A4[0]-69) / 3] * 3
+        col_widths = [(PAGE_WIDTH-69) / 3] * 3
         section_.append(self._build_styled_table(table_data, col_widths))
 
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -3726,7 +3726,7 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             # ("BOX",(0,0),(-1,-1),0.2,colors.black),
         ]))
-        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[PAGE_WIDTH-64])
         bottom_stack_.setStyle(TableStyle([
 
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -3739,14 +3739,14 @@ class ThriveRoadmapTemplate:
 
 
         rounded_card = RoundedBox(
-                width=A4[0]-64,
+                width=PAGE_WIDTH-64,
                 height=None,
                 content=bottom_stack_,
                 corner_radius=16
             )
         section.append(rounded_card)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -3824,7 +3824,7 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             # ("BOX",(0,0),(-1,-1),0.2,colors.black),
         ]))
-        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[PAGE_WIDTH-64])
         bottom_stack_.setStyle(TableStyle([
 
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -3837,14 +3837,14 @@ class ThriveRoadmapTemplate:
 
 
         rounded_card = RoundedBox(
-                width=A4[0]-64,
+                width=PAGE_WIDTH-64,
                 height=None,
                 content=bottom_stack_,
                 corner_radius=16
             )
         section.append(rounded_card)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -3903,7 +3903,7 @@ class ThriveRoadmapTemplate:
         section.append(ListFlowable(bullet_items, bulletType='bullet', start='•'))
         # section.append(Spacer(1, 12))
         
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4079,7 +4079,7 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             # ("BOX",(0,0),(-1,-1),0.2,colors.black),
         ]))
-        bottom_stack_ = Table([[bottom_stack]], colWidths=[A4[0]-64])
+        bottom_stack_ = Table([[bottom_stack]], colWidths=[PAGE_WIDTH-64])
         bottom_stack_.setStyle(TableStyle([
 
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -4092,14 +4092,14 @@ class ThriveRoadmapTemplate:
 
 
         rounded_card = RoundedBox(
-                width=A4[0]-64,
+                width=PAGE_WIDTH-64,
                 height=None,
                 content=bottom_stack_,
                 corner_radius=16
             )
         section.append(rounded_card)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4257,7 +4257,7 @@ class ThriveRoadmapTemplate:
 
         ]))
         # Outer Wrapper Box
-        drawlist_table = Table([[draw_list_]], colWidths=[A4[0] - 64])
+        drawlist_table = Table([[draw_list_]], colWidths=[PAGE_WIDTH - 64])
         drawlist_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
@@ -4266,10 +4266,10 @@ class ThriveRoadmapTemplate:
             # ("BOX",(0,0),(-1,-1),0.3,colors.black)
         ]))
 
-        rounded_container = RoundedBox(width=A4[0] - 64, height=None, content=drawlist_table, corner_radius=12)
+        rounded_container = RoundedBox(width=PAGE_WIDTH - 64, height=None, content=drawlist_table, corner_radius=12)
         section_.append(rounded_container)
 
-        final_table = Table([[item] for item in section_], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section_], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4390,7 +4390,7 @@ class ThriveRoadmapTemplate:
             draw_list.append(wrapper)
 
         
-        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table = Table([[draw_list]], colWidths=[PAGE_WIDTH - 80])
         drawlist_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
@@ -4399,10 +4399,10 @@ class ThriveRoadmapTemplate:
             # ("BOX",(0,0),(-1,-1),0.3,colors.black)
         ]))
 
-        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        rounded_container = RoundedBox(width=PAGE_WIDTH - 80, height=None, content=drawlist_table, corner_radius=12)
         section.append(rounded_container)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4587,7 +4587,7 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
         ]))
         draw_list.append(microbiome_table)
-        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table = Table([[draw_list]], colWidths=[PAGE_WIDTH - 80])
         drawlist_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
@@ -4596,10 +4596,10 @@ class ThriveRoadmapTemplate:
             # ("BOX",(0,0),(-1,-1),0.3,colors.black)
         ]))
 
-        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        rounded_container = RoundedBox(width=PAGE_WIDTH - 80, height=None, content=drawlist_table, corner_radius=12)
         section.append(rounded_container)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4718,7 +4718,7 @@ class ThriveRoadmapTemplate:
             draw_list.append(wrapper)
 
         
-        drawlist_table = Table([[draw_list]], colWidths=[A4[0] - 80])
+        drawlist_table = Table([[draw_list]], colWidths=[PAGE_WIDTH - 80])
         drawlist_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
             ("RIGHTPADDING", (0, 0), (-1, -1), 16),
@@ -4727,10 +4727,10 @@ class ThriveRoadmapTemplate:
             # ("BOX",(0,0),(-1,-1),0.3,colors.black)
         ]))
 
-        rounded_container = RoundedBox(width=A4[0] - 80, height=None, content=drawlist_table, corner_radius=12)
+        rounded_container = RoundedBox(width=PAGE_WIDTH - 80, height=None, content=drawlist_table, corner_radius=12)
         section.append(rounded_container)
 
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -4864,7 +4864,7 @@ class ThriveRoadmapTemplate:
         ]))
         outer_left_stack_ = Table(
             [[outer_left_stack]],
-            colWidths=[A4[0]-64],
+            colWidths=[PAGE_WIDTH-64],
         )
         outer_left_stack_.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -4875,7 +4875,7 @@ class ThriveRoadmapTemplate:
 
 
         rounded_card = RoundedBox(
-                width=A4[0]-64,
+                width=PAGE_WIDTH-64,
                 height=None,
                 content=outer_left_stack_,
                 corner_radius=12,
@@ -4891,7 +4891,7 @@ class ThriveRoadmapTemplate:
         # img = Image(img_path, width=558, height=531)
         section.append(Spacer(1,8))
         section.append(vitamin_b12_icon)
-        final_table = Table([[item] for item in section], colWidths=[A4[0]])
+        final_table = Table([[item] for item in section], colWidths=[PAGE_WIDTH])
         final_table.setStyle(TableStyle([
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -5005,7 +5005,7 @@ class ThriveRoadmapTemplate:
             ]))
             outer_left_stack_ = Table(
                 [[outer_left_stack]],
-                colWidths=[A4[0]-64],
+                colWidths=[PAGE_WIDTH-64],
             )
             outer_left_stack_.setStyle(TableStyle([
                 ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -5016,7 +5016,7 @@ class ThriveRoadmapTemplate:
 
 
             rounded_card = RoundedBox(
-                    width=A4[0]-64,
+                    width=PAGE_WIDTH-64,
                     height=None,
                     content=outer_left_stack_,
                     corner_radius=12,
@@ -5210,7 +5210,7 @@ class ThriveRoadmapTemplate:
         section.append(Paragraph(title_data, self.styles["eye_screening_desc_style"]))
         section.append(Spacer(1, 17))
         
-        page_width = A4[0]
+        page_width = PAGE_WIDTH
         left_col_width = 126
         gap_between_columns = 16
         right_col_width = 322  # 64 = margins
@@ -5538,7 +5538,7 @@ class ThriveRoadmapTemplate:
         section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
         section.append(Spacer(1, 10))
 
-        page_width = A4[0]
+        page_width = PAGE_WIDTH
         left_col_width = 126
         gap_between_columns = 32
         right_col_width = page_width - 64 - left_col_width - gap_between_columns  # 64 = margins
@@ -5898,8 +5898,8 @@ async def generate_pdf(request: Request):
     image_frame = Frame(
         x1=0,
         y1=0,
-        width=A4[0],
-        height=A4[1],
+        width=PAGE_WIDTH,
+        height=PAGE_HEIGHT,
         id='image',
         leftPadding=0,
         bottomPadding=0,
@@ -5916,7 +5916,7 @@ async def generate_pdf(request: Request):
 
     # Full-page image
     img_path = os.path.join(svg_dir, "final_page.png")
-    full_page_image = Image(img_path, width=A4[0], height=A4[1])
+    full_page_image = Image(img_path, width=PAGE_WIDTH, height=PAGE_HEIGHT)
     full_page_image.hAlign = 'CENTER'
     flowables.append(full_page_image)
     doc.build(flowables, canvasmaker=NumberedCanvas)
