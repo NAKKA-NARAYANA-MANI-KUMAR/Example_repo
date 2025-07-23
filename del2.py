@@ -25,11 +25,11 @@ class MyDocTemplate(BaseDocTemplate):
                 self.notify('TOCEntry', (1, text, self.page))
 
 h1 = PS(name = 'Heading1',
-       fontSize = 14,
+       fontSize = 30,
        leading = 16)
 
 h2 = PS(name = 'Heading2',
-       fontSize = 12,
+       fontSize = 26,
        leading = 14,
        leftIndent = 10)
 
@@ -37,7 +37,10 @@ h2 = PS(name = 'Heading2',
 story = []
 toc = TableOfContents()
 # For conciseness we use the same styles for headings and TOC entries
-toc.levelStyles = [h1, h2]
+toc_h1 = PS(name='TOCHeading1', fontSize=12, leftIndent=20, leading=14)
+toc_h2 = PS(name='TOCHeading2', fontSize=10, leftIndent=40, leading=12)
+
+toc.levelStyles = [toc_h1, toc_h2]
 story.append(toc)
 story.append(PageBreak())
 story.append(Paragraph('First heading', h1))

@@ -122,6 +122,21 @@ metric = {
     "powder": {"width": 15, "height": 11.3},
     "tablet": {"width": 15, "height": 15.03}
 }
+class MyDocTemplate(BaseDocTemplate):
+    def __init__(self, filename, **kwargs):
+        self.allowSplitting = 0
+        self.custom_toc_entries = []
+        BaseDocTemplate.__init__(self, filename, pagesize=A4, **kwargs)
+        frame = Frame(2.5 * cm, 2.5 * cm, 15 * cm, 25 * cm, id='F1')
+        template = PageTemplate('normal', [frame])
+        self.addPageTemplates(template)
+
+    def afterFlowable(self, flowable):
+        if isinstance(flowable, Paragraph):
+            text = flowable.getPlainText()
+            style = flowable.style.name
+            if style == "Heading1":
+                self.custom_toc_entries.append((0, text, self.page))
 
 class RoundedBox(Flowable):
     def __init__(self, width, height=None, content=None, corner_radius=8,border_radius=0.4,stroke_color=PMX_GREEN,fill_color=colors.white ):
@@ -1636,7 +1651,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                     if table:
                         elements.append(table)
                 else:
-                    elements.append(self.create_diagnosis_pill_table(section_data,title))
+                    elements.append(KeepTogether(self.create_diagnosis_pill_table(section_data,title)))
                 elements.append(Spacer(1, 16))
 
         return elements

@@ -36,6 +36,7 @@ from svglib.svglib import svg2rlg
 
 # JSON Handling (optional if needed)
 import json
+svg_dir = "staticfiles/icons/"
 
 # === Brand Colors ===
 PMX_GREEN = colors.HexColor("#00625B")
@@ -87,8 +88,43 @@ TABLE_COL_NUMBER = 0.05
 TABLE_PADDING = 8
 TABLE_HEADER_PADDING = 12
 
-svg_dir = "staticfiles/icons/"
 # === Base Classes ===
+
+class MyDocTemplate(BaseDocTemplate):
+    def __init__(self, filename, **kwargs):
+        self.allowSplitting = 0
+        self.custom_toc_entries = []
+
+        # Use super to avoid duplication of pagesize keyword
+        super().__init__(filename, **kwargs)
+
+        # Define a single frame (can be replaced by your actual page layout logic)
+        frame = Frame(2* cm, 2.5 * cm, 15 * cm, 25 * cm, id='F1')
+
+        # Create a simple template with that frame
+        template = PageTemplate(id='normal', frames=[frame])
+        self.addPageTemplates([template])
+
+    def afterFlowable(self, flowable):
+        """
+        Collects TOC entries by detecting Paragraphs with specific styles.
+        """
+        if isinstance(flowable, Paragraph):
+            text = flowable.getPlainText()
+            style = flowable.style.name
+
+            if style == "TOCTitleStyle":
+                # You can customize level=0 or change based on more logic
+                self.custom_toc_entries.append((0, text, self.page+3))
+
+            # Optional: Support Heading1/2/3 auto-detection
+            elif style.startswith("Heading"):
+                try:
+                    level = int(style[-1])
+                except ValueError:
+                    level = 0
+                self.custom_toc_entries.append((level, text, self.page))
+
 class ThriveRoadmapOnlySVGImage:
     def __init__(self, filename, width=None, height=None):
         self.filename = filename
@@ -989,11 +1025,13 @@ class BackgroundImageCard(Flowable):
         self.card.drawOn(self.canv, 0, 0)
 
 class ThriveRoadmapTemplate:
-    def __init__(self):
+    def __init__(self,buffer):
+        self.buffer = buffer
         self.styles = getSampleStyleSheet()
         self.base_path = Path("staticfiles/icons")
         self.init_styles()
         self.svg_dir = "staticfiles/icons/"
+        self.doc = MyDocTemplate(buffer)
 
     def _get_logo(self):
         possible_paths = [
@@ -2117,10 +2155,10 @@ class ThriveRoadmapTemplate:
     def get_current_symptoms_conditions(self,current_symptoms_conditions):
 
         section = []
-        header=current_symptoms_conditions.get("header","")
-        csc=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([csc])
-        section.append([Spacer(1,8)])
+        # header=current_symptoms_conditions.get("header","")
+        # csc=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append([csc])
+        # section.append([Spacer(1,8)])
         header_data=current_symptoms_conditions.get("header_data","")
         csc_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([csc_data])
@@ -2149,10 +2187,10 @@ class ThriveRoadmapTemplate:
     def get_your_current_stack(self,your_current_stack):
 
         section = []
-        header=your_current_stack.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([cs])
-        section.append([Spacer(1,8)])
+        # header=your_current_stack.get("header","")
+        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append([cs])
+        # section.append([Spacer(1,8)])
         header_data=your_current_stack.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([cs_data])
@@ -2182,9 +2220,9 @@ class ThriveRoadmapTemplate:
         section = []
 
         # 1. Header and Subheader
-        header = family_past_histories.get("header", "")
-        section.append([Paragraph(header, self.styles["TOCTitleStyle"])])
-        section.append([Spacer(1, 8)])
+        # header = family_past_histories.get("header", "")
+        # section.append([Paragraph(header, self.styles["TOCTitleStyle"])])
+        # section.append([Spacer(1, 8)])
 
         header_data = family_past_histories.get("header_data", "")
         section.append([Paragraph(header_data, self.styles["header_data_style"])])
@@ -2334,10 +2372,10 @@ class ThriveRoadmapTemplate:
 
     def get_health_goals(self,health_goals_data):
         section = []
-        header=health_goals_data.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([cs])
-        section.append([Spacer(1,8)])
+        # header=health_goals_data.get("header","")
+        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append([cs])
+        # section.append([Spacer(1,8)])
         header_data=health_goals_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([cs_data])
@@ -2362,10 +2400,10 @@ class ThriveRoadmapTemplate:
     def get_lifestyle_trends(self, lifestyle_data: dict):
 
         section = []
-        header=lifestyle_data.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append([cs])
-        section.append([Spacer(1,8)])
+        # header=lifestyle_data.get("header","")
+        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append([cs])
+        # section.append([Spacer(1,8)])
 
         header_data=lifestyle_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
@@ -2662,10 +2700,10 @@ class ThriveRoadmapTemplate:
     def get_vital_params(self, vital_params_data: dict):
         
         section_ = []
-        header=vital_params_data.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1,8))
+        # header=vital_params_data.get("header","")
+        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section_.append(cs)
+        # section_.append(Spacer(1,8))
         header_data=vital_params_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section_.append(cs_data)
@@ -2933,10 +2971,10 @@ class ThriveRoadmapTemplate:
 
     def get_ear_screening(self, ear_screening_data: dict):
         section_ = []
-        header=ear_screening_data.get("header","")
-        cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1,8))
+        # header=ear_screening_data.get("header","")
+        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        # section_.append(cs)
+        # section_.append(Spacer(1,8))
         header_data=ear_screening_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section_.append(cs_data)
@@ -3050,10 +3088,10 @@ class ThriveRoadmapTemplate:
         section_ = []
         
         # Header Section
-        header = brain_function_score.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1, 16))
+        # header = brain_function_score.get("header", "")
+        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        # section_.append(cs)
+        # section_.append(Spacer(1, 16))
 
         header_data = brain_function_score.get("header_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -3187,10 +3225,10 @@ class ThriveRoadmapTemplate:
     def get_body_mass_index(self,bmi_data: dict,data):
         section_ = []
         # Header Section
-        header = bmi_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1, 16))
+        # header = bmi_data.get("header", "")
+        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        # section_.append(cs)
+        # section_.append(Spacer(1, 16))
 
         header_data = bmi_data.get("header_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -3602,10 +3640,10 @@ class ThriveRoadmapTemplate:
     def get_fitness_assesment(self, fitness_assesment_data: dict):
         section_ = []
         # Header Section
-        header = fitness_assesment_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1, 8))
+        # header = fitness_assesment_data.get("header", "")
+        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        # section_.append(cs)
+        # section_.append(Spacer(1, 8))
 
         header_data = fitness_assesment_data.get("header_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -3659,8 +3697,7 @@ class ThriveRoadmapTemplate:
     def get_homa_ir(self, homa_ir_data: dict):
         section = []
 
-        title = homa_ir_data.get("title", "")
-        sub_title = homa_ir_data.get("sub_title", "")
+        
     
         homa_ir_score = homa_ir_data.get("homa_ir_score", "")
         home_ir_box_title=homa_ir_data.get("home_ir_box_title", "")
@@ -3671,14 +3708,6 @@ class ThriveRoadmapTemplate:
         bottom_labels=homa_ir_data.get("bottom_labels", "")
         pill_text=homa_ir_data.get("pill_text","")  
 
-        # ---------- Heading ----------
-        header = f'''
-        <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
-        <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
-        '''
-        heading = Paragraph(header, self.styles["homair"])
-        section.append(heading)
-        section.append(Spacer(1, 16))
         
         # ---------- Description Paragraph ----------
         header_data = homa_ir_data.get("title_data", "")
@@ -3760,7 +3789,7 @@ class ThriveRoadmapTemplate:
     def get_framingham_risk_score(self, framingham_risk_data: dict):
         section = []
 
-        title = framingham_risk_data.get("title", "")    
+          
         fr_risk_score = framingham_risk_data.get("fr_risk_score", "")
         fr_risk_box_title=framingham_risk_data.get("fr_risk_box_title", "")
         gradient_colors=framingham_risk_data.get("gradient_colors", "")  
@@ -3769,10 +3798,6 @@ class ThriveRoadmapTemplate:
         top_labels=framingham_risk_data.get("top_labels", "")  
         bottom_labels=framingham_risk_data.get("bottom_labels", "")
         pill_text=framingham_risk_data.get("pill_text","")  
-
-        cs = Paragraph(title, self.styles["TOCTitleStyle"])
-        section.append(cs)
-        section.append(Spacer(1, 16))
 
         header_data = framingham_risk_data.get("title_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -3857,13 +3882,6 @@ class ThriveRoadmapTemplate:
 
     def get_oligo_scan(self, oligo_scan_data: dict):
         section = []
-
-        title = oligo_scan_data.get("title", "")    
-
-        cs = Paragraph(title, self.styles["TOCTitleStyle"])
-        section.append(cs)
-        section.append(Spacer(1, 16))
-
         header_data = oligo_scan_data.get("title_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
         section.append(cs_data)
@@ -4005,8 +4023,7 @@ class ThriveRoadmapTemplate:
     def get_aerobic_capacity(self, aerobic_data: dict):
         section = []
 
-        title = aerobic_data.get("title", "")
-        sub_title = aerobic_data.get("sub_title", "")
+        
     
         aerobic_score = aerobic_data.get("aerobic_score", "")
         aerobic_box_title=aerobic_data.get("aerobic_box_title", "")
@@ -4016,16 +4033,7 @@ class ThriveRoadmapTemplate:
         max_val=aerobic_data.get("max_val", "")  
         top_labels=aerobic_data.get("top_labels", "")  
         bottom_labels=aerobic_data.get("bottom_labels", "")
-        pill_text=aerobic_data.get("pill_text","")  
-
-        # ---------- Heading ----------
-        header = f'''
-        <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
-        <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
-        '''
-        heading = Paragraph(header, self.styles["homair"])
-        section.append(heading)
-        section.append(Spacer(1, 16))
+        pill_text=aerobic_data.get("pill_text","")         
         
         # ---------- Description Paragraph ----------
         header_data = aerobic_data.get("title_data", "")
@@ -4112,12 +4120,6 @@ class ThriveRoadmapTemplate:
 
     def get_resting_health(self, resting_health_data: dict):
         section_ = []
-        
-        # Header Section
-        header = resting_health_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section_.append(cs)
-        section_.append(Spacer(1, 16))
 
         header_data = resting_health_data.get("header_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -4284,10 +4286,10 @@ class ThriveRoadmapTemplate:
         section = []
         
         # Header Section
-        header = fatty_acid_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append(cs)
-        section.append(Spacer(1, 16))
+        # header = fatty_acid_data.get("header", "")
+        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append(cs)
+        # section.append(Spacer(1, 16))
 
         header_data = fatty_acid_data.get("header_data", "")
         content = []
@@ -4417,10 +4419,10 @@ class ThriveRoadmapTemplate:
         section = []
         
         # Header Section
-        header = digestive_health_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append(cs)
-        section.append(Spacer(1, 16))
+        # header = digestive_health_data.get("header", "")
+        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
+        # section.append(cs)
+        # section.append(Spacer(1, 16))
 
         header_data = digestive_health_data.get("header_data", "")
         content = []
@@ -4614,10 +4616,7 @@ class ThriveRoadmapTemplate:
         section = []
         
         # Header Section
-        header = digestion_potential_data.get("header", "")
-        cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        section.append(cs)
-        section.append(Spacer(1, 16))
+        
 
         header_data = digestion_potential_data.get("header_data", "")
         content = []
@@ -4744,13 +4743,10 @@ class ThriveRoadmapTemplate:
     def get_understanding_biomarker(self, biomarkers_range: dict):
         section = []
 
-        title = biomarkers_range.get("title", "")
+        
         biomarkers_range_data = biomarkers_range.get("biomarkers_range_data", [])
         biomarkers_data = biomarkers_range.get("biomarkers_data", [])
-        heading = Paragraph(title, self.styles["TOCTitleStyle"])
-
-        section.append(heading)
-        section.append(Spacer(1, 16))
+        
         icon_path = os.path.join(svg_dir, "bullet_point.svg")  
         icon = self.svg_icon(icon_path, width=16, height=16)
 
@@ -5623,40 +5619,107 @@ class ThriveRoadmapTemplate:
 
         return section
 
+    def build_toc_table(self, toc_data):
+        section = []
+        
+        toc_title = Paragraph("Table Of Contents", self.styles["TOCTitleStyle"])
+
+        section.append(toc_title)
+        section.append(Spacer(1, 12))
+        section.append(Indenter(left=32, right=32))
+        toc_table_data = []
+
+        bullet_path = os.path.join("staticfiles", "icons", "table_content_bullet.png")
+
+        if not toc_data:
+            # Add dummy row to prevent crash
+            toc_table_data.append([
+                "", "", Paragraph("Generating TOC...", self.styles["TOCEntryText"]), ""
+            ])
+        else:
+            for level, title, page in toc_data:
+                icon_bullet = Image(bullet_path, width=40, height=40)
+                toc_table_data.append([
+                    icon_bullet,
+                    Spacer(13, 1),
+                    Paragraph(title, self.styles["TOCEntryText"]),
+                    Paragraph(str(page), self.styles["toc_pagenum"]),
+                ])
+
+        toc_table = Table(toc_table_data, colWidths=[40, 13, 344, 134])
+        toc_table.setStyle(TableStyle([
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            # ("VALIGN", (0, 0), (0, -1), "TOP"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("ALIGN", (0, 0), (1, -1), "CENTER"),
+            ("ALIGN", (3, 0), (3, -1), "RIGHT"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0)
+        ]))
+        
+        section.append(toc_table)
+        
+        section.append(Indenter(left=-32, right=-32))
+        section.append(PageBreak())
+        return section
+
     def generate(self, data: dict) -> list:
         story = []
-        story.extend(self.build_main_section(data))       
+        # story.extend(self.build_main_section(data))       
         
-        toc_data=data.get("toc_items",[])
-        if toc_data:
-            story.append(PageBreak())
-            story.extend(self.toc_table(toc_data))
+        # toc_data=data.get("toc_items",[])
+        # if toc_data:
+        #     story.append(PageBreak())
+        #     story.extend(self.toc_table(toc_data))
         
         user_profile_card=data.get("user_profile_card",{})
         if user_profile_card:
-            story.append(PageBreak())
+            hidden_toc_para = Paragraph(
+                "Health Profile", 
+                ParagraphStyle(
+                    name="TOCTitleStyle",  # Make sure this is picked up by your afterFlowable
+                    fontSize=0, 
+                    leading=0,
+                    spaceAfter=0,
+                    spaceBefore=0
+                )
+            )
+            # Triggers TOC entry without visible text
+            # story.append(PageBreak())
             story.append(self.get_user_profile_card(user_profile_card))
+            story.append(hidden_toc_para) 
         
         profile_card_data=data.get("profile_card_data",{})
         if profile_card_data:
-            story.append(Spacer(1, 12))
+            # story.append(Spacer(1, 12))
             story.append(self.get_health_metrics_left_column(profile_card_data,data))
         
         current_symptoms_conditions=data.get("current_symptoms_conditions",{})
         if current_symptoms_conditions:
-            story.append(PageBreak())
+            # story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=current_symptoms_conditions.get("header","")
+            csc=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(csc)
             story.append(self.get_current_symptoms_conditions(current_symptoms_conditions))
         
         your_current_stack=data.get("your_current_stack",{})
         if your_current_stack:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=your_current_stack.get("header","")
+            csc=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(csc)
+            story.append(Spacer(1,8))
             story.append(self.get_your_current_stack(your_current_stack))
 
         family_and_past_histories=data.get("family_and_past_histories",{})
         if family_and_past_histories:
             story.append(PageBreak())
+            story.append(Spacer(1, 8))
+            header = family_and_past_histories.get("header", "")
+            story.append(Paragraph(header, self.styles["TOCTitleStyle"]))
             story.append(Spacer(1, 8))
             story.append(self.get_family_past_histories(family_and_past_histories))
 
@@ -5664,36 +5727,60 @@ class ThriveRoadmapTemplate:
         if health_goals:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=health_goals.get("header","")
+            cs=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1,8))
             story.append(self.get_health_goals(health_goals))
         
         lifestyle_trends=data.get("lifestyle_trends",{})
         if lifestyle_trends:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=lifestyle_trends.get("header","")
+            cs=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1,8))
             story.append(self.get_lifestyle_trends(lifestyle_trends))
         
         vital_params=data.get("vital_params",{})
         if vital_params:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=vital_params.get("header","")
+            cs=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1,8))
             story.append(self.get_vital_params(vital_params))
         
         ear_screening=data.get("ear_screening",{})
         if ear_screening:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header=ear_screening.get("header","")
+            cs=Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1,8))
             story.append(self.get_ear_screening(ear_screening))
 
         brain_function_score=data.get("brain_score",{})
         if brain_function_score:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = brain_function_score.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_brain_function_screen(brain_function_score))
 
         bmi=data.get("bmi",{})
         if bmi:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = bmi.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_body_mass_index(bmi,data))
 
         body_composition=data.get("body_composition",{})
@@ -5706,24 +5793,45 @@ class ThriveRoadmapTemplate:
         if fitness_assesment:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = fitness_assesment.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 8))
             story.append(self.get_fitness_assesment(fitness_assesment))
 
         homa_ir=data.get("homa_ir",{})
         if homa_ir:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            title = homa_ir.get("title", "")
+            sub_title = homa_ir.get("sub_title", "")
+            header = f'''
+            <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
+            <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
+            '''
+            heading = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(heading)
+            story.append(Spacer(1, 16))
             story.append(self.get_homa_ir(homa_ir))
         
         framingham_risk_score=data.get("framingham_risk_score",{})
         if framingham_risk_score:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            title = framingham_risk_score.get("title", "")  
+            cs = Paragraph(title, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_framingham_risk_score(framingham_risk_score))
 
         oligo_scan=data.get("oligo_scan",{})
         if oligo_scan:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            title = oligo_scan.get("title", "")    
+            cs = Paragraph(title, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_oligo_scan(oligo_scan))
 
         domain_in_focus=data.get("domain_in_focus",{})
@@ -5742,72 +5850,126 @@ class ThriveRoadmapTemplate:
         if aerobic_capacity:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            title = aerobic_capacity.get("title", "")
+            sub_title = aerobic_capacity.get("sub_title", "")
+            header = f'''
+            <font name="{FONT_RALEWAY_MEDIUM}" size="30">{title}</font> 
+            <font name="{FONT_INTER_SEMI_BOLD}" size="14">({sub_title})</font>
+            '''
+            heading = Paragraph(header, self.styles["homair"])
+            story.append(heading)
+            story.append(Spacer(1, 16))
             story.append(self.get_aerobic_capacity(aerobic_capacity))
                
         resting_health=data.get("resting_health",{})
         if resting_health:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = resting_health.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_resting_health(resting_health))
         
         fatty_acid=data.get("fatty_acid",{})
         if fatty_acid:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = fatty_acid.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_fatty_acid(fatty_acid))
         
         digestive_health=data.get("digestive_health",{})
         if digestive_health:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestive_health.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
+
             story.append(self.get_digestive_health(digestive_health))
         
         disease_susceptibility=data.get("disease_susceptibility",{})
         if disease_susceptibility:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestive_health.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestive_health(disease_susceptibility))
         
         digestion_potential=data.get("digestion_potential",{})
         if digestion_potential:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(digestion_potential))
        
         lipid_digestion=data.get("lipid_digestion",{})
         if lipid_digestion:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(lipid_digestion))
         
         short_chain_fatty_acid=data.get("short_chain_fatty_acid",{})
         if short_chain_fatty_acid:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(short_chain_fatty_acid))
         
         gases=data.get("gases",{})
         if gases:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(gases))
         
         neurotransmitters=data.get("neurotransmitters",{})
         if neurotransmitters:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(neurotransmitters))
         
         vitamins=data.get("vitamins",{})
         if vitamins:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            header = digestion_potential.get("header", "")
+            cs = Paragraph(header, self.styles["TOCTitleStyle"])
+            story.append(cs)
+            story.append(Spacer(1, 16))
             story.append(self.get_digestion_potential(vitamins))
         
         understanding_biomarker=data.get("biomarkers_range",{})
         if understanding_biomarker:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
+            title = understanding_biomarker.get("title", "")
+            heading = Paragraph(title, self.styles["TOCTitleStyle"])
+            story.append(heading)
+            story.append(Spacer(1, 16))
             story.append(self.get_understanding_biomarker(understanding_biomarker))
         
         areas_of_concern=data.get("areas_of_concern",{})
@@ -5875,57 +6037,76 @@ app = FastAPI()
 
 @app.post("/generate-pdf")
 async def generate_pdf(request: Request):
-    data = await request.json()  
+    data = await request.json()
 
     buffer = io.BytesIO()
-    template = ThriveRoadmapTemplate()
+    template = ThriveRoadmapTemplate(buffer)
     renderer = ThrivePageRenderer(template)
 
-    doc = BaseDocTemplate(buffer, pagesize=A4,leftMargin=0, rightMargin=0,topMargin=0, bottomMargin=0)
-    frame = Frame(
-        x1=0,
-        y1=FOOTER_HEIGHT,
-        width=PAGE_WIDTH,
-        height=PAGE_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT,
-        id='main',
-        leftPadding=0,
-        bottomPadding=0,
-        rightPadding=0,
-        topPadding=0,
+    PAGE_WIDTH, PAGE_HEIGHT = A4
+    HEADER_HEIGHT = 80
+    FOOTER_HEIGHT = 80
+    svg_dir = "staticfiles/icons/"
 
+    # Define custom doc
+    doc = MyDocTemplate(buffer, pagesize=A4, leftMargin=0, rightMargin=0, topMargin=0, bottomMargin=0)
+
+    # Frames
+    frame = Frame(
+        x1=0, y1=FOOTER_HEIGHT, width=PAGE_WIDTH,
+        height=PAGE_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT,
+        id='main', leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0,
     )
 
     image_frame = Frame(
-        x1=0,
-        y1=0,
-        width=PAGE_WIDTH,
-        height=PAGE_HEIGHT,
-        id='image',
-        leftPadding=0,
-        bottomPadding=0,
-        rightPadding=0,
-        topPadding=0,
+        x1=0, y1=0, width=PAGE_WIDTH, height=PAGE_HEIGHT,
+        id='image', leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0,
     )
 
+    # Page templates
     doc.addPageTemplates([
         PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer),
         PageTemplate(id='image', frames=[image_frame])
     ])
-    flowables = template.generate(data)  
-    flowables.append(NextPageTemplate('image'))
 
-    # Full-page image
-    img_path = os.path.join(svg_dir, "final_page.png")
-    full_page_image = Image(img_path, width=PAGE_WIDTH, height=PAGE_HEIGHT)
-    full_page_image.hAlign = 'CENTER'
-    flowables.append(full_page_image)
-    doc.build(flowables, canvasmaker=NumberedCanvas)
-    with open("output_from_buffer_stash.pdf", "wb") as f:
+    # ---------- First Pass ----------
+    # Build only to collect TOC entries
+    initial_story = []
+    initial_story.extend(template.build_main_section(data))
+
+    initial_story.extend(template.generate(data))
+
+    initial_story.append(NextPageTemplate('image'))
+    doc.build(initial_story)
+
+    # ---------- Second Pass ----------
+    toc_flowables = template.build_toc_table(doc.custom_toc_entries)
+
+    final_story = []
+    # STEP 1: Main section still first
+    final_story.extend(template.build_main_section(data))
+
+    # STEP 2: Then add TOC
+    final_story.append(PageBreak())
+    final_story.extend(toc_flowables)
+    final_story.extend(template.generate(data))
+
+    final_story.append(NextPageTemplate('image'))
+
+    buffer.seek(0)
+    buffer.truncate(0)
+
+    final_doc = MyDocTemplate(buffer, pagesize=A4, leftMargin=0, rightMargin=0, topMargin=0, bottomMargin=0)
+    final_doc.addPageTemplates([
+        PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer),
+        PageTemplate(id='image', frames=[image_frame])
+    ])
+
+    final_doc.build(final_story, canvasmaker=NumberedCanvas)
+    with open("toc.pdf", "wb") as f:
         f.write(buffer.getvalue())
+
     buffer.seek(0)
     return StreamingResponse(buffer, media_type="application/pdf", headers={
         "Content-Disposition": "inline; filename=styled_output.pdf"
     })
-
-
-
