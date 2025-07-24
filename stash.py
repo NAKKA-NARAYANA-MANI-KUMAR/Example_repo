@@ -95,15 +95,7 @@ class MyDocTemplate(BaseDocTemplate):
         self.allowSplitting = 0
         self.custom_toc_entries = []
 
-        # Use super to avoid duplication of pagesize keyword
         super().__init__(filename, **kwargs)
-
-        # Define a single frame (can be replaced by your actual page layout logic)
-        frame = Frame(2* cm, 2.5 * cm, 15 * cm, 25 * cm, id='F1')
-
-        # Create a simple template with that frame
-        template = PageTemplate(id='normal', frames=[frame])
-        self.addPageTemplates([template])
 
     def afterFlowable(self, flowable):
         """
@@ -114,16 +106,11 @@ class MyDocTemplate(BaseDocTemplate):
             style = flowable.style.name
 
             if style == "TOCTitleStyle":
-                # You can customize level=0 or change based on more logic
-                self.custom_toc_entries.append((0, text, self.page+3))
+                formatted_page = str(self.page + 3).zfill(2)
+                self.custom_toc_entries.append((0, text, formatted_page))
 
-            # Optional: Support Heading1/2/3 auto-detection
-            elif style.startswith("Heading"):
-                try:
-                    level = int(style[-1])
-                except ValueError:
-                    level = 0
-                self.custom_toc_entries.append((level, text, self.page))
+                # self.custom_toc_entries.append((0, text, self.page+3))
+
 
 class ThriveRoadmapOnlySVGImage:
     def __init__(self, filename, width=None, height=None):
@@ -313,61 +300,178 @@ class NumberedCanvas(Canvas):
         self.setFillColor(PMX_GREEN)
         self.drawString(PAGE_WIDTH - 32 - text_width, 31, text)
 
+# class RoundedPill(Flowable):
+#     def __init__(
+#         self,
+#         text,
+#         bg_color,
+#         radius=9,
+#         width=64,
+#         height=18,
+#         font_size=8,
+#         text_color=colors.white,
+#         border_color=None,
+#         border_width=0.2,
+#         font_name=FONT_INTER_REGULAR,
+#     ):
+#         super().__init__()
+#         self.text = str(text)
+#         self.bg_color = bg_color
+#         self.radius = radius
+#         self.width = width
+#         self.height = height
+#         self.font_size = font_size
+#         self.text_color = text_color
+#         self.border_color = border_color
+#         self.border_width = border_width
+#         self.font_name=font_name
+
+#     def wrap(self, availWidth, availHeight):
+#         return self.width, self.height
+
+#     def draw(self):
+#         self.canv.saveState()
+
+#         # Fill background
+#         self.canv.setFillColor(self.bg_color)
+#         if self.border_color:
+#             self.canv.setStrokeColor(self.border_color)
+#             self.canv.setLineWidth(self.border_width)
+#             stroke_val = 1
+#         else:
+#             self.canv.setStrokeColor(self.bg_color)  # invisible stroke
+#             stroke_val = 0
+
+#         self.canv.roundRect(0, 0, self.width, self.height, self.radius, stroke=stroke_val, fill=1)
+
+#         # Text
+#         self.canv.setFont(self.font_name, self.font_size)
+#         self.canv.setFillColor(self.text_color)
+#         text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
+#         center_x = self.width / 2
+#         center_y = (self.height - self.font_size) / 2 + 0.3 * self.font_size  # Better vertical alignment
+#         self.canv.drawCentredString(center_x, center_y, self.text)
+
+#         self.canv.restoreState()
+
+# class RoundedPill1(Flowable):
+#     def __init__(
+#         self,
+#         text,
+#         bg_color,
+#         radius=None,
+#         width=None,
+#         height=None,
+#         font_size=8,
+#         text_color=colors.white,
+#         border_color=None,
+#         border_width=0.2,
+#         font_name=FONT_INTER_REGULAR,
+#         icon_path=None,
+#         icon_width=0,
+#         icon_height=0,
+#         icon_text_padding=4,
+#         left_padding=8,
+#         right_padding=8,
+#         top_padding=6,
+#         bottom_padding=6,
+#     ):
+#         super().__init__()
+#         self.text = str(text)
+#         self.bg_color = bg_color
+#         self.radius = radius
+#         self.width = width
+#         self.height = height
+#         self.font_size = font_size
+#         self.text_color = text_color
+#         self.border_color = border_color
+#         self.border_width = border_width
+#         self.font_name = font_name
+
+#         # Padding
+#         self.left_padding = left_padding
+#         self.right_padding = right_padding
+#         self.top_padding = top_padding
+#         self.bottom_padding = bottom_padding
+
+#         # Icon handling
+#         self.icon_path = icon_path
+#         self.icon_width = icon_width
+#         self.icon_height = icon_height
+#         self.icon_text_padding = icon_text_padding
+
+#         self.icon_drawing = None
+#         if self.icon_path and os.path.exists(self.icon_path):
+#             try:
+#                 drawing = svg2rlg(self.icon_path)
+#                 if drawing.width > 0 and drawing.height > 0:
+#                     scale_x = self.icon_width / drawing.width
+#                     scale_y = self.icon_height / drawing.height
+#                     drawing.scale(scale_x, scale_y)
+#                     self.icon_drawing = drawing
+#             except Exception as e:
+#                 print(f"Error loading SVG: {e}")
+#                 self.icon_drawing = None
+
+#     def wrap(self, availWidth, availHeight):
+#         # Measure text width using pdfmetrics
+#         text_width = stringWidth(self.text, self.font_name, self.font_size)
+#         content_width = text_width + self.left_padding + self.right_padding
+
+#         if self.icon_drawing:
+#             content_width += self.icon_width + self.icon_text_padding
+
+#         # Estimate height
+#         content_height = max(self.font_size, self.icon_height) + self.top_padding + self.bottom_padding
+
+#         self.width = self.width if self.width is not None else content_width
+#         self.height = self.height if self.height is not None else content_height
+#         self.radius = self.radius if self.radius is not None else self.height / 2
+
+#         return self.width, self.height
+
+#     def draw(self):
+#         self.canv.saveState()
+
+#         # Draw pill background
+#         radius = min(self.radius, self.height / 2, self.width / 2)
+#         self.canv.setFillColor(self.bg_color)
+
+#         if self.border_color:
+#             self.canv.setStrokeColor(self.border_color)
+#             self.canv.setLineWidth(self.border_width)
+#             stroke_val = 1
+#         else:
+#             self.canv.setStrokeColor(self.bg_color)
+#             stroke_val = 0
+
+#         self.canv.roundRect(0, 0, self.width, self.height, radius, fill=1, stroke=stroke_val)
+
+#         # Set font and compute string width
+#         self.canv.setFont(self.font_name, self.font_size)
+#         text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
+
+#         content_width = text_width
+#         if self.icon_drawing:
+#             content_width += self.icon_width + self.icon_text_padding
+
+#         start_x = (self.width - content_width) / 2
+#         center_y = self.height / 2
+
+#         # Draw icon if exists
+#         if self.icon_drawing:
+#             icon_y = center_y - self.icon_height / 2
+#             renderPDF.draw(self.icon_drawing, self.canv, start_x, icon_y)
+#             start_x += self.icon_width + self.icon_text_padding
+
+#         # Draw text
+#         text_y = center_y - self.font_size / 4  # adjust vertically
+#         self.canv.setFillColor(self.text_color)
+#         self.canv.drawString(start_x, text_y, self.text)
+
+#         self.canv.restoreState()
+
 class RoundedPill(Flowable):
-    def __init__(
-        self,
-        text,
-        bg_color,
-        radius=9,
-        width=64,
-        height=18,
-        font_size=8,
-        text_color=colors.white,
-        border_color=None,
-        border_width=0.2,
-        font_name=FONT_INTER_REGULAR,
-    ):
-        super().__init__()
-        self.text = str(text)
-        self.bg_color = bg_color
-        self.radius = radius
-        self.width = width
-        self.height = height
-        self.font_size = font_size
-        self.text_color = text_color
-        self.border_color = border_color
-        self.border_width = border_width
-        self.font_name=font_name
-
-    def wrap(self, availWidth, availHeight):
-        return self.width, self.height
-
-    def draw(self):
-        self.canv.saveState()
-
-        # Fill background
-        self.canv.setFillColor(self.bg_color)
-        if self.border_color:
-            self.canv.setStrokeColor(self.border_color)
-            self.canv.setLineWidth(self.border_width)
-            stroke_val = 1
-        else:
-            self.canv.setStrokeColor(self.bg_color)  # invisible stroke
-            stroke_val = 0
-
-        self.canv.roundRect(0, 0, self.width, self.height, self.radius, stroke=stroke_val, fill=1)
-
-        # Text
-        self.canv.setFont(self.font_name, self.font_size)
-        self.canv.setFillColor(self.text_color)
-        text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
-        center_x = self.width / 2
-        center_y = (self.height - self.font_size) / 2 + 0.3 * self.font_size  # Better vertical alignment
-        self.canv.drawCentredString(center_x, center_y, self.text)
-
-        self.canv.restoreState()
-
-class RoundedPill1(Flowable):
     def __init__(
         self,
         text,
@@ -379,7 +483,7 @@ class RoundedPill1(Flowable):
         text_color=colors.white,
         border_color=None,
         border_width=0.2,
-        font_name=FONT_INTER_REGULAR,
+        font_name="Helvetica",
         icon_path=None,
         icon_width=0,
         icon_height=0,
@@ -407,13 +511,13 @@ class RoundedPill1(Flowable):
         self.top_padding = top_padding
         self.bottom_padding = bottom_padding
 
-        # Icon handling
+        # Icon setup
         self.icon_path = icon_path
         self.icon_width = icon_width
         self.icon_height = icon_height
         self.icon_text_padding = icon_text_padding
-
         self.icon_drawing = None
+
         if self.icon_path and os.path.exists(self.icon_path):
             try:
                 drawing = svg2rlg(self.icon_path)
@@ -427,16 +531,17 @@ class RoundedPill1(Flowable):
                 self.icon_drawing = None
 
     def wrap(self, availWidth, availHeight):
-        # Measure text width using pdfmetrics
+        # Measure text
         text_width = stringWidth(self.text, self.font_name, self.font_size)
         content_width = text_width + self.left_padding + self.right_padding
 
         if self.icon_drawing:
             content_width += self.icon_width + self.icon_text_padding
 
-        # Estimate height
+        # Height estimate
         content_height = max(self.font_size, self.icon_height) + self.top_padding + self.bottom_padding
 
+        # Use fixed width/height if given, else use computed
         self.width = self.width if self.width is not None else content_width
         self.height = self.height if self.height is not None else content_height
         self.radius = self.radius if self.radius is not None else self.height / 2
@@ -446,7 +551,7 @@ class RoundedPill1(Flowable):
     def draw(self):
         self.canv.saveState()
 
-        # Draw pill background
+        # Rounded background
         radius = min(self.radius, self.height / 2, self.width / 2)
         self.canv.setFillColor(self.bg_color)
 
@@ -460,7 +565,7 @@ class RoundedPill1(Flowable):
 
         self.canv.roundRect(0, 0, self.width, self.height, radius, fill=1, stroke=stroke_val)
 
-        # Set font and compute string width
+        # Text measurement
         self.canv.setFont(self.font_name, self.font_size)
         text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
 
@@ -471,14 +576,14 @@ class RoundedPill1(Flowable):
         start_x = (self.width - content_width) / 2
         center_y = self.height / 2
 
-        # Draw icon if exists
+        # Draw icon
         if self.icon_drawing:
             icon_y = center_y - self.icon_height / 2
             renderPDF.draw(self.icon_drawing, self.canv, start_x, icon_y)
             start_x += self.icon_width + self.icon_text_padding
 
         # Draw text
-        text_y = center_y - self.font_size / 4  # adjust vertically
+        text_y = center_y - self.font_size / 4
         self.canv.setFillColor(self.text_color)
         self.canv.drawString(start_x, text_y, self.text)
 
@@ -1062,7 +1167,7 @@ class ThriveRoadmapTemplate:
     def init_styles(self):
         self.styles.add(ParagraphStyle(
             name="MixedInlineStyle",
-            fontName=FONT_RALEWAY_REGULAR,  # Fallback
+            fontName=FONT_RALEWAY_REGULAR, 
             fontSize=75,
             leading=100, 
             textColor=colors.white,
@@ -1073,7 +1178,7 @@ class ThriveRoadmapTemplate:
         )),
         self.styles.add(ParagraphStyle(
             name="MixedRalewayLine",
-            fontName=FONT_RALEWAY_REGULAR,  # fallback
+            fontName=FONT_RALEWAY_REGULAR,  
             fontSize=38.426,               
             textColor=colors.white,
             alignment=0,
@@ -1106,6 +1211,11 @@ class ThriveRoadmapTemplate:
             alignment=TA_LEFT,
         )),
         self.styles.add(ParagraphStyle(
+            name="FakeTOCTitleStyle", 
+            parent=self.styles["TOCTitleStyle"]
+        ))
+
+        self.styles.add(ParagraphStyle(
             name="ear_screening_unit",
             fontName=FONT_INTER_REGULAR,
             fontSize=8,
@@ -1131,16 +1241,16 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "profile_card_name",
-            fontName=FONT_RALEWAY_MEDIUM,               # Ensure this font is registered properly
+            fontName=FONT_RALEWAY_MEDIUM,               
             fontSize=36,
-            leading=44,                               # 122.222% of 36px
+            leading=44,                               
             textColor=PMX_GREEN,
         ))
         self.styles.add(ParagraphStyle(
             name="profile_card_otherstyles",
-            fontName=FONT_INTER_REGULAR,               # Make sure Inter is registered
+            fontName=FONT_INTER_REGULAR,              
             fontSize=16,
-            leading=24,                     # 150% line height
+            leading=24,                    
             textColor=PMX_GREEN,
         ))
         self.styles.add(ParagraphStyle(
@@ -1191,17 +1301,17 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "SvgBulletTitle",
-            fontName=FONT_INTER_MEDIUM,               # Make sure Inter is registered
+            fontName=FONT_INTER_MEDIUM,               
             fontSize=16,
-            leading=24,                     # 150% line height
+            leading=24,                     
             textColor=PMX_GREEN,
         ))
         self.styles.add(ParagraphStyle(
             "bullet_after_text",
-            fontName=FONT_INTER_REGULAR,                   # Make sure Inter-Regular is registered
+            fontName=FONT_INTER_REGULAR,                   
             fontSize=12,
-            leading=18,                         # Equivalent to line-height: 18px
-            textColor=colors.HexColor("#003632"),     # Brand-800
+            leading=18,                         
+            textColor=colors.HexColor("#003632"),     
             spaceBefore=0,
             spaceAfter=0,
         ))
@@ -1209,16 +1319,16 @@ class ThriveRoadmapTemplate:
             "eye_screening_desc_style",
             fontName=FONT_INTER_REGULAR,
             fontSize=10,
-            leading=16,  # line-height: 160% of 10px = 16px
+            leading=16,  
             textColor=colors.HexColor("#667085"),
             spaceBefore=0,
             spaceAfter=0
         ))
         self.styles.add(ParagraphStyle(
             "ear_screening_title",
-            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontName=FONT_RALEWAY_SEMI_BOLD,  
             fontSize=12,
-            leading=18,  # line height
+            leading=18,  
             textColor=PMX_GREEN,
             spaceBefore=0,
             spaceAfter=0,
@@ -1243,7 +1353,7 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "BrainScoreRange",
-            fontName=FONT_RALEWAY_SEMI_BOLD,  # You must register this font
+            fontName=FONT_RALEWAY_SEMI_BOLD,  
             fontSize=12,
             leading=18,
             textColor=colors.HexColor("#344054"),
@@ -1252,7 +1362,7 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "circle_fallback_style",
-            fontName=FONT_INTER_REGULAR,  # built-in and supports Unicode
+            fontName=FONT_INTER_REGULAR,  
             fontSize=10,
             leading=10,
             textColor=PMX_GREEN,
@@ -1284,9 +1394,9 @@ class ThriveRoadmapTemplate:
             ))
         self.styles.add(ParagraphStyle(
             "homair",
-            fontName=FONT_RALEWAY_MEDIUM,        # You must register this font first
+            fontName=FONT_RALEWAY_MEDIUM,        
             fontSize=30,
-            leading=38,                # Equivalent to line-height
+            leading=38,                
             textColor=PMX_GREEN,
             spaceAfter=0,
             spaceBefore=0
@@ -1302,14 +1412,14 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             name="AerobicStyle",
-            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontName=FONT_RALEWAY_SEMI_BOLD,  
             fontSize=12,
-            leading=18,  # Line height
+            leading=18,  
             textColor=colors.HexColor("#000000"),
         ))
         self.styles.add(ParagraphStyle(
             "DigestiveHealthStyle",
-            fontName=FONT_RALEWAY_MEDIUM,  # Ensure this matches your registered font
+            fontName=FONT_RALEWAY_MEDIUM,  
             fontSize=12,
             leading=18,
             textColor=PMX_GREEN,
@@ -1334,32 +1444,32 @@ class ThriveRoadmapTemplate:
         )),
         self.styles.add(ParagraphStyle(
             "BiomarkerValue",
-            fontName=FONT_INTER_SEMI_BOLD,          # Make sure this font is registered
+            fontName=FONT_INTER_SEMI_BOLD,          
             fontSize=FONT_SIZE_MEDIUM,
-            leading=24,                         # Line height = 24px (200% of 12px)
+            leading=24,                         
             textColor=colors.HexColor("#003632"),
             alignment=TA_RIGHT
         )),
         self.styles.add(ParagraphStyle(
             "BiomarkerUnit",
-            fontName=FONT_INTER_REGULAR,          # Ensure this is registered
+            fontName=FONT_INTER_REGULAR,          
             fontSize=10,
-            leading=18,                         # 180% of 10px
+            leading=18,                         
             textColor=colors.HexColor("#667085")
         ))
         self.styles.add(ParagraphStyle(
             "BiomarkerHeaderData",
             fontName=FONT_INTER_REGULAR,
             fontSize=10,
-            leading=14,  # line-height: 14px
+            leading=14, 
             textColor=colors.HexColor("#667085"),
             alignment=TA_LEFT
         )),
         self.styles.add(ParagraphStyle(
             "AreasOfConcern",
-            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontName=FONT_RALEWAY_SEMI_BOLD,  
             fontSize=12,
-            leading=18,  # line height
+            leading=18,  
             textColor=PMX_GREEN,
             spaceBefore=0,
             spaceAfter=0,
@@ -1368,7 +1478,7 @@ class ThriveRoadmapTemplate:
         self.styles.add(ParagraphStyle(
             name="RoutineStyle",
             fontName=FONT_INTER_REGULAR,
-            fontSize=12,                 # or FONT_SIZE_MEDIUM
+            fontSize=12,                 
             leading=18,
             textColor=colors.HexColor("#003632"),
             spaceAfter=0,
@@ -1377,9 +1487,9 @@ class ThriveRoadmapTemplate:
         self.styles.add(ParagraphStyle(
             name="RoutineBulletStyle",
             parent=self.styles["RoutineStyle"],
-            leftIndent=16,           # total indent for all lines (bullet + text)
-            firstLineIndent=-8,      # bullet "hangs" to the left
-            bulletFontName=FONT_INTER_REGULAR,  # preserve your font
+            leftIndent=16,           
+            firstLineIndent=-8,      
+            bulletFontName=FONT_INTER_REGULAR,  
             bulletFontSize=12,
             fontSize=12
         ))
@@ -1387,22 +1497,22 @@ class ThriveRoadmapTemplate:
         self.styles.add(ParagraphStyle(
             name="RoutineSubBulletStyle",
             parent=self.styles["RoutineStyle"],
-            leftIndent=24,           # deeper indent
+            leftIndent=24,           
             firstLineIndent=-8,
-            bulletFontName=FONT_INTER_REGULAR,  # preserve your font
+            bulletFontName=FONT_INTER_REGULAR,  
             bulletFontSize=11,
             fontSize=11
         ))
         self.styles.add(ParagraphStyle(
             name="RoutineTitleStyle",
-            fontName=FONT_INTER_SEMI_BOLD,            # Inter Semibold
-            fontSize= FONT_SIZE_LARGE_MEDIUM,                          # 16px
-            leading=24,                           # Line height: 150%
-            textColor=PMX_GREEN, # Brand-50                       # Optional spacing after paragraph
+            fontName=FONT_INTER_SEMI_BOLD,            
+            fontSize= FONT_SIZE_LARGE_MEDIUM,                          
+            leading=24,                           
+            textColor=PMX_GREEN, 
         ))
         self.styles.add(ParagraphStyle(
             "DiagnosisText",
-            fontName=FONT_INTER_REGULAR,                      # Make sure the Inter font is registered
+            fontName=FONT_INTER_REGULAR,                     
             fontSize=10.952,
             leading=26.941,
             textColor=colors.HexColor("#26968D"),
@@ -1410,24 +1520,24 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "BodyWeightVal",
-            fontName=FONT_INTER_SEMI_BOLD,               # Make sure the 'Inter-SemiBold' font is registered
+            fontName=FONT_INTER_SEMI_BOLD,               
             fontSize=18,
-            leading=28,                              # Line height
-            textColor=colors.HexColor("#003632"),    # Brand-800 color
-            alignment=TA_LEFT,                       # Default alignment from your CSS (not explicitly center or right)
+            leading=28,                              
+            textColor=colors.HexColor("#003632"),    
+            alignment=TA_LEFT,                       
         ))
         self.styles.add(ParagraphStyle(
             "AdditionalDiagnostics",
-            fontName=FONT_RALEWAY_SEMI_BOLD,  # Make sure this font is registered
+            fontName=FONT_RALEWAY_SEMI_BOLD,  
             fontSize=12,
-            leading=18,  # line height
+            leading=18,  
             textColor=colors.HexColor("#002624"),
             spaceAfter=0,
             spaceBefore=0,
         ))
         self.styles.add(ParagraphStyle(
             "CardioVascularStyle",
-            fontName=FONT_INTER_BOLD,  # Assuming you've registered "Inter-Bold"
+            fontName=FONT_INTER_BOLD,  
             fontSize=12,
             leading=18,
             leftIndent=12,
@@ -1435,7 +1545,7 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             "SSBUlletBelowStyle",
-            fontName=FONT_INTER_REGULAR,  # Ensure Inter is registered; fallback to 'Helvetica' if not
+            fontName=FONT_INTER_REGULAR,  
             fontSize=7.375,
             leading=10.536,
             textColor=HexColor("#004540"),
@@ -1443,19 +1553,19 @@ class ThriveRoadmapTemplate:
         ))
         self.styles.add(ParagraphStyle(
             name="OptimizationPhasesStyle",
-            fontName=FONT_INTER_REGULAR,                     # Make sure 'Inter' is registered, else fallback to 'Helvetica'
+            fontName=FONT_INTER_REGULAR,                     
             fontSize=7.375,
-            leading=10.536,                       # Line height
-            textColor=colors.HexColor("#475467"),# Equivalent to var(--Gray-600)
-            alignment=1,                          # 0=left, 1=center, 2=right, 4=justify
+            leading=10.536,                      
+            textColor=colors.HexColor("#475467"),
+            alignment=1,                          
         ))
         self.styles.add(ParagraphStyle(
             "ActionPlanStyle",
-            fontName=FONT_INTER_SEMI_BOLD,       # You must register this font first
+            fontName=FONT_INTER_SEMI_BOLD,       
             fontSize=16,
-            leading=24,                      # This is the line-height (150% of font size)
+            leading=24,                      
             textColor=PMX_GREEN,
-            spaceAfter=0                     # Optional: spacing after paragraph
+            spaceAfter=0                     
         ))
         self.styles.add(ParagraphStyle(
             "SADataStyle",
@@ -1477,24 +1587,21 @@ class ThriveRoadmapTemplate:
         Returns:
             Table: Styled table ready for rendering
         """
-        # Create inner table for remarks column when it contains multiple elements
         table = Table(table_data, colWidths=col_widths, repeatRows=1)
         style = [
             # Headers
             ("BACKGROUND", (0, 0), (-1, 0), colors.white),
             ("TEXTCOLOR", (0, 0), (-1, 0), PMX_GREEN),
             ("ALIGN", (1, 0), (-1, -1), "CENTER"),
-            # ("ALIGN", (0, 0), (-1, -1), "CENTER"),
             ("FONTNAME", (0, 0), (-1, 0), FONT_INTER_BOLD),
             ("FONTSIZE", (0, 0), (-1, 0), FONT_SIZE_MEDIUM),
             ("BOTTOMPADDING", (0, 0), (-1, 0), TABLE_HEADER_PADDING),
             ("TOPPADDING", (0, 0), (-1, 0), TABLE_HEADER_PADDING),
-            # Data rows
             ("BACKGROUND", (0, 1), (-1, -1), colors.white),
             ("TEXTCOLOR", (0, 1), (-1, -1), colors.HexColor('#00625B')),
-            ("ALIGN", (0, 0), (0, -1), "CENTER"),  # Number column
-            ("ALIGN", (1, 1), (1, -1), "CENTER"),  # Medications column
-            ("ALIGN", (2, 1), (2, -1), "CENTER"),  # Dosage column
+            ("ALIGN", (0, 0), (0, -1), "CENTER"),  
+            ("ALIGN", (1, 1), (1, -1), "CENTER"),  
+            ("ALIGN", (2, 1), (2, -1), "CENTER"),  
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ("FONTNAME", (0, 1), (-1, -1), FONT_INTER_REGULAR),
             ("FONTSIZE", (0, 1), (-1, -1), FONT_SIZE_SMALL),
@@ -1531,7 +1638,6 @@ class ThriveRoadmapTemplate:
                 raise FileNotFoundError(f"SVG file '{path}' could not be loaded or is invalid.")
         except Exception as e:
             print(f"Error loading SVG: {e}")
-            # Return a blank box or a placeholder
             drawing = Drawing(width, height)
         
         original_width = drawing.width or 1
@@ -1563,11 +1669,10 @@ class ThriveRoadmapTemplate:
                 self.y=y
 
             def wrap(self, availWidth, availHeight):
-                return 0, 0  # Doesn't consume space in normal flow
+                return 0, 0  
 
             def draw(self):
                 try:
-                    # Draw image at absolute bottom-left (0, 0)
                     self.canv.drawImage(
                         self.path,
                         x=self.x,
@@ -1642,7 +1747,6 @@ class ThriveRoadmapTemplate:
             "Welcome to your longevity roadmap, This report has been carefully curated for you."
         )
 
-        # Load and wrap the image
         img_path = os.path.join("staticfiles", "icons", "dp_face.png")        
         img = Image(img_path, width=100, height=100)
         img_cell = Table([[img]], colWidths=[100])
@@ -1663,7 +1767,6 @@ class ThriveRoadmapTemplate:
             Paragraph(welcome_data, self.styles["FrstPageTitle"]),
         ]
 
-        # Layout table: [ image | spacer | text ]
         layout_table = Table(
             [[img_cell, Spacer(1, 1), text_block]],
             colWidths=[100, 32, None],
@@ -1684,53 +1787,6 @@ class ThriveRoadmapTemplate:
         ]))
 
         return container_table
-
-    def toc_table(self, toc_data: list) -> list:
-        
-        section=[]
-        
-        toc=Paragraph("Table Of Contents", self.styles["TOCTitleStyle"])
-
-        toc_table_data = []
-        table_bullet_path = os.path.join("staticfiles", "icons", "table_content_bullet.png")
-        icon_bullet= Image(table_bullet_path, width=24, height=24)
-        for item in toc_data:
-            title=item.get("title","")
-            page=item.get("page","")
-            
-            toc_table_data.append([
-                icon_bullet,
-                Spacer(1,13),
-                Paragraph(title, self.styles["TOCEntryText"]),
-                Paragraph(page, self.styles["toc_pagenum"]),
-            ])
-
-        toc_table = Table(toc_table_data,colWidths=[40,13,344,134])
-        toc_table.setStyle(TableStyle([
-            ("TOPPADDING", (0, 0), (0, -1), 8),
-            ("BOTTOMPADDING", (0, 0), (0, -1), 8),
-            ("LEFTPADDING", (0, 0), (0, -1), 8),
-            ("RIGHTPADDING", (0, 0), (0, -1), 8),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("ALIGN", (0, 0), (0, -1), "LEFT"),
-            ("ALIGN", (2, 0), (2, -1), "LEFT"),
-            ("ALIGN", (3, 0), (3, -1), "RIGHT"),
-            ("TOPPADDING", (1, 0), (-1, -1), 4),
-            ("BOTTOMPADDING", (1, 0), (-1, -1), 4),
-            ("LEFTPADDING", (1, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (1, 0), (-1, -1), 0),
-        ]))
-        toc_table2=Table([[toc],[Spacer(1, 8)],[toc_table]],colWidths=[PAGE_WIDTH])
-        toc_table2.setStyle(TableStyle([
-            ("TOPPADDING", (0, 0), (-1, -1), 0),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-            ("LEFTPADDING", (0, 0), (-1, -1), 32),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 32),
-            ("ALIGN",(0,0),(-1,-1),"RIGHT"),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE")
-        ]))
-        section.append(toc_table2)
-        return section
 
     def get_dynamic_col_width(self, text, font_name=FONT_INTER_REGULAR, font_size=10, icon_width=24):
         """
@@ -1953,7 +2009,7 @@ class ThriveRoadmapTemplate:
 
                 footer_stack = Table(
                     [[Spacer(1, 8)], [footer_text]],
-                    colWidths=[192],  # Force full width to let right align take effect
+                    colWidths=[192], 
                     style=[
                         ("VALIGN", (0, 1), (-1, -1), "BOTTOM"),
                         ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -2048,8 +2104,6 @@ class ThriveRoadmapTemplate:
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-            #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-
         ]))
         
         gender=data.get("gender","")
@@ -2059,12 +2113,11 @@ class ThriveRoadmapTemplate:
             ahw_path = os.path.join("staticfiles", "icons", "female_age_ht_wt_.png")
         else:
             ahw_path = os.path.join("staticfiles", "icons", "other_age_ht_wt.png")
-        # image_= Image(ahw_path, width=222, height=308)
         
         text_data = [
-            (profile_card_data.get("age","00 yr"), 180, 285, "ear_screening_title"),       # Height
-            (profile_card_data.get("height","00 cm"), 180, 150, "ear_screening_title"),        # Waist
-            (profile_card_data.get("weight","00 kg"), 170, 22, "ear_screening_title")       # Hip
+            (profile_card_data.get("age","00 yr"), 180, 285, "ear_screening_title"),      
+            (profile_card_data.get("height","00 cm"), 180, 150, "ear_screening_title"),        
+            (profile_card_data.get("weight","00 kg"), 170, 22, "ear_screening_title")       
         ]
 
         icon_ahw = ImageWithOverlayText(
@@ -2081,8 +2134,6 @@ class ThriveRoadmapTemplate:
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
             ("TOPPADDING", (0, 0), (-1, -1), 66),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 76),
-            #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-
         ]))
         section_table2=Table([[section_table,right_metric_table]],colWidths=[309,PAGE_WIDTH-309])
         section_table2.setStyle(TableStyle([
@@ -2092,9 +2143,6 @@ class ThriveRoadmapTemplate:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
             ("VALIGN",(0,0),(-1,-1),"TOP"),
             ("ALIGN",(0,0),(-1,-1),"CENTER"),
-            
-            #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-
         ]))
         return section_table2
 
@@ -2116,7 +2164,7 @@ class ThriveRoadmapTemplate:
                 Spacer(1, 10),
                 Paragraph(item, self.styles["bullet_after_text"]),
             ])
-            if i != len(symptoms) - 1:  # Only add spacer if not the last item
+            if i != len(symptoms) - 1:  
                 bullets.append([Spacer(1, 16)])
 
         if bullets:
@@ -2131,7 +2179,6 @@ class ThriveRoadmapTemplate:
                 ("ALIGN", (0, 0), (-1, -1), "LEFT"),
             ]))
 
-            # Inner table with 16pt padding inside box
             inner_table = Table([[bullet_table]])
             inner_table.setStyle(TableStyle([
                 ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -2155,10 +2202,6 @@ class ThriveRoadmapTemplate:
     def get_current_symptoms_conditions(self,current_symptoms_conditions):
 
         section = []
-        # header=current_symptoms_conditions.get("header","")
-        # csc=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section.append([csc])
-        # section.append([Spacer(1,8)])
         header_data=current_symptoms_conditions.get("header_data","")
         csc_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([csc_data])
@@ -2166,7 +2209,6 @@ class ThriveRoadmapTemplate:
         
         icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
         icon = self.svg_icon(icon_path, width=24, height=24)
-        # ---------- Bullet Points: Current Symptoms ----------
         symptoms = current_symptoms_conditions.get("symptoms_data", {}).get("title_data", [])
         title =  current_symptoms_conditions.get("symptoms_data", {}).get("title", "")
         section.append([self.inner_rounded_table_data(symptoms,title,icon)])
@@ -2187,10 +2229,6 @@ class ThriveRoadmapTemplate:
     def get_your_current_stack(self,your_current_stack):
 
         section = []
-        # header=your_current_stack.get("header","")
-        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section.append([cs])
-        # section.append([Spacer(1,8)])
         header_data=your_current_stack.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([cs_data])
@@ -2218,11 +2256,6 @@ class ThriveRoadmapTemplate:
 
     def get_family_past_histories(self, family_past_histories):
         section = []
-
-        # 1. Header and Subheader
-        # header = family_past_histories.get("header", "")
-        # section.append([Paragraph(header, self.styles["TOCTitleStyle"])])
-        # section.append([Spacer(1, 8)])
 
         header_data = family_past_histories.get("header_data", "")
         section.append([Paragraph(header_data, self.styles["header_data_style"])])
@@ -2260,17 +2293,16 @@ class ThriveRoadmapTemplate:
         # 7. Combine Title Row and Total Stack into one table
         family_history_table = Table([
             family_header_row,
-            [total_stack, '', '']  # fill empty cells for spanning
-        ], colWidths=[24, 10, PAGE_WIDTH - 64 - 34])  # match widths with padding considered
+            [total_stack, '', '']  
+        ], colWidths=[24, 10, PAGE_WIDTH - 64 - 34])  
 
         family_history_table.setStyle(TableStyle([
-            ("SPAN", (0, 1), (2, 1)),  # Span across all 3 columns in 2nd row
+            ("SPAN", (0, 1), (2, 1)), 
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
             ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ]))
 
-        # 8. Wrap it in rounded box
         total_table = Table([[family_history_table]], colWidths=[PAGE_WIDTH - 64])
         total_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -2324,11 +2356,10 @@ class ThriveRoadmapTemplate:
                     Paragraph(item, self.styles["bullet_after_text"]),
                 ])
                 if i != len(symptoms) - 1:
-                    bullets_.extend([Spacer(1, 8)])  # flat spacer for horizontal space between items
+                    bullets_.extend([Spacer(1, 8)])  
 
             if bullets_:
-                # Wrap the extended list into a single table row (horizontal layout)
-                bullet_table = Table([bullets_],colWidths=[16,10,130,8,16,10,164,8,16,10,112])  # List inside a list = single row
+                bullet_table = Table([bullets_],colWidths=[16,10,130,8,16,10,164,8,16,10,112])  
                 bullet_table.setStyle(TableStyle([
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -2337,7 +2368,6 @@ class ThriveRoadmapTemplate:
                     ("VALIGN", (0, 0), (-1, -1), "TOP"),
                     ("ALIGN", (0, 0), (-1, -1), "LEFT"),
                 ]))
-                # Inner table with padding around the content
                 inner_table = Table([[bullet_table]])
                 inner_table.setStyle(TableStyle([
                     ("LEFTPADDING", (0, 0), (-1, -1), 16),
@@ -2359,7 +2389,6 @@ class ThriveRoadmapTemplate:
 
                 section.append([rounded_box])
         
-        # 10. Wrap all in final section table
         section_table = Table(section, colWidths=[PAGE_WIDTH])
         section_table.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 32),
@@ -2372,10 +2401,7 @@ class ThriveRoadmapTemplate:
 
     def get_health_goals(self,health_goals_data):
         section = []
-        # header=health_goals_data.get("header","")
-        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section.append([cs])
-        # section.append([Spacer(1,8)])
+        
         header_data=health_goals_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([cs_data])
@@ -2400,11 +2426,7 @@ class ThriveRoadmapTemplate:
     def get_lifestyle_trends(self, lifestyle_data: dict):
 
         section = []
-        # header=lifestyle_data.get("header","")
-        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section.append([cs])
-        # section.append([Spacer(1,8)])
-
+       
         header_data=lifestyle_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section.append([cs_data])
@@ -2418,8 +2440,8 @@ class ThriveRoadmapTemplate:
         
         lifestyle_trends_data_=lifestyle_data.get("lifestyle_trends_data","")
 
-        total_height = 473  # Fixed total height
-        available_width = 346  # 160 + 32 + 160 (two columns + spacer)
+        total_height = 473  
+        available_width = 346  
 
         row_tables = []
         temp_row = []
@@ -2971,10 +2993,10 @@ class ThriveRoadmapTemplate:
 
     def get_ear_screening(self, ear_screening_data: dict):
         section_ = []
-        # header=ear_screening_data.get("header","")
-        # cs=Paragraph(header, self.styles["TOCTitleStyle"])
-        # section_.append(cs)
-        # section_.append(Spacer(1,8))
+        header=ear_screening_data.get("header","")
+        cs=Paragraph(header, self.styles["TOCTitleStyle"])
+        section_.append(cs)
+        section_.append(Spacer(1,8))
         header_data=ear_screening_data.get("header_data","")
         cs_data=Paragraph(header_data, self.styles["header_data_style"])
         section_.append(cs_data)
@@ -3361,7 +3383,7 @@ class ThriveRoadmapTemplate:
 
         title = body_composition.get("title", "")
         section=[]
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         # ---------- Heading ----------
         heading = Paragraph(title, self.styles["TOCTitleStyle"])
         section.append(heading)
@@ -3634,7 +3656,7 @@ class ThriveRoadmapTemplate:
 
     
         section.append(content_)
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
         return section
 
     def get_fitness_assesment(self, fitness_assesment_data: dict):
@@ -3939,15 +3961,10 @@ class ThriveRoadmapTemplate:
 
         title = domain_in_focus_data.get("title", "")
         cs = Paragraph(title, self.styles["TOCTitleStyle"])
-
-        # --- Page 1 ---        
-        # Title with 32pt indent
-        flowables.append(Indenter(left=32, right=32))
+       
         flowables.append(cs)
         flowables.append(Spacer(1, 8))
-        flowables.append(Indenter(left=-32, right=-32))  # close title indent
 
-        # Image with 17pt indent
         img_path1 = os.path.join("staticfiles", "icons", "domain_in_focus_1.png")
         img1 = Image(img_path1, width=559, height=594)
         flowables.append(Indenter(left=17, right=17))
@@ -3959,10 +3976,8 @@ class ThriveRoadmapTemplate:
         # --- Page 2 ---
         flowables.append(Spacer(1, 8))
         
-        flowables.append(Indenter(left=32, right=32))
         flowables.append(cs)
         flowables.append(Spacer(1, 8))
-        flowables.append(Indenter(left=-32, right=-32))
 
         img_path2 = os.path.join("staticfiles", "icons", "domain_in_focus_2.png")
         img2 = Image(img_path2, width=559, height=594)
@@ -3977,12 +3992,10 @@ class ThriveRoadmapTemplate:
 
         title = minerals_test_ratio_data.get("title", "")    
 
-        cs = Paragraph(title, self.styles["TOCTitleStyle"])
+        cs = Paragraph(title, self.styles["FakeTOCTitleStyle"])
         
-        section.append(Indenter(left=32, right=32))
         section.append(cs)
         section.append(Spacer(1, 16))        
-        section.append(Indenter(left=-32, right=-32))
 
         img_path = os.path.join("staticfiles", "icons", "mineral_test_ratio_report.png")        
         img = Image(img_path, width=558, height=531)
@@ -3991,7 +4004,6 @@ class ThriveRoadmapTemplate:
         section.append(Indenter(left=-17, right=-17))
         
         
-        section.append(Indenter(left=32, right=32))
         section.append(Spacer(1, 16))  
         bullet_items = []
         findings=minerals_test_ratio_data.get("findings","")
@@ -4001,11 +4013,9 @@ class ThriveRoadmapTemplate:
             color_=finding["level_color"]
             sources_text = finding.get("sources", "")
 
-            # Styled metal names
             metal_str = ", ".join(metals)
             metal_styled = f'<font name="Inter-Bold" color="#667085">{metal_str}</font>'
 
-            # Styled level
             level_styled = f'<font name="Inter-Bold" color="{color_}">{level}</font>'
 
             if len(metals)==1:
@@ -4014,9 +4024,7 @@ class ThriveRoadmapTemplate:
                 final_text = f'{metal_styled} are {level_styled}. {sources_text}'
             bullet_items.append(ListItem(Paragraph(final_text, self.styles["BulletStyle"])))
 
-        # Add to document
         section.append(ListFlowable(bullet_items, bulletType='bullet', start='•'))
-        section.append(Indenter(left=-32, right=-32))
         
         return section
 
@@ -4902,7 +4910,7 @@ class ThriveRoadmapTemplate:
 
     def get_areas_of_concern(self, areas_of_concern: dict):
         section = []
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         title = areas_of_concern.get("title", "")
         title_data = areas_of_concern.get("title_data", "")
 
@@ -5022,14 +5030,14 @@ class ThriveRoadmapTemplate:
             section.append(rounded_card)
             section.append(Spacer(1,17))
 
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
         return section
 
     def _create_diagnosis(self, diagnoses_data: list) -> list:
         # Create styled pills
         bullet = self.svg_icon(os.path.join("staticfiles","icons", "bullet.svg"), width=16, height=16)
         section=[]
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
 
         title = diagnoses_data.get("title", "")
 
@@ -5077,7 +5085,7 @@ class ThriveRoadmapTemplate:
         ]))
         section.append(table)
 
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return  section
     
@@ -5085,7 +5093,7 @@ class ThriveRoadmapTemplate:
         # Create styled pills
         bullet = self.svg_icon(os.path.join("staticfiles","icons", "bullet.svg"), width=24, height=24)
         section=[]
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
 
         title = additional_diagnoses_data.get("title", "")
 
@@ -5098,7 +5106,7 @@ class ThriveRoadmapTemplate:
         for val in additional_diagnoses_data_:
             name=val.get("name")
             location=val.get("location")
-            location_pill= RoundedPill1(
+            location_pill= RoundedPill(
                 text=location,
                 bg_color=colors.HexColor("#E6F4F3"),
                 radius=46.622,
@@ -5161,14 +5169,14 @@ class ThriveRoadmapTemplate:
         ]))
         section.append(table)
 
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section 
 
     def get_action_plan(self, action_plan: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = action_plan.get("header", "")
         action_plan_list_ = action_plan.get("action_plan_list", "")
@@ -5186,14 +5194,14 @@ class ThriveRoadmapTemplate:
             section.append(SvgTitleRow(icon, Paragraph(item,self.styles["ActionPlanStyle"])))
             section.append(Spacer(1, 4))
         
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section
         
     def get_optimization_phases(self, optimization_phases: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = optimization_phases.get("header", "")
         title_data = optimization_phases.get("header_data", "")
@@ -5310,14 +5318,14 @@ class ThriveRoadmapTemplate:
             section.append(final_table)
             section.append(Spacer(1, 8))  # Optional gap between entries
 
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section
 
     def get_morning_routine_protocol(self, morning_routine_protocol: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = morning_routine_protocol.get("header", "")
         title_data = morning_routine_protocol.get("header_data", "")
@@ -5383,14 +5391,14 @@ class ThriveRoadmapTemplate:
                     ])
                 )
             )
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section
 
     def get_cognitive_health_recommendations(self,health_recommendations: dict) -> list:
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = health_recommendations.get("header", "")
         health_recommendations_data_ = health_recommendations.get("health_recommendations_data", [])
@@ -5419,13 +5427,13 @@ class ThriveRoadmapTemplate:
 
             section.append(KeepTogether(pill_content))
             section.append(Spacer(1, 16))
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
         return section
 
     def get_lifestyle_recommendations(self, lifestyle_recommendations_data: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = lifestyle_recommendations_data.get("header", "")
         lifestyle_recommendations_data_ = lifestyle_recommendations_data.get("lifestyle_recommendations_data", [])
@@ -5468,14 +5476,14 @@ class ThriveRoadmapTemplate:
             section.append(KeepTogether(pill_content))
             section.append(Spacer(1,16))
 
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section
     
     def get_cardiovascular_recommendations(self, cardiovascular_recommendations: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
+        # section.append(Indenter(left=32, right=32))
         
         title = cardiovascular_recommendations.get("header", "")
         cardiovascular_recommendations_data_ = cardiovascular_recommendations.get("cardiovascular_recommendations_data", "")
@@ -5516,21 +5524,19 @@ class ThriveRoadmapTemplate:
             section.append(KeepTogether(pill_content))
             
         
-        section.append(Indenter(left=-32, right=-32))
+        # section.append(Indenter(left=-32, right=-32))
 
         return section
 
     def get_start_suplements(self, start_suplements: dict):
         section = []
 
-        section.append(Indenter(left=32, right=32))
         
         title = start_suplements.get("header", "")
         start_suplements_data_ = start_suplements.get("start_suplements_data", "")
         table_below_data = start_suplements.get("table_below_data", "")
         table_below_data_ = start_suplements.get("table_below_data_", "")
 
-        # Section Heading
         section.append(Paragraph(title, self.styles["TOCTitleStyle"]))
         section.append(Spacer(1, 10))
 
@@ -5540,7 +5546,6 @@ class ThriveRoadmapTemplate:
         right_col_width = page_width - 64 - left_col_width - gap_between_columns  # 64 = margins
 
         for item in start_suplements_data_:
-            # Left stack (vertical)
             left_stack = []
 
             day = item.get("day", "00 day")
@@ -5604,9 +5609,8 @@ class ThriveRoadmapTemplate:
                 ("ALIGN", (0, 0), (0, -1), "CENTER"),
             ]))
 
-            # Add to section
             section.append(final_table)
-            section.append(Spacer(1, 8))  # Optional gap between entries
+            section.append(Spacer(1, 8))  
 
         section.append(Paragraph(table_below_data,ParagraphStyle(
             name="BiomarkersStyle_Centered",
@@ -5615,24 +5619,22 @@ class ThriveRoadmapTemplate:
         )))
         section.append(Spacer(1, 17))
         section.append(Paragraph(table_below_data_,self.styles["eye_screening_desc_style"]))
-        section.append(Indenter(left=-32, right=-32))
 
         return section
 
     def build_toc_table(self, toc_data):
         section = []
         
+        section.append(Indenter(left=32, right=32))
         toc_title = Paragraph("Table Of Contents", self.styles["TOCTitleStyle"])
 
         section.append(toc_title)
         section.append(Spacer(1, 12))
-        section.append(Indenter(left=32, right=32))
         toc_table_data = []
 
         bullet_path = os.path.join("staticfiles", "icons", "table_content_bullet.png")
 
         if not toc_data:
-            # Add dummy row to prevent crash
             toc_table_data.append([
                 "", "", Paragraph("Generating TOC...", self.styles["TOCEntryText"]), ""
             ])
@@ -5650,7 +5652,6 @@ class ThriveRoadmapTemplate:
         toc_table.setStyle(TableStyle([
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-            # ("VALIGN", (0, 0), (0, -1), "TOP"),
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ("ALIGN", (0, 0), (1, -1), "CENTER"),
             ("ALIGN", (3, 0), (3, -1), "RIGHT"),
@@ -5666,38 +5667,29 @@ class ThriveRoadmapTemplate:
 
     def generate(self, data: dict) -> list:
         story = []
-        # story.extend(self.build_main_section(data))       
         
-        # toc_data=data.get("toc_items",[])
-        # if toc_data:
-        #     story.append(PageBreak())
-        #     story.extend(self.toc_table(toc_data))
-        
+        story.append(Indenter(left=32, right=32))
         user_profile_card=data.get("user_profile_card",{})
         if user_profile_card:
             hidden_toc_para = Paragraph(
                 "Health Profile", 
                 ParagraphStyle(
-                    name="TOCTitleStyle",  # Make sure this is picked up by your afterFlowable
+                    name="TOCTitleStyle", 
                     fontSize=0, 
                     leading=0,
                     spaceAfter=0,
                     spaceBefore=0
                 )
             )
-            # Triggers TOC entry without visible text
-            # story.append(PageBreak())
             story.append(self.get_user_profile_card(user_profile_card))
             story.append(hidden_toc_para) 
         
         profile_card_data=data.get("profile_card_data",{})
         if profile_card_data:
-            # story.append(Spacer(1, 12))
             story.append(self.get_health_metrics_left_column(profile_card_data,data))
         
         current_symptoms_conditions=data.get("current_symptoms_conditions",{})
         if current_symptoms_conditions:
-            # story.append(PageBreak())
             story.append(Spacer(1, 8))
             header=current_symptoms_conditions.get("header","")
             csc=Paragraph(header, self.styles["TOCTitleStyle"])
@@ -5757,10 +5749,6 @@ class ThriveRoadmapTemplate:
         if ear_screening:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header=ear_screening.get("header","")
-            cs=Paragraph(header, self.styles["TOCTitleStyle"])
-            story.append(cs)
-            story.append(Spacer(1,8))
             story.append(self.get_ear_screening(ear_screening))
 
         brain_function_score=data.get("brain_score",{})
@@ -5896,7 +5884,7 @@ class ThriveRoadmapTemplate:
         if disease_susceptibility:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestive_health.get("header", "")
+            header = disease_susceptibility.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -5916,7 +5904,7 @@ class ThriveRoadmapTemplate:
         if lipid_digestion:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestion_potential.get("header", "")
+            header = lipid_digestion.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -5926,7 +5914,7 @@ class ThriveRoadmapTemplate:
         if short_chain_fatty_acid:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestion_potential.get("header", "")
+            header = short_chain_fatty_acid.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -5936,7 +5924,7 @@ class ThriveRoadmapTemplate:
         if gases:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestion_potential.get("header", "")
+            header = gases.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -5946,7 +5934,7 @@ class ThriveRoadmapTemplate:
         if neurotransmitters:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestion_potential.get("header", "")
+            header = neurotransmitters.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -5956,7 +5944,7 @@ class ThriveRoadmapTemplate:
         if vitamins:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
-            header = digestion_potential.get("header", "")
+            header = vitamins.get("header", "")
             cs = Paragraph(header, self.styles["TOCTitleStyle"])
             story.append(cs)
             story.append(Spacer(1, 16))
@@ -6029,7 +6017,8 @@ class ThriveRoadmapTemplate:
             story.append(PageBreak())
             story.append(Spacer(1, 8))
             story.extend(self.get_start_suplements(start_suplements))
-        
+        story.append(Indenter(left=-32, right=-32))
+
         return story
 
 
@@ -6062,7 +6051,7 @@ async def generate_pdf(request: Request):
         x1=0, y1=0, width=PAGE_WIDTH, height=PAGE_HEIGHT,
         id='image', leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0,
     )
-
+    
     # Page templates
     doc.addPageTemplates([
         PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer),
@@ -6092,16 +6081,16 @@ async def generate_pdf(request: Request):
     final_story.extend(template.generate(data))
 
     final_story.append(NextPageTemplate('image'))
-
-    buffer.seek(0)
-    buffer.truncate(0)
+    img_path = os.path.join(svg_dir, "final_page.png")
+    full_page_image = Image(img_path, width=PAGE_WIDTH, height=PAGE_HEIGHT)
+    full_page_image.hAlign = 'CENTER'
+    final_story.append(full_page_image)
 
     final_doc = MyDocTemplate(buffer, pagesize=A4, leftMargin=0, rightMargin=0, topMargin=0, bottomMargin=0)
     final_doc.addPageTemplates([
         PageTemplate(id='main', frames=[frame], onPage=renderer.draw_header, onPageEnd=renderer.draw_footer),
         PageTemplate(id='image', frames=[image_frame])
     ])
-
     final_doc.build(final_story, canvasmaker=NumberedCanvas)
     with open("toc.pdf", "wb") as f:
         f.write(buffer.getvalue())
