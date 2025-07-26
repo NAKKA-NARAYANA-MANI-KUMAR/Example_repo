@@ -111,7 +111,6 @@ class MyDocTemplate(BaseDocTemplate):
 
                 # self.custom_toc_entries.append((0, text, self.page+3))
 
-
 class ThriveRoadmapOnlySVGImage:
     def __init__(self, filename, width=None, height=None):
         self.filename = filename
@@ -483,7 +482,7 @@ class RoundedPill(Flowable):
         text_color=colors.white,
         border_color=None,
         border_width=0.2,
-        font_name="Helvetica",
+        font_name=FONT_INTER_SEMI_BOLD,
         icon_path=None,
         icon_width=0,
         icon_height=0,
@@ -677,7 +676,7 @@ class GradientScoreBar:
         b = c1.blue + (c2.blue - c1.blue) * t
         return Color(r, g, b)
 
-    def lighten_color(self, color, factor=0.4):
+    def lighten_color(self, color, factor=0.8):
         return Color(
             color.red + (1.0 - color.red) * factor,
             color.green + (1.0 - color.green) * factor,
@@ -755,11 +754,11 @@ class GradientScoreBar:
                 text_width = len(text) * 4.5
 
                 if i == 0:
-                    pass  # left align
+                    pass  
                 elif i == count - 1:
-                    x -= text_width  # right align
+                    x -= text_width  
                 else:
-                    x -= text_width / 2  # center align
+                    x -= text_width / 2  
 
                 d.add(String(x, y, text, fontName=label_font, fontSize=7, fillColor=font_color))
         if self.bottom_labels_2:
@@ -795,7 +794,7 @@ class GradientScoreBar:
 
         d.add(Rect(score_x - pill_w / 2, pill_y, pill_w, pill_h,
                    rx=pill_h / 2, ry=pill_h / 2,
-                   fillColor=score_fill, strokeColor=score_color, strokeWidth=1))
+                   fillColor=score_fill, strokeColor=score_color, strokeWidth=0.6))
 
         score_text = str(self.score)
         score_text_x = score_x - (len(score_text) * 5 / 2)
@@ -986,7 +985,7 @@ class GradientScoreBarr:
         radius = 16
         pill_h = 20
         padding = 15
-        label_font = FONT_INTER_REGULAR
+        label_font = FONT_INTER_BOLD
         font_color = colors.HexColor("#667085")
 
         total_label_height = 0
@@ -1089,7 +1088,7 @@ class GradientScoreBarr:
         # Pill shape
         d.add(Rect(score_x - pill_w / 2, pill_y, pill_w, pill_h,
                    rx=pill_h / 2, ry=pill_h / 2,
-                   fillColor=score_fill, strokeColor=score_color, strokeWidth=1))
+                   fillColor=score_fill, strokeColor=score_color, strokeWidth=0.6))
 
         # Accurate text width and vertical position
         text_width = stringWidth(self.pill_text, font_name, pill_font_size)
@@ -1603,7 +1602,7 @@ class ThriveRoadmapTemplate:
             ("ALIGN", (1, 1), (1, -1), "CENTER"),  
             ("ALIGN", (2, 1), (2, -1), "CENTER"),  
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("FONTNAME", (0, 1), (-1, -1), FONT_INTER_REGULAR),
+            ("FONTNAME", (0, 1), (-1, -2), FONT_INTER_REGULAR),
             ("FONTSIZE", (0, 1), (-1, -1), FONT_SIZE_SMALL),
             ("TOPPADDING", (0, 1), (-1, -1), 10),
             ("BOTTOMPADDING", (0, 1), (-1, -1), 10),
@@ -1616,7 +1615,7 @@ class ThriveRoadmapTemplate:
             ("LINEAFTER", (1,0), (1, -1), 0.01, PMX_GREEN),
             # Rounded Corners
             ("ROUNDEDCORNERS", [20, 20, 20, 20]),
-            ("FONTNAME", (0, -1), (-1, -1), FONT_INTER_BOLD),
+            ("FONTNAME", (0, -1), (0, -1), FONT_INTER_BOLD),
             ("BOX", (0, 0), (-1, -1), 0.01, PMX_GREEN, None, None, "round"),
         ]
 
@@ -1972,7 +1971,7 @@ class ThriveRoadmapTemplate:
             "Heart Rate Variability":"calorie_2.svg",    
             "Grip Strength (Left)"  :"grip_strength.svg",  
             "Grip Strength (Right)" : "grip_strength.svg",
-            "Cognitive"   :"Cognitive.svg"
+            "Cognitive"   :"brain.svg"
         }
         section = []
         for idx,metric in enumerate(metrics):
@@ -2234,13 +2233,15 @@ class ThriveRoadmapTemplate:
         section.append([cs_data])
         section.append([Spacer(1,32)])
         
-        icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
-        icon = self.svg_icon(icon_path, width=24, height=24)
+        icon_path = os.path.join(svg_dir,"medications.svg")  
+        icon = self.svg_icon(icon_path, width=20, height=20)
         # ---------- Bullet Points: Current Symptoms ----------
         medications = your_current_stack.get("medications", {}).get("title_data", [])
         title =  your_current_stack.get("medications", {}).get("title", "")
         section.append([self.inner_rounded_table_data(medications,title,icon)])
         section.append([Spacer(1, 8)])
+        icon_path = os.path.join(svg_dir,"supplements.svg")  
+        icon = self.svg_icon(icon_path, width=20, height=20)
         supplements = your_current_stack.get("supplements", {}).get("title_data", [])
         title =  your_current_stack.get("supplements", {}).get("title", "")
         section.append([self.inner_rounded_table_data(supplements,title,icon)])
@@ -2271,8 +2272,8 @@ class ThriveRoadmapTemplate:
         # 3. Icons
         svg_dir = "staticfiles/icons/"
         icon_family = self.svg_icon(os.path.join(svg_dir, "family.svg"), width=24, height=24)
-        icon_male = self.svg_icon(os.path.join(svg_dir, "gender_male.svg"), width=24, height=24)
-        icon_female = self.svg_icon(os.path.join(svg_dir, "gender_female2.svg"), width=24, height=24)
+        icon_male = self.svg_icon(os.path.join(svg_dir, "gender_malee.svg"), width=16, height=16)
+        icon_female = self.svg_icon(os.path.join(svg_dir, "gender_femalee.svg"), width=20, height=20)
 
         # 4. Inner Tables
         left_stack = self.inner_rounded_table_data(mother_data, mother_title, icon_female, width=246)
@@ -2325,18 +2326,18 @@ class ThriveRoadmapTemplate:
         section.append([Spacer(1, 8)])
 
         # 9. Past History Section
-        icon = self.svg_icon(os.path.join(svg_dir, "bullet_text_icon.svg"), width=24, height=24)
+        icon = self.svg_icon(os.path.join(svg_dir, "past_history.svg"), width=18, height=18)
         symptoms = family_past_histories.get("past_history", {}).get("title_data", [])
         title = family_past_histories.get("past_history", {}).get("title", "")
         section.append([self.inner_rounded_table_data(symptoms, title, icon)])
-        
+        # menstrual_history
         menstrual_history=family_past_histories.get("menstrual_history",{})
         if menstrual_history:
             section.append([Spacer(1, 8)])
 
             bullets = []
             title_para = Paragraph(menstrual_history.get("title",""), self.styles["SvgBulletTitle"])
-            
+            icon = self.svg_icon(os.path.join(svg_dir, "menstrual_history.svg"), width=15, height=20)
             title_table=Table([
                 [icon,
                 Spacer(1, 10),
@@ -2407,8 +2408,8 @@ class ThriveRoadmapTemplate:
         section.append([cs_data])
         section.append([Spacer(1,40)])
         
-        icon_path = os.path.join(svg_dir,"bullet_text_icon.svg")  
-        icon = self.svg_icon(icon_path, width=24, height=24)
+        icon_path = os.path.join(svg_dir,"goalss.svg")  
+        icon = self.svg_icon(icon_path, width=20, height=18)
         # ---------- Bullet Points: Current Symptoms ----------
         goals_data = health_goals_data.get("goals_data", [])
         title =  health_goals_data.get("title", "")
@@ -2435,7 +2436,7 @@ class ThriveRoadmapTemplate:
         icon_path = os.path.join(svg_dir,"bullet.svg")  
         icon_bullet = self.svg_icon(icon_path, width=16, height=16)
 
-        icon_path = os.path.join("staticfiles/icons/", "lifestyle.svg")
+        icon_path = os.path.join("staticfiles/icons/", "lifestyle_trends.svg")
         icon_lifestyle = self.svg_icon(icon_path, width=24, height=24)
         
         lifestyle_trends_data_=lifestyle_data.get("lifestyle_trends_data","")
@@ -2575,11 +2576,10 @@ class ThriveRoadmapTemplate:
             stroke_color=PMX_GREEN
         )
         # ---------- Extract Data ----------
-        icon_path = os.path.join(svg_dir, "lifestyle.svg")
-        icon = self.svg_icon(icon_path, width=24, height=24)
+        
         frst_row = Table(
             [   
-                [icon,Spacer(1,10),Paragraph("Your Lifestyle Trends", self.styles["SvgBulletTitle"])]
+                [icon_lifestyle,Spacer(1,10),Paragraph("Your Lifestyle Trends", self.styles["SvgBulletTitle"])]
             ],
             colWidths=[24,10, None],
         )
@@ -2732,10 +2732,10 @@ class ThriveRoadmapTemplate:
         section_.append(Spacer(1,32))
 
         title=vital_params_data.get("metrics","").get("title","")
-        icon_path=os.path.join(svg_dir,"lifestyle.svg")
+        icon_path=os.path.join(svg_dir,"vitals.svg")
 
 
-        icon_lifestyle = self.svg_icon(icon_path, width=24, height=24)
+        icon_lifestyle = self.svg_icon(icon_path, width=20, height=16)
         title_para = Paragraph(title, self.styles["SvgBulletTitle"])
         family_header_row = [icon_lifestyle, Spacer(1, 10), title_para]
 
@@ -2769,14 +2769,14 @@ class ThriveRoadmapTemplate:
                 "height":18
             },
             "Blood Pressure (Left Arm)"  :{
-                "path":"left.svg",
-                "width":24,
-                "height":24
+                "path":"left_arm.svg",
+                "width":20,
+                "height":20
             },
             "Blood Pressure (Right Arm)" : {
-                "path":"right.svg",
-                "width":24,
-                "height":24
+                "path":"right_arm.svg",
+                "width":20,
+                "height":20
             },
             "Heart Rate"   :{
                 "path":"HRV.svg",
@@ -2784,14 +2784,14 @@ class ThriveRoadmapTemplate:
                 "height":24
             },
             "Respiratory Rate"   :{
-                "path":"respiratory_rate.svg",
-                "width":17.02,
+                "path":"respiratory.svg",
+                "width":20,
                 "height":18
             },
             "Eye Screening"   :{
-                "path":"eye.svg",
-                "width":18,
-                "height":9.15
+                "path":"eyee.svg",
+                "width":14,
+                "height":10
             }
         }
         metrics=vital_params_data.get("metrics",{}).get("metrics_data",[])
@@ -3661,11 +3661,6 @@ class ThriveRoadmapTemplate:
 
     def get_fitness_assesment(self, fitness_assesment_data: dict):
         section_ = []
-        # Header Section
-        # header = fitness_assesment_data.get("header", "")
-        # cs = Paragraph(header, self.styles["TOCTitleStyle"])
-        # section_.append(cs)
-        # section_.append(Spacer(1, 8))
 
         header_data = fitness_assesment_data.get("header_data", "")
         cs_data = Paragraph(header_data, self.styles["header_data_style"])
@@ -3690,8 +3685,8 @@ class ThriveRoadmapTemplate:
             your_score = ftd.get("your_score", "")
             optimal_score = ftd.get("optimal_score", "")
 
-            your_score_pill = RoundedPill(your_score, PMX_BUTTON_BG, 8, 40, 18, 8, "#003632","#17B26A",0.2,FONT_INTER_BOLD)
-            optimal_score_pill = RoundedPill(optimal_score, PMX_BUTTON_BG, 8, 40, 18, 8, "#003632","#17B26A",0.2,FONT_INTER_BOLD)
+            your_score_pill = RoundedPill(your_score, PMX_BUTTON_BG, 8, 40, 18, 10, "#003632","#17B26A",0.2,FONT_INTER_BOLD)
+            optimal_score_pill = RoundedPill(optimal_score, PMX_BUTTON_BG, 8, 40, 18, 10, "#003632","#17B26A",0.2,FONT_INTER_BOLD)
 
             row = [
                 Paragraph(test_name, self.styles["TableCell"]),
@@ -3759,7 +3754,7 @@ class ThriveRoadmapTemplate:
             ("TOPPADDING", (0, 0), (-1, -1), 0),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
             #("BOX",(0,0),(-1,-1),0.2,colors.black),
-            ("LINEBELOW", (0, 0), (-1, -1), 0.01, PMX_GREEN)
+            ("LINEBELOW", (0, 0), (-1, -1), 0.1, PMX_GREEN)
         ]))
         data = [
             [top_stack],
@@ -5146,7 +5141,6 @@ class ThriveRoadmapTemplate:
                 ("RIGHTPADDING", (0, 0), (-1, -1), 16),
                 ("TOPPADDING", (0, 0), (-1, -1), 10),
                 ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
-                #("BOX",(0,0),(-1,-1),0.2,colors.HexColor("#000000"))
             ]))
             section_.append(RoundedBox(width=240, height=None, content=entry_table, corner_radius=16,border_radius=0.2))
 

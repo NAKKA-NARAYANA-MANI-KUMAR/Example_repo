@@ -122,21 +122,6 @@ metric = {
     "powder": {"width": 15, "height": 11.3},
     "tablet": {"width": 15, "height": 15.03}
 }
-class MyDocTemplate(BaseDocTemplate):
-    def __init__(self, filename, **kwargs):
-        self.allowSplitting = 0
-        self.custom_toc_entries = []
-        BaseDocTemplate.__init__(self, filename, pagesize=A4, **kwargs)
-        frame = Frame(2.5 * cm, 2.5 * cm, 15 * cm, 25 * cm, id='F1')
-        template = PageTemplate('normal', [frame])
-        self.addPageTemplates(template)
-
-    def afterFlowable(self, flowable):
-        if isinstance(flowable, Paragraph):
-            text = flowable.getPlainText()
-            style = flowable.style.name
-            if style == "Heading1":
-                self.custom_toc_entries.append((0, text, self.page))
 
 class RoundedBox(Flowable):
     def __init__(self, width, height=None, content=None, corner_radius=8,border_radius=0.4,stroke_color=PMX_GREEN,fill_color=colors.white ):
@@ -1452,12 +1437,12 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             Paragraph("", self.styles["TableHeader"]),  # First column (number)
             Paragraph("Therapy", self.styles["TableHeader"]),
             Paragraph("Start From", ParagraphStyle(
-                "Start From",  # Custom left-aligned
+                "Start From",  
                 parent=self.styles["TableHeader"],
                 alignment=TA_CENTER
             )),
             Paragraph("Frequency & Duration", ParagraphStyle(
-                "Frequency & Duration",  # Custom left-aligned
+                "Frequency & Duration",  
                 parent=self.styles["TableHeader"],
                 alignment=TA_CENTER
             )),
@@ -1469,7 +1454,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             name=therapy.get("name", "")
             start_from_cell=Paragraph(therapy.get("start_from", ""), self.styles["TableCell"]),
             frequency=therapy.get("frequency", "")
-            #frequency_cell=Paragraph(therapy.get("frequency", ""), self.styles["TableCell"]),
             session_days=therapy.get("session_days", "")
             session_time=Paragraph(therapy.get("session_time", ""), ParagraphStyle(
                 "frequency_duration",  # Custom left-aligned
@@ -1485,14 +1469,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             ))
             remarks_cell=Paragraph(therapy.get("remarks", ""), self.styles["TableCell"]),
             
-
-
-            # metrics = {
-            #     "h-bot": {"width": 15, "height": 14.09},
-            #     "sauna": {"width": 15, "height": 15},
-            #     "iv_theraphy": {"width": 15, "height": 11.3},
-            #     "physiotherapy": {"width": 15, "height": 15.03}
-            # }
             if name:
                 name_=name.replace(" ","_")
                 icon_path = os.path.join("staticfiles", "icons", f"{name_.lower()}.svg")
@@ -1549,7 +1525,8 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             days_table = Table(
                 [days_list],
                 style=[
-                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE")
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER")
                 ]
             )
             frequency_duration_table = Table(
@@ -1557,7 +1534,8 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 [session_time],
                 [frequency_duration]],
                 style=[
-                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE")
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER")
                 ]
             )
 
@@ -1799,7 +1777,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 )
 
         if medications:
-            story.append(self._create_prescription_table(medications))
+            story.append(KeepTogether(self._create_prescription_table(medications)))
             story.append(Spacer(1, 16))
         
         if "supplements" in data:
@@ -1830,7 +1808,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 )
 
         if supplements:
-            story.append(self._create_supplements_table(supplements))
+            story.append(KeepTogether(self._create_supplements_table(supplements)))
             story.append(Spacer(1, 16))
         # Handle therapies from different possible sources
         therapies = []
@@ -1858,10 +1836,11 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
         if therapies:
             story.append(self._create_therapies_table(therapies))
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
-            story.append(DoctorSignature(self.styles))  # <- Add signature here
+            story.append(DoctorSignature(self.styles))
+            story.append(PageBreak())  # <- Add signature here
             story.append(Spacer(1, self.PAGE_MARGIN / 4))
 
-        story.append(PageBreak())
+        
 
         sections_to_process = [
             ("additional_diagnoses","Additional Diagnostics",None),
@@ -1958,7 +1937,6 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
 
 # ------------------ Flask App ------------------
 app = Flask(__name__)
-
 @app.route("/generate_prescription", methods=["POST"])
 def generate_prescription():
     data = request.get_json()
