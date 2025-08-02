@@ -22,6 +22,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.lib.utils import ImageReader
+from PIL import Image as PILImage
+from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
 
 # === Constants ===
 PAGE_WIDTH, PAGE_HEIGHT = A4
@@ -34,6 +36,12 @@ FONT_INTER_BOLD = "Inter-Bold"
 FONT_RALEWAY_BOLD="Raleway-Bold"
 FONT_INTER_LIGHT="Inter-Light"
 FONT_INTER_MEDIUM="Inter-Medium"
+FONT_INTER_THIN="Inter-Thin"
+FONT_RALEWAY_REGULAR="Raleway-Regular"
+FONT_RALEWAY_LIGHT = "Raleway-Light"
+FONT_RALEWAY_THIN="Raleway-Thin"
+FONT_RALEWAY_MEDIUM="Raleway-Medium"
+
 FONT_SIZE_MEDIUM = 12
 FONT_SIZE_SMALL = 10
 
@@ -48,7 +56,13 @@ def register_fonts():
         FONT_INTER_SEMI_BOLD: "staticfiles/fonts/inter/Inter-SemiBold.ttf",
         FONT_RALEWAY_BOLD:"staticfiles/fonts/Raleway-Bold.ttf",
         FONT_INTER_LIGHT: "staticfiles/fonts/inter/Inter-Light.ttf",
-        FONT_INTER_MEDIUM: "staticfiles/fonts/inter/Inter-Medium.ttf"
+        FONT_INTER_MEDIUM: "staticfiles/fonts/inter/Inter-Medium.ttf",
+        FONT_RALEWAY_REGULAR: "staticfiles/fonts/Raleway-Regular.ttf",
+        FONT_RALEWAY_LIGHT: "staticfiles/fonts/Raleway-Light.ttf",
+        FONT_INTER_THIN :"staticfiles/fonts/inter/Inter-Thin.ttf",
+        FONT_RALEWAY_THIN :"staticfiles/fonts/Raleway-Thin.ttf",
+        FONT_RALEWAY_MEDIUM: "staticfiles/fonts/Raleway-Medium.ttf"
+
     }
     for name, path in fonts.items():
         if os.path.exists(path):
@@ -192,38 +206,6 @@ class MyDocTemplate(BaseDocTemplate):
         super().__init__(filename, **kwargs)
         self.allowSplitting = 0
 
-# class NumberedCanvas(Canvas):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self._saved_page_states = []
-
-#     def showPage(self):
-#         self._saved_page_states.append(dict(self.__dict__))
-#         self._startPage()
-
-#     def save(self):
-#         total_pages = len(self._saved_page_states)
-#         for state in self._saved_page_states:
-#             self.__dict__.update(state)
-#             self.draw_page_number(total_pages)
-#             super().showPage()
-#         super().save()
-
-#     def draw_page_number(self, total_pages):
-#         page_number = self.getPageNumber()
-#         # if page_number <= 2:
-#         #     return
-#         # if page_number == total_pages:
-#         #     return
-#         text = f"Page {page_number:02d} - {total_pages:02d}"
-#         font = FONT_INTER_REGULAR
-#         size = 8
-#         text_width = stringWidth(text, font, size)
-#         self.setFont(font, size)
-#         self.setFillColor(colors.HexColor("#949599"))
-#         self.drawString(PAGE_WIDTH - 32 - text_width, 31, text)
-#         self.drawString(PAGE_WIDTH - 32 - text_width, 31, text)
-
 class NumberedCanvas(Canvas):
     def __init__(self, *args, footer_label="", **kwargs):
         super().__init__(*args, **kwargs)
@@ -246,7 +228,7 @@ class NumberedCanvas(Canvas):
     def draw_page_number(self, total_pages):
         page_number = self.getPageNumber()
         if page_number <= 1:
-            return
+            return ""
         text = f"Page {page_number:02d} - {total_pages:02d}"
         font = FONT_INTER_REGULAR
         size = 8
@@ -293,6 +275,73 @@ class NumberedCanvas(Canvas):
         except Exception as e:
             print(f"Failed to render SVG: {e}")
 
+class ImageWithOverlaySVGAndText(Flowable):
+    def __init__(self, main_image_path, svg_path, width=400, height=300,
+                 svg_pos=(53, 162), svg_size=(181, 84), text="PMX0000",user_name=""):
+        super().__init__()
+        self.main_image_path = main_image_path
+        self.svg_path = svg_path
+        self.width = width                  # main image width
+        self.height = height                # main image height
+        self.svg_pos = svg_pos              # (x, y from top)
+        self.svg_size = svg_size            # (width, height)
+        self.text = text
+        self.user_name=user_name
+
+    def wrap(self, availWidth, availHeight):
+        return self.width, self.height
+
+    def draw(self):
+        # Draw main image
+        try:
+            main_img = ImageReader(self.main_image_path)
+            self.canv.drawImage(main_img, 0, 0, width=self.width, height=self.height, mask='auto')
+        except Exception as e:
+            print(f"Failed to draw main image: {e}")
+
+        # Draw scaled SVG overlay
+        try:
+            drawing = svg2rlg(self.svg_path)
+            scale_x = self.svg_size[0] / drawing.width
+            scale_y = self.svg_size[1] / drawing.height
+
+            self.canv.saveState()
+            self.canv.translate(53, A4[1]-162)
+            self.canv.scale(scale_x, scale_y)
+            renderPDF.draw(drawing, self.canv, 0, 0)
+            self.canv.restoreState()
+        except Exception as e:
+            print(f"Failed to render SVG: {e}")
+
+        try:
+            # Load PNG image
+            png_path = os.path.join("staticfiles", "icons", "pmx_x_white.png")
+            img = ImageReader(png_path)
+
+            # Set position and size (x=53, y=top-162, width=181, height=84)
+            x = 53
+            y = A4[1] - 728  # Y coordinate from bottom
+            width = 16
+            height = 18
+
+            # Draw the image
+            self.canv.drawImage(img, x, y, width=width, height=height, mask='auto')
+        except Exception as e:
+            print(f"Failed to render PNG: {e}")
+
+        try:
+            # Optional: Draw text BELOW the image
+            self.canv.setFillColorRGB(1, 1, 1)  # White color
+            self.canv.setFont(FONT_RALEWAY_THIN, 95.75)  # Approx. 95.75 px
+            self.canv.drawString(49, A4[1]-254, "Genome")
+            self.canv.setFont(FONT_INTER_THIN, 95.75)  # Approx. 95.75 px
+            self.canv.drawString(49, A4[1]-366, "360 Report")  # Position below image
+            self.canv.setFont(FONT_INTER_REGULAR, 16)  # Approx. 95.75 px
+            self.canv.drawString(76, A4[1]-726, f"ID - {self.text}")
+            self.canv.setFont(FONT_RALEWAY_MEDIUM, 30)  # Approx. 95.75 px
+            self.canv.drawString(52, A4[1]-756, self.user_name)
+        except Exception as e:
+            print(f"Failed to render text: {e}")
 
 class FixedSizeDrawing(Flowable):
     def __init__(self, drawing, width, height):
@@ -315,7 +364,6 @@ class FixedSizeDrawing(Flowable):
         renderPDF.draw(self.drawing, self.canv, 0, 0)
         self.canv.restoreState()
 
-# === Renderer ===
 class ThrivePageRenderer:
     def __init__(self, template):
         self.template = template
@@ -568,7 +616,72 @@ class CustomTextBoxFlowable(Flowable):
             c.drawString(cursor_x, cursor_y, char)
             cursor_x += stringWidth(char, self.font_name, self.font_size) + self.letter_spacing
 
-# === Template ===
+class ImageWithOverlayText(Flowable):
+    def __init__(self, image_path, width, height, text_data, styles):
+        super().__init__()
+        self.width = width
+        self.height = height
+        self.text_data = text_data  # List of tuples: (text, x, y, style_name)
+        self.image_stream = self.flatten_image_to_white(image_path)
+        self.styles = getSampleStyleSheet()
+        self.init_styles()
+
+    def flatten_image_to_white(self, image_path):
+        img = PILImage.open(image_path)
+        if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+            bg = PILImage.new("RGB", img.size, (255, 255, 255))  # White background
+            bg.paste(img, mask=img.split()[-1])  # Use alpha as mask
+        else:
+            bg = img.convert("RGB")
+
+        buffer = io.BytesIO()
+        bg.save(buffer, format='PNG')
+        buffer.seek(0)
+        return buffer
+
+    def init_styles(self):
+        self.styles.add(ParagraphStyle(
+            name="ear_screening_title",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=12,
+            leading=24,
+            textColor=PMX_GREEN,
+            backColor=None,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="ear_screening_unit",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=8,
+            leading=18,
+            textColor=colors.HexColor("#667085"),
+            spaceBefore=0,
+            spaceAfter=0
+        ))
+
+    def draw(self):
+        img = ImageReader(self.image_stream)
+        self.canv.drawImage(img, 0, 0, width=self.width, height=self.height)
+
+        for text, x, y, style_name in self.text_data:
+            val_unit = text.strip().split()
+
+            if len(val_unit) == 2:
+                val, unit = val_unit
+                inline_text = (
+                    f'<font name="{FONT_INTER_SEMI_BOLD}" color="{PMX_GREEN}" size="12">{val}</font> '
+                    f'<font name="{FONT_INTER_REGULAR}" color="#667085" size="8">{unit}</font>'
+                )
+            else:
+                val = val_unit[0]
+                inline_text = (
+                    f'<font name="{FONT_INTER_SEMI_BOLD}" color="{PMX_GREEN}" size="12">{val}</font>'
+                )
+
+            para = Paragraph(inline_text, self.styles[style_name])
+            w, h = para.wrapOn(self.canv, self.width, self.height)
+            para.drawOn(self.canv, x, y - h)
+
 class ThriveRoadmapTemplate:
     def __init__(self, buffer):
         self.buffer = buffer
@@ -709,7 +822,6 @@ class ThriveRoadmapTemplate:
             ("ROUNDEDCORNERS", [6, 6, 6, 6]),
             ("BOX", (0, 0), (-1, -1), 0.01,colors.HexColor("#949599") , None, None, "round"),
         ]))
-
         return tablee
     
     def generate_section(self,data_card,sections):
@@ -736,15 +848,10 @@ class ThriveRoadmapTemplate:
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+
                 ]))
                 story.append(wrapped)
-                # story.append(
-                #     KeepTogether([
-                #         table_data,
-                #         Spacer(1, 8),
-                #         interpretation_analyzed
-                #     ])
-                # )
                 story.append(Spacer(1,16))
         return story
     
@@ -860,47 +967,6 @@ class ThriveRoadmapTemplate:
 # === FastAPI App ===
 app = FastAPI()
 
-# @app.post("/generate-pdf")
-# async def generate_pdf(request: Request):
-#     data = await request.json()
-#     buffer = io.BytesIO()
-
-#     template = ThriveRoadmapTemplate(buffer)
-#     renderer = ThrivePageRenderer(template)
-
-#     frame = Frame(
-#         x1=0, y1=FOOTER_HEIGHT,
-#         width=PAGE_WIDTH,
-#         height=PAGE_HEIGHT-HEADER_HEIGHT-FOOTER_HEIGHT,
-#         leftPadding=0,
-#         rightPadding=0,
-#         topPadding=0,
-#         bottomPadding=0,
-#         id='main'
-#     )
-
-#     doc = MyDocTemplate(buffer, pagesize=A4, leftMargin=0, rightMargin=0, topMargin=HEADER_HEIGHT, bottomMargin=FOOTER_HEIGHT)
-
-#     doc.addPageTemplates([
-#         PageTemplate(id='main', frames=[frame])
-#     ])
-#     story=[]
-#     img_path = os.path.join("staticfiles", "icons", "final_page.png")
-#     full_page_image = Image(img_path, width=PAGE_WIDTH, height=PAGE_HEIGHT-HEADER_HEIGHT-FOOTER_HEIGHT)
-#     full_page_image.hAlign = 'CENTER'
-#     story.append(full_page_image)
-#     story.extend(template.generate(data))
-#     user_name=data.get("user_name","")
-#     doc.build(story,canvasmaker=lambda *args, **kwargs: NumberedCanvas(*args, footer_label=user_name, **kwargs))
-    
-#     with open("genome.pdf", "wb") as f:
-#         f.write(buffer.getvalue())
-#     buffer.seek(0)
-#     return StreamingResponse(buffer, media_type="application/pdf", headers={
-#         "Content-Disposition": "inline; filename=styled_output.pdf"
-#     })
-
-
 @app.post("/generate-pdf")
 async def generate_pdf(request: Request):
     data = await request.json()
@@ -949,12 +1015,19 @@ async def generate_pdf(request: Request):
     ])
 
     story = []
+    id=data.get("user_id","")
+    user_name=data.get("user_name","")
+    story.append(ImageWithOverlaySVGAndText(
+        main_image_path="staticfiles/icons/genome_page.png",
+        svg_path="staticfiles/icons/pmx_logo.svg",
+        width=PAGE_WIDTH,
+        height=PAGE_HEIGHT,
+        svg_pos=(53, 162),
+        svg_size=(181, 84),
+        text=id,
+        user_name=user_name
+    ))
 
-    # === Page 1 === (no header/footer)
-    img_path = os.path.join("staticfiles", "icons", "genome_page.png")
-    full_page_image = Image(img_path, width=PAGE_WIDTH, height=PAGE_HEIGHT)
-    full_page_image.hAlign = 'CENTER'
-    story.append(full_page_image)
 
     # === Tell ReportLab to switch to 'main' template from here on ===
     story.append(NextPageTemplate("main"))
