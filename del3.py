@@ -1,196 +1,88 @@
-from reportlab.platypus import SimpleDocTemplate
+import os
+from typing import Tuple
+from io import BytesIO
+
+import fitz  # PyMuPDF
+from PIL import Image, ImageDraw
+from reportlab.platypus import SimpleDocTemplate, Spacer, Image as RLImage
 from reportlab.lib.pagesizes import A4
-from pathlib import Path
+from reportlab.lib.units import inch
 
-def generate_areas_of_concern_pdf(output_path="areas_of_concern_output.pdf"):
-    from reportlab.lib import colors
-    from reportlab.lib.units import inch
-    from reportlab.platypus import Flowable, Paragraph, Table, TableStyle, Spacer
-    from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
-    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+class ThriveRoadmapTemplate:
+    @staticmethod
+    def crop_pdf_styled(pdf_path: str, page_number: int, crop_rect: Tuple[float, float, float, float], max_width: int = 500, max_height: int = 600) -> RLImage:
+        """
+        Crop a region from a PDF page, apply styles, and return a ReportLab Image.
+        """
+        # Check if file exists
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"PDF file not found at: {pdf_path}")
 
-    # ---------------- Styles ----------------
-    BORDER_COLOR = colors.HexColor("#EAECF0")
-    OPTIMAL_COLOR = colors.HexColor("#12B76A")
-    SUB_OPTIMAL_COLOR = colors.HexColor("#F79009")
-    NON_OPTIMAL_COLOR = colors.HexColor("#F04438")
-    TEAL_COLOR = colors.HexColor("#00625B")
-    TEXT_COLOR = colors.HexColor("#667085")
+        # Load PDF and crop region
+        doc = fitz.open(pdf_path)
+        page = doc[page_number]
+        rect = fitz.Rect(*crop_rect)
+        cropped_pix = page.get_pixmap(clip=rect, dpi=200)
+        doc.close()
 
-    # ---------------- ConcernCard ----------------
-    class ConcernCard(Flowable):
-        def __init__(self, concern, width=250, height=None):
-            Flowable.__init__(self)
-            self.concern = concern
-            self.width = width
-            self.height = self._calculate_height()
+        # Convert pixmap to PIL Image
+        cropped_image = Image.frombytes("RGB", (cropped_pix.width, cropped_pix.height), bytes(cropped_pix.samples))
 
-        def _calculate_height(self):
-            from reportlab.pdfgen import canvas
-            from io import BytesIO
+        # Create gradient background
+        gradient = Image.new("RGB", cropped_image.size, "#02665F")
+        for y in range(gradient.height):
+            gradient.paste((2, 102, 95), (0, y, gradient.width, y + 1))
 
-            tmp_canvas = canvas.Canvas(BytesIO())
-            total_height = 90
-            tmp_canvas.setFont("Helvetica", 12)
-            name_lines = self._wrap_text(tmp_canvas, self.concern.get("name", ""), 12, self.width - 100)
-            total_height += len(name_lines) * 14
-            tmp_canvas.setFont("Helvetica", 9)
-            desc_lines = self._wrap_text(tmp_canvas, self.concern.get("description", ""), 9, self.width - 30)
-            total_height += len(desc_lines) * 12
-            return total_height
+        # Blend cropped image with gradient
+        blended = Image.blend(gradient, cropped_image, alpha=0.7)
 
-        def _wrap_text(self, canvas, text, font_size, max_width):
-            words = text.split()
-            lines = []
-            current_line = []
-            current_width = 0
-            for word in words:
-                word_width = canvas.stringWidth(word + " ", "Helvetica", font_size)
-                if current_width + word_width <= max_width:
-                    current_line.append(word)
-                    current_width += word_width
-                else:
-                    lines.append(" ".join(current_line))
-                    current_line = [word]
-                    current_width = word_width
-            if current_line:
-                lines.append(" ".join(current_line))
-            return lines
+        # Add rounded corners
+        mask = Image.new("L", blended.size, 0)
+        draw = ImageDraw.Draw(mask)
+        draw.rounded_rectangle([0, 0, blended.width, blended.height], radius=20, fill=255)
 
-        def _get_status_color(self, status):
-            status = status.lower()
-            if status in ["optimal", "high", "normal"]:
-                return OPTIMAL_COLOR
-            if status in ["sub optimal", "medium"]:
-                return SUB_OPTIMAL_COLOR
-            if status in ["non optimal", "low"]:
-                return NON_OPTIMAL_COLOR
-            return SUB_OPTIMAL_COLOR
+        # Apply mask for rounded corners
+        blended = blended.convert("RGBA")
+        blended.putalpha(mask)
 
-        def draw(self):
-            c = self.canv
-            c.saveState()
-            c.setFillColor(colors.white)
-            c.setStrokeColor(BORDER_COLOR)
-            c.roundRect(0, 0, self.width, self.height, 10, fill=1, stroke=1)
+        # Resize image to fit PDF size constraints
+        width, height = blended.size
+        scale = min(max_width / width, max_height / height, 1.0)
+        new_size = (int(width * scale), int(height * scale))
+        print(f"Original size: {width}x{height}, Scaled size: {new_size}")
+        blended = blended.resize(new_size, Image.LANCZOS)
 
-            pill_width = 80
-            pill_height = 22
-            max_width = self.width - pill_width - 40
+        # Save image to BytesIO as PNG
+        image_bytes = BytesIO()
+        blended.save(image_bytes, format="PNG")
+        image_bytes.seek(0)
 
-            c.setFont("Helvetica", 12)
-            c.setFillColor(TEAL_COLOR)
-            name_lines = self._wrap_text(c, self.concern.get("name", ""), 12, max_width)
-            y = self.height - 25
-            for line in name_lines:
-                c.drawString(15, y, line)
-                y -= 14
+        # Create ReportLab Image object with correct dimensions
+        rl_image = RLImage(image_bytes, width=new_size[0], height=new_size[1])
+        rl_image._restrictSize(max_width, max_height)
+        return rl_image
 
-            pill_y = y + 14
-            pill_x = self.width - pill_width - 15
-            status = self.concern.get("status", "Sub Optimal")
-            status_color = self._get_status_color(status)
 
-            c.setFillColor(status_color)
-            c.setStrokeColor(status_color)
-            c.roundRect(pill_x, pill_y, pill_width, pill_height, pill_height / 2, fill=1, stroke=1)
+if __name__ == "__main__":
+    # Input and output paths
+    pdf_path = r"C:\Users\Admin\Downloads\DEXASCAN-NAINA-SAXENA_Y7rTnwm.pdf"
+    output_pdf_path = r"C:\Users\Admin\Downloads\output.pdf"
 
-            c.setFillColor(colors.white)
-            c.setFont("Helvetica", 11)
-            text_width = c.stringWidth(status, "Helvetica", 11)
-            c.drawString(pill_x + (pill_width - text_width) / 2, pill_y + 6, status)
-
-            c.setFillColor(colors.black)
-            c.setFont("Helvetica", 10)
-            value_text = f"{self.concern.get('value', '')} {self.concern.get('unit', '')}"
-            c.drawString(15, pill_y - 25, value_text)
-
-            range_text = self.concern.get("reference_range", "")
-            text_width = c.stringWidth(range_text, "Helvetica", 10)
-            c.setFillColor(colors.gray)
-            c.drawString(self.width - text_width - 15, pill_y - 25, range_text)
-
-            c.setFont("Helvetica", 9)
-            c.setFillColor(TEXT_COLOR)
-            desc_lines = self._wrap_text(c, self.concern.get("description", ""), 9, self.width - 30)
-            y = pill_y - 50
-            for line in desc_lines:
-                c.drawString(15, y, line)
-                y -= 12
-
-            c.restoreState()
-
-    # ---------------- Sample Data ----------------
-    sample_data = [
-        {
-            "name": "Vitamin D Levels",
-            "value": "18",
-            "unit": "ng/mL",
-            "reference_range": "30 - 100 ng/mL",
-            "status": "Low",
-            "description": "Low vitamin D levels can affect bone health, immunity, and mood regulation.",
-        },
-        {
-            "name": "Cholesterol",
-            "value": "220",
-            "unit": "mg/dL",
-            "reference_range": "< 200 mg/dL",
-            "status": "High",
-            "description": "High cholesterol levels increase the risk of cardiovascular disease.",
-        },
-        {
-            "name": "HbA1c",
-            "value": "6.3",
-            "unit": "%",
-            "reference_range": "< 5.7%",
-            "status": "Sub Optimal",
-            "description": "This value suggests prediabetes and indicates a need to manage blood sugar.",
-        },
-    ]
-
-    # ---------------- Document Building ----------------
-    doc = SimpleDocTemplate(output_path, pagesize=A4)
+    # Create the output PDF using ReportLab
+    doc = SimpleDocTemplate(output_pdf_path, pagesize=A4)
     story = []
 
-    # Header
-    style = ParagraphStyle(name="Heading", fontSize=18, textColor=TEAL_COLOR, leading=22, spaceAfter=14)
-    story.append(Paragraph("Areas of Concern", style))
+    # Crop and style a portion of the PDF and add it to the PDF
+    cropped_image = ThriveRoadmapTemplate.crop_pdf_styled(
+        pdf_path=pdf_path,
+        page_number=0,
+        crop_rect=(8, 280, 200, 570),  # (x0, y0, x1, y1)
+        max_width=400,
+        max_height=500
+    )
+    story.append(cropped_image)
+    story.append(Spacer(1, 0.2 * inch))
 
-    # Grid of cards: 2 columns
-    card_width = (A4[0] - (2.0 * inch)) / 2
-    rows = []
-    temp_row = []
-    for i, concern in enumerate(sample_data):
-        card = ConcernCard(concern, width=card_width)
-        temp_row.append(card)
-        if i % 2 == 0:
-            temp_row.append(Spacer(20, 1))  # gap between columns
-        if len(temp_row) == 3 or i == len(sample_data) - 1:
-            if len(temp_row) < 3:
-                temp_row.append(Spacer(card_width, 1))  # pad row if only one card
-            rows.append(temp_row)
-            rows.append([Spacer(1, 15)])  # space between rows
-            temp_row = []
-
-    # Build table from rows
-    if rows:
-        table = Table(rows, colWidths=[card_width, 20, card_width])
-        table.setStyle(
-            TableStyle(
-                [
-                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                    ("LEFTPADDING", (0, 0), (-1, -1), 5),
-                    ("RIGHTPADDING", (0, 0), (-1, -1), 5),
-                ]
-            )
-        )
-        story.append(table)
-    else:
-        story.append(Paragraph("No areas of concern found.", ParagraphStyle(name="Normal", fontSize=12)))
-
-    # Build PDF
+    # Build the final PDF
     doc.build(story)
-    print(f"PDF successfully created: {Path(output_path).resolve()}")
-
-# Run the function
-generate_areas_of_concern_pdf()
+    print(f"✅ PDF created at: {output_pdf_path}")
