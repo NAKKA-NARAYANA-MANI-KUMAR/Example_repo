@@ -1,0 +1,813 @@
+{
+    "cardiac_health_data": {
+        "title": "CARDIAC HEALTH",
+        "content": "Cardiac health refers to the overall well-being and optimal functioning of the heart and its associated vascular system. It is a critical aspect of overall health, as the heart is responsible for pumping oxygenated blood and essential nutrients throughout the body. ",
+        "data": [
+            {
+                "header": "Coronary Artery Disease",
+                "header_data": "Coronary artery disease occurs when the arteries that supply blood to the heart become narrowed or blocked by cholesterol buildup (plaque). This limits oxygen-rich blood flow, which can cause chest pain or lead to a heart attack. It is one of the most common causes of heart-related illness and death.",
+                "range": "Moderate",
+                "genes_analyzed": "ACE, PPARG, NPC1L1, ABCA1, APOB, APOC3, APOE, CETP, KCNE1, LDLR, ANGPLT4, NOS3, PCSK9",
+                "interpretation": "Clinically significant, Homozygous mutations in NOS3, APOB genes indicate impaired endothelial function and lipid metabolism, elevating the risk of early-onset coronary artery disease."
+            },
+            {
+                "header": "Cardiomyopathy",
+                "header_data": "Cardiomyopathy is a disease of the heart muscle that makes it harder for the heart to pump blood. The heart may become enlarged, thickened, or stiff, affecting its ability to function normally. It can lead to heart failure, irregular heartbeats, or other complications.",
+                "range": "Low",
+                "genes_analyzed": "MYH7, TNNT2, TTN, TNNC1, PLN, FLNC, PRKAGE, MYBPC3, MYL2, MYH6, ACTC1, TPM1, TNNI3, ABCC9",
+                "interpretation": "You have low genetic risk for Cardiomyopathy. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Atrial Fibrillation",
+                "header_data": "Atrial Fibrillation is a common type of irregular heartbeat that starts in the upper chambers (atria) of the heart.  The heart beats too fast or unevenly, which can lead to poor blood flow and increase stroke risk.\nMany people with atrial fibrillation may feel palpitations, fatigue, or no symptoms at all.",
+                "range": "Low",
+                "genes_analyzed": "NPPA, GJA5, SCN5A, KCNH2, KCNQ1, KCNA5, KCNJ2, SCN1B, KCNE2, TTR",
+                "interpretation": "You have low genetic risk for Atrial Fibrillation. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Long QT Syndrome",
+                "header_data": "Long QT Syndrome is a heart rhythm condition that can cause fast, chaotic heartbeats. It happens because of a delay in the heart’s electrical system recovering between beats. If untreated, it can trigger fainting, seizures, or even sudden death.",
+                "range": "Low",
+                "genes_analyzed": "CAV3, SCN5A, KCNH2, KCNQ1, CACNA1C, CALM1, SCN9A",
+                "interpretation": "You have low genetic risk for Long QT syndrome. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Ventricular Arrythmias / Sudden Cardiac Death",
+                "header_data": "Ventricular arrhythmias are abnormal heart rhythms that begin in the heart’s lower chambers (ventricles).\nThey can cause the heart to beat so fast or erratically that it stops pumping effectively. If not treated immediately, this can lead to sudden cardiac death.",
+                "range": "Low",
+                "genes_analyzed": "RYR2, CASQ2, CALM1, CALM2, SCN10A, KCNH2, KCNQ1, SCN5A, CALM3, KCNJ8, NKX2-5",
+                "interpretation": "You have low genetic risk for Ventricular Arrythmias. No Clinically significant mutations were seen for it"
+            },
+            {
+                "header": "Hypertension",
+                "header_data": "Hypertension means the pressure of blood against the artery walls is consistently too high. It often has no symptoms but puts extra strain on the heart and blood vessels.  Over time, it increases the risk of heart attack, stroke, and kidney disease.\n\n",
+                "range": "Mild",
+                "genes_analyzed": "AGT, PRKAG2, INF2, PKD1, PKD2, NOS3, CACNA1H, CLCN2, CYP11B2, KCNJ5, NR3C2, SLC12A3",
+                "interpretation": "You have mild genetic risk for Hypertension. Few clinically significant mutations seen for it."
+            }
+        ]
+    },
+    "metabolic_health_data": {
+        "title": "METABOLIC HEALTH",
+        "content": "Metabolic health refers to the state of having ideal levels of blood sugar, triglycerides, HDL cholesterol, blood pressure, and waist circumference, reducing risks of diabetes, heart disease, stroke, and improving overall quality of life and longevity.",
+        "data": [
+            {
+                "header": "Diabetes",
+                "header_data": "A chronic condition where the body cannot properly regulate blood sugar levels. It results from insufficient insulin production or poor insulin response. ncontrolled diabetes can damage the eyes, kidneys, nerves, and heart.",
+                "range": "Mild",
+                "genes_analyzed": "ABCC8, C1QTNF6, CEL, CTLA4, DNAJC3, DUT, GCK, HLADQ, HLADR, HNF1A, HNF1B, HNF4A",
+                "interpretation": "You have mild genetic risk for Diabetes. Few clinically significant mutations seen for it."
+            },
+            {
+                "header": "Cholesterol Disorders",
+                "header_data": "Problems abnormal levels of cholesterol in the blood, especially high LDL (\"bad\") cholesterol. Such imbalances can lead to plaque buildup in arteries (atherosclerosis). They increase the risk of heart attacks, strokes, and other cardiovascular diseases.",
+                "range": "Moderate",
+                "genes_analyzed": "LDLR, APOB, MTTP, APOA1, ABCA1, CETP, LPL, LDLRAP1, APOA4, APOC2, APOA5",
+                "interpretation": "You have moderate genetic risk for cholesterol disorders. You have homozygous mutations in PCSK9, APOB, ABCA1 genes. It can cause elevated LDL cholesterol levels."
+            },
+            {
+                "header": "Hypertriglyceridemia",
+                "header_data": "A condition where triglyceride levels in the blood are abnormally high. It is often linked to obesity, diabetes, and excessive alcohol or sugar intake. Severe levels may increase the risk of pancreatitis and heart disease.",
+                "range": "Moderate",
+                "genes_analyzed": "LPL, APOC2, APOA5, LMF1, GPIHBP1, APOA1, GCKR, APOB, PLTP, ANGPTL3, APOE",
+                "interpretation": "You have moderate genetic risk for cholesterol disorders. You have homozygous mutations in ABCG8, MTTP genes. It can cause high triglyceride levels. "
+            },
+            {
+                "header": "Tendency to weight gain",
+                "header_data": "A predisposition where the body gains weight more easily due to genetics, metabolism, or lifestyle. It may lead to fat accumulation, especially around the abdomen. This increases the risk of metabolic diseases like diabetes and hypertension.",
+                "range": "Mild",
+                "genes_analyzed": "FTO, PCSK1, MC4R, LEPR, LEP, ENPP1, ADCY3, GHRL, CEP19, SIM1, NTRK2",
+                "interpretation": "You have mild genetic risk for weight gain. Few clinically significant mutations seen for it."
+            }
+        ]
+    },
+    "vascular_health_data": {
+        "title": "VASCULAR HEALTH",
+        "content": "Vascular health refers to the proper functioning of blood vessels, ensuring efficient circulation of blood, oxygen, and nutrients throughout the body. It plays a vital role in preventing cardiovascular diseases, supporting organ function, and maintaining overall well-being.",
+        "data": [
+            {
+                "header": "Tendedncy to Blood Clots",
+                "header_data": "Also known as thrombophilia, a genetic or acquired risk where the blood clots more easily than normal. This can lead to dangerous blockages in veins or arteries. It may increase the risk of deep vein thrombosis, stroke, or pulmonary embolism.",
+                "range": "Low",
+                "genes_analyzed": "F2, F5, F12, SERPIN, SERPINA1, SERPINC1, SERPINE1, FGG, FGA, FGB, MTHFR, MTRR",
+                "interpretation": "You have low genetic risk for Tendency to Blood Clots. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Bleeding Disorders",
+                "header_data": "Conditions where the blood does not clot properly, causing excessive bleeding. They may be inherited (like hemophilia) or acquired due to medication or disease. Even minor injuries can lead to prolonged bleeding or internal hemorrhage.",
+                "range": "Low",
+                "genes_analyzed": "F2, F13A1, F9, THBD, MMACHC, F8, SERPIND1, F12, GP1BA, PEAR1, GP6, F11, KLKB1",
+                "interpretation": "You have low genetic risk for Bleeding Disorders. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Peripheral Artery Disease",
+                "header_data": "A condition where narrowed arteries reduce blood flow to the limbs, usually the legs. It is often caused by atherosclerosis (plaque buildup). Symptoms include leg pain while walking, cold feet, or slow wound healing.",
+                "range": "Mild",
+                "genes_analyzed": "NOS3, TNF, VEGFA, APOE, CRP, SOD2, TIMP1, IL6, MMP2, NOS2, PPARG, LPA, PTPN11",
+                "interpretation": "You have mild genetic risk for Peripheral Arterial Disease. Few clinically significant mutations seen for it."
+            },
+            {
+                "header": "Arterial Aneurysms",
+                "header_data": "A bulging or ballooning in the wall of an artery due to weakness. They can occur in major arteries like the aorta or brain vessels. If ruptured, they can cause life-threatening bleeding or stroke.",
+                "range": "Low",
+                "genes_analyzed": "SMAD3, MMP9, TGFBR2, MMP2, FBN1, TGFBR1, TIMP1, TGFB2, MYLK, COL1A1, FBLN5, COL3A1",
+                "interpretation": "You have low genetic risk for Arterial Aneurysms. No Clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "gut_and_immune_health_data": {
+        "title": "Gut and Immune Health",
+        "content": "Gut and Immune Health are interconnected, with 70% of immune cells residing in the gut. A healthy microbiome supports digestion, immunity, and inflammation control. Boost gut health with fiber, probiotics, and hydration while avoiding processed foods. This balance strengthens immunity and overall well-being.",
+        "data": [
+            {
+                "header": "Crohn's Disease",
+                "header_data": "A chronic inflammatory bowel disease affecting any part of the digestive tract. It causes symptoms like abdominal pain, diarrhea, and weight loss. Flares and remissions are common, often requiring long-term treatment.",
+                "range": "Moderate",
+                "genes_analyzed": "IL-10, NOD2, IL10, CARD15, IL23R, TNFSF15, IRF5, ATG16L1, IRGM, HLA-DRB1, IL6, TLR4, PTGS2, IL10RA, IL1B, IL2RA",
+                "interpretation": "You have moderate genetic risk for Crohn's disease. Please follow up with your primary care physician."
+            },
+            {
+                "header": "Ulcerative Colitis",
+                "header_data": "An inflammatory bowel disease limited to the colon and rectum. It leads to ulcers and inflammation, causing bloody stools and abdominal cramps. It may increase colon cancer risk over time.",
+                "range": "Low",
+                "genes_analyzed": "GPR35, BACH2, NOD2, IL6, INAVA, IL37, CARD11, IL23R, IL10, ECM1, CXCL9, IL1B, ADCY7, ABCB1",
+                "interpretation": "You have low genetic risk for Ulcerative Colitis. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Celiac Disease",
+                "header_data": "An autoimmune disorder where gluten triggers damage to the small intestine lining. It leads to poor nutrient absorption, bloating, diarrhea, and fatigue. Lifelong adherence to a gluten-free diet is essential.",
+                "range": "Moderate",
+                "genes_analyzed": "TRIM32, MKS1, IFT172, GPR35, MST1, IPO8, SOCS1, STAT3, IVNS1ABP, STAT5B, HLA-DQA1, HLA-DQB1, ARPC5, IGKC",
+                "interpretation": "You have moderate genetic risk for Celiac disease. Please follow up with your primary care physician."
+            },
+            {
+                "header": "Grave's Disease",
+                "header_data": "An autoimmune condition causing overactive thyroid (hyperthyroidism). Symptoms include weight loss, rapid heartbeat, anxiety, and bulging eyes. It may require medication, radioactive iodine, or surgery.",
+                "range": "Low",
+                "genes_analyzed": "KCNJ18, GABRA3, HLA-B8, HLA-DR, PTPN22, CTLA4, CD25, CD40, DIO2, TSHR, TG, CD226, TLR9, CD86, DRB1, DQB1, DQA1",
+                "interpretation": "You have low genetic risk for Grave's Disease. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Systemic Lupus Erythematosus",
+                "header_data": "A chronic autoimmune disease where the immune system attacks multiple organs. It commonly affects skin, joints, kidneys, and the brain. Symptoms vary and flare unpredictably, requiring immunosuppressive therapy in case of severe cases",
+                "range": "Low",
+                "genes_analyzed": "PTPN22, FCGR2A, FCGR2B, TREX1, CTLA4, DNASE1, FCGR3B, TNFSF4, IL10, CR2, STAT4, PDCD1, PXK",
+                "interpretation": "You have low genetic risk for Systemic Lupus Erthematosus. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Multiple Sclerosis",
+                "header_data": "A disease where the immune system attacks the protective coating of nerves (myelin). It leads to vision problems, muscle weakness, and balance issues.\nMultiple sclerosis progresses differently in each person and may lead to disability.",
+                "range": "Low",
+                "genes_analyzed": "HLA-DRB1, IL7R, CLEC16A, RPL5, CD58, CD40, CYP27B1, TNFRS1A, IL2R, MYT1A, MPHOSPH9, RGS1, CXCR4",
+                "interpretation": "You have low genetic risk for Multiple Sclerosis. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Rheumatoid Arthritis",
+                "header_data": "An autoimmune disease causing chronic joint inflammation and pain. It may affect other organs over time if untreated. Early treatment helps prevent joint damage and disability.",
+                "range": "Mild",
+                "genes_analyzed": "STAT4, IL2RB, ANKRD55, PTPN22, CD247, IL2RA, PTPN2, IL10, SLC22A4, LACC1, MIF, HLA-DRB1, IL6, HLA-DR4",
+                "interpretation": "No pathogenic/ likely pathogenic mutations seen. Only a few benign mutations are seen. You are less likely to have severe Rheumatoid Arthritis."
+            },
+            {
+                "header": "Psoriasis",
+                "header_data": "A chronic skin condition causing red, scaly, itchy patches. It results from an overactive immune response and may also affect joints (psoriatic arthritis).\nTriggers include stress, infections, and weather changes.",
+                "range": "Low",
+                "genes_analyzed": "IL36RN, CARD14, TRAF3IP2, HLA-C, STAT3, TNF, IL12B, AP1S3, IL6, NOS2, IL23R, VEGFA, TNIP1, IL13, IL1B, TNFAIP3, HLA-A",
+                "interpretation": "You have low genetic risk for Psoriasis. No clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "kidney_and_liver_health_data": {
+        "title": "Kidney and Liver Health",
+        "content": "Kidney and Liver Health is vital for detoxification, metabolism, and body function. The kidneys filter waste and maintain fluid balance, while the liver processes nutrients and detoxifies harmful substances. Support them with hydration, a balanced diet, limited alcohol, and avoiding excess salt or processed foods.",
+        "data": [
+            {
+                "header": "Chronic Kidney Disease",
+                "header_data": "A gradual loss of kidney function over time, often due to diabetes or hypertension. It can lead to fluid imbalance, waste buildup, and anemia. Advanced stages may require dialysis or transplantation.",
+                "range": "Low",
+                "genes_analyzed": "APOL1, UMOD, COL4A3, COL4A4, COL4A5, SLC7A9, MGP, GLA, AGXT, RAAS, GRHPR, HOGA, CFHR3, HOGA1, CD2AP, NPHP4, NPHP3",
+                "interpretation": "You have low genetic risk for Chronic Kidney Disease. No clinically significant mutations seen for it."
+            },
+            {
+                "header": "RENAL STONES",
+                "header_data": "Hard, rock-like deposits that form in the kidneys, causing pain.  They may block urine flow and lead to infections. Prevention includes hydration, diet changes, and medications.",
+                "range": "Low",
+                "genes_analyzed": "AGXT, GRHPR, HOGA1, SLC26A1, CYP24A1, XDH, MOCOS, PREPL, SLC2A9, SLC34A1, SLC3A1, SLC22A12, AGXT2, SLC7A9, SLC26A6",
+                "interpretation": "You have low genetic risk for Renal Stones. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Tubulointerstitial Disease",
+                "header_data": "A group of kidney disorders affecting the tubules and surrounding tissue. It may be caused by infections, drugs, or autoimmune diseases. Chronic forms can lead to kidney dysfunction or failure.",
+                "range": "Low",
+                "genes_analyzed": "UMOD, MUC1, HNF1B, REN, SEC61A1, NPHP1, NPHP3, CEP290, RPGRIP1L, TTC21B, INVS, NPHP4, IQCB1, GLIS2",
+                "interpretation": "You have low genetic risk for Tubulointerstitial Disease. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Liver Cirrhosis",
+                "header_data": "A condition where healthy liver tissue is replaced by scar tissue. It impairs liver function, often caused by alcohol, hepatitis, or fatty liver disease. It may lead to complications like bleeding, jaundice, or liver cancer.",
+                "range": "Low",
+                "genes_analyzed": "MMEL1, IL12A, IRF5, TNPO3, TNFSF15, POU2AF1, IL12RB1, SPIB, PNPLA3, IFNL4, TM6SF2, MBOAT7, GCKR, HSD17B13, FAF2",
+                "interpretation": "You have low genetic risk for Liver Cirrhosis. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Hemochromatosis",
+                "header_data": "A genetic disorder causing excessive iron buildup in the body. Iron accumulates in organs like the liver, heart, and pancreas. If untreated, it can lead to organ damage and diabetes.",
+                "range": "Low",
+                "genes_analyzed": "HFE, HJV, HAMP, TFR2, SLC40A1, DENND3, BMP6, CP",
+                "interpretation": "You have low genetic risk for Hemochromatosis. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Gall Bladder Disorders",
+                "header_data": "Includes conditions like gallstones or cholecystitis (inflammation). Symptoms may include upper abdominal pain, nausea, and indigestion. Treatment may involve diet control or gallbladder removal.",
+                "range": "Mild",
+                "genes_analyzed": "ABCG8, APOE, APOC3, MTTP, APOA1, ABCA1, LDL, CETP, ABCB1, ABCB4, ABCG5, ApoB100, UGT1A1, ABCC2, ABCC3, CFTR",
+                "interpretation": "You have Mild genetic risk for Gall Bladder disorder. Few clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Pancreatic Disorders",
+                "header_data": "These include pancreatitis (inflammation) or pancreatic insufficiency. They affect digestion and can cause severe pain or nutrient malabsorption. Chronic forms may lead to diabetes or cancer.",
+                "range": "Mild",
+                "genes_analyzed": "SLC7A7, BCKDHA, CTLA4, PTPN22, HLA-DPB1, PRTN3, HLA-DPA1, SLC37A4, CFTR, CTRC, PRSS2, PRSS1, SPINK1, MEFV, CDC73, PNPLA2, ABCB4",
+                "interpretation": "You have Mild genetic risk for Pancreatic disorder. Few clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "neuro_health_data": {
+        "title": "Neuro Health",
+        "content": "Neuro Health is vital for cognitive function, memory, and nervous system efficiency. A healthy brain aids decision-making, mood, and sensory responses. Support it with a nutrient-rich diet, exercise, mental stimulation, sleep, stress management, and avoiding harmful substances for optimal performance.",
+        "data": [
+            {
+                "header": "Stroke",
+                "header_data": "Occurs when blood flow to the brain is blocked or a vessel bursts. It leads to sudden weakness, speech loss, or paralysis. Timely treatment is critical to reduce brain damage.",
+                "range": "Mild",
+                "genes_analyzed": "F2, F5, F12, SERPIN, SERPINA1, SERPINC1, SERPINE1, FGG, FGA, FGB, F11, PGM, PROC, PROS1, PROCR, MTHFR",
+                "interpretation": "You have Mild genetic risk for Stroke. Few clinically significant mutations were seen for it."
+            },
+            {
+                "header": "ALS",
+                "header_data": "A progressive neurological disease affecting motor neurons. It causes muscle weakness, difficulty speaking, and eventual paralysis. Life expectancy is limited, with supportive care being essential.",
+                "range": "Low",
+                "genes_analyzed": "SETX, MAPT, UBQLN2, CYLD, TIA1, NEK1, ALS2, FUS, MATR3, TARDBP, ERBB4, OPTN, CHCHD10, ANG, TUBA4A, VCP, ANXA11",
+                "interpretation": "You have low genetic risk for Amyotrophic Lateral Sclerosis. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Parkinsons Disease",
+                "header_data": "A neurodegenerative disorder affecting movement and coordination. Symptoms include tremors, stiffness, and slowness of movement. It progresses gradually and requires lifelong management.",
+                "range": "Low",
+                "genes_analyzed": "APOE, APP, ATP13A2, ATP1A3, ATXN2, ATXN3, CHCHD2, COMT, DCTN1, DDC, DNAJC13, DNAJC6, EIF4G1, FBXO7, FMR1",
+                "interpretation": "You have low genetic risk for Parkinsons Disease. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Progressive Supranuclear Palsy",
+                "header_data": "A rare brain disorder causing balance, movement, and eye movement problems. It resembles Parkinson’s but progresses faster and lacks response to medication. Speech and swallowing difficulties often occur.",
+                "range": "Low",
+                "genes_analyzed": "MAPT, PRNP, ATP13A2, SNCA, GBA, TREM2, DCTN1, C9orf72, SOD1, MOBP, CHMP2B, GRN, FUS, NPC1",
+                "interpretation": "You have low genetic risk for Progressive Supranuclear Palsy. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Seizures",
+                "header_data": "Sudden, uncontrolled electrical activity in the brain.\nThey can cause jerking movements, confusion, or unconsciousness. Causes range from epilepsy to brain injuries or infections.",
+                "range": "Low",
+                "genes_analyzed": "SLC2A3, CBS, ADNP, TRAPPC4, CHRNA7, UFM1, CDK8, UGP2, AMT, GLDC, LAMA3, LAMC2, LAMB3, DIAPH1, IGF2, H19, GLI3, ARHGDIA, FOLR1, RPGRIP1L, NPHP1, TMEM237, AHDC1",
+                "interpretation": "You have low genetic risk for Seizures. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Migraines",
+                "header_data": "Recurring headaches often with nausea, sensitivity to light, or aura. Triggers include stress, hormones, or certain foods. They can be disabling but are manageable with treatment.",
+                "range": "Mild",
+                "genes_analyzed": "PLA2G6, CHMP2B, TARDBP, TBK1, TAF15, PPARGC1A, SOD1, OPTN, TREM2, NEK1, EPHA4, GRN, TMEM106B, CACNA1A, ATP1A2",
+                "interpretation": "You have mild genetic risk for Migraines. Few clinically significant mutations seen for it."
+            },
+            {
+                "header": "TREMORS",
+                "header_data": "Involuntary rhythmic shaking of body parts, especially hands. They may be due to neurological disorders or medications. Treatment depends on the underlying cause.",
+                "range": "Low",
+                "genes_analyzed": "HTT, SLC2A3, MAPT, RAI1, CACNA1C, ADCYAP1, DRD2, SCN1A, NKX2-1, SLC52A3, BTBD9, PDYN, STXBP1, MAPTTH, SNCA, SLC6A3",
+                "interpretation": "You have low genetic risk for Tremors. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Peripheral Neuropathy",
+                "header_data": "Damage to the peripheral nerves causing numbness, tingling, or burning in hands and feet. It’s often linked to diabetes, infections, or toxins. Management includes treating the cause and symptom relief.",
+                "range": "Mild",
+                "genes_analyzed": "PMP22, SLC12A6, EGR2, SCN9A, SOX10, MTMR2, PRPS1, MFN2, AIFM1, DYNC1H1, NEFH, MYH14, AP1S1",
+                "interpretation": "You have mild genetic risk for Peripheral Neuropathy. Few clinically significant mutations seen for it."
+            }
+        ]
+    },
+    "mood_disorders_data": {
+        "title": "Mood Disorders",
+        "content": "Mood Disorders affect emotional well-being, causing conditions like depression, anxiety, or bipolar disorder. Manage them with therapy, medication, exercise, a balanced diet, stress management, and support networks for better emotional health and quality of life.",
+        "data": [
+            {
+                "header": "Depression",
+                "header_data": "A mood disorder with persistent sadness, fatigue, and lack of interest. It may interfere with daily life and requires medical attention. Treatment includes therapy, lifestyle changes, and medication.",
+                "range": "Low",
+                "genes_analyzed": "SLC6A4, HTR2A, TPH2, BDNF, MTHFR, DRD2, S100B, HTR1A, CRHR1, COMT, DAOA/G30, DAO, ZNF804",
+                "interpretation": "You have low genetic risk for Depression. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Anxiety",
+                "header_data": "Excessive worry, fear, or nervousness that affects daily functioning. It may cause physical symptoms like rapid heartbeat or restlessness. Therapy and medication can help manage symptoms.",
+                "range": "Low",
+                "genes_analyzed": "SLC6A4, ADORA2A, COMT, HTR1A, ADRA2A, DRD2, CCKBR, NPS, BDNF, HTR7",
+                "interpretation": "You have low genetic risk for Anxiety. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Schizophrenia",
+                "header_data": "A severe mental disorder affecting thoughts, emotions, and behavior. It may include hallucinations, delusions, and cognitive difficulties. Lifelong treatment with medication and therapy is essential.",
+                "range": "Low",
+                "genes_analyzed": "PRODH, COMT, APOL2, SYN2, DISC2, DAOA, HTR2A, MTHFR, APOL4, RBM12, ZNF804A, P250gap",
+                "interpretation": "You have low genetic risk for Schizophrenia. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "ADHD",
+                "header_data": "A neurodevelopmental condition marked by inattention, impulsivity, and hyperactivity. It often begins in childhood and can persist into adulthood. Structured support, therapy, and medications help manage symptoms.",
+                "range": "Low",
+                "genes_analyzed": "CHD8, ADH5, SLC6A8, SLC2A1, GABRB3, GABRA1, GABRG2, CDH2, CHD7, SLC6A19, SLC38A3, SCN8A, SLC1A2, SLC13A5",
+                "interpretation": "You have low genetic risk for Attention Deficit Hyperactivity Disease. No clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "muscle_and_bone_health_data": {
+        "title": "MUSCLE AND BONE HEALTH",
+        "content": "Ensures strength, mobility, and resilience by maintaining optimal muscle mass and bone density. It reduces the risk of osteoporosis, fractures, and age-related muscle loss. Proper nutrition, exercise, and lifestyle habits are key to supporting long-term skeletal and muscular well-being.",
+        "data": [
+            {
+                "header": "Osteoporosis",
+                "header_data": "A condition where bones become weak and brittle.\nIt increases fracture risk, especially in the hips, spine, and wrists. It often progresses silently until a fracture occurs.",
+                "range": "Mild",
+                "genes_analyzed": "MATN3, SMAD6, SLC26A2, FBN1, COMP, NLRP1, FGFR1, CYP27B1, CYP24A1, VDR, CYP2R1, CASR, CYP27A1, BMP1, CA3-AS1, CACNA1S, CLCN7",
+                "interpretation": "You have mild genetic risk to osteoporosis meaning, you are less likely to have impaired calcium uptake by bone."
+            },
+            {
+                "header": "Osteoarthritis",
+                "header_data": "A degenerative joint disorder involving the gradual breakdown of cartilage. It typically affects weight-bearing joints like knees, hips, and spine. Symptoms include pain, stiffness, and reduced range of motion.",
+                "range": "Mild",
+                "genes_analyzed": "FRZB, MATN3, COMP, VDR, IL-1A, IL-1B, IL1RN, IL17A, IL17F, IL-6, BMP2",
+                "interpretation": "You have heterozygous mutations seen in collagen related genes, NLRP1, inflammatory genes. You are less likely to have severe degenerative joint disease. However, over exertion can cause joint degeneration."
+            },
+            {
+                "header": "Myalgias / Muscle Atrophy",
+                "header_data": "Myalgias refer to generalized muscle pain or soreness.\nMuscle atrophy is the loss of muscle mass and strength. Both may result from inactivity, underlying conditions, or nerve issues.",
+                "range": "Mild",
+                "genes_analyzed": "ACTA1, TTN, TPM3, FBN1, GYG1, RYR1, SCN4A, MYH7, COQ2, ATP2B1, DMPK, NEB, DMD, COMT, 5-HTT",
+                "interpretation": "You have heterozygous mutations seen in collagen related genes. You are less likely to have severe muscle aches, myalgias. "
+            },
+            {
+                "header": "Gout",
+                "header_data": "A metabolic condition where excess uric acid leads to joint crystal deposits. It causes sudden, intense pain, swelling, and redness, especially in the big toe. Attacks often occur at night and may recur.",
+                "range": "Low",
+                "genes_analyzed": "DNAJB11, HPRT1, UMOD, PRPS1, HNF1B, SEC61A1, G6PC1, PFKM, MUC1, CLCNKB, SLC12A3, SLC37A4, APOE",
+                "interpretation": "You have low genetic risk for Gout. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Ankylosing Spondylitis",
+                "header_data": "A chronic inflammatory disease that primarily affects the spine and sacroiliac joints. It leads to stiffness, reduced flexibility, and postural changes over time. It often begins in early adulthood and progresses gradually.",
+                "range": "Low",
+                "genes_analyzed": "HLA-B, ERAP1, IL1A, IL23R, CARD9, STAT3",
+                "interpretation": "You have low genetic risk for Ankylosing Spondylitis. No clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "aging_and_longevity_data": {
+        "title": "Aging and Longevity",
+        "content": "Focus on maintaining health and vitality as we age. Healthy aging involves balanced nutrition, regular exercise, mental stimulation, and stress management. Preventive care and lifestyle choices can delay age-related issues, improving quality of life and promoting a longer, healthier lifespan.",
+        "data": [
+            {
+                "header": "Response to Oxidative Stress",
+                "header_data": "The body’s ability to neutralize harmful free radicals that can damage cells. This resistance plays a critical role in slowing aging and preventing chronic diseases. It varies among individuals due to genetic and environmental factors.",
+                "range": "Mild",
+                "genes_analyzed": "SOD1, SOD2, SOD3, CAT, GPX1, GSS, GLUL, GSTM1, GSTM5, GSTP1, TXN, HMOX1, YAP1, SKN7, GRX2, GPX2, GPX6, GPX3, TRX1, GSR, GCLC, GCLM, NQO1, Nrf2, KEAP1, PRD1, PRDX2, PRDX3, PRDX4, PRDX5, PRDX6, PON1, NOS, XO, CYBA, CYBB, ALOX, LMNA",
+                "interpretation": "Your genetic test results show a mild risk towards the response to oxidative strees "
+            },
+            {
+                "header": "Cellular Senescence and DNA Repair",
+                "header_data": "Cellular senescence is a state where cells stop dividing but do not die. DNA repair mechanisms help maintain genetic stability and delay aging. Impairment in these processes contributes to tissue dysfunction and age-related decline.",
+                "range": "Mild",
+                "genes_analyzed": "FOXO3, SIRT1, APOE, TERT, KL, MTOR, IGF1, PON1, WRN, DAF-16,",
+                "interpretation": "Your genetic testing suggests a mild risk meaning there may be minor changes in efficiency of cellular protection and DNA repair mechanisms."
+            },
+            {
+                "header": "Alzheimer's Disease / Dementia",
+                "header_data": "Alzheimer’s is a progressive brain disorder causing memory loss and cognitive decline. It is the most common form of dementia, often affecting older adults. It is associated with abnormal protein buildup and neuronal damage.",
+                "range": "Mild",
+                "genes_analyzed": "APOE, PSEN2, PSEN1, APP, MPO, NOS3, PLAU, CACNA1G, ABCA7, CREB, MAPT, UBQLN2, CYLD, TIA1, CHCHD10",
+                "interpretation": "Your genetic test suggests a mild risk, indicating a mild influence on memory and cognitive function"
+            }
+        ]
+    },
+    "eye_health_data": {
+        "title": "Eye Health",
+        "content": "Eye Health ensures clear vision and quality of life. Conditions like macular degeneration, glaucoma, and cataracts can impair vision if untreated. Protect eyes with regular checkups, good nutrition, UV protection, limiting screen time, and staying hydrated to ensure long-term visual health.",
+        "data": [
+            {
+                "header": "Age related Macular Degeneration",
+                "header_data": "A condition that affects the central part of the retina (macula), impairing vision. It is a leading cause of vision loss in older adults. There are two types—dry and wet—with gradual or sudden vision changes.",
+                "range": "Mild",
+                "genes_analyzed": "C9, ABCA4, CFI, PROM1, PRPH2, CST3, FBLN5, ATXN7, CFHR1, CFHR3, HMCN1, FBN2, SIX6",
+                "interpretation": "You have mild genetic risk for Age related Macular Degeneration. It can cause vision loss."
+            },
+            {
+                "header": "Glaucoma",
+                "header_data": "A group of eye conditions that damage the optic nerve, often linked to high eye pressure. It can lead to irreversible vision loss if undetected. Peripheral vision is typically affected first, progressing slowly over time.",
+                "range": "Low",
+                "genes_analyzed": "MYOC, CYP1B1, TEK, COL18A1, PXDN, GLIS3, OPTN, NTF4, WDR36, EFEMP1, ASB10",
+                "interpretation": "You have low genetic risk for Glaucoma. No Clinically significant mutations were seen for it."
+            },
+            {
+                "header": "Cataract",
+                "header_data": "A clouding of the eye's natural lens, leading to blurry or dim vision. It commonly develops with aging due to protein changes in the lens. Cataracts can affect one or both eyes and gradually worsen.",
+                "range": "Low",
+                "genes_analyzed": "CRYAA, DKC1, GFER, IARS2, RDH11, FTL, DNMBP, INTS1, FAR1, NOP10, AGK, INPP5K, NHS, CRYBA2, TRPM3, MED27, OTX2",
+                "interpretation": "You have low genetic risk for Cataract. No Clinically significant mutations were seen for it."
+            }
+        ]
+    },
+    "nutrition_data": {
+        "title": "Nutrition",
+        "content": "Nutrition is key to health, providing essential nutrients for energy, growth, and repair. A balanced diet supports immunity, brain function, and overall well-being. Proper hydration, mindful eating, and healthy food choices enhance long-term health and vitality.",
+        "data": [
+            {
+                "header": "Magnesium",
+                "header_data": "Magnesium is an essential mineral that plays a key role in many body functions, like keeping your muscles, nerves, and heart working properly and supporting strong bones. Magnesium absorption genetics refers to how your genes affect your ability to absorb and use magnesium from the food you eat.",
+                "range": "Mild",
+                "genes_analyzed": "CNNM2, CTLA4, EGF, FXYD2, LRBA, TRPM6, SLC41A1, CLDN16, CLDN19, CASR, CLCNKB, EGFR",
+                "interpretation": "You have mild genetic risk for impaired Magnesium absorption and metabolism. It can cause muscle aches and fatigue."
+            },
+            {
+                "header": "Calcium",
+                "header_data": "Calcium is essential for strong bones, teeth, muscle contractions, and nerve function. Your genes can affect how well your body absorbs and uses calcium. Poor absorption can lead to weak bones (osteoporosis) and muscle cramps.",
+                "range": "Mild",
+                "genes_analyzed": "AGA, AP2S1, BMP1, C4BPB, CA3-AS1, CACNA1S, CASR, CLCN7, COL11A1, COL1A1, CRTAP",
+                "interpretation": "You have mild genetic risk for impaired calcium absorption and metabolism. It can cause mild bone pains and muscle aches"
+            },
+            {
+                "header": "Phosphate",
+                "header_data": "Phosphate works with calcium to build strong bones and teeth, and it’s also crucial for energy production in cells. Genetic factors can influence how well your body maintains the right balance of phosphate, which is important for overall energy and bone health.",
+                "range": "Moderate",
+                "genes_analyzed": "ALPL, BMP1, CA2, CLCN7, COL11A1, COL2A1, COL5A1, COL9A2, FGF23, FGFR3, FKBP10, GALNT3",
+                "interpretation": "You have moderate genetic risk for Phosphate. It can cause cardiovasular complications, neuromuscular symptoms and bone demineralization."
+            },
+            {
+                "header": "Homocysteine",
+                "header_data": "Homocysteine is a byproduct of protein metabolism, and high levels can damage blood vessels and increase the risk of heart disease. Genetics can influence how well your body breaks it down, which depends on nutrients like folic acid (Vitamin B9), Vitamin B12, and Vitamin B6.",
+                "range": "Mild",
+                "genes_analyzed": "MTHFR, COMT, MTRR, MTR, MMADHC, MS, CBS, BHMT, cSHMT, TC, MTHFD, GCPII, RFC,ABCD4, ACSF3",
+                "interpretation": "You have mild genetic risk for Homocysteine. "
+            },
+            {
+                "header": "Iron",
+                "header_data": "Iron is essential for making hemoglobin, which carries oxygen in your blood. Genetic differences can affect how well your body absorbs and uses iron, potentially leading to anemia (low energy and fatigue) if absorption is poor.",
+                "range": "Mild",
+                "genes_analyzed": "ABCD4, ACSF3, BBOF1, CD320, CUBN, DNMT1, FMO3, GIF, HCFC1, MCEE, MMAA, MMAB, MMACHC, MMADHC, MTHFD1, MTHFR, MTR, MTRR, MVK",
+                "interpretation": "You have mild genetic risk for impaired iron absorption and metabolism. It can cause anemia, fatigue and hair loss"
+            },
+            {
+                "header": "Zinc",
+                "header_data": "Zinc is crucial for your immune system, wound healing, and cell repair. Genetic factors can influence how efficiently your body absorbs zinc, which may impact your ability to fight infections or heal wounds.",
+                "range": "Mild",
+                "genes_analyzed": "SLC7A7, SLC39A8, SLC30A2, COL7A1, IARS1, SLC39A4, MMP1, SLC30A, ZIP1, ZIP4, ZIP8, ZnT1",
+                "interpretation": "You have mild genetic risk for impaired zinc absorption and metabolism. It can cause skin dryness and hair loss."
+            },
+            {
+                "header": "Selenium",
+                "header_data": "Selenium helps protect cells from damage and supports thyroid function. Genetics can affect how well your body absorbs selenium, which can influence your overall energy levels and immune health.",
+                "range": "Low",
+                "genes_analyzed": "DIO1, GPX2, TXNRD1, DIO2, GPX3, SELENOP, GPX4, GPX1, SELS, SBP2, SEPP1, SELENOS, SELENOF",
+                "interpretation": "You have low genetic risk for impaired Selenium absorption and metabolism. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "VITAMIN-K",
+                "header_data": "Vitamin K is vital for blood clotting and bone health. Genetic differences can affect how your body absorbs and uses Vitamin K, potentially leading to bleeding problems or weaker bones.",
+                "range": "Low",
+                "genes_analyzed": "VKORC1, GGCX",
+                "interpretation": "You have low genetic risk for impaired Vitamin K absorption and metabolism. No clinically significant mutations were seen for it."
+            },
+            {
+                "header": "VITAMIN-D",
+                "header_data": "Vitamin D helps your body absorb calcium, supports immune function, and promotes bone health. Genetics can affect how well your body processes Vitamin D from sunlight or food, potentially leading to weaker bones or immunity issues.",
+                "range": "Mild",
+                "genes_analyzed": "AICDA, C4BPB, CD19, CD27-AS1, CD36, CTLA4, DOCK2, IKZF1, IL10RB, IL12B, IL21, IL23R, IL7R, LRBA, PTPRC, RAG1",
+                "interpretation": "You have a mild genetic risk for Vitamin-D. It can cause weaker bones or immunity issues."
+            },
+            {
+                "header": "VITAMIN-B12",
+                "header_data": "Vitamin B12 is essential for nerve health, red blood cell production, and DNA repair. Genetics can affect your ability to absorb Vitamin B12 from food, which may lead to fatigue, nerve problems, or anemia if levels are low.",
+                "range": "Mild",
+                "genes_analyzed": "ABCD4, ACSF3, BBOF1, CD320, CUBN, DNMT1,DNMT2, FMO3, GIF, HCFC1, MCEE, MMAA, MMAB, MMACHC, MMADHC, MTHFD1, MTHFR, MTR, MTRR, MVK, NDUFA7, PRDX1, SLC19A2, TCN1, TCN2, ZNF143",
+                "interpretation": "You have low genetic risk for impaired Vitamin B12 absorption and metabolism. No clinically significant mutations were seen for it"
+            },
+            {
+                "header": "VITAMIN-B2",
+                "header_data": "Vitamin B2 helps convert food into energy and supports healthy skin and eyes. Genetic factors can impact how well your body uses Vitamin B2, possibly affecting your energy levels.",
+                "range": "Mild",
+                "genes_analyzed": "ACAD9, ACAD10, ACAD11, ACAD12, ACAD13, ACAD14, ACAD15, ACAD16, ACAD17, SLC52A2, SLC52A3, AIMF1",
+                "interpretation": "You have mild genetic risk for Vitamin-B2. It can cause weakness, skin and eyes issues."
+            },
+            {
+                "header": "VITAMIN-B1",
+                "header_data": "Vitamin B1 is important for energy production and nerve health. Genetics can influence how well your body absorbs Thiamine, leading to fatigue or nerve-related issues if levels are low.",
+                "range": "Mild",
+                "genes_analyzed": "SLC19A2, SLC19A1, SLC19A3, SLC25A19, TPK1, SLC44A4, SLC35F3, SLC22A1, PDHA1, BCKDHA, BCKDHB, DBT",
+                "interpretation": "You have mild genetic risk for impaired Vitamin B1 absorption and metabolism. It can cause headaches, feet swelling and fatigue."
+            },
+            {
+                "header": "VITAMIN-C",
+                "header_data": "Vitamin C supports your immune system, helps heal wounds, and keeps your skin healthy. Genetic variations can influence how your body absorbs and uses Vitamin C, affecting your ability to fight infections or heal quickly.",
+                "range": "Mild",
+                "genes_analyzed": "ACAT1, CPT1A, CPT2, CYB5R3, DLG4, HADHA, ICOS, MIR324, NCF2, PNCK, SLC22A5, SLC25A20, SLC27A5, TLR5, SLC23A1, SLC23A2, GLO",
+                "interpretation": "You have mild  genetic risk for impaired Vitamin C absorption and metabolism. It can cause dental and gum issues, dry skin."
+            },
+            {
+                "header": "VITAMIN-B6-(Biotin)",
+                "header_data": "Vitamin B6 helps the body make neurotransmitters and supports brain health, while Biotin is important for healthy skin, hair, and nails. Genetics can affect how efficiently your body absorbs these vitamins, which may impact mental clarity and skin health.",
+                "range": "Mild",
+                "genes_analyzed": "ACACA, ACAT1, BTD, DNAJC19, HLCS, HR, MASP1, MCCC1, MCCC2, MCEE, MLYCD, PC, PCCA, PCCB, PCK1",
+                "interpretation": "You have mild genetic risk for impaired Vitamin B6 absorption and metabolism. It can cause anemia and fatigue."
+            },
+            {
+                "header": "VITAMIN-B9(Folic Acid)",
+                "header_data": "Vitamin B9 is crucial for making DNA and supporting healthy cell growth, especially during pregnancy. Genetic factors, like the MTHFR gene variation, can affect how well your body processes folic acid, potentially leading to problems with energy or cell repair.",
+                "range": "Mild",
+                "genes_analyzed": "MTHFR, COMT, MTRR, MTR, SLC46A1, RFC1, SHMT, FOLH1, FOLR1, FTCD, MTR , MTR, MTRR, MTHFD1, ADA",
+                "interpretation": "You have mild genetic risk for impaired Vitamin B9 absorption and metabolism. It can cause mild fatigue, muscle aches and dry skin."
+            },
+            {
+                "header": "VITAMIN-E",
+                "header_data": "Vitamin E is an antioxidant that helps protect your cells from damage and supports skin, eye, and immune health. Genetics can affect how well your body absorbs and uses Vitamin E, impacting its protective effects.",
+                "range": "Mild",
+                "genes_analyzed": "TTPA, SR-BI, CD36, NPC1L1, LIPC, SREBP2, ASBT, SLC10A2, TAP1, ABCA1, SCAR-B1",
+                "interpretation": "You have mild genetic risk for impaired Vitamin E absorption and metabolism. It can cause low immunity."
+            },
+            {
+                "header": "Lipid Intolerance",
+                "header_data": "Lipid intolerance refers to how your body processes fats. Genetics can influence how well your body breaks down and uses fats from food. If you have difficulty processing fats, it can lead to issues like high cholesterol, weight gain, or inflammation, increasing your risk for heart disease.",
+                "range": "Low",
+                "genes_analyzed": "PEX1, PEX6, PEX10, HSD17B4, PPARA, PHYH, PEX7, SLC17A5, SMPD1, ACADM, ACADVL, HADHA, ACADS, ACOX1",
+                "interpretation": "You have a low risk for Lipid Intolerance."
+            },
+            {
+                "header": "Protein Intolerance",
+                "header_data": "Protein intolerance happens when your body struggles to digest certain proteins, often due to genetic variations affecting enzymes. This can lead to symptoms like bloating, discomfort, or poor nutrient absorption. For example, lactose intolerance (a type of protein intolerance) occurs because of a genetic inability to break down lactose in dairy.",
+                "range": "Low",
+                "genes_analyzed": "BCKDHA, BCKDHB, DBT, PPM1K, BCAT2, HPD, OTC, CPS1, AASS, ASS1, NAGS, ASL, TAT, SLC7A9, SLC3A1, SLC7A7, SLC6A19",
+                "interpretation": "You have low risk for Protein Intolerance."
+            },
+            {
+                "header": "Adiponectin Levels",
+                "header_data": "Adiponectin is a hormone that helps regulate blood sugar levels and fat metabolism. Your genes influence how much adiponectin your body produces. Low adiponectin levels can increase the risk of obesity, diabetes, and heart disease.",
+                "range": "Mild",
+                "genes_analyzed": "ADIPOQ, ADIPOR1, ADIPOR2, PPARG, KCNJ11, TCF7L2, APM1, GCKR, FTO, RETN, PLIN1",
+                "interpretation": "You have mild genetic risk of adiponectin imbalance."
+            },
+            {
+                "header": "Caffeine Sensitivity",
+                "header_data": "Caffeine sensitivity is determined by how quickly your body breaks down caffeine, which is controlled by your genes. People with slow caffeine metabolism may feel jittery, anxious, or have trouble sleeping even after small amounts, while fast metabolizers can handle more caffeine without these effects.",
+                "range": "Low",
+                "genes_analyzed": "ADORA2A, CYP1A2, AHR, CUX2, NRCAM, DRD2, TAS2R43, TAS2R14, PDSS2",
+                "interpretation": "You have low risk for Caffeine Sensitivity."
+            }
+        ]
+    },
+    "methylation_genes_data": {
+        "title": "Methylation Genes",
+        "content": "Regulate biological processes by controlling gene expression without altering DNA. Proper methylation supports detoxification, hormone balance, and DNA repair. Support it with a nutrient-rich diet, B-vitamins, exercise, and stress management to maintain overall health.",
+        "data": [
+            {
+                "header": "COMT (Catechol-O-Methyltransferase)",
+                "header_data": "The COMT gene encodes an enzyme responsible for breaking down dopamine, norepinephrine, and epinephrine in the brain. Its activity plays a key role in regulating mood, stress response, and emotional balance. Altered COMT function can influence neurotransmitter levels, impacting cognitive performance and mental well-being.",
+                "range": "Low",
+                "genes_analyzed": "COMT",
+                "interpretation": "Low-risk COMT alleles suggest normal enzyme activity, supporting balanced neurotransmitter breakdown and stable stress response."
+            },
+            {
+                "header": "MTHFR (Methylenetetrahydrofolate Reductase)",
+                "header_data": "The MTHFR gene encodes an enzyme crucial for activating folate, enabling proper methylation processes in the body. Methylation supports DNA synthesis, detoxification, neurotransmitter production, and cardiovascular health. Disruptions in MTHFR function can influence homocysteine levels, mood regulation, and overall metabolic efficiency.",
+                "range": "Low",
+                "genes_analyzed": "MTHFR",
+                "interpretation": "Low-risk MTHFR alleles indicate normal enzyme function, supporting efficient methylation and metabolic balance.\n\n"
+            },
+            {
+                "header": "MTRR (Methionine Synthase Reductase)",
+                "header_data": "The MTRR (Methionine Synthase Reductase) gene is essential for regenerating active vitamin B12, a key cofactor in the methylation cycle. It supports the conversion of homocysteine to methionine, influencing methylation, detoxification, and nervous system health. MTRR dysfunction can impair B12 recycling, potentially affecting energy metabolism, mood, and cardiovascular balance.",
+                "range": "Mild",
+                "genes_analyzed": "MTRR",
+                "interpretation": "Mild-risk MTRR variants may slightly reduce enzyme efficiency, suggesting the need for consistent B12 and folate support."
+            },
+            {
+                "header": "MTR (Methionine Synthase)",
+                "header_data": "The MTR (Methionine Synthase) gene encodes an enzyme that helps convert homocysteine to methionine, a key step in the methylation cycle. This process is vital for DNA synthesis, neurotransmitter balance, and cardiovascular health. Proper MTR function depends on adequate vitamin B12, making it essential for energy and nervous system support.",
+                "range": "Mild",
+                "genes_analyzed": "MTR",
+                "interpretation": "Mild-risk MTR variants may slightly reduce enzyme function, suggesting increased need for bioavailable B12 and folate intake."
+            },
+            {
+                "header": "AHCY (Adenosylhomocysteinase)",
+                "header_data": "The AHCY (Adenosylhomocysteinase) gene encodes an enzyme that breaks down S-adenosylhomocysteine (SAH) into homocysteine, maintaining methylation efficiency. This step is crucial for keeping the SAM:SAH ratio optimal, ensuring proper function of methylation-dependent processes like DNA regulation and neurotransmitter synthesis. Disruption in AHCY activity can inhibit methylation and affect cellular detoxification, mood, and gene expression.",
+                "range": "Low",
+                "genes_analyzed": "AHCY",
+                "interpretation": "Low-risk AHCY alleles suggest normal enzyme function, supporting balanced methylation and metabolic health."
+            },
+            {
+                "header": "CBS (Cystathionine Beta-Synthase)",
+                "header_data": "The CBS (Cystathionine Beta-Synthase) gene encodes an enzyme that plays a critical role in converting homocysteine to cysteine, which is important for detoxification and antioxidant defense. CBS activity is essential for maintaining the balance of methionine metabolism and regulating sulfur-containing compounds in the body. Reduced CBS function can lead to elevated homocysteine levels, affecting cardiovascular health and methylation processes.",
+                "range": "Low",
+                "genes_analyzed": "CBS",
+                "interpretation": "Low-risk CBS alleles suggest normal enzyme function, supporting efficient homocysteine metabolism and healthy sulfur compound balance."
+            },
+            {
+                "header": "SHMT1 (Serine Hydroxymethyltransferase 1)",
+                "header_data": "The SHMT1 (Serine Hydroxymethyltransferase 1) gene encodes an enzyme involved in converting serine to glycine, playing a crucial role in the folate metabolism and methylation cycle. This enzyme is essential for maintaining one-carbon metabolism, which supports DNA synthesis, repair, and cellular function. Reduced SHMT1 activity can affect methylation efficiency, potentially impacting growth, immune response, and neurological health.",
+                "range": "Low",
+                "genes_analyzed": "SHMT1",
+                "interpretation": "Low-risk SHMT1 alleles suggest normal enzyme activity, supporting optimal one-carbon metabolism and efficient methylation processes."
+            },
+            {
+                "header": "DNMT (DNA Methyltransferases)",
+                "header_data": "The DNMT (DNA Methyltransferase) gene encodes enzymes responsible for adding methyl groups to DNA, which is essential for gene expression regulation and epigenetic stability. This process is critical for cell differentiation, development, and genomic imprinting, influencing long-term gene function and health outcomes. Impaired DNMT activity can lead to epigenetic changes, affecting cellular processes and increasing the risk for various diseases.",
+                "range": "Low",
+                "genes_analyzed": "DNMT",
+                "interpretation": "Low-risk DNMT alleles suggest normal enzyme activity and methylation supporting stable gene expression and epigenetic regulation."
+            },
+            {
+                "header": "TCN2 (Transcobalamin II)",
+                "header_data": "The TCN2 (Transcobalamin II) gene encodes a protein that facilitates the transport of vitamin B12 into cells, crucial for DNA synthesis and neurological function.\nThis gene supports vitamin B12 absorption, ensuring efficient methylation and homocysteine metabolism.\nReduced TCN2 function can impair B12 delivery, leading to potential issues in cellular function and methylation processes.",
+                "range": "Low",
+                "genes_analyzed": "TCN2",
+                "interpretation": "Low-risk TCN2 alleles suggest normal transport of B12, supporting efficient vitamin B12 utilization and optimal methylation."
+            },
+            {
+                "header": "BHMT (Betaine-Homocysteine Methyltransferase)",
+                "header_data": "The BHMT (Betaine-Homocysteine Methyltransferase) gene encodes an enzyme that converts homocysteine to methionine using betaine as a methyl donor. It plays a key role in the alternative methylation pathway, supporting liver function and maintaining homocysteine balance. BHMT activity is especially important when folate-dependent pathways are compromised or under stress.",
+                "range": "Moderate",
+                "genes_analyzed": "BHMT",
+                "interpretation": "Moderate-risk BHMT variants may reduce enzyme efficiency, potentially affecting homocysteine clearance and methylation support—especially during oxidative stress or low choline intake."
+            }
+        ]
+    },
+    "liver_detox_phase_1_data": {
+        "title": "Liver Detox Phase 1",
+        "content": "Liver detoxification starts with Phase 1, where enzymes break down toxins for further processing. Gene variations can affect this process, influencing toxin clearance, health, and drug response.",
+        "data": [
+            {
+                "header": "CYP1A1 (Cytochrome P450 Family 1 Subfamily A Member 1)",
+                "header_data": "CYP1A1 gene encodes an enzyme involved in metabolizing environmental toxins like polycyclic aromatic hydrocarbons (e.g., from smoke and charred foods). It plays a role in activating pro-carcinogens and handling oxidative stress. Altered function may influence cancer risk and detox efficiency.\n\n",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP1A1",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP1B1 (Cytochrome P450 Family 1 Subfamily B Member 1)",
+                "header_data": "CYP1B1 - Primarily expressed in extrahepatic tissues, this gene metabolizes estrogens and environmental chemicals.\nIt contributes to hormone balance and Phase I detoxification of xenobiotics. Variants may affect estrogen metabolism and toxin clearance.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP1B1",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP2A6 (Cytochrome P450 Family 2 Subfamily A Member 6)",
+                "header_data": "CYP2A6 gene encodes an enzyme that metabolizes nicotine and certain drugs, as well as activating some procarcinogens.\nIt supports clearance of tobacco-related toxins and chemical exposures. Reduced activity can slow detox and alter drug response.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP2A6",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP2C9 (Cytochrome P450 Family 2 Subfamily C Member 9)",
+                "header_data": "CYP2C9 gene encodes an enzyme that processes several common medications (e.g., NSAIDs, warfarin) and endogenous compounds. It's vital for maintaining proper drug metabolism and clearance. Variations can increase drug sensitivity or toxicity risk.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP2C9",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP2C19 (Cytochrome P450 Family 2 Subfamily C Member 19)",
+                "header_data": "CYP2C19 gene encodes an enzyme that handles the metabolism of proton pump inhibitors, antidepressants, and certain toxins. Important for both drug detoxification and environmental toxin clearance. Reduced activity may cause slower drug breakdown and altered detox speed.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP2C19",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP2D6 (Cytochrome P450 Family 2 Subfamily D Member 6)",
+                "header_data": "CYP2D6 gene encodes an enzyme that metabolizes 20–25% of all clinically used drugs, including antidepressants and opioids. Key for processing neuroactive compounds and environmental chemicals. Gene variations can range from poor to ultra-rapid metabolism, impacting detox capacity.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP2D6",
+                "interpretation": ""
+            },
+            {
+                "header": "CYP3A4 (Cytochrome P450 Family 3 Subfamily A Member 4)",
+                "header_data": "CYP3A4 gene encodes ne of the most abundant liver enzymes, responsible for metabolizing over half of all drugs.\nIt also detoxifies hormones, pesticides, and various toxins.\nActivity levels strongly influence drug clearance and toxin load.",
+                "range": "Normal Function",
+                "genes_analyzed": "CYP3A4",
+                "interpretation": ""
+            }
+        ]
+    },
+    "liver_detox_phase_2_data": {
+        "title": "Liver Detox Phase 2",
+        "content": "Phase II liver detoxification makes toxins water-soluble for easier elimination. Gene variations can affect how well the body clears pollutants, drugs, and harmful byproducts.",
+        "data": [
+            {
+                "header": "NAT1 (N-Acetyltransferase 1)",
+                "header_data": "NAT1 (N-Acetyltransferase 1) is involved in acetylation of certain drugs, carcinogens, and toxins for safe elimination. Primarily processes aromatic amines found in tobacco smoke and environmental pollutants. Enzyme activity impacts cancer risk and chemical sensitivity.",
+                "range": "Normal Function",
+                "genes_analyzed": "NAT1",
+                "interpretation": ""
+            },
+            {
+                "header": "NAT2 (N-Acetyltransferase 2)",
+                "header_data": "NAT2 (N-Acetyltransferase 2) Metabolizes drugs and xenobiotics, especially those requiring acetylation (e.g., isoniazid, caffeine). Variants influence whether someone is a slow or fast acetylator. Slow acetylators may accumulate toxins, increasing oxidative stress or side effects.",
+                "range": "Normal Function",
+                "genes_analyzed": "NAT2",
+                "interpretation": ""
+            },
+            {
+                "header": "GSTM1 (Glutathione S-Transferase Mu 1)",
+                "header_data": "GSTM1 (Glutathione S-Transferase Mu 1) Catalyzes the binding of glutathione to toxins for detox and excretion. Important for clearing environmental chemicals, drugs, and products of oxidative stress. A common deletion variant (null type) results in no enzyme activity, reducing detox capacity.",
+                "range": "Normal Function",
+                "genes_analyzed": "GSTM1",
+                "interpretation": ""
+            },
+            {
+                "header": "GSTP1 (Glutathione S-Transferase Pi 1)",
+                "header_data": "GSTP1 (Glutathione S-Transferase Pi 1) Helps detoxify carcinogens, heavy metals, and oxidative by-products using glutathione. Active in many tissues, especially lungs and brain. Variants may lower enzyme efficiency, impacting antioxidant defense.",
+                "range": "Normal Function",
+                "genes_analyzed": "GSTP1",
+                "interpretation": ""
+            },
+            {
+                "header": "SOD1 (Superoxide Dismutase 1)",
+                "header_data": "SOD1 (Superoxide Dismutase 1) Neutralizes superoxide radicals into hydrogen peroxide, protecting cells from oxidative damage. Functions primarily in the cytosol of nearly all cell types. Efficient SOD1 activity supports cellular resilience against toxin-induced stress.",
+                "range": "Normal Function",
+                "genes_analyzed": "SOD1",
+                "interpretation": ""
+            },
+            {
+                "header": "SOD2 (Superoxide Dismutase 2)",
+                "header_data": "SOD2 (Superoxide Dismutase 2) Located in mitochondria, it converts superoxide radicals into less harmful molecules. Critical for managing oxidative stress generated during detox and energy production. Impaired activity may increase mitochondrial damage and inflammatory risk.",
+                "range": "Normal Function",
+                "genes_analyzed": "SOD2",
+                "interpretation": ""
+            }
+        ]
+    },
+    "hereditary_cancer_risk_data": {
+        "title": "Hereditary Cancer",
+        "content": "Risk involves genetic mutations passed through families that increase cancer risk, such as in BRCA1 or BRCA2 genes. Early screening, genetic counseling, and lifestyle changes help manage risks. Awareness and prevention are key to reducing the impact of hereditary cancers.",
+        "data": [
+            {
+                "header": "Breast Cancer",
+                "header_data": "Genetics can influence breast cancer risk by affecting how the body regulates cell growth and repairs damage in breast tissue. A family history of the condition often indicates inherited risk factors.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing male breast cancer since no mutations are seen in the related genes. "
+            },
+            {
+                "header": "Ovarian Cancer",
+                "header_data": "Inherited genetic traits can increase the likelihood of ovarian cancer by impacting how cells in the ovaries grow and repair themselves, leading to abnormal growth.",
+                "range": "",
+                "genes_analyzed": "",
+                "interpretation": ""
+            },
+            {
+                "header": "Uterine Cancer",
+                "header_data": "Genetic predispositions can heighten the risk of uterine cancer by affecting the body’s ability to control cell growth in the uterus, allowing abnormal cells to form.",
+                "range": "",
+                "genes_analyzed": "",
+                "interpretation": ""
+            },
+            {
+                "header": "Prostate Cancer",
+                "header_data": "Genetic factors can increase prostate cancer risk by influencing how cells in the prostate grow, divide, and repair damage, potentially leading to uncontrolled cell growth.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing prostate cancer since no mutations are seen in the related genes. "
+            },
+            {
+                "header": "Colorectal Cancer",
+                "header_data": "A family history of colorectal cancer often points to genetic factors that affect how the body repairs damaged cells in the colon or rectum, leading to an increased risk of abnormal growths or polyps.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing colorectal cancer since no mutations are seen in the related genes. "
+            },
+            {
+                "header": "Pancreatic Cancer",
+                "header_data": "Genetic predispositions may impact how the body regulates cell growth in the pancreas, making it more likely for abnormal cells to grow and lead to cancer.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing pancreatic cancer since no mutations are seen in the related genes. "
+            },
+            {
+                "header": "Melanome",
+                "header_data": "Genetic factors can make the skin more prone to abnormal cell growth, especially when combined with environmental triggers like sun exposure, increasing the risk of melanoma.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing melanoma since no mutations are seen in the related genes. "
+            },
+            {
+                "header": "Renal Cell Carcinoma",
+                "header_data": "Genetic influences can affect the regulation of cell growth and repair in the kidneys, increasing the likelihood of abnormal cell development and kidney cancer.",
+                "range": "Low",
+                "genes_analyzed": "APC, ATM, AXIN2, BARD1, BLM, BMPR1A, BRCA1, BRCA2, BRIP1, CDH1, CDKN2A, CHEK2, EPCAM, FANCC, GALNT12, GREM1, HOXB13, MBD4, MLH1, MLH3, MRE11, MSH2, MSH3, MSH6, MUTYH, NBN, NF1, NTHL1, PALB2, PMS2, POLD1, POLE, PTEN, RAD50, RAD51C, RAD51D, RECQL, RINT1, RNF43, RPS20, STK11, SLX4, SMAD4, SMARCA4, TP53, XRCC2",
+                "interpretation": "You are at low risk of developing renal cell carcinoma since no mutations are seen in the related genes. "
+            }
+        ]
+    }
+}

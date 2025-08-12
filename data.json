@@ -1,0 +1,2026 @@
+[
+    {
+        "biomarker_id": "58f809d9-e907-4366-9f97-8f6539997c8f",
+        "name": "TESTOSTERONE",
+        "variable_name": "TEST",
+        "description": "",
+        "units": "ng/dl",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "347ee468-8082-446c-b597-02850b2359f2",
+        "name": "17 OH PROGESTERONE",
+        "variable_name": "17OH",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "b0420a64-3ece-4866-a1bf-f705ed8d1853",
+        "name": "HDL CHOLESTEROL - DIRECT",
+        "variable_name": "HCHO",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "121596f1-ef0d-472c-89a3-2ed80fdfb457",
+        "name": "TOTAL RBC",
+        "variable_name": "RBC",
+        "description": "",
+        "units": "X 10^6/μL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "e5a361dc-237f-41d6-a92b-35d400c9ad1e",
+        "name": "ALDOSTERONE",
+        "variable_name": "ALDOS",
+        "description": "",
+        "units": "ng/dL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "29955560-9cd4-44f6-ba84-5384e5d95d42",
+        "name": "ALKALINE PHOSPHATASE",
+        "variable_name": "ALKP",
+        "description": "",
+        "units": "U/L",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "964b46d9-31cf-46cd-b9d4-f2193c876a39",
+        "name": "ANTI MULLERIAN HORMONE (AMH)",
+        "variable_name": "AMH",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "aa188801-12c4-46d6-8627-0f3bc48f94df",
+        "name": "ANTI NUCLEAR ANTIBODIES (ANA)",
+        "variable_name": "ANA",
+        "description": "",
+        "units": "AU/mL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "f8eac9eb-e3a1-4a5b-a850-a1e20363fcd1",
+        "name": "APO B / APO A1 RATIO (APO B/A1)",
+        "variable_name": "APB/",
+        "description": "",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "65bf08bb-23ed-4e30-8ab3-b8598f1dc781",
+        "name": "APOLIPOPROTEIN - A1 (APO-A1)",
+        "variable_name": "APOA",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "91645714-f3ef-40c5-95e1-28d637ebc762",
+        "name": "APOLIPOPROTEIN - B (APO-B)",
+        "variable_name": "APOB",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "b0bc79a3-1d1a-433b-af4a-f1f573a0216c",
+        "name": "EOSINOPHILS - ABSOLUTE COUNT",
+        "variable_name": "AEOS",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "a2e0f2d3-77ab-49a9-bce4-237546e15120",
+        "name": "IMMATURE GRANULOCYTE PERCENTAGE (IG%)",
+        "variable_name": "IG%",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "c23e23e8-8e25-42d9-abc8-b1d703c2f948",
+        "name": "BILIRUBIN - DIRECT",
+        "variable_name": "BILIRUBIN_DIRECT",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "1b88146f-0827-4709-89eb-61ca06aeb0bb",
+        "name": "BILIRUBIN (INDIRECT)",
+        "variable_name": "BILI",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "9062405e-40c6-436c-bef3-8ccd9eabb987",
+        "name": "BLOOD UREA NITROGEN (BUN)",
+        "variable_name": "BUN",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "b1f63df3-5bb6-47a3-bff4-139d0648e2ca",
+        "name": "SEX HORMONE BINDING GLOBULIN (SHBG)",
+        "variable_name": "SHBG",
+        "description": "",
+        "units": "nmol/L",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "181687d5-4c53-4855-9ae3-ba4bc20094fa",
+        "name": "LUTEINISING HORMONE (LH)",
+        "variable_name": "LH",
+        "description": "",
+        "units": "mIU/L",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "82597407-f433-4879-943b-1c111ce0ad9c",
+        "name": "PROLACTIN (PRL)",
+        "variable_name": "PRL",
+        "description": "",
+        "units": "ng/ml",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "c3a2332c-94a1-44b2-acb6-f010cb8465b7",
+        "name": "FREE TESTOSTERONE",
+        "variable_name": "FTES",
+        "description": "",
+        "units": "pg/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "606ce000-1d6a-4e30-b02a-d71e5fb1fc76",
+        "name": "ESTRADIOL/OESTROGEN (E2)",
+        "variable_name": "E2",
+        "description": "",
+        "units": "pg/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "1275285e-96d6-4e4b-9f9c-507af61ae4d2",
+        "name": "PROGESTERONE",
+        "variable_name": "PROG",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8d32d00d-55c7-4889-b3ca-88de7a693cba",
+        "name": "FOLLICLE STIMULATING HORMONE (FSH)",
+        "variable_name": "FSH",
+        "description": "",
+        "units": "mIU/L",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "b04b0e39-853d-4851-a59b-04139aeaec23",
+        "name": "TSH - ULTRASENSITIVE",
+        "variable_name": "USTSH",
+        "description": "",
+        "units": "μIU/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "e56a38c7-e32e-4c82-ba6d-78bba8ad897e",
+        "name": "FREE TRIIODOTHYRONINE (FT3)",
+        "variable_name": "FT3",
+        "description": "",
+        "units": "pg/mL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "44b4a935-79d2-456d-b0de-1346173ab2a9",
+        "name": "FREE THYROXINE (FT4)",
+        "variable_name": "FT4",
+        "description": "",
+        "units": "ng/dl",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "7bf40339-aae0-48f3-8182-a06e28a69d89",
+        "name": "INSULIN - FASTING",
+        "variable_name": "INSFA",
+        "description": "",
+        "units": "μU/ml",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "97999241-9c72-4b1f-91c7-3c6fb45e166d",
+                "name": "PANCREAS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "407f3749-fc0f-4640-9bdc-be3b13103e3b",
+        "name": "INSULIN LIKE GROWTH FACTOR 1",
+        "variable_name": "INGF1",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "aa2aada0-a244-41d2-8e2b-f53d0607106d",
+        "name": "HEMATOCRIT (PCV)",
+        "variable_name": "PCV",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "887a90b4-3d19-4f5e-9d80-6e8235c30c2d",
+        "name": "FOLATE",
+        "variable_name": "FOLI",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "c1182513-c281-41da-8f8c-f3dd0631bb3c",
+        "name": "HOMA INSULIN RESISTANCE INDEX",
+        "variable_name": "HOMIR",
+        "description": "",
+        "units": "Index",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "17ba1d17-9201-4572-99c0-807e82ec7064",
+        "name": "TC/ HDL CHOLESTEROL RATIO",
+        "variable_name": "TC/H",
+        "description": "",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "69aa0d51-d228-480d-bd81-589304b49ca5",
+        "name": "TRIG / HDL RATIO",
+        "variable_name": "TRI/H",
+        "description": "",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "54e5f1fe-9223-4b36-83d7-6b9f51a014b6",
+        "name": "NON-HDL CHOLESTEROL",
+        "variable_name": "NHDL",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "ffd9584c-07ef-4c77-b8ca-c5f723d96028",
+        "name": "VLDL CHOLESTEROL",
+        "variable_name": "VLDL",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "ed72de4f-e2a7-48b2-b8f2-5fae64730547",
+        "name": "SGOT / SGPT RATIO",
+        "variable_name": "OT/PT",
+        "description": "",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8d4f78d0-730d-49f2-91b0-d61a0b2ec7c0",
+        "name": "PROTEIN - TOTAL",
+        "variable_name": "PROT",
+        "description": "",
+        "units": "gm/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "742c3401-e523-44cd-9528-0f41c7b11e04",
+        "name": "SERUM GLOBULIN",
+        "variable_name": "SEGB",
+        "description": "",
+        "units": "gm/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "73473ead-0ac6-4b95-851e-b301323e8f4b",
+        "name": "SERUM ALB/GLOBULIN RATIO",
+        "variable_name": "A/GR",
+        "description": "",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "730ceec7-9b5c-46ee-9721-de7b454d15bc",
+        "name": "HEPATITIS B SURFACE ANTIGEN(HBSAG) RAPID TEST",
+        "variable_name": "HBSAG",
+        "description": "",
+        "units": "",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "fbdc24a6-9073-4978-a368-e0a3ee4f9f07",
+        "name": "CHLORIDE",
+        "variable_name": "CHL",
+        "description": "",
+        "units": "mmol/L",
+        "pathways": [
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "f59a8512-aa6b-47a9-9f99-1c98344662ab",
+        "name": "CORTISOL",
+        "variable_name": "CORT",
+        "description": "",
+        "units": "µg/dl",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "6cd68526-c0a7-4f90-878a-5c449dc231d8",
+        "name": "AVERAGE BLOOD GLUCOSE (ABG)",
+        "variable_name": "ABG",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "794be8b7-5316-4269-8e8d-bba21eb6302c",
+        "name": "URIC ACID",
+        "variable_name": "URIC",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "20de4b6d-2da7-44e3-ba4c-b97ddc2159b5",
+        "name": "RHEUMATOID FACTOR (RF)",
+        "variable_name": "RFAC",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "9d94e0c3-fb57-4524-a4ef-5702585c6f66",
+        "name": "MEAN CORPUSCULAR VOLUME (MCV)",
+        "variable_name": "MCV",
+        "description": "",
+        "units": "fL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "78ea3802-e31f-468e-8310-76e8ab94c87a",
+        "name": "MEAN CORPUSCULAR HEMOGLOBIN (MCH)",
+        "variable_name": "MCH",
+        "description": "",
+        "units": "pg",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "434d129b-d7b5-4a6d-a4d1-df5dde2aefdb",
+        "name": "MEAN CORP.HEMO. CONC (MCHC)",
+        "variable_name": "MCHC",
+        "description": "",
+        "units": "g/dL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "21a098f2-7608-47e1-9c89-a546c061aa88",
+        "name": "RED CELL DISTRIBUTION WIDTH - SD (RDW-SD)",
+        "variable_name": "RDWSD",
+        "description": "",
+        "units": "fL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "1a22212d-dfa4-4550-96e0-68ee60e42d35",
+        "name": "RED CELL DISTRIBUTION WIDTH (RDW - CV)",
+        "variable_name": "RDCV",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "7deb5889-1a9e-46fe-96ad-11e500def3b9",
+        "name": "NEUTROPHILS PERCENTAGE",
+        "variable_name": "NEUTROPHILS_PERCENT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "76275259-43d0-42a4-b5f5-def78312f6e0",
+        "name": "LYMPHOCYTES PERCENTAGE",
+        "variable_name": "LYMPHOCYTES_PERCENT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "e6121216-df3d-4558-bbab-f1c1fe531db0",
+        "name": "MONOCYTES PERCENTAGE",
+        "variable_name": "MONOCYTES_PERCENT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "01f25f1d-ec37-4e74-83e4-64b4eddc4128",
+        "name": "EOSINOPHILS PERCENTAGE",
+        "variable_name": "EOSINOPHILS_PERCENT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "19b6b08e-b78a-44e2-8fa5-179d00384325",
+        "name": "BASOPHILS PERCENTAGE",
+        "variable_name": "BASOPHILS_PERCENT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "76e2ccf3-12c9-4407-a703-5a9ebdbc0a10",
+        "name": "NUCLEATED RED BLOOD CELLS %",
+        "variable_name": "NRBC%",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8e2f677d-cad7-4895-9e54-28321dbb71e1",
+        "name": "LYMPHOCYTES - ABSOLUTE COUNT",
+        "variable_name": "ALYM",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "bb1f4e16-14d8-45fa-b71d-5d515a7f93a5",
+        "name": "MONOCYTES - ABSOLUTE COUNT",
+        "variable_name": "AMON",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8a28791c-d087-488a-bbc0-bbdffed9f7c4",
+        "name": "BASOPHILS - ABSOLUTE COUNT",
+        "variable_name": "ABAS",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "dea79be9-6a48-4fbc-ac97-c644d50370e7",
+        "name": "IMMATURE GRANULOCYTES (IG)",
+        "variable_name": "IG",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "d4fa93f9-f392-4310-bdd6-388baa1cd158",
+        "name": "NUCLEATED RED BLOOD CELLS",
+        "variable_name": "NRBC",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "68a61bd0-8419-4c78-99d0-0054764d1e74",
+        "name": "PLATELET COUNT",
+        "variable_name": "PLT",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "bfbbbc25-a9cd-4252-921f-34654ce0e18a",
+        "name": "MEAN PLATELET VOLUME (MPV)",
+        "variable_name": "MPV",
+        "description": "",
+        "units": "fL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "a5fd7386-ab4b-460d-9bd3-4006e7fb9668",
+        "name": "PLATELET DISTRIBUTION WIDTH (PDW)",
+        "variable_name": "PDW",
+        "description": "",
+        "units": "fL",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "004e0f93-2231-4180-9ad5-53116eb501df",
+        "name": "PLATELET TO LARGE CELL RATIO (PLCR)",
+        "variable_name": "PLCR",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "2d692f2d-4aca-4a42-a720-afda7a977fff",
+        "name": "PLATELETCRIT (PCT)",
+        "variable_name": "PCT",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "5e1b710c-cff6-42d3-bf30-a3885a08534a",
+        "name": "CREATININE - URINE",
+        "variable_name": "UCRA",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "0eddaa7d-14db-423e-89e5-ea279aa3e4e1",
+        "name": "URI. ALBUMIN/CREATININE RATIO (UA/C)",
+        "variable_name": "UA/C",
+        "description": "",
+        "units": "µg/mg of Creatinine",
+        "pathways": [
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "898a3b61-eacb-4c16-bf21-5c357f3c5e83",
+        "name": "HIGH SENSITIVITY C-REACTIVE PROTEIN (HS-CRP)",
+        "variable_name": "HSCRP",
+        "description": "",
+        "units": "mg/L",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            },
+            {
+                "pathway_id": "52335da6-5d95-46c3-b0dc-9ad4001545e0",
+                "name": "GUT HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "922dfba0-2881-4480-9f25-0d5e43231f0e",
+        "name": "25-OH VITAMIN D (TOTAL)",
+        "variable_name": "VITDC",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "1de37656-8c06-4a6e-be41-04c155199c52",
+        "name": "TRIGLYCERIDES",
+        "variable_name": "TRIG",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8ce4d1ee-f32b-47cf-bf16-90b5112ca4dc",
+        "name": "LDL CHOLESTEROL - DIRECT",
+        "variable_name": "LDL",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "498356b1-325c-45b0-bba9-78de0a2d6935",
+        "name": "TOTAL CHOLESTEROL",
+        "variable_name": "CHOL",
+        "description": "",
+        "units": "mg/dl",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "85c4a22e-207e-4f8f-8c25-76c4a2a4d36c",
+        "name": "LIPOPROTEIN (a) [Lp(a)]",
+        "variable_name": "LPA",
+        "description": "",
+        "units": "mg/dl",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "99bfe4d5-c69c-4ea5-9b7c-51a414e0386c",
+        "name": "FASTING BLOOD SUGAR(GLUCOSE)",
+        "variable_name": "FBS",
+        "description": "",
+        "units": "mg/dl",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "ac4e4f4c-f725-4a70-aeba-5954c2807905",
+        "name": "HbA1c",
+        "variable_name": "HBA",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "18eb9a5c-000f-4fa6-8f42-3a60785d928e",
+        "name": "VITAMIN B-12",
+        "variable_name": "VITB",
+        "description": "",
+        "units": "pg/mL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "4fe758bf-c9f4-45cf-b049-3cb5453faaa8",
+        "name": "IRON",
+        "variable_name": "IRON",
+        "description": "",
+        "units": "µg/dl",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "6af61b49-e77d-42e6-8c68-078e78c428e6",
+        "name": "FERRITIN",
+        "variable_name": "FERR",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "149db188-ead8-4a3e-bca0-0c25fa9ecbb9",
+        "name": "GAMMA GLUTAMYL TRANSFERASE (GGT)",
+        "variable_name": "GGT",
+        "description": "",
+        "units": "U/L",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "79e18810-2e5d-4e3f-a91a-8bb4e0a62331",
+        "name": "HEMOGLOBIN",
+        "variable_name": "HB",
+        "description": "",
+        "units": "g/dl",
+        "pathways": [
+            {
+                "pathway_id": "4541a0eb-8077-4b11-b9fc-77a474da46a1",
+                "name": "BLOOD HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "471c1858-67cc-40da-964e-a2b27bcafa4f",
+        "name": "C-PEPTIDE",
+        "variable_name": "CPEP",
+        "description": "",
+        "units": "ng/mL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "45fa64ab-c9da-4d5e-b228-557515dd570f",
+        "name": "SODIUM",
+        "variable_name": "SOD",
+        "description": "",
+        "units": "mmol/L",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "95f0c7fb-4eed-4ef4-add5-921c8b6bf2cd",
+        "name": "POTASSIUM",
+        "variable_name": "POT",
+        "description": "",
+        "units": "mmol/L",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "12017c1c-f2aa-4e3c-b2d0-785a71bb47ac",
+        "name": "MAGNESIUM",
+        "variable_name": "MG",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "6ec9f4b7-8320-47b3-939c-34613be5c1d8",
+        "name": "CALCIUM",
+        "variable_name": "CALC",
+        "description": "",
+        "units": "mg/dL",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "363dd19c-49ac-4201-93b4-bed2dc098b39",
+        "name": "SERUM ZINC",
+        "variable_name": "SEZN",
+        "description": "",
+        "units": "μg/dL",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "5ae98567-5ea0-468a-81a1-bdfe88e8c478",
+        "name": "ALBUMIN - SERUM",
+        "variable_name": "SALB",
+        "description": "",
+        "units": "gm/dL",
+        "pathways": [
+            {
+                "pathway_id": "200be314-c92e-469d-92d2-f9f842587e07",
+                "name": "LIVER HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "cd36b034-0181-4e35-b159-6096398b1054",
+        "name": "URINARY MICROALBUMIN",
+        "variable_name": "UALB",
+        "description": "",
+        "units": "μg/mL",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "4f3c74e1-528e-4a9c-b96b-0621149401fc",
+        "name": "TOTAL LEUCOCYTES COUNT (WBC)",
+        "variable_name": "LEUC",
+        "description": "",
+        "units": "X 10^3/μL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "a6267dca-bb0d-468b-8df4-c07232cd67d4",
+        "name": "DIASTOLIC_BP",
+        "variable_name": "DIASTOLIC_BP",
+        "description": "",
+        "units": "mmHg",
+        "pathways": []
+    },
+    {
+        "biomarker_id": "4ce5ea33-40c1-45bc-8d91-9b1f862aa0c1",
+        "name": "Vascular Age",
+        "variable_name": "VASCULAR_AGE",
+        "description": "",
+        "units": "#",
+        "pathways": []
+    },
+    {
+        "biomarker_id": "9082828a-180e-4875-92c3-d3e97ddc0cf9",
+        "name": "ANTI CCP (ACCP)",
+        "variable_name": "ACCP",
+        "description": "",
+        "units": "U/mL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "d3e57cbf-5362-4ae2-80c9-e860fb9a4ea4",
+        "name": "QUANTITATIVE INSULIN SENSITIVITY INDEX",
+        "variable_name": "QUICKI",
+        "description": "",
+        "units": "Index",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "4eb5d214-102f-4c35-92e8-2432fcebe835",
+        "name": "NEUTROPHILS - ABSOLUTE COUNT",
+        "variable_name": "ANEU",
+        "description": "",
+        "units": "X 10³ / µL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "66cb6a00-1bcd-4bf1-8c60-df465fee7b53",
+                "name": "INFLAMMATION",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "1f25081d-2848-4d3e-8df7-094ec9cc31b2",
+        "name": "EST. GLOMERULAR FILTRATION RATE (eGFR)",
+        "variable_name": "EGFR",
+        "description": "",
+        "units": "mL/min/1.73 m2",
+        "pathways": [
+            {
+                "pathway_id": "48b1b775-0f8b-4011-ab7c-177102eff14b",
+                "name": "KIDNEY HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "7aed25ac-7d09-4170-a328-5a8a98fc90eb",
+        "name": "ANTI-THYROID PEROXIDASE ANTIBODIES",
+        "variable_name": "ANTI_TPO",
+        "description": "",
+        "units": "IU/mL",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "2677d9ba-d88f-4f1d-89c8-706532db5a6d",
+        "name": "ANTI THYROGLOBULIN ANTIBODY (ATG)",
+        "variable_name": "ATG",
+        "description": "",
+        "units": "IU/ml",
+        "pathways": [
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "dbacdc49-583e-4813-a96d-92af234def3e",
+        "name": "LIPASE",
+        "variable_name": "LASE",
+        "description": "",
+        "units": "U/L",
+        "pathways": [
+            {
+                "pathway_id": "97999241-9c72-4b1f-91c7-3c6fb45e166d",
+                "name": "PANCREAS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "bea815a8-a780-4d67-bd1a-96a78e9abbf9",
+        "name": "AMYLASE",
+        "variable_name": "AMYL",
+        "description": "",
+        "units": "U/L",
+        "pathways": [
+            {
+                "pathway_id": "97999241-9c72-4b1f-91c7-3c6fb45e166d",
+                "name": "PANCREAS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "ab1d95a7-4866-4c67-be9b-9cf095b8c120",
+        "name": "HOMOCYSTEINE",
+        "variable_name": "HOMO",
+        "description": "",
+        "units": "µmol/L",
+        "pathways": [
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "33f2415c-719a-4698-9215-9bb6931605d3",
+        "name": "WAIST_TO_HIP_RATIO",
+        "variable_name": "WAIST_TO_HIP_RATIO",
+        "description": "",
+        "units": "Numeric",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "4eba311f-dce1-41d4-b9b0-15ba67f56237",
+        "name": "GRIP_STRENGTH_LEFT",
+        "variable_name": "GRIP_STRENGTH_LEFT",
+        "description": "",
+        "units": "Numeric",
+        "pathways": [
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "a41c73f8-3ae9-40f6-8d74-05213e56c55d",
+        "name": "PULSE_RATE",
+        "variable_name": "PULSE_RATE",
+        "description": "",
+        "units": "bpm",
+        "pathways": [
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "9d8b65f7-f245-418a-83bb-14eb59a007a3",
+        "name": "RESPIRATORY_RATE",
+        "variable_name": "RESPIRATORY_RATE",
+        "description": "",
+        "units": "breaths/min",
+        "pathways": [
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "f43a280e-5c70-4af1-9829-2e2b2a2feb79",
+                "name": "RESPIRATORY",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "e2483083-3ecb-4e14-ad1c-8d4ecbfbb50a",
+        "name": "BODY_WEIGHT",
+        "variable_name": "BODY_WEIGHT",
+        "description": "",
+        "units": "kg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            },
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "e5bdc7cd-74a5-4ca2-8ab9-e21983aab902",
+        "name": "SYSTOLIC_BP_RIGHT",
+        "variable_name": "SYSTOLIC_BP_RIGHT",
+        "description": "",
+        "units": "mmHg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "c67eee58-b6df-422a-8294-4765152215a3",
+        "name": "DIASTOLIC_BP_RIGHT",
+        "variable_name": "DIASTOLIC_BP_RIGHT",
+        "description": "",
+        "units": "mmHg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "cda9a18e-be72-4133-96d7-89fa4b81fa87",
+        "name": "SYSTOLIC_BP_LEFT",
+        "variable_name": "SYSTOLIC_BP_LEFT",
+        "description": "",
+        "units": "mmHg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "2b1adcd0-2ebb-46a9-a156-32a0ab34bd4f",
+        "name": "DIASTOLIC_BP_LEFT",
+        "variable_name": "DIASTOLIC_BP_LEFT",
+        "description": "",
+        "units": "mmHg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "c9dac1cc-6dee-4203-89a0-227287e0cb06",
+        "name": "OXYGEN_SATURATION",
+        "variable_name": "OXYGEN_SATURATION",
+        "description": "",
+        "units": "%",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "dadd683a-5680-457a-ba5a-5bf41356c707",
+        "name": "BODY_TEMPERATURE",
+        "variable_name": "BODY_TEMPERATURE",
+        "description": "",
+        "units": "°F",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "61419601-ca82-47fe-bdcb-f8e244acb10d",
+                "name": "IMMUNE HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8f590052-a458-4877-96ec-3cb53327fa18",
+        "name": "BODY_MASS_INDEX",
+        "variable_name": "BODY_MASS_INDEX",
+        "description": "",
+        "units": "kg/m²",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "14a89e5f-b1ab-4fb8-a5dc-a9434d397469",
+        "name": "BODY_HEIGHT",
+        "variable_name": "BODY_HEIGHT",
+        "description": "",
+        "units": "cm",
+        "pathways": [
+            {
+                "pathway_id": "36c7b7bf-5873-4146-b7a3-7bb6b62bc777",
+                "name": "HORMONAL HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "bea4e956-c5eb-4cc5-a091-424545994b43",
+                "name": "NUTRITIONAL STATUS",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "8df2220d-eef8-4ceb-8022-b9414b8063c1",
+        "name": "WAIST_CIRCUMFERENCE",
+        "variable_name": "WAIST_CIRCUMFERENCE",
+        "description": "",
+        "units": "cm",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "f43474af-78c5-4eaf-9f93-1379ae83e44b",
+        "name": "HIP_CIRCUMFERENCE",
+        "variable_name": "HIP_CIRCUMFERENCE",
+        "description": "",
+        "units": "cm",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "3abd20fb-06e2-42f5-9cba-9735d4038330",
+        "name": "GRIP_STRENGTH_RIGHT",
+        "variable_name": "GRIP_STRENGTH_RIGHT",
+        "description": "",
+        "units": "Numeric",
+        "pathways": [
+            {
+                "pathway_id": "72d8115f-e9e9-43b2-9325-1015c460363f",
+                "name": "MUSCULOSKELETAL",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "4f50cd70-1207-4068-b990-f700de07bd56",
+        "name": "SYSTOLIC_BP",
+        "variable_name": "SYSTOLIC_BP",
+        "description": "",
+        "units": "mmHg",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "biomarker_id": "326fe60d-62ab-4ab9-be18-305067e9623f",
+        "name": "LDL / HDL RATIO",
+        "variable_name": "LDL/",
+        "description": "-",
+        "units": "Ratio",
+        "pathways": [
+            {
+                "pathway_id": "b0e0a720-1067-46b2-b4f1-38cf8d61f598",
+                "name": "METABOLIC HEALTH",
+                "description": ""
+            },
+            {
+                "pathway_id": "edd930a9-f4a0-45d4-bc0e-a37ae652feeb",
+                "name": "CARDIOVASCULAR HEALTH",
+                "description": ""
+            }
+        ]
+    }
+]

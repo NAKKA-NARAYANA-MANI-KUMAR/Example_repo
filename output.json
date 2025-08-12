@@ -1,0 +1,193 @@
+{
+    "CARDIAC HEALTH": {
+        "title": "CARDIAC HEALTH",
+        "content": "Cardiac health refers to the overall well-being and optimal functioning of the heart and its associated vascular system. It is a critical aspect of overall health, as the heart is responsible for pumping oxygenated blood and essential nutrients throughout the body. ",
+        "descriptions": {
+            "Coronary Artery Disease": "Coronary Artery Disease (CAD) is a condition where coronary arteries, which supply oxygen-rich blood to the heart, narrow or block due to plaque buildup",
+            "Cardiomyopathy": "A disease of the heart muscle that makes it hard for the heart to pump blood properly.",
+            "Atrial Fibrillation": "An irregular and often fast heartbeat that can cause blood clots, stroke, or heart failure.",
+            "Long QT Syndrome": "A heart rhythm disorder that affects the electrical signals in the heart, sometimes leading to fainting or sudden death.",
+            "Ventricular Arrythmias / Sudden Cardiac Death": "Dangerous irregular heartbeats start in the lower chambers of the heart. It prevents oxygen-rich blood from circulating to the body and brain. This can lead to cardiac arrest, which is when the heart suddenly stops pumping blood.",
+            "Hypertension": "High blood pressure, which puts extra strain on the heart and blood vessels and can lead to heart disease or stroke."
+        }
+    },
+    "METABOLIC HEALTH": {
+        "title": "METABOLIC HEALTH",
+        "content": "Metabolic health refers to the state of having ideal levels of blood sugar, triglycerides, HDL cholesterol, blood pressure, and waist circumference, reducing risks of diabetes, heart disease, stroke, and improving overall quality of life and longevity.",
+        "descriptions": {
+            "Diabetes": "A condition where the body has trouble regulating blood sugar levels, either due to low insulin production (Type 1) or insulin resistance (Type 2).",
+            "Cholesterol Disorders": "Problems with high or low levels of cholesterol, which can lead to clogged arteries and heart disease.",
+            "Hypertriglyceridemia": "High levels of triglycerides (a type of fat) in the blood, which can increase the risk of heart disease and pancreatitis.",
+            "Tendency to weight gain": "A natural predisposition to gain weight more easily, often linked to genetics, metabolism, or lifestyle factors."
+        }
+    },
+    "VASCULAR HEALTH": {
+        "title": "VASCULAR HEALTH",
+        "content": "Vascular health refers to the proper functioning of blood vessels, ensuring efficient circulation of blood, oxygen, and nutrients throughout the body. It plays a vital role in preventing cardiovascular diseases, supporting organ function, and maintaining overall well-being.",
+        "descriptions": {
+            "Tendency to Blood Clots": "Also known as thrombophilia, this condition can be inherited or acquired where the blood clots more easily than normal, increasing the risk of blockages in blood vessels. . Inherited thrombophilia is caused by a genetic predisposition",
+            "Bleeding Disorders": "Bleeding disorders involve difficulty in clotting, leading to excessive or prolonged bleeding, often caused by genetic or acquired factors affecting coagulation.",
+            "Peripheral Artery Disease": "Peripheral Artery Disease (PAD) is a condition where narrowed arteries reduce blood flow to the limbs, often causing pain, numbness, or mobility issues, and increasing cardiovascular risk.",
+            "Arterial Aneurysms": "Arterial aneurysms are bulges in the walls of arteries caused by weakness, which can rupture and lead to life-threatening internal bleeding or other complications."
+        }
+    },
+    "Gut and Immune Health": {
+        "title": "Gut and Immune Health",
+        "content": "Gut and Immune Health are interconnected, with 70% of immune cells residing in the gut. A healthy microbiome supports digestion, immunity, and inflammation control. Boost gut health with fiber, probiotics, and hydration while avoiding processed foods. This balance strengthens immunity and overall well-being.",
+        "descriptions": {
+            "Crohn's Disease": "A chronic condition where the immune system attacks the digestive tract, causing inflammation, pain, and digestive issues.",
+            "Ulcerative Colitis": "A condition causing long-term inflammation and sores in the large intestine and rectum, leading to abdominal pain and diarrhea.",
+            "Celiac Disease": "An autoimmune disorder where eating gluten (found in wheat, barley, and rye) damages the small intestine, leading to digestive problems.",
+            "Grave's Disease": "An autoimmune disorder that causes the thyroid gland to become overactive, leading to symptoms like weight loss, a rapid heartbeat, and anxiety.",
+            "Systemic Lupus Erythematosus": "An autoimmune disease where the immune system attacks various parts of the body, including skin, joints, and organs, causing inflammation and damage.",
+            "Multiple Sclerosis": "A disease where the immune system attacks the protective coating of nerves (myelin), causing problems with movement, vision, and sensation.",
+            "Rheumatoid Arthritis": "An autoimmune disease where the immune system attacks joints, causing pain, swelling, and stiffness, especially in the hands and feet.",
+            "Psoriasis": "A skin condition where skin cells build up too quickly, causing scaly, red patches that may itch or hurt."
+        }
+    },
+    "Kidney and Liver Health": {
+        "title": "Kidney and Liver Health",
+        "content": "Kidney and Liver Health is vital for detoxification, metabolism, and body function. The kidneys filter waste and maintain fluid balance, while the liver processes nutrients and detoxifies harmful substances. Support them with hydration, a balanced diet, limited alcohol, and avoiding excess salt or processed foods.",
+        "descriptions": {
+            "Chronic Kidney Disease": "A gradual loss of kidney function over time, making it hard for the body to remove waste and excess fluid.",
+            "Renal Stones": "Hard, rock-like deposits that form in the kidneys, causing pain when they block urine flow or are passed out of the body.",
+            "Tubulointerstitial Disease": "A condition that damages the tubes and surrounding tissues in the kidneys, affecting their ability to filter waste.",
+            "Liver Cirrhosis": "A condition where long-term damage causes scarring of the liver, reducing its ability to function properly.",
+            "Hemochromatosis": "A condition where too much iron builds up in the body, which can damage organs like the liver, heart, and pancreas.",
+            "Gall Bladder Disorders": "Problems with the gallbladder, such as gallstones or inflammation, which can cause pain, nausea, and digestion issues.",
+            "Pancreatic Disorders": "Conditions like pancreatitis (inflammation) or pancreatic insufficiency, which can affect digestion or insulin production."
+        }
+    },
+    "Neuro Health": {
+        "title": "Neuro Health",
+        "content": "Neuro Health is vital for cognitive function, memory, and nervous system efficiency. A healthy brain aids decision-making, mood, and sensory responses. Support it with a nutrient-rich diet, exercise, mental stimulation, sleep, stress management, and avoiding harmful substances for optimal performance.",
+        "descriptions": {
+            "Stroke": "A sudden interruption of blood flow to the brain, which can cause weakness, speech difficulties, or paralysis.",
+            "ALS": "A condition that damages nerve cells controlling muscles, leading to weakness, difficulty speaking or swallowing, and eventual loss of muscle control.",
+            "Parkinsons Disease": "A brain disorder that causes shaking, stiffness, and difficulty with balance and movement, often worsening over time.",
+            "Progressive Supranuclear Palsy": "A rare brain disorder that causes balance, movement, and eye movement problems, making it hard to look up or down.",
+            "Seizures": "Sudden electrical activity in the brain that can cause shaking, confusion, or temporary loss of awareness.",
+            "Migraines": "Severe headaches often accompanied by nausea, sensitivity to light and sound, and sometimes visual disturbances like flashing lights.",
+            "Tremors": "Involuntary shaking or trembling of a part of the body, often the hands, which can occur at rest or during movement.",
+            "Peripheral Neuropathy": "Damage to nerves outside the brain and spinal cord, causing numbness, tingling, or pain in the hands and feet."
+        }
+    },
+    "Mood Disorders": {
+        "title": "Mood Disorders",
+        "content": "Mood Disorders affect emotional well-being, causing conditions like depression, anxiety, or bipolar disorder. Manage them with therapy, medication, exercise, a balanced diet, stress management, and support networks for better emotional health and quality of life.",
+        "descriptions": {
+            "Depression": "A mood disorder that causes persistent feelings of sadness, lack of energy, and loss of interest in daily activities.",
+            "Anxiety": "A condition involving excessive worry or fear that can cause physical symptoms like a racing heart, sweating, or restlessness.",
+            "Schizophrenia": "A mental illness that affects how a person thinks, feels, and behaves, often causing hallucinations, delusions, and difficulty distinguishing reality from imagination.",
+            "ADHD": "A condition that makes it hard to focus, sit still, or control impulses, often starting in childhood but sometimes continuing into adulthood."
+        }
+    },
+    "MUSCLE AND BONE HEALTH": {
+        "title": "MUSCLE AND BONE HEALTH",
+        "content": "Ensures strength, mobility, and resilience by maintaining optimal muscle mass and bone density. It reduces the risk of osteoporosis, fractures, and age-related muscle loss. Proper nutrition, exercise, and lifestyle habits are key to supporting long-term skeletal and muscular well-being.",
+        "descriptions": {
+            "Osteoporosis": "A condition where bones become weak and brittle, increasing the risk of fractures.",
+            "Osteoarthritis": "A joint disorder caused by the breakdown of cartilage, leading to pain, stiffness, and reduced movement, especially in older adults.",
+            "Myalgias / Muscle Atrophy": "Myalgia is a medical term for muscle pain, while muscle atrophy is a condition that causes muscles to decrease in size and strength",
+            "Gout": "Gout is a type of arthritis that causes pain and swelling in the joints due to a buildup of uric acid in the body",
+            "Ankylosing Spondylitis": "A type of arthritis that primarily affects the spine, causing pain, stiffness, and reduced flexibility over time."
+        }
+    },
+    "Aging and Longevity": {
+        "title": "Aging and Longevity",
+        "content": "Focus on maintaining health and vitality as we age. Healthy aging involves balanced nutrition, regular exercise, mental stimulation, and stress management. Preventive care and lifestyle choices can delay age-related issues, improving quality of life and promoting a longer, healthier lifespan.",
+        "descriptions": {
+            "Response to Oxidative Stress": "The body’s ability to protect itself from damage caused by unstable molecules called free radicals, which can contribute to aging and diseases.",
+            "Cellular Senescence and DNA Repair": "Cellular senescence is a process where cells stop dividing but don’t die, contributing to aging and diseases. DNA repair is the body’s mechanism to fix damage to DNA, which is crucial for preventing mutations and maintaining health.",
+            "Alzheimer's Disease / Dementia": "Conditions that affect memory, thinking, and behavior, with Alzheimer’s being the most common cause of dementia in older adults."
+        }
+    },
+    "Eye Health": {
+        "title": "Eye Health",
+        "content": "Eye Health ensures clear vision and quality of life. Conditions like macular degeneration, glaucoma, and cataracts can impair vision if untreated. Protect eyes with regular checkups, good nutrition, UV protection, limiting screen time, and staying hydrated to ensure long-term visual health.",
+        "descriptions": {
+            "Age related Macular Degeneration": "A condition where the central part of the retina (macula) deteriorates, leading to blurry or loss of central vision.",
+            "Glaucoma": "An eye condition where increased pressure damages the optic nerve, potentially leading to vision loss if untreated.",
+            "Cataract": "A cloudy area in the lens of the eye that causes blurry vision and develops mostly with aging."
+        }
+    },
+    "Nutrition": {
+        "title": "Nutrition",
+        "content": "Nutrition is key to health, providing essential nutrients for energy, growth, and repair. A balanced diet supports immunity, brain function, and overall well-being. Proper hydration, mindful eating, and healthy food choices enhance long-term health and vitality.",
+        "descriptions": {
+            "Magnesium": "Magnesium is an essential mineral that plays a key role in many body functions, like keeping your muscles, nerves, and heart working properly and supporting strong bones. Magnesium absorption genetics refers to how your genes affect your ability to absorb and use magnesium from the food you eat.",
+            "Calcium": "Calcium is essential for strong bones, teeth, muscle contractions, and nerve function. Your genes can affect how well your body absorbs and uses calcium. Poor absorption can lead to weak bones (osteoporosis) and muscle cramps.",
+            "Phosphate": "Phosphate works with calcium to build strong bones and teeth, and it’s also crucial for energy production in cells. Genetic factors can influence how well your body maintains the right balance of phosphate, which is important for overall energy and bone health.",
+            "Homocysteine": "Homocysteine is a byproduct of protein metabolism, and high levels can damage blood vessels and increase the risk of heart disease. Genetics can influence how well your body breaks it down, which depends on nutrients like folic acid (Vitamin B9), Vitamin B12, and Vitamin B6.",
+            "Iron": "Iron is essential for making hemoglobin, which carries oxygen in your blood. Genetic differences can affect how well your body absorbs and uses iron, potentially leading to anemia (low energy and fatigue) if absorption is poor.",
+            "Zinc": "Zinc is crucial for your immune system, wound healing, and cell repair. Genetic factors can influence how efficiently your body absorbs zinc, which may impact your ability to fight infections or heal wounds.",
+            "Selenium": "Selenium helps protect cells from damage and supports thyroid function. Genetics can affect how well your body absorbs selenium, which can influence your overall energy levels and immune health.",
+            "Vitamin K": "Vitamin K is vital for blood clotting and bone health. Genetic differences can affect how your body absorbs and uses Vitamin K, potentially leading to bleeding problems or weaker bones.",
+            "Vitamin D": "Vitamin D helps your body absorb calcium, supports immune function, and promotes bone health. Genetics can affect how well your body processes Vitamin D from sunlight or food, potentially leading to weaker bones or immunity issues.",
+            "Vitamin B 12": "Vitamin B12 is essential for nerve health, red blood cell production, and DNA repair. Genetics can affect your ability to absorb Vitamin B12 from food, which may lead to fatigue, nerve problems, or anemia if levels are low.",
+            "Vitamin B 2": "Vitamin B2 helps convert food into energy and supports healthy skin and eyes. Genetic factors can impact how well your body uses Vitamin B2, possibly affecting your energy levels.",
+            "Vitamin B 1": "Vitamin B1 is important for energy production and nerve health. Genetics can influence how well your body absorbs Thiamine, leading to fatigue or nerve-related issues if levels are low.",
+            "Vitamin C": "Vitamin C supports your immune system, helps heal wounds, and keeps your skin healthy. Genetic variations can influence how your body absorbs and uses Vitamin C, affecting your ability to fight infections or heal quickly.",
+            "Vitamin B6 & Biotin": "Vitamin B6 helps the body make neurotransmitters and supports brain health, while Biotin is important for healthy skin, hair, and nails. Genetics can affect how efficiently your body absorbs these vitamins, which may impact mental clarity and skin health.",
+            "Vitamin B9/ Folic Acid": "Vitamin B9 is crucial for making DNA and supporting healthy cell growth, especially during pregnancy. Genetic factors, like the MTHFR gene variation, can affect how well your body processes folic acid, potentially leading to problems with energy or cell repair.",
+            "Vitamin E": "Vitamin E is an antioxidant that helps protect your cells from damage and supports skin, eye, and immune health. Genetics can affect how well your body absorbs and uses Vitamin E, impacting its protective effects.",
+            "Lipid Intolerance": "Lipid intolerance refers to how your body processes fats. Genetics can influence how well your body breaks down and uses fats from food. If you have difficulty processing fats, it can lead to issues like high cholesterol, weight gain, or inflammation, increasing your risk for heart disease.",
+            "Protein Intolerance": "Protein intolerance happens when your body struggles to digest certain proteins, often due to genetic variations affecting enzymes. This can lead to symptoms like bloating, discomfort, or poor nutrient absorption. For example, lactose intolerance (a type of protein intolerance) occurs because of a genetic inability to break down lactose in dairy.",
+            "Adiponectin Levels": "Adiponectin is a hormone that helps regulate blood sugar levels and fat metabolism. Your genes influence how much adiponectin your body produces. Low adiponectin levels can increase the risk of obesity, diabetes, and heart disease.",
+            "Caffeine Sensitivity": "Caffeine sensitivity is determined by how quickly your body breaks down caffeine, which is controlled by your genes. People with slow caffeine metabolism may feel jittery, anxious, or have trouble sleeping even after small amounts, while fast metabolizers can handle more caffeine without these effects."
+        }
+    },
+    "Methylation Genes": {
+        "title": "Methylation Genes",
+        "content": "Regulate biological processes by controlling gene expression without altering DNA. Proper methylation supports detoxification, hormone balance, and DNA repair. Support it with a nutrient-rich diet, B-vitamins, exercise, and stress management to maintain overall health.",
+        "descriptions": {
+            "COMT (Catechol-O-Methyltransferase)": "Breaks down neurotransmitters like dopamine, epinephrine, and norepinephrine.COMT variants can influence mood, stress response, and pain sensitivity.",
+            "MTHFR (Methylenetetrahydrofolate Reductase)": "Converts folate into its active form (5-MTHF) essential for methylation.Mutations can impair methylation and increase homocysteine, affecting cardiovascular and mental health.",
+            "MTRR (Methionine Synthase Reductase)": "Regenerates active MTR enzyme needed for B12-dependent methylation.Variants can reduce methylation efficiency and elevate homocysteine levels.",
+            "MTR (Methionine Synthase)": "Catalyzes conversion of homocysteine to methionine using vitamin B12.MTR dysfunction can lead to homocysteine buildup and methylation disruption.",
+            "AHCY (Adenosylhomocysteinase)": "Converts S-adenosylhomocysteine (SAH) to homocysteine, regulating methylation feedback.Impaired AHCY activity can inhibit methylation and lead to toxic metabolite accumulation.",
+            "CBS (Cystathionine Beta-Synthase)": "Converts homocysteine to cystathionine in the transsulfuration pathway.CBS upregulation can deplete methyl groups and increase ammonia or sulfur-containing metabolites.",
+            "SHMT1 (Serine Hydroxymethyltransferase 1)": "Generates one-carbon units for the folate cycle by converting serine to glycine.Variants can affect folate metabolism and impair DNA synthesis and methylation.",
+            "DNMT (DNA Methyltransferases)": "Catalyze the addition of methyl groups to DNA, silencing or activating genes.Imbalances in DNMT activity can alter gene expression, contributing to cancer, aging, and chronic disease.",
+            "TCN2 (Transcobalamin II)": "Transports active vitamin B12 into cells.Mutations can reduce cellular B12 availability, impairing methylation and energy production.",
+            "BHMT (Betaine-Homocysteine Methyltransferase)": "Uses betaine to convert homocysteine back into methionine, supporting methylation.Dysfunction in BHMT can elevate homocysteine and strain the folate-dependent methylation pathway."
+        }
+    },
+    "Liver Detox Phase 1": {
+        "title": "Liver Detox Phase 1",
+        "content": "Liver detoxification starts with Phase 1, where enzymes break down toxins for further processing. Gene variations can affect this process, influencing toxin clearance, health, and drug response.",
+        "descriptions": {
+            "CYP1A1 (Cytochrome P450 Family 1 Subfamily A Member 1)": "Metabolizes environmental toxins like dioxins and polycyclic aromatic hydrocarbons.Variants can affect cancer risk and the body’s ability to clear harmful environmental chemicals.",
+            "CYP1B1 (Cytochrome P450 Family 1 Subfamily B Member 1)": "Breaks down estrogens and activates procarcinogens into reactive forms.Genetic changes may influence hormone-related cancer risk and toxin sensitivity.",
+            "CYP2A6 (Cytochrome P450 Family 2 Subfamily A Member 6)": "Processes nicotine and certain drugs like coumarin.Slow metabolizers may have reduced ability to clear nicotine and increased drug side effects.",
+            "CYP2C9 (Cytochrome P450 Family 2 Subfamily C Member 9)": "Metabolizes NSAIDs, warfarin, and other common drugs.Variants impact drug clearance speed, influencing bleeding risk and drug sensitivity.",
+            "CYP2C19 (Cytochrome P450 Family 2 Subfamily C Member 19)": "Breaks down drugs like proton pump inhibitors, antidepressants, and clopidogrel.Poor metabolizers may not activate some medications effectively, reducing efficacy",
+            "CYP2D6 (Cytochrome P450 Family 2 Subfamily D Member 6)": "Processes ~25% of all prescription drugs, including opioids and antidepressants.Genetic differences can lead to poor, intermediate, or ultra-rapid drug metabolism",
+            "CYP3A4 (Cytochrome P450 Family 3 Subfamily A Member 4)": "Handles the detox of over 50% of drugs and many toxins.Its activity affects drug levels, interactions, and susceptibility to toxic overload."
+        }
+    },
+    "Liver Detox Phase 2": {
+        "title": "Liver Detox Phase 2",
+        "content": "Phase II liver detoxification makes toxins water-soluble for easier elimination. Gene variations can affect how well the body clears pollutants, drugs, and harmful byproducts.",
+        "descriptions": {
+            "NAT1 (N-Acetyltransferase 1)": "Helps detoxify aromatic amines found in smoked meats, dyes, and pollutants.Gene variations can affect cancer risk and how well the body neutralizes certain toxins.",
+            "NAT2 (N-Acetyltransferase 2)": "Processes drugs and carcinogens, especially from tobacco smoke and cooked meats.Slow acetylators may be at higher risk of drug side effects and toxin buildup.",
+            "GSTM1 (Glutathione S-Transferase Mu 1)": "Uses glutathione to neutralize free radicals and toxins.A common deletion (null genotype) means no enzyme is produced, reducing detox capacity.",
+            "GSTP1 (Glutathione S-Transferase Pi 1)": "Protects cells from oxidative stress and detoxifies harmful compounds.Variants can reduce enzyme efficiency, affecting cancer risk and chemical sensitivity.",
+            "SOD1 (Superoxide Dismutase 1)": "Neutralizes superoxide radicals in the cytoplasm, reducing oxidative stress.Impairment can lead to increased inflammation and cellular damage.",
+            "SOD2 (Superoxide Dismutase 2)": "Breaks down free radicals in the mitochondria, supporting cellular energy and detox.Genetic changes may weaken antioxidant defense and increase chronic disease risk."
+        }
+    },
+    "Hereditary Cancer": {
+        "title": "Hereditary Cancer",
+        "content": "Risk involves genetic mutations passed through families that increase cancer risk, such as in BRCA1 or BRCA2 genes. Early screening, genetic counseling, and lifestyle changes help manage risks. Awareness and prevention are key to reducing the impact of hereditary cancers.",
+        "descriptions": {
+            "Breast Cancer": "Genetics can influence breast cancer risk by affecting how the body regulates cell growth and repairs damage in breast tissue. A family history of the condition often indicates inherited risk factors.",
+            "Prostrate Cancer": "Genetic factors can increase prostate cancer risk by influencing how cells in the prostate grow, divide, and repair damage, potentially leading to uncontrolled cell growth.",
+            "Colorectal Cancer": "A family history of colorectal cancer often points to genetic factors that affect how the body repairs damaged cells in the colon or rectum, leading to an increased risk of abnormal growths or polyps.",
+            "Pancreatic Cancer": "Genetic predispositions may impact how the body regulates cell growth in the pancreas, making it more likely for abnormal cells to grow and lead to cancer.",
+            "Melanoma": "Genetic factors can make the skin more prone to abnormal cell growth, especially when combined with environmental triggers like sun exposure, increasing the risk of melanoma.",
+            "Renal Cell Carcinoma": "Genetic influences can affect the regulation of cell growth and repair in the kidneys, increasing the likelihood of abnormal cell development and kidney cancer."
+        }
+    }
+}

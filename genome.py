@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
-
+import pandas as pd
+import json
 from reportlab.platypus import (
     BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer,Indenter,TableStyle,Table,Flowable,Image,PageBreak,NextPageTemplate,
     KeepTogether
@@ -744,116 +745,125 @@ class ThriveRoadmapTemplate:
         return rounded_table
 
     def get_table_data(self,main_data:list,sections:list):
-        header=main_data.get("header","")
-        header_data=main_data.get("header_data","")
-        active_label=main_data.get("range","Low")
-        header_para=Paragraph(header,styles["HeaderStyle"])
-        header_data_para=Paragraph(header_data,styles["HeaderDataStyle"])
-        line=HorizontalLine(width=40, thickness=0.2, color=colors.HexColor("#949599"))
-        status_bar=StatusBarFlowable(active_label=active_label, sections=sections)
+        try:
+            header=main_data.get("header","")
+            header_data=main_data.get("header_data","")
+            active_label=main_data.get("range","Low")
+            header_para=Paragraph(header,styles["HeaderStyle"])
+            header_data_para=Paragraph(header_data,styles["HeaderDataStyle"])
+            line=HorizontalLine(width=40, thickness=0.2, color=colors.HexColor("#949599"))
+            status_bar=StatusBarFlowable(active_label=active_label, sections=sections)
 
-        table_ = Table([
-            [line, header_para, "", status_bar],
-            ["", header_data_para, "", ""]
-        ], colWidths=[44, 247, 8, A4[0] - 44 - 247 - 8])
+            table_ = Table([
+                [line, header_para, "", status_bar],
+                ["", header_data_para, "", ""]
+            ], colWidths=[44, 247, 8, A4[0] - 44 - 247 - 8])
 
-        table_.setStyle(TableStyle([
-            ("TOPPADDING", (0, 0), (-1, -1), 0),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-            ("LEFTPADDING", (0, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (-1, 0), (-1, -1), 36),
-            ("VALIGN", (0,0), (-1, -1), "MIDDLE"),
-            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-            ("ALIGN", (0, 0), (0, -1), "LEFT"),
-            ("SPAN", (2, 0), (2, 1)),
-            ("SPAN", (3, 0), (3, 1)),
-            # ("GRID", (0, 0), (-1, -1), 0.25, colors.red)
-        ]))
+            table_.setStyle(TableStyle([
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (-1, 0), (-1, -1), 36),
+                ("VALIGN", (0,0), (-1, -1), "MIDDLE"),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("ALIGN", (0, 0), (0, -1), "LEFT"),
+                ("SPAN", (2, 0), (2, 1)),
+                ("SPAN", (3, 0), (3, 1)),
+                # ("GRID", (0, 0), (-1, -1), 0.25, colors.red)
+            ]))
 
-        return table_
+            return table_
+        except Exception as e:
+            print(f"Error issssss {e}")
     
     def get_interpretation_analyzed(self,data:dict):
-        interpretation=data.get("interpretation","")
-        genes_analyzed=data.get("genes_analyzed","")
+        try:
+            interpretation=data.get("interpretation","")
+            genes_analyzed=data.get("genes_analyzed","")
 
-        genes_analyzed_ = CustomTextBoxFlowable("GENES ANALYSED")
-        interpretation_ = CustomTextBoxFlowable("INTERPRETATION")
+            genes_analyzed_ = CustomTextBoxFlowable("GENES ANALYSED")
+            interpretation_ = CustomTextBoxFlowable("INTERPRETATION")
 
-        interpretation_para=Paragraph(interpretation,styles["GenesAnalyzedStyle"])
-        genes_analyzed_para=Paragraph(genes_analyzed,styles["GenesAnalyzedStyle"])
-        if interpretation and genes_analyzed:
-            
-            table_ = Table([
-                [genes_analyzed_,"", "", interpretation_],
-                [genes_analyzed_para, "", "", interpretation_para]
-            ], colWidths=[240,8, 8,227])
+            interpretation_para=Paragraph(interpretation,styles["GenesAnalyzedStyle"])
+            genes_analyzed_para=Paragraph(genes_analyzed,styles["GenesAnalyzedStyle"])
+            if interpretation and genes_analyzed:
+                
+                table_ = Table([
+                    [genes_analyzed_,"", "", interpretation_],
+                    [genes_analyzed_para, "", "", interpretation_para]
+                ], colWidths=[240,8, 8,227])
 
-            table_.setStyle(TableStyle([
-                ("BOTTOMPADDING", (0, 1), (-1, -1), 0),
-                ("TOPPADDING", (0, 0), (-1, -1), 0),
-                ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                ("LINEAFTER", (1,0), (1, -1), 0.01, colors.HexColor("#949599")),
-                ("VALIGN", (0,0), (-1, -1), "TOP"),
-                # ("BOX", (0, 0), (-1, -1), 0.01,colors.HexColor("#949599") , None, None, "round"),
-            ]))
-        elif interpretation:
-            table_ = Table([
-                [interpretation_,"", "", ""],
-                [interpretation_para, "", "", ""]
-            ], colWidths=[227,8, 8,240])
-
-            table_.setStyle(TableStyle([
-                ("BOTTOMPADDING", (0, 1), (-1, -1), 0),
-                ("TOPPADDING", (0, 0), (-1, -1), 0),
-                ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                ("VALIGN", (0,0), (-1, -1), "TOP"),
-            ]))
-        tablee=Table([[table_]],colWidths=[A4[0]-80])
-        tablee.setStyle(TableStyle([
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-            ("TOPPADDING", (0, 0), (-1, -1), 8),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 8),
-            ("LEFTPADDING", (0, 0), (-1, -1), 8),
-            ("ROUNDEDCORNERS", [6, 6, 6, 6]),
-            ("BOX", (0, 0), (-1, -1), 0.01,colors.HexColor("#949599") , None, None, "round"),
-        ]))
-        return tablee
-    
-    def generate_section(self,data_card,sections):
-        story=[]
-        main_data=data_card.get("data",[])
-        story.append(Indenter(left=44, right=35))
-        story.append(self.get_heading(data_card))
-        story.append(Indenter(left=-44, right=-35))
-        story.append(Spacer(1,24))
-        if main_data:
-            for item in main_data:
-                table_data=self.get_table_data(item,sections)
-                interpretation_analyzed=self.get_interpretation_analyzed(item)
-                # story.append(table_data)
-                # story.append(Spacer(1,8))
-                # story.append(interpretation_analyzed)
-                wrapped = Table([
-                    [table_data],
-                    [Spacer(1, 8)],
-                    [interpretation_analyzed]
-                ], colWidths=[PAGE_WIDTH])
-                wrapped.setStyle(TableStyle([
+                table_.setStyle(TableStyle([
+                    ("BOTTOMPADDING", (0, 1), (-1, -1), 0),
                     ("TOPPADDING", (0, 0), (-1, -1), 0),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 0),
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-
+                    ("LINEAFTER", (1,0), (1, -1), 0.01, colors.HexColor("#949599")),
+                    ("VALIGN", (0,0), (-1, -1), "TOP"),
+                    # ("BOX", (0, 0), (-1, -1), 0.01,colors.HexColor("#949599") , None, None, "round"),
                 ]))
-                story.append(wrapped)
-                story.append(Spacer(1,16))
-        return story
+            elif interpretation:
+                table_ = Table([
+                    [interpretation_,"", "", ""],
+                    [interpretation_para, "", "", ""]
+                ], colWidths=[227,8, 8,240])
+
+                table_.setStyle(TableStyle([
+                    ("BOTTOMPADDING", (0, 1), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("VALIGN", (0,0), (-1, -1), "TOP"),
+                ]))
+            tablee=Table([[table_]],colWidths=[A4[0]-80])
+            tablee.setStyle(TableStyle([
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+                ("LEFTPADDING", (0, 0), (-1, -1), 8),
+                ("ROUNDEDCORNERS", [6, 6, 6, 6]),
+                ("BOX", (0, 0), (-1, -1), 0.01,colors.HexColor("#949599") , None, None, "round"),
+            ]))
+            return tablee
+        except Exception as e:
+            print(f"Errorrr is {e}")
+    
+    def generate_section(self,data_card,sections):
+        try:
+            story=[]
+            main_data=data_card.get("data",[])
+            story.append(Indenter(left=44, right=35))
+            story.append(self.get_heading(data_card))
+            story.append(Indenter(left=-44, right=-35))
+            story.append(Spacer(1,24))
+            if main_data:
+                for item in main_data:
+                    table_data=self.get_table_data(item,sections)
+                    interpretation_analyzed=self.get_interpretation_analyzed(item)
+                    # story.append(table_data)
+                    # story.append(Spacer(1,8))
+                    # story.append(interpretation_analyzed)
+                    wrapped = Table([
+                        [table_data],
+                        [Spacer(1, 8)],
+                        [interpretation_analyzed]
+                    ], colWidths=[PAGE_WIDTH])
+                    wrapped.setStyle(TableStyle([
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+
+                    ]))
+                    story.append(wrapped)
+                    story.append(Spacer(1,16))
+            return story
+        except Exception as e:
+            print(f"Error is {e}")
     
     def generate(self, data: dict):
         story = []
@@ -884,13 +894,13 @@ class ThriveRoadmapTemplate:
             vascular_health=self.generate_section(vascular_health_data,sections)
             story.extend(vascular_health)
         
-        gut_immune_health_data=data.get("gut_immune_health_data", {})
+        gut_immune_health_data=data.get("gut_and_immune_health_data", {})
         if gut_immune_health_data:
             story.append(PageBreak())
             gut_immune_health=self.generate_section(gut_immune_health_data,sections)
             story.extend(gut_immune_health)
         
-        kidney_liver_health_data=data.get("kidney_liver_health_data", {})
+        kidney_liver_health_data=data.get("kidney_and_liver_health_data", {})
         if kidney_liver_health_data:
             story.append(PageBreak())
             kidney_liver_health=self.generate_section(kidney_liver_health_data,sections)
@@ -908,13 +918,13 @@ class ThriveRoadmapTemplate:
             mood_disorders=self.generate_section(mood_disorders_data,sections)
             story.extend(mood_disorders)
          
-        muscle_bone_health_data=data.get("muscle_bone_health_data", {})
+        muscle_bone_health_data=data.get("muscle_and_bone_health_data", {})
         if muscle_bone_health_data:
             story.append(PageBreak())
             muscle_bone_health=self.generate_section(muscle_bone_health_data,sections)
             story.extend(muscle_bone_health)
         
-        aging_longevity_data=data.get("aging_longevity_data", {})
+        aging_longevity_data=data.get("aging_and_longevity_data", {})
         if aging_longevity_data:
             story.append(PageBreak())
             aging_longevity=self.generate_section(aging_longevity_data,sections)
@@ -933,7 +943,7 @@ class ThriveRoadmapTemplate:
             story.extend(nutrition)
 
          
-        methylation_data=data.get("methylation_data", {})
+        methylation_data=data.get("methylation_genes_data", {})
         if methylation_data:
             story.append(PageBreak())
             methylation=self.generate_section(methylation_data,sections)
@@ -944,19 +954,19 @@ class ThriveRoadmapTemplate:
                 ("Intermediate", "#F79009"),
                 ("Rapid", "#912018")
         ]
-        liver_detox_phase1=data.get("liver_detox_phase1", {})
+        liver_detox_phase1=data.get("liver_detox_phase_1_data", {})
         if liver_detox_phase1:
             story.append(PageBreak())
             liver_detox_phase1_=self.generate_section(liver_detox_phase1,sections__)
             story.extend(liver_detox_phase1_)
         
-        liver_detox_phase2=data.get("liver_detox_phase2", {})
+        liver_detox_phase2=data.get("liver_detox_phase_2_data", {})
         if liver_detox_phase2:
             story.append(PageBreak())
             liver_detox_phase2_=self.generate_section(liver_detox_phase2,sections__)
             story.extend(liver_detox_phase2_)
 
-        hereditary_cancer_data=data.get("hereditary_cancer_data", {})
+        hereditary_cancer_data=data.get("hereditary_cancer_risk_data", {})
         if hereditary_cancer_data:
             story.append(PageBreak())
             hereditary_cancer=self.generate_section(hereditary_cancer_data,sections)
@@ -969,7 +979,99 @@ app = FastAPI()
 
 @app.post("/generate-pdf")
 async def generate_pdf(request: Request):
-    data = await request.json()
+    # data = await request.json()
+    excel_file = r'C:\Users\Admin\Downloads\PMX_Sample_report.xlsx'
+    df = pd.read_excel(excel_file)
+    df.fillna("", inplace=True)
+
+    # === Section Metadata ===
+    section_info = {
+        "CARDIAC HEALTH": {
+            "title": "CARDIAC HEALTH",
+            "content": "Cardiac health refers to the overall well-being and optimal functioning of the heart and its associated vascular system. It is a critical aspect of overall health, as the heart is responsible for pumping oxygenated blood and essential nutrients throughout the body. ",
+        },
+        "METABOLIC HEALTH": {
+            "title": "METABOLIC HEALTH",
+            "content": "Metabolic health refers to the state of having ideal levels of blood sugar, triglycerides, HDL cholesterol, blood pressure, and waist circumference, reducing risks of diabetes, heart disease, stroke, and improving overall quality of life and longevity.",
+        },
+        "VASCULAR HEALTH": {
+            "title": "VASCULAR HEALTH",
+            "content": "Vascular health refers to the proper functioning of blood vessels, ensuring efficient circulation of blood, oxygen, and nutrients throughout the body. It plays a vital role in preventing cardiovascular diseases, supporting organ function, and maintaining overall well-being.",
+        },
+        "Gut and Immune Health": {
+            "title": "Gut and Immune Health",
+            "content": "Gut and Immune Health are interconnected, with 70% of immune cells residing in the gut. A healthy microbiome supports digestion, immunity, and inflammation control. Boost gut health with fiber, probiotics, and hydration while avoiding processed foods. This balance strengthens immunity and overall well-being.",
+        },
+        "Kidney and Liver Health": {
+            "title": "Kidney and Liver Health",
+            "content": "Kidney and Liver Health is vital for detoxification, metabolism, and body function. The kidneys filter waste and maintain fluid balance, while the liver processes nutrients and detoxifies harmful substances. Support them with hydration, a balanced diet, limited alcohol, and avoiding excess salt or processed foods.",
+        },
+        "Neuro Health": {
+            "title": "Neuro Health",
+            "content": "Neuro Health is vital for cognitive function, memory, and nervous system efficiency. A healthy brain aids decision-making, mood, and sensory responses. Support it with a nutrient-rich diet, exercise, mental stimulation, sleep, stress management, and avoiding harmful substances for optimal performance.",
+        },
+        "Mood Disorders": {
+            "title": "Mood Disorders",
+            "content": "Mood Disorders affect emotional well-being, causing conditions like depression, anxiety, or bipolar disorder. Manage them with therapy, medication, exercise, a balanced diet, stress management, and support networks for better emotional health and quality of life.",
+        },
+        "MUSCLE AND BONE HEALTH": {
+            "title": "MUSCLE AND BONE HEALTH",
+            "content": "Ensures strength, mobility, and resilience by maintaining optimal muscle mass and bone density. It reduces the risk of osteoporosis, fractures, and age-related muscle loss. Proper nutrition, exercise, and lifestyle habits are key to supporting long-term skeletal and muscular well-being.",
+        },
+        "Aging and Longevity": {
+            "title": "Aging and Longevity",
+            "content": "Focus on maintaining health and vitality as we age. Healthy aging involves balanced nutrition, regular exercise, mental stimulation, and stress management. Preventive care and lifestyle choices can delay age-related issues, improving quality of life and promoting a longer, healthier lifespan.",
+        },
+        "Eye Health": {
+            "title": "Eye Health",
+            "content": "Eye Health ensures clear vision and quality of life. Conditions like macular degeneration, glaucoma, and cataracts can impair vision if untreated. Protect eyes with regular checkups, good nutrition, UV protection, limiting screen time, and staying hydrated to ensure long-term visual health.",
+        },
+        "Nutrition": {
+            "title": "Nutrition",
+            "content": "Nutrition is key to health, providing essential nutrients for energy, growth, and repair. A balanced diet supports immunity, brain function, and overall well-being. Proper hydration, mindful eating, and healthy food choices enhance long-term health and vitality.",
+        },
+        "Methylation Genes": {
+            "title": "Methylation Genes",
+            "content": "Regulate biological processes by controlling gene expression without altering DNA. Proper methylation supports detoxification, hormone balance, and DNA repair. Support it with a nutrient-rich diet, B-vitamins, exercise, and stress management to maintain overall health.",
+        },
+        "Liver Detox Phase 1": {
+            "title": "Liver Detox Phase 1",
+            "content": "Liver detoxification starts with Phase 1, where enzymes break down toxins for further processing. Gene variations can affect this process, influencing toxin clearance, health, and drug response.",
+        },
+        "Liver Detox Phase 2": {
+            "title": "Liver Detox Phase 2",
+            "content": "Phase II liver detoxification makes toxins water-soluble for easier elimination. Gene variations can affect how well the body clears pollutants, drugs, and harmful byproducts.",
+        },
+        "Hereditary Cancer Risk": {
+            "title": "Hereditary Cancer",
+            "content": "Risk involves genetic mutations passed through families that increase cancer risk, such as in BRCA1 or BRCA2 genes. Early screening, genetic counseling, and lifestyle changes help manage risks. Awareness and prevention are key to reducing the impact of hereditary cancers.",
+        }
+    }
+    # === Build Final Structured JSON ===
+    final_output = {}
+
+    for group, info in section_info.items():
+        section_data = []
+        group_df = df[df["GROUP"] == group.upper()]
+
+        for _, row in group_df.iterrows():
+            condition = row["CONDITION"]
+            section_data.append({
+                "header": condition,
+                "header_data": row["DEFINITION"],
+                "range": row["RISK LEVEL"],
+                "genes_analyzed": row["TOP LIST OF GENES ANALYZED"],
+                "interpretation": row["INTERPRETATION"]
+            })
+
+        key_name = group.lower().replace(" ", "_") + "_data"
+        final_output[key_name] = {
+            "title": info["title"],
+            "content": info["content"],
+            "data": section_data
+        }
+    with open("final_output.json", "w", encoding="utf-8") as f:
+        json.dump(final_output, f, ensure_ascii=False, indent=4)
     buffer = io.BytesIO()
 
     template = ThriveRoadmapTemplate(buffer)
@@ -1015,8 +1117,8 @@ async def generate_pdf(request: Request):
     ])
 
     story = []
-    id=data.get("user_id","")
-    user_name=data.get("user_name","")
+    id=final_output.get("user_id","Mk")
+    user_name=final_output.get("user_name","nn")
     story.append(ImageWithOverlaySVGAndText(
         main_image_path="staticfiles/icons/genome_page.png",
         svg_path="staticfiles/icons/pmx_logo.svg",
@@ -1031,11 +1133,11 @@ async def generate_pdf(request: Request):
 
     # === Tell ReportLab to switch to 'main' template from here on ===
     story.append(NextPageTemplate("main"))
-
+    print(f"final_output:{final_output}")
     # === Page 2 onward ===
-    story.extend(template.generate(data))
+    story.extend(template.generate(final_output))
 
-    user_name = data.get("user_name", "")
+    user_name = final_output.get("user_name", "mk")
     doc.build(story, canvasmaker=lambda *args, **kwargs: NumberedCanvas(*args, footer_label=user_name, **kwargs))
 
     with open("genome.pdf", "wb") as f:

@@ -1735,7 +1735,7 @@ class ThriveRoadmapTemplate:
             "briefcase": "staticfiles/icons/business.svg",
             "dob_calendar": "staticfiles/icons/dob_calendar.svg",
             "doa_calendar": "staticfiles/icons/calendar.svg",
-            "diet": "staticfiles/icons/food.svg"
+            "diet": "staticfiles/icons/food.svg",
         }
 
         widths_heights = {
@@ -1745,15 +1745,15 @@ class ThriveRoadmapTemplate:
             "briefcase": {"width": 16, "height": 16},
             "dob_calendar": {"width": 16, "height": 16},
             "doa_calendar": {"width": 16, "height": 16},
-            "diet": {"width": 16, "height": 24}
+            "diet": {"width": 16, "height": 24},
         }
 
         # Text values
         name = user_profile_card.get("name", "")
         user_id = user_profile_card.get("id", "")
-        gender=user_profile_card.get("gender", "")
-        if gender.lower()=="female":
-            icon_paths["gender"]="staticfiles/icons/gender_female.svg"
+        gender = user_profile_card.get("gender", "")
+        if gender.lower() == "female":
+            icon_paths["gender"] = "staticfiles/icons/gender_female.svg"
         location = f"{user_profile_card.get('city', '')} - {user_profile_card.get('pincode', '')}"
         occupation = user_profile_card.get("occupation", "")
         dob = f"D.O.B - {user_profile_card.get('dob', '')}"
@@ -1762,41 +1762,40 @@ class ThriveRoadmapTemplate:
 
         style = self.styles["profile_card_otherstyles"]
 
+        # Small helper to build a cell and its exact dynamic width
+        def build_cell(icon_key: str, text_value: str, size_key: str):
+            icon_size = widths_heights[size_key]
+            cell = self.icon_with_text(
+                icon_paths[icon_key],
+                text_value,
+                style,
+                icon_width=icon_size["width"],
+                icon_height=icon_size["height"],
+            )
+            width = self.get_dynamic_col_width(
+                text_value,
+                font_name=style.fontName,
+                font_size=style.fontSize,
+                icon_width=icon_size["width"],
+            )
+            return cell, width
+
         # Name row
         name_para = Paragraph(name, self.styles["profile_card_name"])
 
         # ID row
-        id_row = self.icon_with_text(icon_paths["id"], f"ID - {user_id}", style,
-                                    icon_width=widths_heights["id"]["width"], icon_height=widths_heights["id"]["height"])
+        id_row = self.icon_with_text(
+            icon_paths["id"],
+            f"ID - {user_id}",
+            style,
+            icon_width=widths_heights["id"]["width"],
+            icon_height=widths_heights["id"]["height"],
+        )
 
         # Gender, Location, Occupation row
-        gender_cell = self.icon_with_text(icon_paths["gender"], gender, style,
-                                        icon_width=widths_heights["gender"]["width"], icon_height=widths_heights["gender"]["height"])
-        location_cell = self.icon_with_text(icon_paths["location"], location, style,
-                                            icon_width=widths_heights["location"]["width"], icon_height=widths_heights["location"]["height"])
-        occupation_cell = self.icon_with_text(icon_paths["briefcase"], occupation, style,
-                                            icon_width=widths_heights["briefcase"]["width"], icon_height=widths_heights["briefcase"]["height"])
-
-        gender_width = self.get_dynamic_col_width(
-            gender, 
-            font_name=style.fontName, 
-            font_size=style.fontSize, 
-            icon_width=widths_heights["gender"]["width"]
-        )
-
-        location_width = self.get_dynamic_col_width(
-            location, 
-            font_name=style.fontName, 
-            font_size=style.fontSize, 
-            icon_width=widths_heights["location"]["width"]
-        )
-
-        occupation_width = self.get_dynamic_col_width(
-            occupation, 
-            font_name=style.fontName, 
-            font_size=style.fontSize, 
-            icon_width=widths_heights["briefcase"]["width"]
-        )
+        gender_cell, gender_width = build_cell("gender", gender, "gender")
+        location_cell, location_width = build_cell("location", location, "location")
+        occupation_cell, occupation_width = build_cell("briefcase", occupation, "briefcase")
 
         line2 = Table(
             [[gender_cell, location_cell, occupation_cell]],
@@ -1804,45 +1803,35 @@ class ThriveRoadmapTemplate:
             style=[
                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-            ]
+            ],
         )
 
         # DOB, DOA row
-        dob_cell = self.icon_with_text(icon_paths["dob_calendar"], dob, style,
-                                    icon_width=widths_heights["dob_calendar"]["width"], icon_height=widths_heights["dob_calendar"]["height"])
-        doa_cell = self.icon_with_text(icon_paths["doa_calendar"], doa, style,
-                                    icon_width=widths_heights["doa_calendar"]["width"], icon_height=widths_heights["doa_calendar"]["height"])
-
-        dob_width = self.get_dynamic_col_width(
-            dob, font_name=style.fontName, font_size=style.fontSize, icon_width=widths_heights["dob_calendar"]["width"]
+        dob_cell, dob_width = build_cell("dob_calendar", dob, "dob_calendar")
+        doa_cell, doa_width = build_cell("doa_calendar", doa, "doa_calendar")
+        line3 = Table(
+            [[dob_cell, doa_cell]],
+            colWidths=[dob_width, doa_width],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ],
         )
-        doa_width = self.get_dynamic_col_width(
-            doa, font_name=style.fontName, font_size=style.fontSize, icon_width=widths_heights["doa_calendar"]["width"]
-        )
-        line3 = Table([[dob_cell, doa_cell]],
-                    colWidths =[dob_width,doa_width],
-                    style=[("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)])
 
         # Diet row
-        diet_cell = self.icon_with_text(icon_paths["diet"], diet, style,
-                                        icon_width=widths_heights["diet"]["width"], icon_height=widths_heights["diet"]["height"])
+        diet_cell, _ = build_cell("diet", diet, "diet")
 
         # Combine all text parts
-        text_block = [
-            [id_row],
-            [name_para],
-            [line2],
-            [line3],
-            [diet_cell],
-            [Spacer(1,24)]
-        ]
-
-        text_table = Table(text_block, style=[
-            ("LEFTPADDING", (0, 0), (-1, -1), 0),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-            ("TOPPADDING", (0, 0), (-1, -1), 0),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-        ])
+        text_block = [[id_row], [name_para], [line2], [line3], [diet_cell], [Spacer(1, 24)]]
+        text_table = Table(
+            text_block,
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
 
         # Avatar Image
         avatar = Image(icon_paths["avatar"], width=100, height=100)
@@ -1850,14 +1839,14 @@ class ThriveRoadmapTemplate:
 
         # Combine Avatar and Text in main layout
         final_table = Table(
-            [[avatar,Spacer(1,32), text_table]],
-            colWidths=[100, 32,None],
+            [[avatar, Spacer(1, 32), text_table]],
+            colWidths=[100, 32, None],
             style=[
                 ("VALIGN", (1, 0), (1, -1), "TOP"),
                 ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-            ]
+            ],
         )
         final_table2 = Table(
             [[final_table]],
@@ -1866,8 +1855,7 @@ class ThriveRoadmapTemplate:
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 32),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 32),
-                #("BOX", (0, 0), (-1, -1), 0.5, colors.black),
-            ]
+            ],
         )
         return final_table2
 
