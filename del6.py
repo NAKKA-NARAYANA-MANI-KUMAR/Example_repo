@@ -602,7 +602,7 @@ data_structure = {
     }
 }
 
-doc = SimpleDocTemplate("multi_arc_output.pdf", pagesize=A4, leftMargin=0, rightMargin=0, topMargin=0, bottomMargin=0)
+doc = SimpleDocTemplate("multi_arc_output_.pdf", pagesize=A4, leftMargin=0, rightMargin=0, topMargin=0, bottomMargin=0)
 story = []
 
 # Register the Montserrat font for use

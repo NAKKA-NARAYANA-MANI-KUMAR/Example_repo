@@ -108,6 +108,43 @@ class ThriveRoadmapOnlySVGImage:
         self.width = width
         self.height = height
 
+class RoundedBox(Flowable):
+    def __init__(self, width=A4[0] - 64, height=None, content=None, corner_radius=8, border_radius=0.4, stroke_color=PMX_GREEN, fill_color=colors.white, inner_padding: float = 0):
+        super().__init__()
+        self.width = width
+        self.height = height
+        self.content = content
+        self.corner_radius = corner_radius
+        self.fill_color = fill_color
+        self.stroke_color = stroke_color
+        self.border_radius = border_radius
+        self.inner_padding = inner_padding
+
+    def wrap(self, availWidth, availHeight):
+        pad = self.inner_padding or 0
+        inner_w = max(0, (availWidth or 0) - 2 * pad)
+        inner_h = max(0, (availHeight or 0) - 2 * pad)
+        if self.content:
+            content_width, content_height = self.content.wrap(inner_w, inner_h)
+        else:
+            content_width, content_height = 0, 0
+        self.width = self.width or (content_width + 2 * pad)
+        self.height = self.height or (content_height + 2 * pad)
+        return self.width, self.height
+
+    def draw(self):
+        pad = self.inner_padding or 0
+        self.canv.saveState()
+        self.canv.setFillColor(self.fill_color)
+        self.canv.setStrokeColor(self.stroke_color)
+        self.canv.setLineWidth(self.border_radius)
+        self.canv.roundRect(0, 0, self.width, self.height, self.corner_radius, fill=1, stroke=1)
+        if self.content:
+            self.content.wrapOn(self.canv, max(0, self.width - 2 * pad), max(0, self.height - 2 * pad))
+            self.content.drawOn(self.canv, pad, pad)
+        self.canv.restoreState()
+
+
 class FullPageWidthHRFlowable(Flowable):
     """
     Draws a horizontal line across the entire page width (ignoring margins).
@@ -223,7 +260,7 @@ class ThrivePageRenderer:
                     )
             except Exception as e:
                 print("Header logo load failed:", e)
-        canvas.rect(0, FOOTER_HEIGHT, AVAILABLE_WIDTH, PAGE_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT)
+        # canvas.rect(0, FOOTER_HEIGHT, AVAILABLE_WIDTH, PAGE_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT)
         # Right-aligned site text with specified style and padding
         text = "www.pmxhealth.com"
         padding = 32
@@ -481,6 +518,15 @@ class ThriveRoadmapTemplate:
             spaceBefore=0,
             spaceAfter=0,
         ))
+        # Small section title style for protein headings
+        self.styles.add(ParagraphStyle(
+            name="SectionSmallRalewayBold",
+            fontName=FONT_RALEWAY_BOLD,
+            fontSize=15.079,
+            leading=22.619,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
         # Superfoods table styles
         self.styles.add(ParagraphStyle(
             "SuperfoodsHeaderStyle",
@@ -495,6 +541,83 @@ class ThriveRoadmapTemplate:
             fontSize=8,
             leading=14,
             textColor=PMX_GREEN,
+        ))
+        # Protein table: special style for food_item column
+        self.styles.add(ParagraphStyle(
+            "ProteinFoodItemCellStyle",
+            fontName=FONT_RALEWAY_BOLD,
+            fontSize=8.989,
+            leading=12.584,
+            textColor=PMX_GREEN,
+        ))
+        # Meal Timeline styles
+        self.styles.add(ParagraphStyle(
+            name="MealTimelineTimeStyle",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=12.85,
+            leading=17.991,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="MealTimelineTitleStyle",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=10,
+            leading=14,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="MealTimelineDescStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=8,
+            leading=8,
+            textColor=colors.HexColor("#667085"),
+            alignment=TA_LEFT,
+        ))
+        # Weekly Meal Plan styles
+        self.styles.add(ParagraphStyle(
+            name="WeeklyMealHeaderStyle",
+            fontName=FONT_RALEWAY_BOLD,
+            fontSize=10,
+            leading=14,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="WeeklyMealCellStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=8,
+            leading=14,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        # Food Items: section header style (bullet + title)
+        self.styles.add(ParagraphStyle(
+            name="FoodSectionHeaderStyle",
+            fontName=FONT_RALEWAY_BOLD,
+            fontSize=25.099,
+            leading=31.539,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        # Food Items: title style
+        self.styles.add(ParagraphStyle(
+            name="FoodItemTitleStyle",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=15.439,
+            leading=21.614,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        # Food Items: description style
+        self.styles.add(ParagraphStyle(
+            name="FoodItemDescStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=10,
+            leading=12.351,
+            textColor=colors.HexColor("#667085"),
+            alignment=TA_LEFT,
         ))
     def _build_styled_table(self, table_data, col_widths) -> Table:
         """Build a Table with a consistent style.
@@ -532,13 +655,16 @@ class ThriveRoadmapTemplate:
             # Grid and Borders
             ("GRID", (0, 0), (-1, -1), 0.5, PMX_TABLE_GRID),
             ("LINEBELOW", (0, 0), (-1, 0), 0.01, PMX_GREEN),
-            ("LINEAFTER", (0, 0), (0, -1), 0.01, PMX_GREEN),
-            ("LINEAFTER", (1,0), (1, -1), 0.01, PMX_GREEN),
             # Rounded Corners
             ("ROUNDEDCORNERS", [16, 16, 16, 16]),
             ("FONTNAME", (0, -1), (0, -1), FONT_INTER_BOLD),
             ("BOX", (0, 0), (-1, -1), 0.01, PMX_GREEN, None, None, "round"),
         ]
+
+        # Ensure all vertical lines are Brand Green between every column
+        num_cols = len(col_widths)
+        for col_idx in range(num_cols - 1):
+            style.append(("LINEAFTER", (col_idx, 0), (col_idx, -1), 0.01, PMX_GREEN))
 
         # Add alternate row coloring starting from first data row (index 1)
         for i in range(1, len(table_data)):
@@ -800,7 +926,11 @@ class ThriveRoadmapTemplate:
             row_cells = []
             for col_key, _ in columns:
                 value = item.get(col_key, "")
-                row_cells.append(Paragraph(str(value), self.styles["SuperfoodsCellStyle"]))
+                # Apply special style for food_item column when present
+                if col_key == "food_item":
+                    row_cells.append(Paragraph(str(value), self.styles["ProteinFoodItemCellStyle"]))
+                else:
+                    row_cells.append(Paragraph(str(value), self.styles["SuperfoodsCellStyle"]))
             table_data.append(row_cells)
 
         col_widths = [w for _, w in columns]
@@ -810,6 +940,306 @@ class ThriveRoadmapTemplate:
         """Builds the Reasons to Skip table using the reusable two-column builder."""
         columns = [("category", 100), ("items_to_skip", 430)]
         return self.get_superfoods_table(reasons_to_skip, columns=columns)
+
+    def get_protein_table(self, items: list) -> Table:
+        """Builds a two-column protein table with widths: 141 and 116."""
+        columns = [("food_item", 141), ("Protien_per_100g", 116)]
+        return self.get_superfoods_table(items, columns=columns)
+
+    def get_side_by_side_protein_tables(self, meat_poultry_food: list, sea_food: list) -> Table:
+        """Renders two protein tables side by side (left: meat/poultry, right: sea food).
+
+        Each table width = 141 + 116 = 257. Gap between tables = 16. Total = 530 to fit current layout width.
+        """
+        left_table = self.get_protein_table(meat_poultry_food or [])
+        right_table = self.get_protein_table(sea_food or [])
+
+        container = Table(
+            [[left_table, Spacer(16, 1), right_table]],
+            colWidths=[257, 16, 257],
+            style=[
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+        return container
+
+    def _resolve_nutrition_image_path(self, title: str) -> str | None:
+        safe = (title or "").strip().lower().replace(" ", "_")
+        candidates = [
+            os.path.join("staticfiles", "nutrition_images", f"{safe}.png"),
+            os.path.join("staticfiles", "nutrition_images_png", f"{safe}.png"),
+            os.path.join("staticfiles", "nutrition_images", f"{safe}.svg"),
+        ]
+        for p in candidates:
+            if os.path.exists(p):
+                return p
+        return None
+
+    def _build_food_item_card(self, item: dict) -> RoundedBox:
+        # Left image (PNG preferred): 66 x 80
+        left_w, left_h = 66, 80
+        resolved_path = self._resolve_nutrition_image_path(item.get("title", ""))
+        try:
+            if resolved_path and resolved_path.lower().endswith(".png"):
+                left_img = Image(resolved_path, width=left_w, height=left_h)
+            elif resolved_path and resolved_path.lower().endswith(".svg"):
+                left_img = self.svg_icon(resolved_path, width=left_w, height=left_h)
+            else:
+                left_img = Drawing(left_w, left_h)
+        except Exception:
+            left_img = Drawing(left_w, left_h)
+
+        # Right stack (title + description) with fixed width 151 (fits 2 cards per row)
+        right_w = 151
+        title_para = Paragraph(item.get("title", ""), self.styles["FoodItemTitleStyle"])
+        desc_para = Paragraph(item.get("title_data", ""), self.styles["FoodItemDescStyle"])
+        right_stack = Table(
+            [[title_para], [desc_para]],
+            colWidths=[right_w],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+
+        content_w = left_w + 16 + right_w
+        content = Table(
+            [[left_img, Spacer(16, 1), right_stack]],
+            colWidths=[left_w, 16, right_w],
+            style=[
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 12),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 12),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ],
+        )
+
+        # Box total width 257 to allow 2 boxes + 16 gap across 531 content width
+        return RoundedBox(width=content_w + 24, height=None, content=content, corner_radius=16, border_radius=0.4, stroke_color=PMX_GREEN, fill_color=colors.white)
+
+    def get_food_items_section(self, food_items: dict) -> list:
+        section = []
+        
+        # Render each key as a header + list of cards
+        for key in (food_items or {}).keys():
+            items = food_items.get(key, []) or []
+            if not isinstance(items, list):
+                continue
+            # Header row: bullet.svg + title
+            display_title = str(key).replace("_", " ").title()
+            bullet_icon = self.svg_icon(os.path.join("staticfiles", "icons", "bullet.svg"), width=24, height=24)
+            header_para = Paragraph(display_title, self.styles["FoodSectionHeaderStyle"])
+            section.append(SvgTitleRow(bullet_icon, header_para, gap=8))
+            section.append(Spacer(1, 8))
+
+            # Cards as 2 per row grid
+            cards = [self._build_food_item_card(it) for it in items]
+            rows = []
+            i = 0
+            while i < len(cards):
+                left_card = cards[i]
+                right_card = cards[i+1] if i + 1 < len(cards) else ""
+                rows.append([left_card, Spacer(16, 1), right_card])
+                i += 2
+            if rows:
+                rows_table = Table(
+                    rows,
+                    colWidths=[257, 16, 257],
+                    style=[
+                        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("TOPPADDING", (0, 0), (-1, -1), 0),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                    ],
+                )
+                section.append(rows_table)
+                section.append(Spacer(1, 10))
+
+        return section
+
+    def _build_meal_card(self, item: dict) -> RoundedBox:
+        # Image (PNG preferred): 36 x 44
+        img_w, img_h = 36, 44
+        resolved_path = self._resolve_nutrition_image_path(item.get("title", ""))
+        try:
+            if resolved_path and resolved_path.lower().endswith(".png"):
+                left_img = Image(resolved_path, width=img_w, height=img_h)
+            elif resolved_path and resolved_path.lower().endswith(".svg"):
+                left_img = self.svg_icon(resolved_path, width=img_w, height=img_h)
+            else:
+                left_img = Drawing(img_w, img_h)
+        except Exception:
+            left_img = Drawing(img_w, img_h)
+
+        right_w = 98
+        title_para = Paragraph(item.get("title", ""), self.styles["MealTimelineTitleStyle"])
+        desc_para = Paragraph(item.get("title_data", ""), self.styles["MealTimelineDescStyle"])
+
+        # Keep paddings minimal to fit two cards inside right half
+        right_stack = Table(
+            [[title_para], [desc_para]],
+            colWidths=[right_w],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+
+        content = Table(
+            [[left_img, Spacer(6, 1), right_stack]],
+            colWidths=[img_w, 6, right_w],
+            style=[
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+
+        # Content width (inside padding)
+        content_w = img_w + 6 + right_w  # 36 + 6 + 98 = 140
+        # Add inner padding (8 on each side) to rounded box width so content fits without overflow
+        card_width = content_w + 16
+        return RoundedBox(
+            width=card_width,
+            height=None,
+            content=content,
+            corner_radius=12.351,
+            border_radius=0.772,
+            stroke_color=Color(0/255, 62/255, 57/255, alpha=0.56),
+            fill_color=colors.HexColor("#F2F4F7"),
+            inner_padding=8,
+        )
+
+    def get_meal_timeline_section(self, meal_timeline: list) -> list:
+        section = []
+
+        # Header
+        food_icon = self.svg_icon("staticfiles/icons/food.svg", width=20, height=30)
+        title_para = Paragraph("Meal Timeline", self.styles["TOCTitleStyle"])
+        section.append(SvgTitleRow(food_icon, title_para, gap=8))
+        section.append(Spacer(1, 12))
+
+        time_icon_path = os.path.join("staticfiles", "icons", "clock.svg")
+        time_icon = self.svg_icon(time_icon_path, width=20, height=20)
+
+        for block in meal_timeline or []:
+            time_label = str(block.get("time", "")).strip()
+            items = block.get("meal_data", []) or []
+
+            # Fixed content widths with explicit outer paddings accounted in column widths
+            left_content_w = 194
+            right_content_w = 156 + 8 + 156  # two cards plus 8px gap
+            left_col_w = 39 + left_content_w   # include 39 left padding
+            right_col_w = right_content_w + 39 # include 39 right padding
+
+            # Left stack: [time_icon | time text]
+            time_para = Paragraph(time_label, self.styles["MealTimelineTimeStyle"])
+            left_stack = Table(
+                [[time_icon, Spacer(6, 1), time_para]],
+                colWidths=[20, 6, max(10, left_content_w - (20 + 6))],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ],
+            )
+
+            # Right grid: two cards per row with 8px gap between cards
+            cards = [self._build_meal_card(it) for it in items]
+            rows = []
+            i = 0
+            while i < len(cards):
+                left_card = cards[i]
+                right_card = cards[i+1] if i + 1 < len(cards) else ""
+                rows.append([left_card, Spacer(8, 1), right_card])
+                i += 2
+
+            right_grid = Table(
+                rows or [[Spacer(1, 1), Spacer(8, 1), Spacer(1, 1)]],
+                colWidths=[156, 8, 156],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ],
+            )
+
+            # Flexible middle spacer ensures left aligns to left and right aligns to right with desired paddings
+            total_needed = left_col_w + right_col_w
+            middle_w = max(0, PAGE_WIDTH - total_needed)
+
+            row_table = Table(
+                [[left_stack, Spacer(middle_w, 1), right_grid]],
+                colWidths=[left_col_w, middle_w, right_col_w],
+                style=[
+                    ("VALIGN", (0, 0), (0, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (0, -1), 39),     # left stack left padding 39
+                    ("RIGHTPADDING", (-1, 0), (-1, -1), 39),  # right stack right padding 39
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ],
+            )
+            section.append(row_table)
+            section.append(Spacer(1, 12))
+
+        return section
+
+    def get_weekly_mealplan_section(self, weekly_mealplan: list) -> list:
+        section = []
+        # Header row with icon
+        food_icon = self.svg_icon("staticfiles/icons/food.svg", width=20, height=30)
+        title_para = Paragraph("Weekly Meal Plan", self.styles["TOCTitleStyle"])
+        section.append(SvgTitleRow(food_icon, title_para, gap=8))
+        section.append(Spacer(1, 8))
+
+        # Column order and widths
+        columns = [
+            ("day", 40),
+            ("early_morning", 75),
+            ("breakfast", 100),
+            ("lunch", 95),
+            ("snack", 95),
+            ("dinner", 95),
+        ]
+
+        # Build header using shared styles
+        header_cells = [
+            Paragraph(key.replace("_", " ").upper(), self.styles["SuperfoodsHeaderStyle"]) for key, _ in columns
+        ]
+
+        table_data = [header_cells]
+
+        # Build rows using shared cell style
+        for day_entry in weekly_mealplan or []:
+            row = []
+            for key, _ in columns:
+                value = day_entry.get(key, "")
+                if isinstance(value, list):
+                    value = " + ".join(map(str, value))
+                row.append(Paragraph(str(value), self.styles["SuperfoodsCellStyle"]))
+            table_data.append(row)
+
+        col_widths = [w for _, w in columns]
+        table = self._build_styled_table(table_data, col_widths)
+
+        section.append(table)
+        return section
 
     def get_anti_inflammatory_table(self, anti_inflammatory: list) -> Table:
         """Build a table for anti-inflammatory plan.
@@ -1048,6 +1478,46 @@ class ThriveRoadmapTemplate:
             story.append(title_row)
             story.append(Spacer(1, 8))
             story.append(self.get_reasons_to_skip_table(reasons))
+
+        # Meal Timeline
+        meal_timeline = data.get("meal_timeline", [])
+        if meal_timeline:
+            story.append(PageBreak())
+            story.extend(self.get_meal_timeline_section(meal_timeline))
+
+        # Weekly Meal Plan
+        weekly_mealplan = data.get("weekly_mealplan", [])
+        if weekly_mealplan:
+            story.append(PageBreak())
+            story.extend(self.get_weekly_mealplan_section(weekly_mealplan))
+    
+        # Protein tables: meat/poultry and sea food side by side
+        meat = data.get("meat_poultry_food", [])
+        sea = data.get("sea_food", [])
+        if meat or sea:
+            story.append(PageBreak())
+            protein_icon = self.svg_icon("staticfiles/icons/bullet.svg", width=16, height=16)
+            protein_title = Paragraph("Non - Vegetarian Protein Sources", self.styles["SectionSmallRalewayBold"])
+            story.append(SvgTitleRow(protein_icon, protein_title, gap=8))
+            story.append(Spacer(1, 20))
+            sub_title = Paragraph("1. Meat, Poultry and seafood", self.styles["SectionSmallRalewayBold"])
+            story.append(sub_title)
+
+            story.append(Spacer(1, 8))
+            story.append(self.get_side_by_side_protein_tables(meat, sea))
+        
+        # Food Items: Healthy Fats, Flours
+        food_items = data.get("food_items", {})
+        if food_items:
+            story.append(PageBreak())
+            food_icon = self.svg_icon("staticfiles/icons/food.svg", width=20, height=30)
+            title_para = Paragraph("Food Items", self.styles["TOCTitleStyle"])
+            title_row = SvgTitleRow(food_icon, title_para, gap=8)
+            story.append(title_row)
+            story.append(Spacer(1, 16))
+            story.extend(self.get_food_items_section(food_items))
+
+                
         return story
 
 
