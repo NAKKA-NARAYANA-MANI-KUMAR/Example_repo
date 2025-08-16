@@ -23,7 +23,7 @@ from reportlab.lib.units import inch, mm, cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase.pdfmetrics import stringWidth
-from reportlab.graphics.shapes import Drawing,Rect, String, Line
+from reportlab.graphics.shapes import Drawing,Rect, String, Line,Circle
 from reportlab.lib.colors import Color,HexColor, white, black
 from reportlab.lib.utils import ImageReader
 from PIL import Image as PILImage
@@ -134,16 +134,158 @@ class RoundedBox(Flowable):
 
     def draw(self):
         pad = self.inner_padding or 0
+        inner_w = max(0, self.width - 2 * pad)
+        inner_h = max(0, self.height - 2 * pad)
         self.canv.saveState()
         self.canv.setFillColor(self.fill_color)
         self.canv.setStrokeColor(self.stroke_color)
         self.canv.setLineWidth(self.border_radius)
         self.canv.roundRect(0, 0, self.width, self.height, self.corner_radius, fill=1, stroke=1)
         if self.content:
-            self.content.wrapOn(self.canv, max(0, self.width - 2 * pad), max(0, self.height - 2 * pad))
-            self.content.drawOn(self.canv, pad, pad)
+            # Measure content height for vertical centering within inner padding box
+            content_w, content_h = self.content.wrap(inner_w, inner_h)
+            y_offset = pad + max(0, (inner_h - content_h) / 2)
+            self.content.drawOn(self.canv, pad, y_offset)
         self.canv.restoreState()
 
+class RoundedPill(Flowable):
+    def __init__(
+        self,
+        text,
+        bg_color,
+        radius=None,
+        width=None,
+        height=None,
+        font_size=8,
+        text_color=colors.white,
+        border_color=None,
+        border_width=0.2,
+        font_name=FONT_INTER_SEMI_BOLD,
+        icon_path=None,
+        icon_width=0,
+        icon_height=0,
+        icon_text_padding=4,
+        left_padding=8,
+        right_padding=8,
+        top_padding=6,
+        bottom_padding=6,
+    ):
+        super().__init__()
+        self.text = str(text)
+        self.bg_color = bg_color
+        self.radius = radius
+        self.width = width
+        self.height = height
+        self.font_size = font_size
+        self.text_color = text_color
+        self.border_color = border_color
+        self.border_width = border_width
+        self.font_name = font_name
+
+        # Padding
+        self.left_padding = left_padding
+        self.right_padding = right_padding
+        self.top_padding = top_padding
+        self.bottom_padding = bottom_padding
+
+        # Icon setup
+        self.icon_path = icon_path
+        self.icon_width = icon_width
+        self.icon_height = icon_height
+        self.icon_text_padding = icon_text_padding
+        self.icon_drawing = None
+
+        if self.icon_path and os.path.exists(self.icon_path):
+            try:
+                drawing = svg2rlg(self.icon_path)
+                if drawing.width > 0 and drawing.height > 0:
+                    scale_x = self.icon_width / drawing.width
+                    scale_y = self.icon_height / drawing.height
+                    drawing.scale(scale_x, scale_y)
+                    self.icon_drawing = drawing
+            except Exception as e:
+                print(f"Error loading SVG: {e}")
+                self.icon_drawing = None
+
+    def wrap(self, availWidth, availHeight):
+        # Measure text
+        text_width = stringWidth(self.text, self.font_name, self.font_size)
+        # Font metrics for more reliable vertical sizing
+        try:
+            ascent = pdfmetrics.getAscent(self.font_name) / 1000.0 * self.font_size
+            descent = abs(pdfmetrics.getDescent(self.font_name)) / 1000.0 * self.font_size
+        except Exception:
+            ascent = self.font_size * 0.8
+            descent = self.font_size * 0.2
+        text_box_h = ascent + descent
+
+        content_width = text_width + self.left_padding + self.right_padding
+
+        if self.icon_drawing:
+            content_width += self.icon_width + self.icon_text_padding
+
+        # Height estimate (ensure room for font metrics and optional icon)
+        content_height = max(text_box_h, self.font_size, self.icon_height) + self.top_padding + self.bottom_padding
+
+        # Use fixed width/height if given, else use computed
+        self.width = self.width if self.width is not None else content_width
+        self.height = self.height if self.height is not None else content_height
+        self.radius = self.radius if self.radius is not None else self.height / 2
+
+        return self.width, self.height
+
+    def draw(self):
+        self.canv.saveState()
+
+        # Rounded background
+        radius = min(self.radius, self.height / 2, self.width / 2)
+        self.canv.setFillColor(self.bg_color)
+
+        if self.border_color:
+            self.canv.setStrokeColor(self.border_color)
+            self.canv.setLineWidth(self.border_width)
+            stroke_val = 1
+        else:
+            self.canv.setStrokeColor(self.bg_color)
+            stroke_val = 0
+
+        self.canv.roundRect(0, 0, self.width, self.height, radius, fill=1, stroke=stroke_val)
+
+        # Text measurement
+        self.canv.setFont(self.font_name, self.font_size)
+        text_width = self.canv.stringWidth(self.text, self.font_name, self.font_size)
+
+        content_width = text_width
+        if self.icon_drawing:
+            content_width += self.icon_width + self.icon_text_padding
+
+        # Honor left/right padding when centering horizontally
+        available_w = max(0, self.width - self.left_padding - self.right_padding)
+        start_x = self.left_padding + max(0, (available_w - content_width) / 2)
+
+        # Honor top/bottom padding when centering vertically
+        content_h = max(0, self.height - self.top_padding - self.bottom_padding)
+        center_y = self.bottom_padding + content_h / 2
+
+        # Draw icon
+        if self.icon_drawing:
+            icon_y = center_y - self.icon_height / 2
+            renderPDF.draw(self.icon_drawing, self.canv, start_x, icon_y)
+            start_x += self.icon_width + self.icon_text_padding
+
+        # Draw text baseline centered in padded area using font ascent/descent
+        try:
+            ascent = pdfmetrics.getAscent(self.font_name) / 1000.0 * self.font_size
+            descent = abs(pdfmetrics.getDescent(self.font_name)) / 1000.0 * self.font_size
+        except Exception:
+            ascent = self.font_size * 0.8
+            descent = self.font_size * 0.2
+        text_box_h = ascent + descent
+        text_y = self.bottom_padding + max(0, (content_h - text_box_h) / 2) + descent
+        self.canv.setFillColor(self.text_color)
+        self.canv.drawString(start_x, text_y, self.text)
+
+        self.canv.restoreState()
 
 class FullPageWidthHRFlowable(Flowable):
     """
@@ -558,6 +700,7 @@ class ThriveRoadmapTemplate:
             leading=17.991,
             textColor=PMX_GREEN,
             alignment=TA_LEFT,
+            wordWrap='CJK',
         ))
         self.styles.add(ParagraphStyle(
             name="MealTimelineTitleStyle",
@@ -591,6 +734,43 @@ class ThriveRoadmapTemplate:
             leading=14,
             textColor=PMX_GREEN,
             alignment=TA_LEFT,
+        ))
+        # Practices to Follow (bullets) styles
+        self.styles.add(ParagraphStyle(
+            name="PracticeHeaderMediumStyle",
+            fontName=FONT_RALEWAY_MEDIUM,
+            fontSize=16,
+            leading=24,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+        ))
+        self.styles.add(ParagraphStyle(
+            name="PracticeBulletStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=10,
+            leading=16,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+            wordWrap='CJK',
+        ))
+        # Foods to Reintroduce styles
+        self.styles.add(ParagraphStyle(
+            name="ReintroItemTitleStyle",
+            fontName=FONT_INTER_SEMI_BOLD,
+            fontSize=12,
+            leading=19.885,
+            textColor=PMX_GREEN,
+            alignment=TA_LEFT,
+            wordWrap='CJK',
+        ))
+        self.styles.add(ParagraphStyle(
+            name="ReintroQtyStyle",
+            fontName=FONT_INTER_REGULAR,
+            fontSize=9.2,
+            leading=11.363,
+            textColor=colors.HexColor("#667085"),
+            alignment=TA_LEFT,
+            wordWrap='CJK',
         ))
         # Food Items: section header style (bullet + title)
         self.styles.add(ParagraphStyle(
@@ -979,6 +1159,159 @@ class ThriveRoadmapTemplate:
                 return p
         return None
 
+    def _build_reintroduce_card(self, item: dict) -> RoundedBox:
+        # Left image 47.4 x 57.4 from nutrition_images by item
+        img_w, img_h = 47.4, 57.4
+        title = item.get("item", "")
+        resolved_path = self._resolve_nutrition_image_path(title)
+        try:
+            if resolved_path and resolved_path.lower().endswith(".png"):
+                left_img = Image(resolved_path, width=img_w, height=img_h)
+            elif resolved_path and resolved_path.lower().endswith(".svg"):
+                left_img = self.svg_icon(resolved_path, width=img_w, height=img_h)
+            else:
+                left_img = Drawing(img_w, img_h)
+        except Exception:
+            left_img = Drawing(img_w, img_h)
+
+        # Right stack: title, quantity, pill (calories)
+        inner_pad = 10
+        right_w = 172 - 2*inner_pad - 16 - img_w  # box width - inner padding - gap - left image
+        title_para = Paragraph(title, self.styles["ReintroItemTitleStyle"])
+        qty_para = Paragraph(item.get("quantity", ""), self.styles["ReintroQtyStyle"])
+
+        # Rounded pill for calories
+        pill_text = str(item.get("calories", "")).strip()
+        pill = RoundedPill(
+            text=pill_text,
+            bg_color=colors.HexColor("#E6F4F3"),
+            border_color=colors.HexColor("#26968D"),
+            border_width=0.184,
+            font_name=FONT_INTER_REGULAR,
+            font_size=8,
+            text_color=colors.HexColor("#003632"),
+            radius=42.892 / 2,
+            left_padding=7,
+            right_padding=7,
+            top_padding=5,
+            bottom_padding=5,
+        )
+
+        # Constrain text within right_w using a KeepInFrame to avoid overflow
+        text_block = Table(
+            [[title_para], [qty_para]],
+            colWidths=[right_w],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+        kif = KeepInFrame(right_w, 1000, content=[text_block], hAlign='LEFT', mode='shrink')
+
+        right_stack = Table(
+            [[kif], [Spacer(1, 7)], [pill]],
+            colWidths=[right_w],
+            style=[
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+
+        content = Table(
+            [[left_img, Spacer(16, 1), right_stack]],
+            colWidths=[img_w, 16, right_w],
+            style=[
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ],
+        )
+
+        return RoundedBox(
+            width=172,
+            height=None,
+            content=content,
+            corner_radius=12.351,
+            border_radius=0.772,
+            stroke_color=Color(0/255, 62/255, 57/255, alpha=0.56),
+            fill_color=colors.HexColor("#F2F4F7"),
+            inner_padding=10,
+        )
+
+    def get_foods_to_reintroduce_section(self, foods_to_reintroduce: dict) -> list:
+        section = []
+        # Header
+        icon = self.svg_icon("staticfiles/icons/food.svg", width=20, height=30)
+        title_para = Paragraph("Foods to Reintroduce", self.styles["TOCTitleStyle"])
+        section.append(SvgTitleRow(icon, title_para, gap=8))
+        section.append(Spacer(1, 8))
+
+        # For each category, render header and cards grid (3 per row)
+        for category, items in (foods_to_reintroduce or {}).items():
+            if not isinstance(items, list):
+                continue
+            # Category header
+            cat_label = category.replace("_", " ").title()
+            bullet = self.svg_icon("staticfiles/icons/bullet.svg", width=16, height=16)
+            section.append(SvgTitleRow(bullet, Paragraph(cat_label, self.styles["SectionSmallRalewayBold"]), gap=6))
+            section.append(Spacer(1, 6))
+
+            cards = [self._build_reintroduce_card(it) for it in items]
+            rows = []
+            i = 0
+            while i < len(cards):
+                row_cards = [cards[i]]
+                if i + 1 < len(cards):
+                    row_cards.append(cards[i+1])
+                else:
+                    row_cards.append("")
+                if i + 2 < len(cards):
+                    row_cards.append(cards[i+2])
+                else:
+                    row_cards.append("")
+
+                # Measure and normalize heights so all three cards in the row have equal height
+                measured_heights = []
+                for rc in row_cards:
+                    if isinstance(rc, RoundedBox):
+                        rc.wrap(172, 100000)  # force compute height based on content
+                        measured_heights.append(rc.height or 0)
+                    else:
+                        measured_heights.append(0)
+                max_h = max(measured_heights) if measured_heights else 0
+                normalized_cells = []
+                for idx, rc in enumerate(row_cards):
+                    if isinstance(rc, RoundedBox):
+                        rc.height = max_h
+                        normalized_cells.append(rc)
+                    else:
+                        normalized_cells.append(Spacer(172, max(1, max_h)))
+
+                rows.append([normalized_cells[0], Spacer(12, 1), normalized_cells[1], Spacer(12, 1), normalized_cells[2]])
+                i += 3
+
+            grid = Table(
+                rows or [[Spacer(172, 1), Spacer(12, 1), Spacer(172, 1), Spacer(12, 1), Spacer(172, 1)]],
+                colWidths=[172, 12, 172, 12, 172],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+                ],
+            )
+            section.append(grid)
+            section.append(Spacer(1, 10))
+
+        return section
+
     def _build_food_item_card(self, item: dict) -> RoundedBox:
         # Left image (PNG preferred): 66 x 80
         left_w, left_h = 66, 80
@@ -1146,9 +1479,11 @@ class ThriveRoadmapTemplate:
 
             # Left stack: [time_icon | time text]
             time_para = Paragraph(time_label, self.styles["MealTimelineTimeStyle"])
+            text_col_w = max(10, left_content_w - (20 + 6))
+            time_kif = KeepInFrame(text_col_w, 1000, content=[time_para], hAlign='LEFT', mode='shrink')
             left_stack = Table(
-                [[time_icon, Spacer(6, 1), time_para]],
-                colWidths=[20, 6, max(10, left_content_w - (20 + 6))],
+                [[time_icon, Spacer(6, 1), time_kif]],
+                colWidths=[20, 6, text_col_w],
                 style=[
                     ("VALIGN", (0, 0), (-1, -1), "TOP"),
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -1239,6 +1574,59 @@ class ThriveRoadmapTemplate:
         table = self._build_styled_table(table_data, col_widths)
 
         section.append(table)
+        return section
+
+    def get_practices_to_follow_table(self, practices: list) -> Table:
+        # Headers
+        header_cells = [
+            Paragraph("PRINCIPLE", self.styles["SuperfoodsHeaderStyle"]),
+            Paragraph("GUIDELINE", self.styles["SuperfoodsHeaderStyle"]),
+            Paragraph("SCIENTIFIC BASIS", self.styles["SuperfoodsHeaderStyle"]),
+        ]
+        table_data = [header_cells]
+
+        # Rows
+        for entry in practices or []:
+            principle_para = Paragraph(str(entry.get("principle", "")), self.styles["SuperfoodsCellStyle"])
+            guideline_para = Paragraph(str(entry.get("guideline", "")), self.styles["SuperfoodsCellStyle"])
+            basis_para = Paragraph(str(entry.get("scientific_basis", "")), self.styles["SuperfoodsCellStyle"])
+            table_data.append([principle_para, guideline_para, basis_para])
+
+        col_widths = [92, 212, 242]
+        return self._build_styled_table(table_data, col_widths)
+
+    def get_practices_to_follow_bullets_section(self, info: dict) -> list:
+        section = []
+        # Header
+
+        title = info.get("title", "")
+        items = info.get("title_data", []) or []
+
+        # Title paragraph
+        section.append(Paragraph(title, self.styles["PracticeHeaderMediumStyle"]))
+        section.append(Spacer(1, 6))
+
+        # Bullets list
+        # Custom bullet list to control spacing and color (circle, no underline)
+        bullet_rows = []
+        for it in items:
+            bullet_para = Paragraph('<font color="#00625B">•</font>', self.styles["PracticeBulletStyle"])  # text bullet
+            para = Paragraph(str(it), self.styles["PracticeBulletStyle"])  # no underline
+            bullet_rows.append([bullet_para, Spacer(6, 1), para])
+
+        if bullet_rows:
+            bullet_table = Table(
+                bullet_rows,
+                colWidths=[10, 6, None],
+                style=[
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ],
+            )
+            section.append(bullet_table)
         return section
 
     def get_anti_inflammatory_table(self, anti_inflammatory: list) -> Table:
@@ -1490,6 +1878,7 @@ class ThriveRoadmapTemplate:
         if weekly_mealplan:
             story.append(PageBreak())
             story.extend(self.get_weekly_mealplan_section(weekly_mealplan))
+        
     
         # Protein tables: meat/poultry and sea food side by side
         meat = data.get("meat_poultry_food", [])
@@ -1517,8 +1906,29 @@ class ThriveRoadmapTemplate:
             story.append(Spacer(1, 16))
             story.extend(self.get_food_items_section(food_items))
 
-                
+        practices_to_follow = data.get("practices_to_follow", {})
+        if practices_to_follow:
+            story.append(PageBreak())
+            food_icon = self.svg_icon("staticfiles/icons/food.svg", width=20, height=30)
+            title_para = Paragraph("Practices to Follow ", self.styles["TOCTitleStyle"])
+            title_row = SvgTitleRow(food_icon, title_para, gap=8)
+            story.append(title_row)
+            story.append(Spacer(1, 16))
+            story.append(self.get_practices_to_follow_table(practices_to_follow))
+        
+         # Practices to Follow (bullet set with title + bullets)
+        practices_to_follow_bullets = data.get("practices_to_follow_", {})
+        if practices_to_follow_bullets:
+            story.append(PageBreak())
+            story.extend(self.get_practices_to_follow_bullets_section(practices_to_follow_bullets))
+        
+        # Foods to Reintroduce
+        foods_to_reintroduce = data.get("foods_to_reintroduce", {})
+        if foods_to_reintroduce:
+            story.append(PageBreak())
+            story.extend(self.get_foods_to_reintroduce_section(foods_to_reintroduce))       
         return story
+       
 
 
 app = FastAPI()
