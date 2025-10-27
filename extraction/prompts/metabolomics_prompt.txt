@@ -1,0 +1,104 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available METABOLOMICS biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED METABOLOMICS BIOMARKER UNITS:
+Glycine:GLYCINE : µmol/L
+Beta-AminoIsoButyric Acid:BAIBA : µmol/L
+Sarcosine:SARCOSINE : µmol/L
+Histidine:HISTIDINE : µmol/L
+MMA:MMA : µmol/L
+Uracil:URACIL : µmol/L
+Formiminoglutamate:FIGLU : µmol/L
+Serine:SERINE : µmol/L
+Carnosine:CARNOSINE : µmol/L
+beta-Alanine:B_ALANINE : µmol/L
+Threonine:THREONINE : µmol/L
+Suberate:SUBERATE : µmol/L
+Gln:GLUTAMINE : µmol/L
+HMG2:HMG : µmol/L
+EMA:EMA : µmol/L
+Pyruvate:PYRUVATE : µmol/L
+Succinate:SUCCINATE : µmol/L
+isoLeu:ISOLEUCINE : µmol/L
+Adipate:ADIPATE : µmol/L
+Adipate:3HIV : µmol/L
+PyroGlu:PYROGLU : µmol/L
+Malate:MALATE : µmol/L
+C0:C0 : µmol/L
+Me-succinate:ME_SUCCINATE : µmol/L
+sebacate:SEBACATE : µmol/L
+Lactate:LACTATE : µmol/L
+2KG:2KG : µmol/L
+3HB:3HB : µmol/L
+Benzonate:BENZOATE : µmol/L
+4HPA:4_HPA : µmol/L
+Indole3AA:INDOLE-3-ACETATE : µmol/L
+3HP3HP:CLOSTRIDIAL : µmol/L
+hippurate1:HIPPURATE : µmol/L
+4Hhippurate:4-HYDROXYHIPPURATE : µmol/L
+Taurine:TAURINE : µmol/L
+beta-Alanine:Β-ALANINE : µmol/L
+Glutamine:GLUTAMINE_B : µmol/L
+Mandelate:MANDELATE : µmol/L
+Orotate:OROTATE : µmol/L
+Analog Cit:ANALOG_CITRATE : µmol/L
+Citrate:CITRATE : µmol/L
+Cisaconate:CIS-ACONITATE : µmol/L
+1- Methyl-histidine:1-METHYL-HISTIDINE : µmol/L
+Cysteine:CYSTEINE : µmol/L
+Lysine:LYSINE : µmol/L
+Proline:PROLINE : µmol/L
+Oxalate:OXALATE : µmol/L
+Arginine:ARGININE : µmol/L
+Phenylalanine:PHENYLALANINE : µmol/L
+Methionine:METHIONINE : µmol/L
+Valine:VALINE : µmol/L
+Tyrosine:TYROSINE : µmol/L
+Tryptophan:TRYPTOPHAN : µmol/L
+Leucine:LEUCINE : µmol/L
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `PDF_NAME:VARIABLE_NAME : unit`
+   - Search for the PDF_NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "Glycine:GLYCINE : µmol/L" → search PDF for "Glycine" → output as `{"GLYCINE": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: Look for the exact names as they appear in the PDF
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle decimal values** - preserve decimal places as shown in the report
+8. **Look for these specific terms** in the PDF - use the exact names as they appear in the report
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "GLYCINE": 245.5,
+  "BAIBA": 12.3,
+  "SARCOSINE": 8.7,
+  "HISTIDINE": 89.2,
+  "MMA": 0.5,
+  "URACIL": 2.1,
+  "FIGLU": 15.8,
+  "SERINE": 156.3,
+  "CARNOSINE": 45.2,
+  "B_ALANINE": 78.9
+}
+```

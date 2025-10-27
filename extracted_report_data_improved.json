@@ -1,0 +1,200 @@
+{
+  "report_info": {
+    "type": "Thrive Longevity Report",
+    "generated_date": "2025-10-22",
+    "clinic": {
+      "name": "PMX Health",
+      "address": "4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033",
+      "doctor": {
+        "name": "Samatha Tulla",
+        "specialization": "Internal Medicine Physician & Diabetologist",
+        "registration": "PMX-12345"
+      }
+    }
+  },
+  "source_data": {},
+  "client": {
+    "user_id": "61a36d0a-1041-7000-4202-539a9c2bf8be",
+    "id": null,
+    "name": "",
+    "demographics": {
+      "gender": "Female",
+      "location": "Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 1 Dr. Samatha Tulla Internal Medicine Physician & Diabetologist Reg No: 68976 (Telangana State Medical Council ) PMX Health 4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033 Nitya Surekha Annam (36 years, Female) Date: 25-06-2025 Diagnoses: • Folate Deficiency • Systemic Inflammation • Vitamin D Deficiency • Vitamin B12 Insufficiency • Iron Deficiency Anaemia • IGF -1 Insufficiency • Hyperkalaemia • Hypocalcemia • Zinc Deficiency Prescription Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 1 Albendazole 1 tablet 400m g 0-0-1 After dinner 2 mont hs Day 1 Link to buy Dewarming 2 Opti Allergy shield 1 tablet 0-1-0 After meal 2 mont hs Day 11 Available @ PMX Reduce allergic symptoms 3 Livogen XT - once daily (afternoon) for 2 months 1 tablet 0-1-0 After lunch 2 mont hs Day 12 Available @ PMX To optimize iron levels in body 4 Vitaone Vitamin d3 K2-7 1 tablet 1-0-0 After breakf ast 2 mont hs Day 13 Available @ PMX To optimize vitamin D levels and regulate calcium metaboli sm 5 Ace Blend Outshine Omega 3 1 caps ule 1-0-1 Afte Meal 2 mont hs Day 14 Available @ PMX Improve HDL Cholesterol levels Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 2 Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 6 Unizyme (Char coal) 1 tablet 0-1-1 After meal 2 mont hs Day 4- D ay14 Link to buy Improves digestiv e function Reduces bloating Soothes stomach discomfort Maintains healthy digestion 7 Supermag 1 tablet 0-0-1 After meal 2 mont hs - Available @ PMX Take when IV not taken 8 Progesterone cream - - 1-0-0 - 2 mont hs Day 1 Link to buy Massage on thighs and abdomen .once daily & rotate applications to these area . Premenopausal women, use 14 days prior to first day of menstruati on, discontinue and repeat. Menopausal women , use for 21 days discontin ue for 7 days and repeat. 9 AUTOIMMUN ITY CARE COMPLETE BIOTIC CARE (3-in-1 Prebiotic, Probiotic & Postbiotic) 1 caps ule mix ed 0-0-1 After dinner 2 mont hs Day 15 Available @ PMX Supports Digestiv e Health Relieves Bloating & Gas Advanced Investigation Recommendations: • Stool for Ova & parasites",
+      "occupation": "",
+      "dob": "",
+      "assessment_date": "2025-10-22",
+      "age": "1",
+      "zip_code": "500033",
+      "diet": "Vegetarian"
+    }
+  },
+  "profile_card_data": {
+    "metrics": [
+      {
+        "title": "Vascular Age",
+        "value": "42",
+        "suff": "yrs",
+        "pill": "High",
+        "pill_color": "#F49E5C"
+      },
+      {
+        "title": "Heart Rate Variability",
+        "value": "27.18",
+        "suff": "ms",
+        "pill": "Sub Optimal",
+        "pill_color": "#F4CE5C",
+        "footer": "40.0 - 100.0 ms"
+      }
+    ],
+    "age": 1,
+    "height": "160 cms",
+    "weight": "65 kg"
+  },
+  "current_medical_issues": {
+    "symptoms": [
+      {
+        "symptom": "Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 1 Dr. Samatha Tulla Internal Medicine Physician & Diabetologist Reg No: 68976 (Telangana State Medical Council ) PMX Health 4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033 Nitya Surekha Annam (36 years, Female) Date: 25-06-2025 Diagnoses: • Folate Deficiency • Systemic Inflammation • Vitamin D Deficiency • Vitamin B12 Insufficiency • Iron Deficiency Anaemia • IGF -1 Insufficiency • Hyperkalaemia • Hypocalcemia • Zinc Deficiency Prescription Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 1 Albendazole 1 tablet 400m g 0-0-1 After dinner 2 mont hs Day 1 Link to buy Dewarming 2 Opti Allergy shield 1 tablet 0-1-0 After meal 2 mont hs Day 11 Available @ PMX Reduce allergic symptoms 3 Livogen XT - once daily (afternoon) for 2 months 1 tablet 0-1-0 After lunch 2 mont hs Day 12 Available @ PMX To optimize iron levels in body 4 Vitaone Vitamin d3 K2-7 1 tablet 1-0-0 After breakf ast 2 mont hs Day 13 Available @ PMX To optimize vitamin D levels and regulate calcium metaboli sm 5 Ace Blend Outshine Omega 3 1 caps ule 1-0-1 Afte Meal 2 mont hs Day 14 Available @ PMX Improve HDL Cholesterol levels Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 2 Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 6 Unizyme (Char coal) 1 tablet 0-1-1 After meal 2 mont hs Day 4- D ay14 Link to buy Improves digestiv e function Reduces bloating Soothes stomach discomfort Maintains healthy digestion 7 Supermag 1 tablet 0-0-1 After meal 2 mont hs - Available @ PMX Take when IV not taken 8 Progesterone cream - - 1-0-0 - 2 mont hs Day 1 Link to buy Massage on thighs and abdomen .once daily & rotate applications to these area . Premenopausal women, use 14 days prior to first day of menstruati on, discontinue and repeat. Menopausal women , use for 21 days discontin ue for 7 days and repeat. 9 AUTOIMMUN ITY CARE COMPLETE BIOTIC CARE (3-in-1 Prebiotic, Probiotic & Postbiotic) 1 caps ule mix ed 0-0-1 After dinner 2 mont hs Day 15 Available @ PMX Supports Digestiv e Health Relieves Bloating & Gas Advanced Investigation Recommendations: • Stool for Ova & parasites",
+        "hide": false
+      }
+    ],
+    "conditions": [
+      "Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 1 Dr. Samatha Tulla Internal Medicine Physician & Diabetologist Reg No: 68976 (Telangana State Medical Council ) PMX Health 4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033 Nitya Surekha Annam (36 years, Female) Date: 25-06-2025 Diagnoses: • Folate Deficiency • Systemic Inflammation • Vitamin D Deficiency • Vitamin B12 Insufficiency • Iron Deficiency Anaemia • IGF -1 Insufficiency • Hyperkalaemia • Hypocalcemia • Zinc Deficiency Prescription Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 1 Albendazole 1 tablet 400m g 0-0-1 After dinner 2 mont hs Day 1 Link to buy Dewarming 2 Opti Allergy shield 1 tablet 0-1-0 After meal 2 mont hs Day 11 Available @ PMX Reduce allergic symptoms 3 Livogen XT - once daily (afternoon) for 2 months 1 tablet 0-1-0 After lunch 2 mont hs Day 12 Available @ PMX To optimize iron levels in body 4 Vitaone Vitamin d3 K2-7 1 tablet 1-0-0 After breakf ast 2 mont hs Day 13 Available @ PMX To optimize vitamin D levels and regulate calcium metaboli sm 5 Ace Blend Outshine Omega 3 1 caps ule 1-0-1 Afte Meal 2 mont hs Day 14 Available @ PMX Improve HDL Cholesterol levels Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 2 Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 6 Unizyme (Char coal) 1 tablet 0-1-1 After meal 2 mont hs Day 4- D ay14 Link to buy Improves digestiv e function Reduces bloating Soothes stomach discomfort Maintains healthy digestion 7 Supermag 1 tablet 0-0-1 After meal 2 mont hs - Available @ PMX Take when IV not taken 8 Progesterone cream - - 1-0-0 - 2 mont hs Day 1 Link to buy Massage on thighs and abdomen .once daily & rotate applications to these area . Premenopausal women, use 14 days prior to first day of menstruati on, discontinue and repeat. Menopausal women , use for 21 days discontin ue for 7 days and repeat. 9 AUTOIMMUN ITY CARE COMPLETE BIOTIC CARE (3-in-1 Prebiotic, Probiotic & Postbiotic) 1 caps ule mix ed 0-0-1 After dinner 2 mont hs Day 15 Available @ PMX Supports Digestiv e Health Relieves Bloating & Gas Advanced Investigation Recommendations: • Stool for Ova & parasites"
+    ]
+  },
+  "family_history": {
+    "maternal": [
+      "Diabetes",
+      "Hypertension"
+    ],
+    "paternal": [
+      "Heart Disease"
+    ],
+    "past_history": [
+      "Previous infections",
+      "Vaccinations received"
+    ],
+    "menstrual_history": [
+      "LMP - 12/08/2025",
+      "Cycle length: 28 days",
+      "Duration: 5 days"
+    ]
+  },
+  "vital_params": {
+    "header": "Comprehensive Vital Parameters",
+    "header_data": "Delivers vital health metrics to detect risks early and guide personalized, preventive care",
+    "metrics": {
+      "title": "Vitals",
+      "metrics_data": [
+        {
+          "title": "Body Temperature",
+          "value": "98.6",
+          "suff": "°F",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "97.8-99.1 °F"
+        },
+        {
+          "title": "Heart Rate",
+          "value": "72",
+          "suff": "bpm",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "60.0-100.0 bpm"
+        },
+        {
+          "title": "Blood Pressure",
+          "value": "120/80",
+          "suff": "mmHg",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "90/60-120/80 mmHg"
+        }
+      ]
+    }
+  },
+  "lifestyle_trends": {
+    "header": "Your Lifestyle Trends",
+    "header_data": "Evaluates daily habits to uncover lifestyle changes that boost long-term health and well-being",
+    "title": "Lifestyle Trends",
+    "lifestyle_trends_data": [
+      {
+        "name": "Diet Preference",
+        "data": "Vegetarian"
+      },
+      {
+        "name": "Physical Activity",
+        "data": "Moderate"
+      },
+      {
+        "name": "Sleep Duration",
+        "data": "7-8 hours"
+      }
+    ]
+  },
+  "areas_of_concern": {
+    "title": "Areas of Concern",
+    "title_data": "Identifies suboptimal biomarkers to spotlight health risks and guide targeted improvements for better wellness",
+    "areas_of_concern_data": [
+      {
+        "title": "VITAMIN B-12",
+        "title_data": "Measures B12 detects deficiency, anemia, nerve health issues.",
+        "title_pill": "Nutritional Status",
+        "value": "580",
+        "suff": "pg/mL",
+        "pill": "Sub Optimal",
+        "pill_color": "#F4CE5C",
+        "footer": "600-1000"
+      }
+    ]
+  },
+  "action_plan": {
+    "header": "Action Plan",
+    "action_plan_list": [
+      "Follow Phase 1 for 8 weeks",
+      "Take nutritional supplements based on prescription",
+      "Review after 1 month"
+    ]
+  },
+  "prescription_data": {
+    "user_profile": {
+      "user_id": "61a36d0a-1041-7000-4202-539a9c2bf8be",
+      "first_name": "Nitya",
+      "last_name": "Surekha Annam",
+      "phone_number": "9876543210",
+      "email": "nitya.surekha@example.com",
+      "gender": "Female",
+      "date_of_birth": "",
+      "age": 1,
+      "occupation": "",
+      "city": "Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 1 Dr. Samatha Tulla Internal Medicine Physician & Diabetologist Reg No: 68976 (Telangana State Medical Council ) PMX Health 4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033 Nitya Surekha Annam (36 years, Female) Date: 25-06-2025 Diagnoses: • Folate Deficiency • Systemic Inflammation • Vitamin D Deficiency • Vitamin B12 Insufficiency • Iron Deficiency Anaemia • IGF -1 Insufficiency • Hyperkalaemia • Hypocalcemia • Zinc Deficiency Prescription Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 1 Albendazole 1 tablet 400m g 0-0-1 After dinner 2 mont hs Day 1 Link to buy Dewarming 2 Opti Allergy shield 1 tablet 0-1-0 After meal 2 mont hs Day 11 Available @ PMX Reduce allergic symptoms 3 Livogen XT - once daily (afternoon) for 2 months 1 tablet 0-1-0 After lunch 2 mont hs Day 12 Available @ PMX To optimize iron levels in body 4 Vitaone Vitamin d3 K2-7 1 tablet 1-0-0 After breakf ast 2 mont hs Day 13 Available @ PMX To optimize vitamin D levels and regulate calcium metaboli sm 5 Ace Blend Outshine Omega 3 1 caps ule 1-0-1 Afte Meal 2 mont hs Day 14 Available @ PMX Improve HDL Cholesterol levels Prescribed by: Dr. Samatha Tulla, Reg. No. 68976, Telangana State Medical Council Page 2 Medications Dosag e Freque ncy Timing Durati on Start Fro m How to Buy Remarks 6 Unizyme (Char coal) 1 tablet 0-1-1 After meal 2 mont hs Day 4- D ay14 Link to buy Improves digestiv e function Reduces bloating Soothes stomach discomfort Maintains healthy digestion 7 Supermag 1 tablet 0-0-1 After meal 2 mont hs - Available @ PMX Take when IV not taken 8 Progesterone cream - - 1-0-0 - 2 mont hs Day 1 Link to buy Massage on thighs and abdomen .once daily & rotate applications to these area . Premenopausal women, use 14 days prior to first day of menstruati on, discontinue and repeat. Menopausal women , use for 21 days discontin ue for 7 days and repeat. 9 AUTOIMMUN ITY CARE COMPLETE BIOTIC CARE (3-in-1 Prebiotic, Probiotic & Postbiotic) 1 caps ule mix ed 0-0-1 After dinner 2 mont hs Day 15 Available @ PMX Supports Digestiv e Health Relieves Bloating & Gas Advanced Investigation Recommendations: • Stool for Ova & parasites",
+      "profile_picture": null,
+      "client_id": null,
+      "is_doctor": false,
+      "zip_code": "500033",
+      "relationship_status": "Single"
+    },
+    "doctor": {
+      "name": "Samatha Tulla MD",
+      "registration_number": "68976",
+      "registration_state": "Telangana State Medical Council",
+      "signature_file_name": "dr_samatha_sign.svg",
+      "specialization": "Internal Medicine",
+      "is_doctor": true
+    },
+    "medications": [
+      {
+        "name": "Vitamin B12",
+        "strength": "1000 mcg",
+        "dosage": "1 tablet",
+        "frequency": "1-0-0",
+        "duration": "2 months",
+        "instructions": "Take with breakfast",
+        "active_ingredients": "Cyanocobalamin",
+        "start_from": "Day 1",
+        "timing": "Morning",
+        "available_in_clinic": false,
+        "external_url": "https://www.1mg.com/drugs/vitamin-b12"
+      }
+    ]
+  }
+}

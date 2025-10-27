@@ -1,0 +1,284 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available OLIGOSCAN biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (include all keys even if empty).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED OLIGOSCAN BIOMARKER UNITS:
+# Heavy Metals
+Aluminium (Al):ALUMINIUM : %
+Antimony (Sb):ANTIMONY : %
+Silver (Ag):SILVER : %
+Arsenic (As):ARSENIC : %
+Barium (Ba):BARIUM : %
+Beryllium (Be):BERYLLIUM : %
+Bismuth (Bi):BISMUTH : %
+Cadmium (Cd):CADMIUM : %
+Mercury (Hg):MERCURY : %
+Nickel (Ni):NICKEL : %
+Platinum (Pt):PLATINUM : %
+Lead (Pb):LEAD : %
+Thallium (Tl):THALLIUM : %
+Thorium (Th):THORIUM : %
+Gadolinium (Gd):GADOLINIUM : %
+
+# Vitamins
+Vitamin A:VITAMIN_A : %
+Vitamin C:VITAMIN_C : %
+Vitamin E:VITAMIN_E : %
+Vitamin B6:VITAMIN_B6 : %
+Vitamin B12:VITAMIN_B12 : %
+Vitamin D:VITAMIN_D3 : %
+Folic acid (B9):FOLIC_ACID : %
+
+# Minerals
+CALCIUM (Ca):CALCIUM : %
+MAGNESIUM (Mg):MAGNESIUM : %
+PHOSPHORUS (P):PHOSPHORUS : %
+SILICON (Si):SILICON : %
+SODIUM (Na):SODIUM : %
+POTASSIUM (K):POTASSIUM : %
+COPPER (Cu):COPPER : %
+ZINC (Zn):ZINC : %
+CHROMIUM (Cr):CHROMIUM : %
+IODINE (I):IODINE : %
+SELENIUM (Se):SELENIUM : %
+SULPHUR (S):SULPHUR : %
+IRON (Fe):IRON : %
+MANGANESE (Mn):MANGANESE : %
+VANADIUM (V):VANADIUM : %
+BORON (B):BORON : %
+COBALT (Co):COBALT : %
+MOLYBDENUM (Mo):MOLYBDENUM : %
+LITHIUM (Li):LITHIUM : %
+GERMANIUM (Ge):GERMANIUM : %
+FLUOR (F):FLUOR : %
+
+# Ratios
+CA/MG:CA/MG : %
+CA/P:CA/P : %
+K/NA:K/NA : %
+CU/ZN:CU/ZN : %
+
+# Ratio Excess/Deficiency Flags
+CA/MG_EXCESS:CA/MG_EXCESS : text
+CA/P_EXCESS:CA/P_EXCESS : text
+K/NA_EXCESS:K/NA_EXCESS : text
+CU/ZN_EXCESS:CU/ZN_EXCESS : text
+CA/MG_DEFICIENCY:CA/MG_DEFICIENCY : text
+CA/P_DEFICIENCY:CA/P_DEFICIENCY : text
+K/NA_DEFICIENCY:K/NA_DEFICIENCY : text
+CU/ZN_DEFICIENCY:CU/ZN_DEFICIENCY : text
+
+# Oxidative Stress
+Oxidative Aggression:OXIDATIVE_AGGREGATION_SCORE : score
+Oxidative Aggression Range:OXIDATIVE_AGGREGATION_RANGE : text
+Antioxidant Protection:ANTIOXIDANT_PROTECTION_SCORE : score
+Antioxidant Protection Range:ANTIOXIDANT_PROTECTION_RANGE : text
+
+# Anti-Aging Skin
+Elasticity - Texture:ELASTICITY_TEXTURE_SCORE : score
+Elasticity - Texture Range:ELASTICITY_TEXTURE_RANGE : text
+Aging Condition:AGING_CONDITION_SCORE : score
+Aging Condition Range:AGING_CONDITION_RANGE : text
+Fragility:FRAGILITY_SCORE : score
+Fragility Range:FRAGILITY_RANGE : text
+
+# Slimness
+Fat excess:FAT_EXCESS_SCORE : score
+Fat excess Range:FAT_EXCESS_RANGE : text
+Aqueous tendency:AQUEOUS_TENDENCY_SCORE : %
+Adipose tendency:ADIPOSE_TENDENCY_SCORE : %
+Fibrous tendency:FIBROUS_TENDENCY_SCORE : %
+
+# Hair/Nails
+Falling tendency:FALLING_TENDENCY_SCORE : score
+Falling tendency Range:FALLING_TENDENCY_RANGE : text
+Quality:QUALITY_SCORE : score
+Quality Range:QUALITY_RANGE : text
+
+# Joints
+Flexibility:FLEXIBILITY_SCORE : score
+Flexibility Range:FLEXIBILITY_RANGE : text
+Acid-base balance:ACID_BASE_BALANCE_SCORE : score
+Acid-base balance Range:ACID_BASE_BALANCE_RANGE : text
+Tissue Repair:TISSUE_REPAIR_SCORE : score
+Tissue Repair Range:TISSUE_REPAIR_RANGE : text
+
+# Detox
+Sulfoconjugation Index:SULFOCONJUGATION_INDEX_SCORE : score
+Sulfoconjugation Index Range:SULFOCONJUGATION_INDEX_RANGE : text
+Overall Intoxication:OVERALL_INTOXICATION_SCORE : score
+Overall Intoxication Range:OVERALL_INTOXICATION_RANGE : text
+Metabolic Overload:METABOLIC_OVERLOAD_SCORE : score
+Metabolic Overload Range:METABOLIC_OVERLOAD_RANGE : text
+
+# Digestion
+Trace Mineral Assimilation:TRACE_MINERAL_ASSIMILATION_SCORE : score
+Trace Mineral Assimilation Range:TRACE_MINERAL_ASSIMILATION_RANGE : text
+Enzymatic Balance:ENZYMATIC_BALANCE_SCORE : score
+Enzymatic Balance Range:ENZYMATIC_BALANCE_RANGE : text
+Glycemic Balance:GLYCEMIC_BALANCE_SCORE : score
+Glycemic Balance Range:GLYCEMIC_BALANCE_RANGE : text
+
+# Mental Condition
+Cognitive Function:COGNITIVE_FUNCTION_SCORE : score
+Cognitive Function Range:COGNITIVE_FUNCTION_RANGE : text
+Emotional Balance:EMOTIONAL_BALANCE_SCORE : score
+Emotional Balance Range:EMOTIONAL_BALANCE_RANGE : text
+Nervous System:NERVOUS_SYSTEM_SCORE : score
+Nervous System Range:NERVOUS_SYSTEM_RANGE : text
+
+# General Balance
+Natural Defenses:NATURAL_DEFENSES_SCORE : score
+Natural Defenses Range:NATURAL_DEFENSES_RANGE : text
+Hormonal Balance:HORMONAL_BALANCE_SCORE : score
+Hormonal Balance Range:HORMONAL_BALANCE_RANGE : text
+Cardiovascular:CARDIOVASCULAR_SCORE : score
+Cardiovascular Range:CARDIOVASCULAR_RANGE : text
+Predisposition for Allergies:PREDISPOSITION_FOR_ALLERGIES_SCORE : score
+Predisposition for Allergies Range:PREDISPOSITION_FOR_ALLERGIES_RANGE : text
+
+## IMPORTANT NOTES:
+1. **Include ALL keys** - even if values are empty, include the key with null/empty value
+2. **Extract exact values** as they appear in the report
+3. **For ratio values** (CA/MG, CA/P, K/NA, CU/ZN) - extract the actual percentage values from the report
+4. **For deficiency/excess flags** - CRITICAL: Look for actual deficiency/excess columns in the report. If these columns are empty/blank, return empty string "". DO NOT infer values from ratio names (e.g., don't put "Ca Mg" for CA/MG just because the ratio name contains Ca and Mg). Only extract what is explicitly written in the deficiency/excess columns of the report.
+5. **For ranges** - extract the text assessment (good, acceptable, bad, to correct, etc.)
+6. **For scores** - extract the numerical values
+7. **For percentages** - extract the percentage values
+8. **Use "Male" or "Female"** for sex (never abbreviations)
+9. **Include patient demographics** (name, age, sex, cycle)
+
+## CRITICAL RULE FOR DEFICIENCY/EXCESS FLAGS:
+- If the deficiency column for CA/MG is empty → CA/MG_DEFICIENCY: ""
+- If the excess column for CA/MG is empty → CA/MG_EXCESS: ""
+- DO NOT put "Ca Mg" just because the ratio is called "CA/MG"
+- ONLY extract what is actually written in the deficiency/excess columns
+- If columns are blank/empty, return empty string ""
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and ALL biomarkers (even if empty).
+Use the VARIABLE_NAME (short codes) as JSON keys.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "ALUMINIUM": 44,
+  "ANTIMONY": 22,
+  "SILVER": 42,
+  "ARSENIC": 39,
+  "BARIUM": 70,
+  "BERYLLIUM": 42,
+  "BISMUTH": 62,
+  "CADMIUM": 63,
+  "MERCURY": 49,
+  "NICKEL": 26,
+  "PLATINUM": 12,
+  "LEAD": 39,
+  "THALLIUM": 21,
+  "THORIUM": 13,
+  "GADOLINIUM": 22,
+  "VITAMIN_A": 68,
+  "VITAMIN_C": 74,
+  "VITAMIN_E": 69,
+  "VITAMIN_B6": 57,
+  "VITAMIN_B12": 79,
+  "VITAMIN_D3": 58,
+  "FOLIC_ACID": 33,
+  "CALCIUM": 20,
+  "MAGNESIUM": -22,
+  "PHOSPHORUS": -58,
+  "SILICON": -9,
+  "SODIUM": -6,
+  "POTASSIUM": -21,
+  "COPPER": -15,
+  "ZINC": -19,
+  "CHROMIUM": -43,
+  "IODINE": -31,
+  "SELENIUM": 6,
+  "SULPHUR": -3,
+  "IRON": -10,
+  "MANGANESE": -17,
+  "VANADIUM": -18,
+  "BORON": 26,
+  "COBALT": -9,
+  "MOLYBDENUM": -21,
+  "LITHIUM": 51,
+  "GERMANIUM": 25,
+  "FLUOR": 69,
+  "CA/MG": 26,
+  "CA/P": 63,
+  "K/NA": -74,
+  "CU/ZN": -32,
+  "CA/MG_EXCESS": "",
+  "CA/P_EXCESS": "",
+  "K/NA_EXCESS": "",
+  "CU/ZN_EXCESS": "",
+  "CA/MG_DEFICIENCY": "",
+  "CA/P_DEFICIENCY": "",
+  "K/NA_DEFICIENCY": "",
+  "CU/ZN_DEFICIENCY": "",
+  "OXIDATIVE_AGGREGATION_SCORE": 20,
+  "OXIDATIVE_AGGREGATION_RANGE": "good",
+  "ANTIOXIDANT_PROTECTION_SCORE": 69,
+  "ANTIOXIDANT_PROTECTION_RANGE": "good",
+  "ELASTICITY_TEXTURE_SCORE": 72,
+  "ELASTICITY_TEXTURE_RANGE": "good",
+  "AGING_CONDITION_SCORE": 45,
+  "AGING_CONDITION_RANGE": "acceptable",
+  "FRAGILITY_SCORE": 32,
+  "FRAGILITY_RANGE": "good",
+  "FAT_EXCESS_SCORE": 55,
+  "FAT_EXCESS_RANGE": "to correct",
+  "AQUEOUS_TENDENCY_SCORE": 40,
+  "ADIPOSE_TENDENCY_SCORE": 35,
+  "FIBROUS_TENDENCY_SCORE": 25,
+  "FALLING_TENDENCY_SCORE": 18,
+  "FALLING_TENDENCY_RANGE": "good",
+  "QUALITY_SCORE": 85,
+  "QUALITY_RANGE": "good",
+  "FLEXIBILITY_SCORE": 54,
+  "FLEXIBILITY_RANGE": "acceptable",
+  "ACID_BASE_BALANCE_SCORE": 52,
+  "ACID_BASE_BALANCE_RANGE": "acceptable",
+  "TISSUE_REPAIR_SCORE": 72,
+  "TISSUE_REPAIR_RANGE": "good",
+  "SULFOCONJUGATION_INDEX_SCORE": 100,
+  "SULFOCONJUGATION_INDEX_RANGE": "bad",
+  "OVERALL_INTOXICATION_SCORE": 83,
+  "OVERALL_INTOXICATION_RANGE": "bad",
+  "METABOLIC_OVERLOAD_SCORE": 38,
+  "METABOLIC_OVERLOAD_RANGE": "acceptable",
+  "TRACE_MINERAL_ASSIMILATION_SCORE": 58,
+  "TRACE_MINERAL_ASSIMILATION_RANGE": "acceptable",
+  "ENZYMATIC_BALANCE_SCORE": 74,
+  "ENZYMATIC_BALANCE_RANGE": "good",
+  "GLYCEMIC_BALANCE_SCORE": 64,
+  "GLYCEMIC_BALANCE_RANGE": "to correct",
+  "COGNITIVE_FUNCTION_SCORE": 30,
+  "COGNITIVE_FUNCTION_RANGE": "bad",
+  "EMOTIONAL_BALANCE_SCORE": 24,
+  "EMOTIONAL_BALANCE_RANGE": "bad",
+  "NERVOUS_SYSTEM_SCORE": 67,
+  "NERVOUS_SYSTEM_RANGE": "good",
+  "NATURAL_DEFENSES_SCORE": 65,
+  "NATURAL_DEFENSES_RANGE": "acceptable",
+  "HORMONAL_BALANCE_SCORE": 58,
+  "HORMONAL_BALANCE_RANGE": "acceptable",
+  "CARDIOVASCULAR_SCORE": 60,
+  "CARDIOVASCULAR_RANGE": "acceptable",
+  "PREDISPOSITION_FOR_ALLERGIES_SCORE": 25,
+  "PREDISPOSITION_FOR_ALLERGIES_RANGE": "good"
+}
+```

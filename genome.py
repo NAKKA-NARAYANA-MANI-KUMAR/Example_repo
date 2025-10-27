@@ -42,7 +42,7 @@ FONT_RALEWAY_REGULAR="Raleway-Regular"
 FONT_RALEWAY_LIGHT = "Raleway-Light"
 FONT_RALEWAY_THIN="Raleway-Thin"
 FONT_RALEWAY_MEDIUM="Raleway-Medium"
-
+FONT_RALEWAY_SEMI_BOLD="Raleway-SemiBold"
 FONT_SIZE_MEDIUM = 12
 FONT_SIZE_SMALL = 10
 
@@ -56,6 +56,7 @@ def register_fonts():
         FONT_INTER_BOLD: "staticfiles/fonts/inter/Inter-Bold.ttf",
         FONT_INTER_SEMI_BOLD: "staticfiles/fonts/inter/Inter-SemiBold.ttf",
         FONT_RALEWAY_BOLD:"staticfiles/fonts/Raleway-Bold.ttf",
+        FONT_RALEWAY_SEMI_BOLD:"staticfiles/fonts/Raleway-SemiBold.ttf",
         FONT_INTER_LIGHT: "staticfiles/fonts/inter/Inter-Light.ttf",
         FONT_INTER_MEDIUM: "staticfiles/fonts/inter/Inter-Medium.ttf",
         FONT_RALEWAY_REGULAR: "staticfiles/fonts/Raleway-Regular.ttf",
@@ -181,6 +182,35 @@ styles.add(ParagraphStyle(
     textColor=colors.HexColor("#152022"),
     spaceAfter=0,
     spaceBefore=0,
+))
+styles.add(ParagraphStyle(
+    "personal_information_style",
+    fontName=FONT_RALEWAY_SEMI_BOLD,         # Raleway SemiBold (weight 600)
+    fontSize=12,
+    leading=14,                      # Approximate line height (adjustable)
+    textColor=colors.HexColor("#DFF9BA"),
+    spaceAfter=0,
+    spaceBefore=0,
+))
+styles.add(ParagraphStyle(
+    "clinical_team_note_style",
+    fontName=FONT_RALEWAY_SEMI_BOLD,         # Raleway SemiBold (weight 600) - Giphurs not available
+    fontSize=18,
+    leading=20,                      # Normal line height
+    textColor=colors.HexColor("#DFF9BA"),
+    spaceAfter=0,
+    spaceBefore=0,
+    wordSpacing=0.72,                # letter-spacing equivalent
+))
+styles.add(ParagraphStyle(
+    "clinical_team_content_style",
+    fontName=FONT_INTER_MEDIUM,              # Inter Medium (weight 500)
+    fontSize=12,
+    leading=24,                              # 200% line height
+    textColor=colors.black,
+    spaceAfter=0,
+    spaceBefore=0,
+    alignment=TA_LEFT,
 ))
 styles.add(ParagraphStyle(
     "HeaderDataStyle",
@@ -428,8 +458,12 @@ class RoundedTopRightTable(Flowable):
         path.close()
         c.drawPath(path, fill=1, stroke=0)
 
+        # Set clipping path to only show content within the green background
+        c.clipPath(path, stroke=0, fill=0)
+
         # Create the table (transparent background)
-        table = Table(self.data, colWidths=self.colWidths)
+        # Set rowHeights to match the background height to ensure proper vertical centering
+        table = Table(self.data, colWidths=self.colWidths, rowHeights=[self.height])
         table.setStyle(TableStyle([
             
             ("ALIGN", (0, 0), (-1, -1), "CENTER"),
@@ -787,6 +821,10 @@ class ThriveRoadmapTemplate:
 
             interpretation_para=Paragraph(interpretation,styles["GenesAnalyzedStyle"])
             genes_analyzed_para=Paragraph(genes_analyzed,styles["GenesAnalyzedStyle"])
+            
+            # Initialize table_ with a default empty table
+            table_ = Table([["", "", "", ""]], colWidths=[240,8, 8,227])
+            
             if interpretation and genes_analyzed:
                 
                 table_ = Table([
@@ -818,6 +856,22 @@ class ThriveRoadmapTemplate:
                     ("LEFTPADDING", (0, 0), (-1, -1), 0),
                     ("VALIGN", (0,0), (-1, -1), "TOP"),
                 ]))
+            else:
+                # Handle case where neither interpretation nor genes_analyzed is available
+                table_ = Table([
+                    [genes_analyzed_,"", "", interpretation_],
+                    [genes_analyzed_para, "", "", interpretation_para]
+                ], colWidths=[240,8, 8,227])
+
+                table_.setStyle(TableStyle([
+                    ("BOTTOMPADDING", (0, 1), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("VALIGN", (0,0), (-1, -1), "TOP"),
+                ]))
+                
             tablee=Table([[table_]],colWidths=[A4[0]-80])
             tablee.setStyle(TableStyle([
                 ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
@@ -830,6 +884,415 @@ class ThriveRoadmapTemplate:
             return tablee
         except Exception as e:
             print(f"Errorrr is {e}")
+    
+    def get_clinical_team_note(self, patient_information):
+        # Create custom flowable for clinical team note with letter spacing
+        class ClinicalTeamNoteText(Flowable):
+            def __init__(self, text, width=A4[0]-79):
+                Flowable.__init__(self)
+                self.text = text
+                self.width = width
+                self.height = 22  # Height for 18px font
+                
+            def draw(self):
+                c = self.canv
+                c.saveState()
+                c.setFont(FONT_RALEWAY_SEMI_BOLD, 18)
+                c.setFillColor(colors.HexColor("#DFF9BA"))
+                
+                # Draw text with letter spacing 0.72px
+                cursor_x = 13  # Left padding to match table
+                cursor_y = 5
+                letter_spacing = 0.72
+                
+                for char in self.text:
+                    c.drawString(cursor_x, cursor_y, char)
+                    cursor_x += stringWidth(char, FONT_RALEWAY_SEMI_BOLD, 18) + letter_spacing
+                
+                c.restoreState()
+        
+        clinical_team_note = ClinicalTeamNoteText("A Note from the PMX Clinical Team")
+        rounded_table = RoundedTopRightTable([[clinical_team_note]], colWidths=[A4[0]-79], height=80, radius=25)
+        
+        # Get patient name
+        patient_name = patient_information.get("pname", "").replace("Mr. ", "").replace("Ms. ", "").replace("Mrs. ", "")
+        
+        # Create the clinical team content text
+        content_text = f"""Dear {patient_name}, 
+          <br/><br/>
+          Your DNA holds powerful clues about your health. At PMX, we believe that understanding your genetic makeup is key to living a longer, healthier life. The PMX Genome 360 Report is designed to help you make sense of your genes in a way that's easy to understand and act on.
+          <br/><br/>
+          This report highlights potential health risks—not as a diagnosis, but as early signals that call for awareness and regular check-ups. It also gives you clear recommendations on what to monitor and how often, so you can stay one step ahead.
+          <br/><br/>
+          Remember, a genetic risk does not mean you will develop the condition, it simply means you should be more mindful. Our goal is to help you stay informed and take proactive steps, not live in worry.
+          <br/><br/>
+          Your genes are not your destiny. They're your blueprint, one you now have the power to work with. With the right information, the right guidance, and timely testing, you can take proactive steps to protect your health and live with confidence.
+          <br/><br/>
+          This is not about fear. It's about foresight. And we're here to guide you every step of the way.
+          <br/><br/>
+          -PMX Clinical Team"""
+        
+        content_paragraph = Paragraph(content_text, styles["clinical_team_content_style"])
+        
+        # Wrap with proper indentation to center horizontally
+        story = []
+        story.append(Indenter(left=44, right=35))
+        story.append(rounded_table)
+        story.append(Spacer(1, 36))  # 36px vertical padding
+        story.append(content_paragraph)
+        story.append(Indenter(left=-44, right=-35))
+        
+        return story
+
+    def generate_patient_information(self,patient_information):
+        personal_information=Paragraph("PERSONAL INFORMATION",styles["personal_information_style"])
+        # Create proper table data structure for RoundedTopRightTable
+        table_data = [[personal_information]]
+
+        rounded_table = RoundedTopRightTable(table_data, colWidths=[A4[0]-79], height=80, radius=25)
+        
+        # Create a custom flowable for the patient info line below
+        class PersonalInfoRow(Flowable):
+            def __init__(self, name, age, gender, width=A4[0]-79):
+                Flowable.__init__(self)
+                self.name = name
+                self.age = age
+                self.gender = gender
+                self.width = width
+                self.height = 20  # Height for the text line
+                
+            def draw_text_with_letter_spacing(self, c, text, x, y, font_name, font_size, letter_spacing=0.4):
+                """Helper to draw text with custom letter spacing"""
+                c.setFont(font_name, font_size)
+                cursor_x = x
+                for char in text:
+                    c.drawString(cursor_x, y, char)
+                    cursor_x += stringWidth(char, font_name, font_size) + letter_spacing
+                return cursor_x - letter_spacing  # Return final x position
+                
+            def draw(self):
+                c = self.canv
+                c.saveState()
+                
+                # Calculate equal spacing for three items
+                available_width = self.width
+                item_width = available_width / 3
+                
+                # Set positions for each key-value pair
+                positions = [0, item_width, item_width * 2]
+                items = [
+                    ("Name: ", self.name),
+                    ("Age: ", self.age),
+                    ("Gender: ", self.gender)
+                ]
+                
+                y_position = 5  # Vertical position for text
+                
+                for i, (key, value) in enumerate(items):
+                    x_position = positions[i]
+                    
+                    # Draw key with Raleway Bold 10px and letter-spacing 0.4px
+                    c.setFillColor(colors.black)
+                    key_end_x = self.draw_text_with_letter_spacing(
+                        c, key, x_position, y_position, FONT_RALEWAY_BOLD, 10, 0.4
+                    )
+                    
+                    # Draw value with Inter Medium 10px and letter-spacing 0.4px
+                    c.setFillColor(colors.black)
+                    self.draw_text_with_letter_spacing(
+                        c, str(value), key_end_x + 2, y_position, FONT_INTER_MEDIUM, 10, 0.4
+                    )
+                
+                c.restoreState()
+        
+        # Extract patient information
+        name = patient_information.get("pname", "")
+        age = patient_information.get("age", "")
+        gender = patient_information.get("gender", "")
+        
+        # Create the info row
+        info_row = PersonalInfoRow(name, age, gender)
+        
+        # Create Sample Details table with letter spacing
+        class SampleDetailsTable(Flowable):
+            def __init__(self, patient_info, width=A4[0]-79):
+                Flowable.__init__(self)
+                self.patient_info = patient_info
+                self.width = width
+                self.height = 150  # Approximate height
+                
+            def draw_text_with_letter_spacing(self, c, text, x, y, font_name, font_size, color, letter_spacing=0.4):
+                """Helper to draw text with custom letter spacing"""
+                c.setFont(font_name, font_size)
+                c.setFillColor(color)
+                cursor_x = x
+                for char in text:
+                    c.drawString(cursor_x, y, char)
+                    cursor_x += stringWidth(char, font_name, font_size) + letter_spacing
+                return cursor_x
+                
+            def draw(self):
+                c = self.canv
+                c.saveState()
+                
+                # Table dimensions
+                header_height = 32
+                row_height = 32
+                padding_left = 16
+                padding_top = 11
+                corner_radius = 6
+                
+                # Define table rows
+                rows = [
+                    ("Collection Date", self.patient_info.get("collection_date", "").split()[0] if self.patient_info.get("collection_date") else ""),
+                    ("Type of sample", self.patient_info.get("type_of_sample", "")),
+                    ("Genomic Specimen ID", self.patient_info.get("samplecode", ""))
+                ]
+                
+                body_height = len(rows) * row_height
+                total_height = header_height + body_height
+                
+                # Create clipping path for rounded corners
+                path = c.beginPath()
+                x, y = 0, self.height - total_height
+                w, h = self.width, total_height
+                r = corner_radius
+                
+                # Rounded rectangle path
+                path.moveTo(x + r, y)
+                path.lineTo(x + w - r, y)
+                path.arcTo(x + w - 2*r, y, x + w, y + 2*r, startAng=270, extent=90)
+                path.lineTo(x + w, y + h - r)
+                path.arcTo(x + w - 2*r, y + h - 2*r, x + w, y + h, startAng=0, extent=90)
+                path.lineTo(x + r, y + h)
+                path.arcTo(x, y + h - 2*r, x + 2*r, y + h, startAng=90, extent=90)
+                path.lineTo(x, y + r)
+                path.arcTo(x, y, x + 2*r, y + 2*r, startAng=180, extent=90)
+                path.close()
+                
+                # Draw header background (dark green) with rounded top corners
+                c.setFillColor(colors.HexColor("#003E39"))
+                c.clipPath(path, stroke=0, fill=0)
+                c.rect(0, self.height - header_height, self.width, header_height, fill=1, stroke=0)
+                
+                # Draw table body background (white)
+                c.setFillColor(colors.white)
+                c.rect(0, self.height - total_height, self.width, body_height, fill=1, stroke=0)
+                
+                # Reset clipping
+                c.restoreState()
+                c.saveState()
+                
+                # Draw rounded border
+                c.setStrokeColor(colors.HexColor("#E0E0E0"))
+                c.setLineWidth(0.5)
+                c.roundRect(0, self.height - total_height, self.width, total_height, corner_radius, fill=0, stroke=1)
+                
+                # Draw header text "Sample Details"
+                self.draw_text_with_letter_spacing(
+                    c, "Sample Details", 
+                    padding_left, 
+                    self.height - header_height + padding_top,
+                    FONT_RALEWAY_SEMI_BOLD, 10, 
+                    colors.HexColor("#DFF9BA"), 
+                    0.4
+                )
+                
+                # Draw rows
+                y_offset = self.height - header_height - row_height
+                col_width = self.width / 2
+                
+                for i, (key, value) in enumerate(rows):
+                    # Draw horizontal line between rows
+                    if i > 0:
+                        c.setStrokeColor(colors.HexColor("#E0E0E0"))
+                        c.setLineWidth(0.5)
+                        c.line(0, y_offset + row_height, self.width, y_offset + row_height)
+                    
+                    # Draw vertical line between columns (not extending to the corners)
+                    line_top = min(y_offset + row_height, self.height - header_height)
+                    line_bottom = y_offset
+                    c.line(col_width, line_bottom, col_width, line_top)
+                    
+                    # Draw key (left column)
+                    self.draw_text_with_letter_spacing(
+                        c, key,
+                        padding_left,
+                        y_offset + padding_top,
+                        FONT_RALEWAY_SEMI_BOLD, 10,
+                        colors.black,
+                        0.4
+                    )
+                    
+                    # Draw value (right column)
+                    self.draw_text_with_letter_spacing(
+                        c, str(value),
+                        col_width + padding_left,
+                        y_offset + padding_top,
+                        FONT_INTER_MEDIUM, 10,
+                        colors.HexColor("#003E39"),
+                        0.4
+                    )
+                    
+                    y_offset -= row_height
+                
+                c.restoreState()
+        
+        # Create sample details table
+        sample_details = SampleDetailsTable(patient_information)
+        
+        # Create Sequencing Details table with the same styling
+        class SequencingDetailsTable(Flowable):
+            def __init__(self, patient_info, width=A4[0]-79):
+                Flowable.__init__(self)
+                self.patient_info = patient_info
+                self.width = width
+                self.height = 260  # Approximate height for 7 rows
+                
+            def draw_text_with_letter_spacing(self, c, text, x, y, font_name, font_size, color, letter_spacing=0.4):
+                """Helper to draw text with custom letter spacing"""
+                c.setFont(font_name, font_size)
+                c.setFillColor(color)
+                cursor_x = x
+                for char in text:
+                    c.drawString(cursor_x, y, char)
+                    cursor_x += stringWidth(char, font_name, font_size) + letter_spacing
+                return cursor_x
+                
+            def draw(self):
+                c = self.canv
+                c.saveState()
+                
+                # Table dimensions
+                header_height = 32
+                row_height = 32
+                padding_left = 16
+                padding_top = 11
+                corner_radius = 6
+                
+                # Define table rows
+                rows = [
+                    ("Sequencing Type", self.patient_info.get("sequencing_type", "")),
+                    ("WGS/WES/Targeted Seq", self.patient_info.get("wgs_wes_targeted_sql", "")),
+                    ("Mean Sequencing Depth(x)", str(self.patient_info.get("mean_sequencing_depth", ""))),
+                    ("Encoding", self.patient_info.get("encoding", "")),
+                    ("Sequence Length", self.patient_info.get("sequencing_length", "")),
+                    ("Overall Alignment  Rate (%)", str(self.patient_info.get("overall_alignment_rate", ""))),
+                    ("Q30 score(%)", str(self.patient_info.get("q30_score", "")))
+                ]
+                
+                body_height = len(rows) * row_height
+                total_height = header_height + body_height
+                
+                # Create clipping path for rounded corners
+                path = c.beginPath()
+                x, y = 0, self.height - total_height
+                w, h = self.width, total_height
+                r = corner_radius
+                
+                # Rounded rectangle path
+                path.moveTo(x + r, y)
+                path.lineTo(x + w - r, y)
+                path.arcTo(x + w - 2*r, y, x + w, y + 2*r, startAng=270, extent=90)
+                path.lineTo(x + w, y + h - r)
+                path.arcTo(x + w - 2*r, y + h - 2*r, x + w, y + h, startAng=0, extent=90)
+                path.lineTo(x + r, y + h)
+                path.arcTo(x, y + h - 2*r, x + 2*r, y + h, startAng=90, extent=90)
+                path.lineTo(x, y + r)
+                path.arcTo(x, y, x + 2*r, y + 2*r, startAng=180, extent=90)
+                path.close()
+                
+                # Draw header background (dark green) with rounded top corners
+                c.setFillColor(colors.HexColor("#003E39"))
+                c.clipPath(path, stroke=0, fill=0)
+                c.rect(0, self.height - header_height, self.width, header_height, fill=1, stroke=0)
+                
+                # Draw table body background (white)
+                c.setFillColor(colors.white)
+                c.rect(0, self.height - total_height, self.width, body_height, fill=1, stroke=0)
+                
+                # Reset clipping
+                c.restoreState()
+                c.saveState()
+                
+                # Draw rounded border
+                c.setStrokeColor(colors.HexColor("#E0E0E0"))
+                c.setLineWidth(0.5)
+                c.roundRect(0, self.height - total_height, self.width, total_height, corner_radius, fill=0, stroke=1)
+                
+                # Draw header text "Sequencing Details"
+                self.draw_text_with_letter_spacing(
+                    c, "Sequencing Details", 
+                    padding_left, 
+                    self.height - header_height + padding_top,
+                    FONT_RALEWAY_SEMI_BOLD, 10, 
+                    colors.HexColor("#DFF9BA"), 
+                    0.4
+                )
+                
+                # Draw rows
+                y_offset = self.height - header_height - row_height
+                col_width = self.width / 2
+                
+                for i, (key, value) in enumerate(rows):
+                    # Draw horizontal line between rows
+                    if i > 0:
+                        c.setStrokeColor(colors.HexColor("#E0E0E0"))
+                        c.setLineWidth(0.5)
+                        c.line(0, y_offset + row_height, self.width, y_offset + row_height)
+                    
+                    # Draw vertical line between columns (not extending to the corners)
+                    line_top = min(y_offset + row_height, self.height - header_height)
+                    line_bottom = y_offset
+                    c.line(col_width, line_bottom, col_width, line_top)
+                    
+                    # Draw key (left column)
+                    self.draw_text_with_letter_spacing(
+                        c, key,
+                        padding_left,
+                        y_offset + padding_top,
+                        FONT_RALEWAY_SEMI_BOLD, 10,
+                        colors.black,
+                        0.4
+                    )
+                    
+                    # Draw value (right column)
+                    self.draw_text_with_letter_spacing(
+                        c, str(value),
+                        col_width + padding_left,
+                        y_offset + padding_top,
+                        FONT_INTER_MEDIUM, 10,
+                        colors.HexColor("#003E39"),
+                        0.4
+                    )
+                    
+                    y_offset -= row_height
+                
+                c.restoreState()
+        
+        # Create sequencing details table
+        sequencing_details = SequencingDetailsTable(patient_information)
+        
+        # Wrap everything in a table to return as a single unit
+        wrapper_table = Table([
+            [rounded_table],
+            [Spacer(1, 28)],
+            [info_row],
+            [Spacer(1, 28)],
+            [sample_details],
+            [Spacer(1, 20)],
+            [sequencing_details]
+        ], colWidths=[A4[0]-79])
+        
+        wrapper_table.setStyle(TableStyle([
+            ("TOPPADDING", (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ]))
+        
+        return wrapper_table
     
     def generate_section(self,data_card,sections):
         try:
@@ -879,6 +1342,26 @@ class ThriveRoadmapTemplate:
                 ("Moderate", "#DE425B"),
                 ("High", "#912018")
         ]
+        patient_information= {
+          "samplecode": "KHPMXGPTTL34",
+          "pname": "Mr. Vish Reddy",
+          "age": "35",
+          "gender": "Male",
+          "collection_date": "07-08-2025 00:00:00",
+          "type_of_sample": "Whole Blood",
+          "sequencing_type": "germline",
+          "wgs_wes_targeted_sql": "Whole exome sequencing",
+          "encoding": "Illumina 1.9",
+          "sequencing_length": "150bp",
+          "mean_sequencing_depth": 74,
+          "overall_alignment_rate": 99.98,
+          "q30_score": 93.37
+        }
+        if patient_information:
+            story.extend(self.get_clinical_team_note(patient_information))
+            story.append(PageBreak())
+            story.append(self.generate_patient_information(patient_information))
+            story.append(PageBreak())
         if cardiac_health_data:
             cardiac_health=self.generate_section(cardiac_health_data,section)
             story.extend(cardiac_health)
@@ -980,7 +1463,7 @@ app = FastAPI()
 @app.post("/generate-pdf")
 async def generate_pdf(request: Request):
     # data = await request.json()
-    excel_file = r'C:\Users\Admin\Downloads\PMX_Sample_report.xlsx'
+    excel_file = r'C:\Users\Admin\Documents\GitHub\Example_repo\df_output.xlsx'
     df = pd.read_excel(excel_file)
     df.fillna("", inplace=True)
 
@@ -1133,7 +1616,6 @@ async def generate_pdf(request: Request):
 
     # === Tell ReportLab to switch to 'main' template from here on ===
     story.append(NextPageTemplate("main"))
-    print(f"final_output:{final_output}")
     # === Page 2 onward ===
     story.extend(template.generate(final_output))
 

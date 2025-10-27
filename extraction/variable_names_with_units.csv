@@ -1,0 +1,260 @@
+variable_name,units
+17OH,ng/mL
+A/GR,Ratio
+ABAS,X 10³ / µL
+ABG,mg/dL
+ACCP,U/mL
+ACTH,pg/mL
+AEOS,X 10³ / µL
+AFP,IU/mL
+ALDOS,ng/dL
+ALKP,U/L
+ALYM,X 10³ / µL
+AMA,IU/mL
+AMH,ng/mL
+AMON,X 10³ / µL
+AMYL,U/L
+ANA,AU/mL
+ANEU,X 10³ / µL
+ANTI_TPO,IU/mL
+APB/,Ratio
+APOA,mg/dL
+APOB,mg/dL
+ATG,IU/ml
+BASO,%
+BHCG,mIU/mL
+BILI,mg/dL
+BILD,mg/dL
+BILT,mg/dL
+BODY_HEIGHT,NOT_FOUND
+BODY_MASS_INDEX,kg/m²
+BODY_TEMPERATURE,°F
+BODY_WEIGHT,NOT_FOUND
+BUN,mg/dL
+B/CR,Ratio
+C125,U/mL
+C153,U/mL
+C199,U/mL
+CALC,mg/dL
+CALCT,pg/mL
+CEA,ng/mL
+CHL,mmol/L
+CHOL,mg/dl
+CORT,µg/dl
+CPEP,ng/mL
+CPK,U/L
+CYST,mg/L
+DHEA,μg/dL
+DHT,pg/mL
+DIASTOLIC_BP,mmHg
+DIASTOLIC_BP_LEFT,mmHg
+DIASTOLIC_BP_RIGHT,mmHg
+E2,pg/mL
+EGFR,mL/min/1.73 m2
+EOS,%
+FBS,mg/dl
+FERR,ng/mL
+FOLI,ng/mL
+FSH,mIU/L
+FT3,pg/mL
+FT4,ng/dl
+FTES,pg/mL
+GGT,U/L
+GRIP_STRENGTH_LEFT,Numeric
+GRIP_STRENGTH_RIGHT,Numeric
+HB,g/dl
+HBA,%
+HBSAG,#
+HCHO,mg/dL
+HD/LD,Ratio
+HIP_CIRCUMFERENCE,cm
+HOMIR,Index
+HOMO,µmol/L
+HSCRP,mg/L
+IG,X 10³ / µL
+IG%,%
+EBVCG,NTU
+INGF1,ng/mL
+INSFA,μU/ml
+IRON,µg/dl
+LASE,U/L
+LDH,U/L
+LDL,mg/dL
+LDL/,Ratio
+LEUC,X 10^3/μL
+LH,mIU/L
+LPA,mg/dl
+LYMPH,%
+MCH,pg
+MCHC,g/dL
+MCV,fL
+MG,mg/dL
+MONO,%
+MPV,fL
+NEUT,%
+NHDL,mg/dL
+NRBC,X 10³ / µL
+NRBC%,%
+OT/PT,Ratio
+OXYGEN_SATURATION,%
+PCT,%
+PCV,%
+PDW,fL
+PLCR,%
+PLT,X 10³ / µL
+POT,mmol/L
+PRL,ng/ml
+PROG,ng/mL
+PROT,gm/dL
+PSA,ng/mL
+PULSE_RATE,bpm
+QUICKI,Index
+RBC,X 10^6/μL
+RDCV,%
+RDWSD,fL
+RESPIRATORY_RATE,breaths/min
+RFAC,ng/mL
+SALB,gm/dL
+SCRE,mg/dL
+SEGB,gm/dL
+SEZN,μg/dL
+SGOT,U/L
+SGPT,U/L
+SHBG,nmol/L
+SOD,mmol/L
+SYSTOLIC_BP,mmHg
+SYSTOLIC_BP_LEFT,mmHg
+SYSTOLIC_BP_RIGHT,mmHg
+TC/H,Ratio
+TEST,ng/dl
+TIBC,µg/dL
+TOTAL_BODY_FAT_PERCENTAGE,%
+TOTAL_CHOLESTEROL,mg/dL
+TRANSAT,%
+TRI/H,Ratio
+TRIG,mg/dL
+UA/C,µg/mg of Creatinine
+UALB,μg/mL
+UCRA,mg/dL
+UR/CR,Ratio
+UREAC,mg/dL
+URIC,mg/dL
+USTSH,μIU/mL
+VITB,pg/mL
+VITDC,ng/mL
+VLDL,mg/dL
+WAIST_CIRCUMFERENCE,cm
+WAIST_TO_HIP_RATIO,Numeric
+MI,NOT_FOUND
+RDWI,NOT_FOUND
+SPGR,#
+UPROT,#
+UGLU,#
+UKET,#
+UBIL,#
+UBNGN,#
+UBSAL,#
+UBPIG,#
+UBLD,#
+UNIT,#
+ULEST,#
+UMUC,#
+UCAST,#
+UCRYS,#
+UBACT,#
+UYST,#
+UPAR,#
+UPH,#
+URBC,cells/HPF
+ULEUC,cells/HPF
+UEPIT,cells/HPF
+VITB9,ng/mL
+TOTAL_BONE_MASS,kg
+TOTAL_SOFT_TISSUE,%
+TOTAL_LEAN_MASS,%
+VAT_MASS,g
+SAT_VAT_RATIO,Ratio
+VAT_AREA,cm²
+ASM_HEIGHT_SQUARED,kg/m²
+ASM_WEIGHT,Ratio
+ASM_BMI,Ratio
+T_SCORE,Numeric
+A_G_RATIO,Ratio
+Z_SCORE,Numeric
+TOTAL_BONE_MASS_PERCENTAGE,%
+GLYCINE,nmol/mL
+BAIBA,nmol/mL
+SARCOSINE,nmol/mL
+HISTIDINE,nmol/mL
+MMA,mmol/mol Cr
+URACIL,mmol/mol Cr
+FIGLU,mmol/mol Cr
+SERINE,nmol/mL
+CARNOSINE,nmol/mL
+B_ALANINE,nmol/mL
+THREONINE,nmol/mL
+SUBERATE,mmol/mol Cr
+GLUTAMINE,mmol/mol Cr
+HMG,mmol/mol Cr
+EMA,mmol/mol Cr
+PYRUVATE,mmol/mol Cr
+SUCCINATE,mmol/mol Cr
+ISOLEUCINE,mmol/mol Cr
+ADIPATE,mmol/mol Cr
+3HIV,mmol/mol Cr
+PYROGLU,mmol/mol Cr
+MALATE,mmol/mol Cr
+C0,nmol/mL
+ME_SUCCINATE,mmol/mol Cr
+SEBACATE,mmol/mol Cr
+LACTATE,mmol/mol Cr
+2KG,mmol/mol Cr
+3HB,mmol/mol Cr
+BENZOATE,mmol/mol Cr
+4_HPA,mmol/mol Cr
+INDOLE‑3‑ACETATE,mmol/mol Cr
+CLOSTRIDIAL,mmol/mol Cr
+HIPPURATE,mmol/mol Cr
+4‑HYDROXYHIPPURATE,mmol/mol Cr
+TAURINE,nmol/mL
+Β‑ALANINE,NOT_FOUND
+GLUTAMINE_B,nmol/mL
+MANDELATE,mmol/mol Cr
+OROTATE,mmol/mol Cr
+ANALOG CITRATE,mmol/mol Cr
+CITRATE,mmol/mol Cr
+CIS‑ACONITATE,mmol/mol Cr
+1‑METHYL‑HISTIDINE,NOT_FOUND
+CYSTEINE,nmol/mL
+LYSINE,nmol/mL
+PROLINE,nmol/mL
+OXALATE,mmol/mol Cr
+ARGININE,nmol/mL
+PHENYLALANINE,nmol/mL
+METHIONINE,nmol/mL
+VALINE,nmol/mL
+TYROSINE,nmol/mL
+TRYPTOPHAN,nmol/mL
+LEUCINE,nmol/mL
+FVC,%
+FEV1,%
+FEV1_FVC_RATIO,%
+PEF,%
+FEF25,l/s
+FEF25_75,%
+PUFA_O3,%
+PUFA_O6,%
+MUFA,%
+SFA,%
+TFA,%
+O3_INDEX,%
+O6_O3_RATIO,Ratio
+PALM_INDEX,%
+AA_EPA_RATIO,Ratio
+TFI,%
+OVERALL_BRAIN_SCORE,Numeric
+ATTENTION,Numeric
+IMMEDIATE_MEMORY,Numeric
+WORKING_MEMORY,Numeric
+BRAIN_EXECUTIVE_FUNCTION,Numeric
+VO2_MAX,ml/kg/min

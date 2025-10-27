@@ -1,0 +1,93 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available Fitness Assessment biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED FITNESS ASSESSMENT BIOMARKER UNITS:
+Balance and Posture:BALANCE_AND_POSTURE : Score
+Upper Body Strength:UPPER_BODY_STRENGTH : Score
+Lower Body Strength:LOWER_BODY_STRENGTH : Score
+Agility:AGILITY : Score
+Power:POWER : Score
+Aerobic Capacity:VO2_MAX : ml/kg/min
+Upper Body Flexibility:UPPER_BODY_FLEXIBILITY : Score
+Lower Body Flexibility:LOWER_BODY_FLEXIBILITY : Score
+Hand Eye Coordination:HAND_EYE_COORDINATION : Score
+Reaction Time:REACTION_TIME : ms
+Total PMX Fitness Score:TOTAL_FITNESS_SCORE : Score
+Interpretation:INTERPRETATION : Text
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `FULL BIOMARKER NAME:VARIABLE_NAME : unit`
+   - Search for the FULL BIOMARKER NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "Balance and Posture:BALANCE_AND_POSTURE : Score" → search PDF for "Balance and Posture" → output as `{"BALANCE_AND_POSTURE": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: 
+   - Balance and Posture = BALANCE_AND_POSTURE
+   - Upper Body Strength = UPPER_BODY_STRENGTH
+   - Lower Body Strength = LOWER_BODY_STRENGTH
+   - Agility = AGILITY
+   - Power = POWER
+   - Aerobic Capacity = VO2_MAX
+   - Upper Body Flexibility = UPPER_BODY_FLEXIBILITY
+   - Lower Body Flexibility = LOWER_BODY_FLEXIBILITY
+   - Hand Eye Coordination = HAND_EYE_COORDINATION
+   - Reaction Time = REACTION_TIME
+   - Total PMX Fitness Score = TOTAL_FITNESS_SCORE
+   - Interpretation = INTERPRETATION
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle different value types**:
+   - Scores: Extract numerical values
+   - VO2_MAX: Extract in ml/kg/min units
+   - Reaction Time: Extract in milliseconds (ms)
+   - Interpretation: Extract as text description
+8. **Look for these specific terms** in the PDF:
+   - "Balance and Posture"
+   - "Upper Body Strength"
+   - "Lower Body Strength"
+   - "Agility"
+   - "Power"
+   - "Aerobic Capacity"
+   - "Upper Body Flexibility"
+   - "Lower Body Flexibility"
+   - "Hand Eye Coordination"
+   - "Reaction Time"
+   - "Total PMX Fitness Score"
+   - "Interpretation"
+9. **For Interpretation field**: Extract the complete interpretation/assessment text, but stop before any "Limitation:" sections. Include the full descriptive assessment text, whatever it may be, but exclude any limitation content that starts with "Limitation:". 
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "BALANCE_AND_POSTURE": 85,
+  "UPPER_BODY_STRENGTH": 78,
+  "LOWER_BODY_STRENGTH": 82,
+  "AGILITY": 75,
+  "POWER": 88,
+  "VO2_MAX": 45.2,
+  "UPPER_BODY_FLEXIBILITY": 80,
+  "LOWER_BODY_FLEXIBILITY": 85,
+  "HAND_EYE_COORDINATION": 90,
+  "REACTION_TIME": 250,
+  "TOTAL_FITNESS_SCORE": 82,
+  "INTERPRETATION": "Good overall fitness level"
+}
+```

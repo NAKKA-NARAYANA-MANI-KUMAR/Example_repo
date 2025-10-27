@@ -1,0 +1,304 @@
+{
+  "report": {
+    "aging_and_longevity": {
+      "resistance_to_oxidative_stress": {
+        "definition": "The body's ability to neutralize harmful free radicals that can damage cells. This resistance plays a critical role in slowing aging and preventing chronic diseases. It varies among individuals due to genetic and environmental factors.",
+        "risk_level": "Moderate",
+        "interpretation": "You have moderate genetic risk for Resistance to Oxidative Stress. Homozygous mutations seen in GSTM1, SOD3, CYBA, PRDX5",
+        "genes_analyzed": [
+          "SOD1",
+          "SOD2",
+          "SOD3",
+          "CAT",
+          "GPX1",
+          "GSS",
+          "GLUL",
+          "GSTM1",
+          "GSTM5",
+          "GSTP1",
+          "TXN",
+          "HMOX1",
+          "YAP1",
+          "SKN7",
+          "GRX2",
+          "GPX2",
+          "GPX6",
+          "GPX3",
+          "TRX1",
+          "GSR",
+          "GCLC",
+          "GCLM",
+          "NQO1",
+          "Nrf2",
+          "KEAP1",
+          "PRD1",
+          "PRDX2",
+          "PRDX3",
+          "PRDX4",
+          "PRDX5",
+          "PRDX6",
+          "PON1",
+          "NOS",
+          "XO",
+          "CYBA",
+          "CYBB",
+          "ALOX",
+          "LMNA"
+        ]
+      },
+      "cellular_senescence_and_dna_repair": {
+        "definition": "Cellular senescence is a state where cells stop dividing but do not die. DNA repair mechanisms help maintain genetic stability and delay aging. Impairment in these processes contributes to tissue dysfunction and age-related decline.",
+        "risk_level": "Mild",
+        "interpretation": "",
+        "genes_analyzed": [
+          "FOXO3",
+          "SIRT1",
+          "APOE",
+          "TERT",
+          "KL",
+          "MTOR",
+          "IGF1",
+          "PON1",
+          "WRN",
+          "DAF-16"
+        ]
+      },
+      "alzheimers_disease_dementia": {
+        "definition": "Alzheimer's is a progressive brain disorder causing memory loss and cognitive decline. It is the most common form of dementia, often affecting older adults. It is associated with abnormal protein buildup and neuronal damage.",
+        "risk_level": "Mild",
+        "interpretation": "You have mild genetic risk for Alzheimer's Disease / Dementia. You have  \u03b54 mutattion in APOE gene.",
+        "genes_analyzed": [
+          "APOE",
+          "PSEN2",
+          "PSEN1",
+          "APP",
+          "MPO",
+          "NOS3",
+          "PLAU",
+          "CACNA1G",
+          "ABCA7",
+          "CREB",
+          "MAPT",
+          "UBQLN2",
+          "CYLD",
+          "TIA1",
+          "CHCHD10"
+        ]
+      }
+    },
+    "cardiac_health": {
+      "coronary_artery_disease": {
+        "definition": "Coronary artery disease occurs when the arteries that supply blood to the heart become narrowed or blocked by cholesterol buildup (plaque). This limits oxygen-rich blood flow, which can cause chest pain or lead to a heart attack. It is one of the most common causes of heart-related illness and death.",
+        "risk_level": "Mild",
+        "interpretation": "You have mild genetic risk for Coronary artery disease. Few clinically significant mutations seen for it.",
+        "genes_analyzed": [
+          "ACE",
+          "PPARG",
+          "NPC1L1",
+          "ABCA1",
+          "APOB",
+          "APOC3",
+          "APOE",
+          "CETP",
+          "KCNE1",
+          "LDLR",
+          "ANGPLT4",
+          "NOS3",
+          "PCSK9"
+        ]
+      },
+      "cardiomyopathy": {
+        "definition": "Cardiomyopathy is a disease of the heart muscle that makes it harder for the heart to pump blood. The heart may become enlarged, thickened, or stiff, affecting its ability to function normally. It can lead to heart failure, irregular heartbeats, or other complications.",
+        "risk_level": "Mild",
+        "interpretation": "You have mild genetic risk for Cardiomyopathy. Few clinically significant mutations seen for it.",
+        "genes_analyzed": [
+          "MYH7",
+          "TNNT2",
+          "TTN",
+          "TNNC1",
+          "PLN",
+          "FLNC",
+          "PRKAGE",
+          "MYBPC3",
+          "MYL2",
+          "MYH6",
+          "ACTC1",
+          "TPM1",
+          "TNNI3",
+          "ABCC9"
+        ]
+      },
+      "atrial_fibrillation": {
+        "definition": "Atrial Fibrillation is a common type of irregular heartbeat that starts in the upper chambers (atria) of the heart.  The heart beats too fast or unevenly, which can lead to poor blood flow and increase stroke risk.\nMany people with atrial fibrillation may feel palpitations, fatigue, or no symptoms at all.",
+        "risk_level": "Low",
+        "interpretation": "You have low genetic risk for Atrial Fibrillation. No Clinically significant mutations were seen for it.",
+        "genes_analyzed": [
+          "NPPA",
+          "GJA5",
+          "SCN5A",
+          "KCNH2",
+          "KCNQ1",
+          "KCNA5",
+          "KCNJ2",
+          "SCN1B",
+          "KCNE2",
+          "TTR"
+        ]
+      },
+      "long_qt_syndrome": {
+        "definition": "Long QT Syndrome is a heart rhythm condition that can cause fast, chaotic heartbeats. It happens because of a delay in the heart's electrical system recovering between beats. If untreated, it can trigger fainting, seizures, or even sudden death.",
+        "risk_level": "Low",
+        "interpretation": "You have low genetic risk for Long QT syndrome. No Clinically significant mutations were seen for it.",
+        "genes_analyzed": [
+          "CAV3",
+          "SCN5A",
+          "KCNH2",
+          "KCNQ1",
+          "CACNA1C",
+          "CALM1",
+          "SCN9A"
+        ]
+      },
+      "ventricular_arrythmias_sudden_cardiac_death": {
+        "definition": "Ventricular arrhythmias are abnormal heart rhythms that begin in the heart's lower chambers (ventricles).\nThey can cause the heart to beat so fast or erratically that it stops pumping effectively. If not treated immediately, this can lead to sudden cardiac death.",
+        "risk_level": "Low",
+        "interpretation": "You have low genetic risk for Ventricular Arrythmias. No Clinically significant mutations were seen for it.",
+        "genes_analyzed": [
+          "RYR2",
+          "CASQ2",
+          "CALM1",
+          "CALM2",
+          "SCN10A",
+          "KCNH2",
+          "KCNQ1",
+          "SCN5A",
+          "CALM3",
+          "KCNJ8",
+          "NKX2-5"
+        ]
+      },
+      "hypertension": {
+        "definition": "Hypertension means the pressure of blood against the artery walls is consistently too high. It often has no symptoms but puts extra strain on the heart and blood vessels.  Over time, it increases the risk of heart attack, stroke, and kidney disease.\n\n",
+        "risk_level": "Moderate",
+        "interpretation": "You have moderate genetic risk for Hypertension. You have clinically significant homozygous mutations in CYP11B1, WNK1.",
+        "genes_analyzed": [
+          "AGT",
+          "PRKAG2",
+          "INF2",
+          "PKD1",
+          "PKD2",
+          "NOS3",
+          "CACNA1H",
+          "CLCN2",
+          "CYP11B2",
+          "KCNJ5",
+          "NR3C2",
+          "SLC12A3"
+        ]
+      }
+    },
+    "nutrition": {
+      "vitamin_b12": {
+        "definition": "Vitamin B12 is essential for nerve health, red blood cell production, and DNA repair. Genetics can affect your ability to absorb Vitamin B12 from food, which may lead to fatigue, nerve problems, or anemia if levels are low.",
+        "risk_level": "Moderate",
+        "interpretation": "You have moderate genetic risk for impaired Vitamin B12 absorption and metabolism. It can cause anemia, headaches, irritability, numbness and fatigue.",
+        "genes_analyzed": [
+          "ABCD4",
+          "ACSF3",
+          "BBOF1",
+          "CD320",
+          "CUBN",
+          "DNMT1",
+          "DNMT2",
+          "FMO3",
+          "GIF",
+          "HCFC1",
+          "MCEE",
+          "MMAA",
+          "MMAB",
+          "MMACHC",
+          "MMADHC",
+          "MTHFD1",
+          "MTHFR",
+          "MTR",
+          "MTRR",
+          "MVK",
+          "NDUFA7",
+          "PRDX1",
+          "SLC19A2",
+          "TCN1",
+          "TCN2",
+          "ZNF143"
+        ]
+      },
+      "vitamin_d": {
+        "definition": "Vitamin D helps your body absorb calcium, supports immune function, and promotes bone health. Genetics can affect how well your body processes Vitamin D from sunlight or food, potentially leading to weaker bones or immunity issues.",
+        "risk_level": "Mild",
+        "interpretation": "You have mild genetic risk for impaired Vitamin D absorption and metabolism. It can cause mild bone pains, muscle aches.",
+        "genes_analyzed": [
+          "AICDA",
+          "C4BPB",
+          "CD19",
+          "CD27-AS1",
+          "CD36",
+          "CTLA4",
+          "DOCK2",
+          "IKZF1",
+          "IL10RB",
+          "IL12B",
+          "IL21",
+          "IL23R",
+          "IL7R",
+          "LRBA",
+          "PTPRC",
+          "RAG1"
+        ]
+      },
+      "magnesium": {
+        "definition": "Magnesium is an essential mineral that plays a key role in many body functions, like keeping your muscles, nerves, and heart working properly and supporting strong bones. Magnesium absorption genetics refers to how your genes affect your ability to absorb and use magnesium from the food you eat.",
+        "risk_level": "Low",
+        "interpretation": "You have low genetic risk for impaired Magnesium absorption and metabolism. No clinically significant mutations were seen for it.",
+        "genes_analyzed": [
+          "CNNM2",
+          "CTLA4",
+          "EGF",
+          "FXYD2",
+          "LRBA",
+          "TRPM6",
+          "SLC41A1",
+          "CLDN16",
+          "CLDN19",
+          "CASR",
+          "CLCNKB",
+          "EGFR"
+        ]
+      }
+    },
+    "methylation_genes": {
+      "mthfr": {
+        "definition": "The MTHFR gene encodes an enzyme crucial for activating folate, enabling proper methylation processes in the body. Methylation supports DNA synthesis, detoxification, neurotransmitter production, and cardiovascular health. Disruptions in MTHFR function can influence homocysteine levels, mood regulation, and overall metabolic efficiency.",
+        "risk_level": "Moderate",
+        "interpretation": "Homozygous mutations seen.",
+        "genes_analyzed": [
+          "MTHFR"
+        ]
+      },
+      "comt": {
+        "definition": "The COMT gene encodes an enzyme responsible for breaking down dopamine, norepinephrine, and epinephrine in the brain. Its activity plays a key role in regulating mood, stress response, and emotional balance. Altered COMT function can influence neurotransmitter levels, impacting cognitive performance and mental well-being.",
+        "risk_level": "Mild",
+        "interpretation": "",
+        "genes_analyzed": [
+          "COMT"
+        ]
+      },
+      "mtrr": {
+        "definition": "The MTRR (Methionine Synthase Reductase) gene is essential for regenerating active vitamin B12, a key cofactor in the methylation cycle. It supports the conversion of homocysteine to methionine, influencing methylation, detoxification, and nervous system health. MTRR dysfunction can impair B12 recycling, potentially affecting energy metabolism, mood, and cardiovascular balance.",
+        "risk_level": "Moderate",
+        "interpretation": "Homozygous mutations seen.",
+        "genes_analyzed": [
+          "MTRR"
+        ]
+      }
+    }
+  }
+}

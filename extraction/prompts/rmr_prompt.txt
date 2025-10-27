@@ -1,0 +1,56 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available RMR (Resting Metabolic Rate) biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED RMR BIOMARKER UNITS:
+Resting Energy Expenditure:REE : kcal/day
+Your Metabolism [%]:YOUR_METABOLISM : %
+Resting Heart Rate [bpm]:RHR : bpm
+Heart Rate Variability:HRV : ms
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `FULL BIOMARKER NAME:VARIABLE_NAME : unit`
+   - Search for the FULL BIOMARKER NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "Resting Energy Expenditure:REE : kcal/day" → search PDF for "Resting Energy Expenditure" → output as `{"REE": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: 
+   - Resting Energy Expenditure = REE
+   - Your Metabolism [%] = YOUR_METABOLISM
+   - Resting Heart Rate [bpm] = RHR
+   - Heart Rate Variability = HRV
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle decimal values** - preserve decimal places as shown in the report
+8. **Look for these specific terms** in the PDF:
+   - "Resting Energy Expenditure" (may appear as REE)
+   - "Your Metabolism" or "Your Metabolism [%]" (percentage value)
+   - "Resting Heart Rate" or "Resting Heart Rate [bpm]" (beats per minute)
+   - "Heart Rate Variability" or "HRV" (milliseconds)
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "REE": 1450.5,
+  "YOUR_METABOLISM": 85.2,
+  "RHR": 65,
+  "HRV": 42.3
+}
+```

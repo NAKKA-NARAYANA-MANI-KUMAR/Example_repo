@@ -1,0 +1,3322 @@
+[
+    {
+      "CONDITION": "Atrial Fibrillation",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found which indicates a reduced inherited likelihood of developing this abnormal heart rhythm",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Atrial Fibrillation",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few  mutations are seen in -- genes, which suggests a mild  risk of atrial fibrillation, syncope, and stroke.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Atrial Fibrillation",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight mutations are seen in -- genes, which suggests a moderate  risk of atrial fibrillation, syncope, and stroke.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Atrial Fibrillation",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in -- genes, which suggests a high risk of atrial fibrillation, syncope, and stroke.",
+      "Tracking Biomarkers": "Holter Monitoring ,12 Lead ECG,Serum Electrolytes",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cardiomyopathy",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Cardiomyopathy, which suggests a low risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cardiomyopathy",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few mutations are seen in -- which suggests a mild risk of dilated cardiomyopathy, conduction defects, and sudden cardiac death.",
+      "Tracking Biomarkers": "2D ECHOCARDIOGRAM",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cardiomyopathy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight mutations are seen in -- which might impair cardiac muscle structure and contraction, predisposing to dilated, hypertrophic, or restrictive cardiomyopathy.",
+      "Tracking Biomarkers": "NT ProBNP ,2D ECHOCARDIOGRAM  ,Chest XRay",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cardiomyopathy",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in -- which suggests a high risk of dilated cardiomyopathy, conduction defects, and sudden cardiac death.",
+      "Tracking Biomarkers": "NT ProBNP ,Cardiac MRI ,2D ECHOCARDIOGRAM",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Coronary Artery Disease",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found, which indicates a reduced inherited likelihood of heart attack, but lifestyle choices can still influence the risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Coronary Artery Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight mutations are seen in --, which is associated with mild risk of developing disrupted lipid clearance, accelerated chronic inflammation and enhanced arterial plaque formation, raising CAD susceptibility",
+      "Tracking Biomarkers": "hsCRP,APOLIPOPROTEIN - B (APO-B),Homocysteine,2D ECHOCARDIOGRAM ,12 Lead ECG,APOLIPOPROTEIN - A1 (APO-A1),APO B / APO A1 RATIO,APOLIPOPROTEIN - B (APO-B) ,APOLIPOPROTEIN - B (APO-B) ,APOLIPOPROTEIN - B (APO-B) ,hsCRP ,hsCRP ,hsCRP,Homocysteine ,Homocysteine ,2D ECHOCARDIOGRAM  ,2D ECHOCARDIOGRAM  ,2D ECHOCARDIOGRAM  ,12 Lead ECG ,12 Lead ECG,12 Lead ECG ,APOLIPOPROTEIN - A1 (APO-A1) ,APOLIPOPROTEIN - A1 (APO-A1),APOLIPOPROTEIN - A1 (APO-A1) ,APO B / APO A1 RATIO ,APO B / APO A1 RATIO ,APO B / APO A1 RATIO ,HDL-C,HDL-C,HDL-C,Fasting Lipid Profile",
+      "Action Plan": "",
+      "Nutrition": "Omega 3 Rich Foods"
+    },
+    {
+      "CONDITION": "Coronary Artery Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few mutations are seen in --, which is associated with mild risk of developing disrupted lipid clearance, accelerated chronic inflammation and enhanced arterial plaque formation, raising CAD susceptibility",
+      "Tracking Biomarkers": "hsCRP,Homocysteine,Homocysteine,APOLIPOPROTEIN - B (APO-B) ,hsCRP ,2D ECHOCARDIOGRAM  ,12 Lead ECG,APOLIPOPROTEIN - A1 (APO-A1) ,APO B / APO A1 RATIO ,Fasting Lipid Profile",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Coronary Artery Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in --, which is associated with mild risk of developing disrupted lipid clearance, accelerated chronic inflammation and enhanced arterial plaque formation, raising CAD susceptibility",
+      "Tracking Biomarkers": "hsCRP,Homocysteine,LDL-C,HDL-C,APOLIPOPROTEIN - B (APO-B),Homocysteine,CT Coronary Angiogram,NT ProBNP,2D ECHOCARDIOGRAM ,APOLIPOPROTEIN - B (APO-B) ,APOLIPOPROTEIN - B (APO-B) ,APOLIPOPROTEIN - B (APO-B) ,hsCRP ,hsCRP ,hsCRP,Homocysteine ,Homocysteine ,NT ProBNP ,NT ProBNP ,NT ProBNP ,CT Coronary Angiogram ,CT Coronary Angiogram ,CT Coronary Angiogram ,2D ECHOCARDIOGRAM  ,2D ECHOCARDIOGRAM  ,2D ECHOCARDIOGRAM  ,HDL-C,HDL-C,HDL-C",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertension",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found which indicates a reduced inherited likelihood of developing high blood pressure.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertension",
+      "RISK LEVEL": "Mild",
+      "Insight": "A few mutations in the -- genes may indicate mild risk of elevated blood pressure, potentially contributing to salt sensitivity and an increased risk of developing high blood pressure over time.",
+      "Tracking Biomarkers": "Blood Pressure Monitoring",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertension",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight mutations in the -- genes may indicate  moderate risk of elevated blood pressure, potentially contributing to impaired sodium regulation, there by salt sensitivity and an increased risk of developing high blood pressure over time.",
+      "Tracking Biomarkers": "Blood Pressure Monitoring,Homocysteine,Serum Magnesium,Serum Electrolytes,Renal Function Test,Fasting Insulin ,HOMA IR,Fasting Blood Glucose ,Fasting Lipid Profile,HOMA IR,HOMA IR,HOMA IR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertension",
+      "RISK LEVEL": "High",
+      "Insight": "A several mutations in the -- genes may indicate high risk of elevated blood pressure, potentially contributing to salt sensitivity and an increased risk of developing high blood pressure over time.",
+      "Tracking Biomarkers": "Blood Pressure Monitoring,Homocysteine,Serum Magnesium,Serum Electrolytes,Renal Function Test,Fasting Insulin ,HOMA IR,Fasting Blood Glucose ,Fasting Lipid Profile,APOLIPOPROTEIN - B (APO-B) ,APO B / APO A1 RATIO ,HOMA IR,HOMA IR,HOMA IR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Long QT Syndrome",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found which indicates a reduced inherited likelihood of developing this abnormal heart rhythm",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Long QT Syndrome",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variations are seen in associated genes, which suggests a mildly elevated risk of seizure, syncope, and palpitations.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Long QT Syndrome",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variants are seen in --, which suggests a moderate risk of delayed cardiac repolarization and prolonged QT interval. Monitoring is required with prolonged antihistamine, antidepressant and certain antibiotic usage which increases the risk of this abnormal heart rhythm.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes,2D ECHOCARDIOGRAM",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Long QT Syndrome",
+      "RISK LEVEL": "High",
+      "Insight": "Few variants are seen in --, which suggests a high risk of delayed cardiac repolarization and prolonged QT interval. Monitoring is required with prolonged antihistamine, antidepressant and certain antibiotic usage which increases the risk of this abnormal heart rhythm.",
+      "Tracking Biomarkers": "Holter Monitoring ,12 Lead ECG,2D ECHOCARDIOGRAM  ,Serum Electrolytes",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ventricular Arrhythmias / Sudden Cardiac Death",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found which indicates a reduced inherited likelihood of developing this abnormal heart rhythm",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ventricular Arrythmias / Sudden Cardiac Death",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few mutations are seen in -- genes  which suggests mildly increased susceptibility of having disrupted cardiac electrical conduction and thereby risk of abnormal heart rhythm.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ventricular Arrythmias / Sudden Cardiac Death",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few mutations are seen in -- genes  which suggests moderate increased susceptibility of having disrupted cardiac electrical conduction and thereby risk of abnormal heart rhythm leading to the possibility of syncope, and sudden cardiac arrest.",
+      "Tracking Biomarkers": "12 Lead ECG,Serum Electrolytes,2D ECHOCARDIOGRAM",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ventricular Arrythmias / Sudden Cardiac Death",
+      "RISK LEVEL": "High",
+      "Insight": "Few variants are seen in --, which suggests a high risk of delayed cardiac repolarization and prolonged QT interval. Monitoring is required with prolonged antihistamine, antidepressant and certain antibiotic usage which increases the risk of this abnormal heart rhythm.",
+      "Tracking Biomarkers": "Holter Monitoring ,12 Lead ECG,2D ECHOCARDIOGRAM  ,Serum Electrolytes",
+      "Action Plan": "Consider wearing a fitness tracker with heart rate/rhythm monitoring capabilities to be aware about all critical changes.",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cholesterol Disorders",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Cholesterol Disorders, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cholesterol Disorders",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variants are seen in --, indicating a mild predisposition to cholesterol imbalance.",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,Total Cholesterol  ,HDL-C",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cholesterol Disorders",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variants are seen in --, indicating a moderate predisposition to atherosclerosis and cardiovascular risk; variants may affect HDL metabolism, contributing to an unfavorable lipid profile.",
+      "Tracking Biomarkers": "Triglycerides    ,LDL-C,Total Cholesterol  ,HDL-C,APOLIPOPROTEIN - B (APO-B) ,APOLIPOPROTEIN - A1 (APO-A1) ,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cholesterol Disoredrs",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in --, indicating a high genetic predisposition to dyslipidemia and atherosclerotic cardiovascular complications; variants significantly affect HDL metabolism and lipid clearance, contributing to an unfavorable lipid profile.",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,Total Cholesterol ,HDL-C,APOLIPOPROTEIN - B (APO-B),APOLIPOPROTEIN - A1 (APO-A1),hsCRP,Lipoprotein A",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Diabetes",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Diabetes, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Diabetes",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variants are seen in --, indicating a mild predisposition to elevated blood glucose and insulin resistance.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Diabetes",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variants are seen in --, indicating a moderate predisposition to altered blood sugar metabolism through impaired beta‑cell function and insulin signaling, elevating insulin resistance and diabetes risk.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c ,Fasting Insulin ,HOMA IR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Diabetes",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in --, indicating a high genetic predisposition to dysregulated blood sugar metabolism through impaired beta‑cell function and insulin signaling pathways, significantly elevating insulin resistance and diabetes risk.",
+      "Tracking Biomarkers": "Fasting Blood Glucose,HbA1c,Fasting Insulin,HOMA IR,Post Prandial Blood Glucose,C Peptide",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertriglyceridemia",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Hypertriglyceridemia, which suggests a low risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertriglyceridemia",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variants are seen in --,which suggest mild risk of developing Dyslipidemia and related cardiovascular problems due to Impaired clearance of Triglyceride and LDL Cholesterol Levels",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,HDL-C",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertriglyceridemia",
+      "RISK LEVEL": "Moderate",
+      "Insight": "You have Homozygous mutations in -- genes. This can predispose you to developing Dyslipidemia and related cardiovascular problems due to Impaired clearance of Triglyceride and LDL Cholesterol Levels",
+      "Tracking Biomarkers": "Triglycerides    ,LDL-C,HDL-C,APOLIPOPROTEIN - B (APO-B)",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hypertriglyceridemia",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations are seen in -- ,which suggests a high risk of developing Dyslipidemia and related cardiovascular conditions due to impaired clearance of Triglyceride and LDL Cholesterol Levels",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,HDL-C,APOLIPOPROTEIN - B (APO-B),Lipoprotein A,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to weight gain",
+      "RISK LEVEL": "Low",
+      "Insight": "No clinically significant mutations were found in genes related to weight‑gain tendency, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to weight gain",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variants are seen in --, indicating a mild predisposition to impaired glucose metabolism and fat distribution.",
+      "Tracking Biomarkers": "Fasting Insulin ,Fasting Blood Glucose",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to weight gain",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variants are seen in --, indicating a moderate predisposition to impaired glucose metabolism and fat distribution; variants may influence appetite regulation, energy balance, and fat storage, especially in obesogenic environments.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,Fasting Insulin ,Triglycerides    ,LDL-C,HDL-C,Total Cholesterol",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to weight gain",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants are seen in --, indicating a high genetic predisposition to impaired glucose metabolism and adverse fat distribution; variants significantly influence appetite regulation, energy balance, and fat storage, particularly in obesogenic environments.",
+      "Tracking Biomarkers": "Fasting Blood Glucose,Fasting Insulin,HbA1c,HOMA IR,Triglycerides   ,LDL-C,HDL-C,Total Cholesterol",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Arterial Aneurysms",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Arterial Aneurysms, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Arterial Aneurysms",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variants indicate a mild susceptibility to arterial wall weakening; inherited factors are not strongly associated with aneurysm formation.",
+      "Tracking Biomarkers": "LDL-C,HDL-C,Total Cholesterol  ,HDL-C,hsCRP ,Fasting Blood Glucose",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Arterial Aneurysms",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Genetic variants suggest a moderate predisposition to aneurysm formation; variants in connective tissue genes can weaken arterial wall integrity and increase rupture risk.",
+      "Tracking Biomarkers": "LDL-C,HDL-C,Total Cholesterol  ,hsCRP ,Fasting Blood Glucose ,HbA1c ,Homocysteine, Fibrinogen",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Arterial Aneurysms",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants are observed, indicating a high genetic predisposition to arterial aneurysms; variants in connective tissue genes significantly weaken arterial wall integrity, increasing risk of aneurysm formation and rupture substantially.",
+      "Tracking Biomarkers": "LDL-C,HDL-C,Total Cholesterol ,hsCRP,Fasting Blood Glucose,HbA1c, Fibrinogen     ,D dimer",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Bleeding Disorders",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Bleeding Disorders, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Bleeding Disorders",
+      "RISK LEVEL": "Mild",
+      "Insight": "Alterations in -- genes are observed, indicating a mild predisposition to impaired platelet function and coagulation.",
+      "Tracking Biomarkers": "CBC,PT,APTT,INR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Bleeding Disorders",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Alterations in -- genes are observed, indicating a moderate predisposition to impaired coagulation and platelet adhesion, predisposing to abnormal bleeding.",
+      "Tracking Biomarkers": "CBC,PT,APTT,INR, Fibrinogen     ,Thrombin time",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Bleeding Disorders",
+      "RISK LEVEL": "High",
+      "Insight": "Alterations in -- genes are observed, indicating a high genetic predisposition to bleeding disorders; mutations in genes and platelet function genes significantly impair coagulation cascade or platelet adhesion, strongly predisposing to abnormal bleeding.",
+      "Tracking Biomarkers": "CBC,PT,APTT,INR, Fibrinogen     ,Thrombin time,\"Factor VIII,IX",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Artery Disease",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to Peripheral Artery Disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Artery Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Genetic alterations in the -- gene are observed, indicating a mild predisposition to endothelial dysfunction and increased vascular inflammation.",
+      "Tracking Biomarkers": "Total Cholesterol  ,Triglycerides   ,HDL-C,LDL-C,TRIG/HDL Ratio,hsCRP ,Fasting Blood Glucose",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Artery Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Genetic alterations in the -- gene indicate a moderate predisposition to peripheral artery disease; variants may increase inflammation, impair vascular repair, and promote lipid accumulation in peripheral arteries.",
+      "Tracking Biomarkers": "APOLIPOPROTEIN - B (APO-B) ,APO B/APO A1 Ratio,Total Cholesterol  ,Triglycerides    ,HDL-C,LDL-C,Fasting Blood Glucose ,HbA1c ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Artery Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Genetic alterations in the -- gene indicate a high genetic predisposition to peripheral artery disease; variants significantly increase inflammation, impair vascular repair, and promote lipid accumulation in peripheral arteries, raising PAD risk substantially.",
+      "Tracking Biomarkers": "Total Cholesterol ,HDL-C,LDL-C,TRIG/HDL Ratio,APOLIPOPROTEIN - B (APO-B),APO B / APO A1 RATIO,D dimer",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to Blood Clots",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in genes related to the tendency to form blood clots, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to Blood Clots",
+      "RISK LEVEL": "Mild",
+      "Insight": "Variants in the -- genes are observed, indicating a mild predisposition to thrombosis.",
+      "Tracking Biomarkers": "CBC,APTT,PT,INR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to Blood Clots",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Variants in the -- genes are observed, indicating a moderate predisposition to venous or arterial thrombosis; inherited changes (e.g., Factor V Leiden, Prothrombin G20210A) can raise DVT/PE risk with triggers such as surgery or pregnancy.",
+      "Tracking Biomarkers": "CBC,APTT,PT,INR, Fibrinogen     ,D dimer",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tendency to Blood Clots",
+      "RISK LEVEL": "High",
+      "Insight": "Variants in the -- genes are observed, indicating a high genetic predisposition to thrombosis; inherited changes (e.g., Factor V Leiden, Prothrombin G20210A) significantly elevate DVT/PE risk with triggers such as surgery or pregnancy, with prothrombotic variants markedly increasing abnormal clot formation likelihood.",
+      "Tracking Biomarkers": "CBC,APTT,PT,INR, Fibrinogen     ,Antithrombin III,D dimer ,Lupus Anticoagulant",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Celiac Diseae",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes associated with Celiac disease, indicating a reduced inherited likelihood of gluten‑triggered autoimmunity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Celiac Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few variants are seen in --, indicating a mild predisposition to gluten‑triggered autoimmunity.",
+      "Tracking Biomarkers": "CBC,Iron blood levels ,Folate ,Vitamin B12  ,Fecal Calprotectin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Celiac Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variants are seen in --, indicating a moderate predisposition to loss of gluten tolerance; variations can trigger chronic small‑intestinal inflammation and reduced nutrient absorption.",
+      "Tracking Biomarkers": "CBC,Iron blood levels ,Folate ,Vitamin B12     ,Fecal Calprotectin ,Anti tTG,Total IgA",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Celiac Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants are seen in --, indicating a high genetic predisposition to gluten‑triggered autoimmunity; variations significantly impair the immune system's tolerance to gluten, triggering chronic inflammation and damage to the small intestinal lining, compromising nutrient absorption and gut health with risk of mucosal injury and malabsorption.",
+      "Tracking Biomarkers": "CBC,Iron blood levels,Folate,Vitamin B12    ,Fecal Calprotectin,Anti tTG,Anti EMA,Intestinal Biopsy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Chron's Disease",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes associated with Crohn's disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Crohn's Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your genetic test shows a mild predisposition to Crohn's disease, indicating a slightly increased likelihood of inflammatory symptoms.",
+      "Tracking Biomarkers": "CBC,ESR,hsCRP ,Fecal Calprotectin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Crohn's Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Your genetic test shows a moderate predisposition to Crohn's disease; variants can impair intestinal immune regulation and microbial tolerance, promoting chronic inflammation of the gut lining.",
+      "Tracking Biomarkers": "Vitamin B12     ,Iron blood levels ,Folate ,Serum Albumin,CBC,ESR,hsCRP ,TNF Alpha",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Crohn's Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Your genetic test shows a high predisposition to Crohn's disease; variants significantly impair intestinal immune regulation and microbial tolerance, promoting chronic inflammation of the gut lining with sustained intestinal inflammatory responses and increased symptom risk.",
+      "Tracking Biomarkers": "Vitamin B12    ,Iron blood levels,Folate,Serum Albumin,Anti-Saccharomyces Cerevisiae Antibodies ,TNF Alpha,IL-6,Colonoscopy with Biopsy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Grave's Disease",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes associated with Graves' disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Grave's Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few variants are observed in --, indicating a mild predisposition to thyroid‑directed autoimmunity.",
+      "Tracking Biomarkers": "TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Grave's Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variants are observed in --, indicating a moderate predisposition to autoimmune hyperthyroidism; polymorphisms can alter immune tolerance and promote thyroid receptor antibodies.",
+      "Tracking Biomarkers": "TSH receptor antibodies (TRAb / TSI) ,Anti TPO,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Grave's Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants are observed in --, indicating a high genetic predisposition to Graves' disease; polymorphisms significantly alter immune tolerance, leading to autoimmune hyperthyroidism and thyroid receptor antibody production with increased likelihood of TSH‑receptor antibody–mediated hyperthyroidism.",
+      "Tracking Biomarkers": "TSH, Free T3,Free T4,TSH receptor antibodies (TRAb / TSI),Anti-TPO,Thyroid Ultrasound with Doppler",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Multiple Sclerosis",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes related to multiple sclerosis, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Multiple Sclerosis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Alterations in the -- genes indicate a mild predisposition to immune‑mediated demyelination.",
+      "Tracking Biomarkers": "MRI Brain,MRI Spine,Vitamin D",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Multiple Sclerosis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Alterations in the -- genes indicate a moderate predisposition to MS; variants can impair immune regulation, increasing CNS demyelination and neuroinflammation.",
+      "Tracking Biomarkers": "Oligoclonal bands (OCBs) in cerebrospinal fluid (CSF) ,MRI Brain,MRI Spine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Multiple Sclerosis",
+      "RISK LEVEL": "High",
+      "Insight": "Alterations in the -- genes indicate a high genetic predisposition to multiple sclerosis; variants significantly impair immune regulation, increasing CNS demyelination and neuroinflammation with heightened risk of demyelinating activity.",
+      "Tracking Biomarkers": "Oligoclonal bands (OCBs) in cerebrospinal fluid (CSF),MRI Brain,MRI Spine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Psoriasis",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes related to psoriasis, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Psoriasis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Presence of -- variants indicates a mild predisposition to immune‑mediated skin inflammation.",
+      "Tracking Biomarkers": "CBC,ESR,hsCRP ,Vitamin D,Triglycerides   ,Total Cholesterol  ,HDL-C,LDL-C",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Psoriasis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Presence of -- variants indicates a moderate predisposition to psoriasis; changes in IL23/IL17 pathway components may trigger abnormal immune activation and keratinocyte proliferation.",
+      "Tracking Biomarkers": "Rheumatoid factor ,Serum Uric acid ,ANA,hsCRP ,Vitamin D,ESR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Psoriasis",
+      "RISK LEVEL": "High",
+      "Insight": "Presence of -- variants indicates a high genetic predisposition to psoriasis; polymorphisms in genes and IL23/IL17 pathway components significantly trigger abnormal immune activation and skin cell proliferation with recurrent inflammatory skin activity.",
+      "Tracking Biomarkers": "IL-6,TNF Alpha ,ANA,hsCRP,\"ESR,\",vitamin D          ,ANA profile",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Rheumatoid Arthritis",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes related to rheumatoid arthritis, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Rheumatoid Arthritis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Alterations in -- genes indicate a mild predisposition to autoimmune joint inflammation.",
+      "Tracking Biomarkers": "ESR,hsCRP ,Rheumatoid factor",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Rheumatoid Arthritis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Alterations in -- genes indicate a moderate predisposition to RA; polymorphisms in immune signaling pathways may enhance inflammation and promote joint damage.",
+      "Tracking Biomarkers": "ESR,hsCRP ,Rheumatoid factor ,ANA,Anti CCP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Rheumatoid Arthritis",
+      "RISK LEVEL": "High",
+      "Insight": "Alterations in -- genes indicate a high genetic predisposition to rheumatoid arthritis; polymorphisms in genes related to immune signaling significantly enhance inflammatory responses and promote joint damage in RA with sustained inflammatory joint involvement.",
+      "Tracking Biomarkers": "ESR,\",hsCRP,Rheumatoid factor,ANA,Anti CCP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Systemic Lupus Erythematosus",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes associated with systemic lupus erythematosus, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Systemic Lupus Erythematous",
+      "RISK LEVEL": "Mild",
+      "Insight": "Alterations in -- genes indicate a mild predisposition to dysregulated immune and inflammatory responses.",
+      "Tracking Biomarkers": "ANA,ESR,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Systemic Lupus Erythematous",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Alterations in -- genes indicate a moderate predisposition to autoantibody production and systemic inflammation.",
+      "Tracking Biomarkers": "ANA,ESR,hsCRP ,Anti dsDNA antibodies",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Systemic Lupus Erythematous",
+      "RISK LEVEL": "High",
+      "Insight": "Alterations in -- genes indicate a high genetic predisposition to systemic lupus erythematosus; genetic variants in immune regulatory genes significantly disrupt immune tolerance, leading to autoantibody production and systemic inflammation with persistent immune dysregulation and multisystem involvement.",
+      "Tracking Biomarkers": "ANA,\"ESR,\",hsCRP,Anti dsDNA antibodies,Serum Creatinine,Urine Protein Creatinine ratio",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ulcerative Colitis",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in the genes associated with Ulcerative Colitis, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ulcerative Colitis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few variants are seen in --, indicating a mild predisposition to long‑term colonic inflammation consistent with ulcerative colitis.",
+      "Tracking Biomarkers": "Fecal Calprotectin ,ESR,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ulcerative Colitis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variants are seen in --, indicating a moderate predisposition to sustained mucosal inflammation; variants in immune‑regulating genes can drive dysregulated mucosal immunity and colonic inflammation.",
+      "Tracking Biomarkers": "Fecal Calprotectin ,ESR,hsCRP ,Screening Colonoscopy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ulcerative Colitis",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants are seen in --, indicating a high genetic predisposition to ulcerative colitis; variants in immune‑regulating genes significantly drive dysregulated mucosal immunity and sustained colonic inflammation with recurrent episodes.",
+      "Tracking Biomarkers": "Fecal Calprotectin,\"ESR,\",hsCRP,Screening Colonoscopy,Stool Occult Blood",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Chronic Kidney Diseaase",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in genes linked to chronic kidney disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Chronic Kidney Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild variants in -- indicate a mild predisposition to impaired renal function.",
+      "Tracking Biomarkers": "Serum Creatinine,eGFR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Chronic Kidney Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate variants in -- indicate a moderate predisposition to CKD progression; variants can affect glomerular function and sodium handling.",
+      "Tracking Biomarkers": "Serum Creatinine ,eGFR    ,Urine albumin-to-creatinine ratio (ACR) ,Serum Sodium ,Serum potassium ,Serum Chloride",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Chronic Kidney Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Several variants in -- indicate a high genetic predisposition to chronic kidney disease; variants significantly affect glomerular function and sodium handling, predisposing to CKD progression with renal function decline and progression to advanced CKD through filtration and tubular dysregulation.",
+      "Tracking Biomarkers": "Serum Creatinine,eGFR    ,Urine albumin-to-creatinine ratio (ACR),Urine Protein Creatinine ratio,Serum Sodium,Serum potassium,Serum Chloride,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gall Bladder Disorders",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in genes linked to gallbladder disorders, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gall Bladder Disorders",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few mutations in -- indicate a mild predisposition affecting bile composition and bilirubin metabolism.",
+      "Tracking Biomarkers": "SGOT ,SGPT ,SGOT/SGPT Ratio ,Total Bilirubin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gall Bladder Disorders",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight mutations in -- indicate a moderate predisposition to gallstone formation; variants can influence bile composition and lithogenicity.",
+      "Tracking Biomarkers": "SGOT ,SGPT ,SGOT/SGPT Ratio,Total Bilirubin ,Serum Amylase ,Serum Lipase ,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gall Bladder Disorders",
+      "RISK LEVEL": "High",
+      "Insight": "Several mutations in -- indicate a high genetic predisposition to gallbladder disease; variants significantly influence bile composition and gallstone formation, increasing susceptibility to gallbladder disease with altered bile composition and bilirubin handling.",
+      "Tracking Biomarkers": "SGOT,SGPT,SGOT/SGPT Ratio,Total Bilirubin,Serum Amylase,Serum Lipase,USG Abdomen and Pelvis,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hemochromatosis",
+      "RISK LEVEL": "Low",
+      "Insight": "The analysis reveals a low genetic predisposition for hemochromatosis, indicating a reduced inherited likelihood of iron overload.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hemochromatosis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Variants in genes  indicate a mild predisposition to altered iron absorption; usually asymptomatic, but may cause slight increases in ferritin under certain conditions.",
+      "Tracking Biomarkers": "Ferritin,Transferrin saturation",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hemochromatosis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "There is a moderate genetic predisposition to hemochromatosis; inherited variants can disrupt control of intestinal iron absorption, promoting excess iron accumulation in organs over time with liver, joint, and metabolic effects.",
+      "Tracking Biomarkers": "Ferritin ,Transferrin saturation ,SGOT ,SGPT ,SGOT/SGPT Ratio ,Total Bilirubin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Hemochromatosis",
+      "RISK LEVEL": "High",
+      "Insight": "There is a high genetic predisposition to hemochromatosis; inherited variants can disrupt control of intestinal iron absorption, promoting excess iron accumulation in organs over time with liver, joint, and metabolic effects.",
+      "Tracking Biomarkers": "Ferritin,Transferrin saturation,SGOT,SGPT,SGOT/SGPT Ratio,Total Bilirubin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Liver Cirrhosis",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no mutations found in genes linked to liver cirrhosis, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Liver Cirrhosis",
+      "RISK LEVEL": "Mild",
+      "Insight": "Variants in -- indicate a mild predisposition to NAFLD and progression, including fibrosis.",
+      "Tracking Biomarkers": "SGOT/SGPT Ratio ,Total Bilirubin ,GGT ,SGOT ,SGPT",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Liver Cirrhosis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Variants in -- indicate a moderate predisposition to NAFLD progression; polymorphisms may impair lipid metabolism and increase fibrosis susceptibility.",
+      "Tracking Biomarkers": "SGOT ,SGPT ,SGOT/SGPT Ratio ,Total Bilirubin ,USG Abdomen and Pelvis ,GGT",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Liver Cirrhosis",
+      "RISK LEVEL": "High",
+      "Insight": "Variants in -- indicate a high genetic predisposition to NAFLD progression and cirrhosis; polymorphisms significantly impair lipid metabolism and increase fibrosis susceptibility, accelerating progression to cirrhosis via sustained steatosis and fibrogenesis.",
+      "Tracking Biomarkers": "SGOT,SGPT,SGOT/SGPT Ratio,Total Bilirubin,Fibroscan,USG Abdomen and Pelvis,GGT",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Disorders",
+      "RISK LEVEL": "Low",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Disorders",
+      "RISK LEVEL": "Mild",
+      "Insight": "",
+      "Tracking Biomarkers": "Serum Amylase ,Serum Lipase",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Disorders",
+      "RISK LEVEL": "Moderate",
+      "Insight": "",
+      "Tracking Biomarkers": "Serum Amylase ,Serum Lipase ,Fasting Blood Glucose ,HbA1c ,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Disoreders",
+      "RISK LEVEL": "High",
+      "Insight": "",
+      "Tracking Biomarkers": "Serum Amylase,Serum Lipase,Fasting Blood Glucose,HbA1c,USG Abdomen and Pelvis,CT Abdomen",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "RENAL STONES",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to renal stones, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "RENAL STONES",
+      "RISK LEVEL": "Mild",
+      "Insight": "Variants in -- genes indicate a mild predisposition to impaired calcium and oxalate transport, supporting stone formation.",
+      "Tracking Biomarkers": "Serum Calcium,Serum Uric acid",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "RENAL STONES",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Variants in -- genes indicate a moderate predisposition to nephrolithiasis; variants in calcium‑sensing and transport pathways can impair calcium, oxalate, or phosphate handling.",
+      "Tracking Biomarkers": "Serum Calcium ,Serum Uric acid ,24 Hours Urine Uric Acid ,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "RENAL STONES",
+      "RISK LEVEL": "High",
+      "Insight": "Variants in -- genes indicate a high genetic predisposition to renal stone formation; mutations in genes and calcium‑sensing receptor genes significantly impair calcium, oxalate, or phosphate handling, promoting nephrolithiasis due to persistent mineral handling abnormalities.",
+      "Tracking Biomarkers": "Serum Calcium,Serum Uric acid,24 Hours Urine Uric Acid,Serum Phosphate,USG Abdomen and Pelvis,CT Abdomen",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tubulointerstitial Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "There are no mutations found in genes linked to tubulointerstitial disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tubulointerstitial Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Alterations in -- genes indicate a mild predisposition to functional changes of renal tubules, which can lead to altered kidney function",
+      "Tracking Biomarkers": "Serum Creatinine,eGFR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tubulointerstitial Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Variants in -- indicate a moderate predisposition to pancreatic dysfunction; genetic changes may increase susceptibility to pancreatic inflammation, enzyme dysregulation, and impaired digestive or endocrine function.",
+      "Tracking Biomarkers": "Serum Creatinine ,eGFR    ,Urine Protein Creatinine ratio ,Serum Sodium ,Serum potassium ,Serum Chloride",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Tubulointerstitial Disease",
+      "RISK LEVEL": "High",
+      "Insight": "Alterations in -- genes indicate a high genetic predisposition to tubulointerstitial disease; gene variants significantly disrupt tubular function, leading to chronic interstitial inflammation and kidney impairment with ongoing tubular injury and interstitial involvement.",
+      "Tracking Biomarkers": "Serum Creatinine,eGFR    ,Urine Protein Creatinine ratio,Serum Sodium,Serum potassium,Serum Chloride,Renal Biposy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ALS",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant genetic variations are observed, indicating a reduced inherited likelihood of ALS.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ALS",
+      "RISK LEVEL": "Mild",
+      "Insight": "Specific pathogenic variants in genes such as -- indicate a mild predisposition to ALS and related respiratory issues.",
+      "Tracking Biomarkers": "Creatine Kinase ,Vitamin B12  ,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ALS",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Specific pathogenic variants in genes such as -- indicate a moderate predisposition to ALS; mutations can disrupt motor neuron survival and protein homeostasis, driving progressive neurodegeneration.",
+      "Tracking Biomarkers": "Creatine Kinase ,Vitamin B12     ,TSH,Free T3,Free T4,SGOT ,SGPT ,SGOT/SGPT Ratio ,Total Bilirubin ,Nerve Conduction studies",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ALS",
+      "RISK LEVEL": "High",
+      "Insight": "Specific pathogenic variants in genes such as -- indicate a high genetic predisposition to ALS; mutations significantly disrupt motor neuron survival and protein homeostasis, driving progressive neurodegeneration with progressive motor neuron vulnerability and respiratory involvement.",
+      "Tracking Biomarkers": "Creatine Kinase,Vitamin B12    ,TSH, Free T3,Free T4,SGOT,SGPT,Total Bilirubin,Nerve Conduction studies,MRI Brain,MRI Spine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Migraine",
+      "RISK LEVEL": "Low",
+      "Insight": "Detected variants indicate a high genetic predisposition to migraine; variants significantly increase neuronal excitability and alter pain processing pathways with heightened trigeminovascular sensitivity and cortical excitability.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Migraine",
+      "RISK LEVEL": "Mild",
+      "Insight": "There are no clinically significant mutations found in the genes related to tremors, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "Vitamin D,Serum Magnesium ,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Migraine",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a mild predisposition to tremor.",
+      "Tracking Biomarkers": "Vitamin D,Serum Magnesium,TSH,Free T3,Free T4,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Migraine",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a moderate predisposition; mitochondrial variants may impair dopaminergic neuron survival, contributing to tremor phenotypes.",
+      "Tracking Biomarkers": "vitamin D          ,Serum Magnesium,TSH,Free T3,Free T4,Homocysteine,MRI Brain,Genomic testing",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Parkinsons Disease",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic testing shows a low predisposition for Parkinson's disease, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Parkinsons Disease",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild‑risk PD‑associated alleles such as -- indicate a mild predisposition; increased enzyme activity and impaired lysosomal function may reduce neuronal resilience.",
+      "Tracking Biomarkers": "Vitamin B12  ,Vitamin D,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Parkinsons Disease",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk PD‑associated alleles indicate a moderate predisposition; variants can impair dopamine regulation or mitochondrial function, increasing Parkinson's disease risk.",
+      "Tracking Biomarkers": "Vitamin B12     ,Vitamin D,Free T3,Free T4,Homocysteine,Serum Uric acid ,TSH",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Parkinsons Disease",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk PD‑associated alleles indicate a high genetic predisposition to Parkinson's disease; mutations in genes significantly impair dopamine regulation or mitochondrial function, increasing Parkinson's disease risk via impaired lysosomal/proteostatic and mitochondrial pathways.",
+      "Tracking Biomarkers": "Vitamin B12    ,vitamin D          ,TSH, Free T3,Free T4,Serum Uric acid,MRI Brain,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Neuropathy",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic testing shows a low predisposition to migraines, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Neuropathy",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to migraine.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c ,TSH,Free T3,Free T4,Vitamin B12",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Peripheral Neuropathy",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a moderate predisposition; variants may increase neuronal excitability and alter pain processing pathways.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c ,TSH,Free T3,Free T4,Nerve Conduction studies,Vitamin B6 ,Vitamin D",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pripheral Neuropathy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a high genetic predisposition to migraine; variants significantly increase neuronal excitability and alter pain processing pathways with heightened trigeminovascular sensitivity and cortical excitability.",
+      "Tracking Biomarkers": "Fasting Blood Glucose,HbA1c,TSH,Free T3,Free T4,Nerve Conduction studies,Vitamin B6,vitamin D",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Seizures",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic testing shows a low predisposition to seizures, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Seizures",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild‑risk seizure‑associated alleles -- indicate a mild predisposition to neuronal hyperexcitability.",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,HDL-C,Total Cholesterol  ,HbA1c ,Fasting Blood Glucose ,Serum Sodium ,Serum potassium,Serum Chloride",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Seizures",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk seizure‑associated alleles indicate a moderate predisposition; ion channel variants can alter neuronal excitability and predispose to epilepsy syndromes.",
+      "Tracking Biomarkers": "Triglycerides    ,LDL-C,HDL-C,Total Cholesterol  ,HbA1c ,Fasting Blood Glucose ,Homocysteine,hsCRP ,Serum Sodium ,Serum potassium ,Serum Chloride,Vitamin D,Vitamin B12     ,Folate",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Seizures",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk seizure‑associated alleles indicate a high genetic predisposition to seizures; variants in ion channel genes significantly alter neuronal excitability, predisposing to epilepsy syndromes through ion channel dysfunction and neuronal hyperexcitability.",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,HDL-C,Total Cholesterol ,HbA1c,Fasting Blood Glucose,Homocysteine,hsCRP,Serum Sodium,Serum potassium,Serum Chloride,Vitamin B12    ,vitamin D          ,EEG",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Stroke",
+      "RISK LEVEL": "Low",
+      "Insight": "You have a low genetic risk for peripheral neuropathy, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Stroke",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mutations in -- indicate a mild predisposition to peripheral nerve vulnerability and neurodegeneration.",
+      "Tracking Biomarkers": "Triglycerides   ,LDL-C,HDL-C,Total Cholesterol  ,HbA1c ,Fasting Blood Glucose",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Stroke",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Mutations in -- indicate a moderate predisposition to peripheral neuropathy; mitochondrial variants may compromise nerve function and regeneration.",
+      "Tracking Biomarkers": "Triglycerides    ,LDL-C,HDL-C,Total Cholesterol  ,HbA1c ,Fasting Blood Glucose ,CT/MRI Brain ,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Stroke",
+      "RISK LEVEL": "High",
+      "Insight": "Mutations in -- indicate a high genetic predisposition to peripheral neuropathy; mutations in mitochondrial genes significantly compromise nerve function and regeneration, raising vulnerability to nerve damage with persistent axonal or myelin susceptibility.",
+      "Tracking Biomarkers": "MR Angiogram - Brain,Triglycerides   ,LDL-C,HDL-C,Total Cholesterol ,HbA1c,Fasting Blood Glucose,CT/MRI Brain,hsCRP,PT,APTT,PT-INR",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "TREMORS",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to tremors, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "TREMORS",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to tremor.",
+      "Tracking Biomarkers": "CBC,Vitamin B12  ,hsCRP ,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "TREMORS",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; mitochondrial variants may impair dopaminergic neuron survival, contributing to tremor phenotypes.",
+      "Tracking Biomarkers": "CSF/serum autoantibodies (e.g., anti-NMDA receptor, LGI1) \",CBC,Vitamin B12     ,hsCRP ,TSH,Free T3,Free T4,MRI Brain",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "TREMORS",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to tremor disorders; mutations in mitochondrial genes significantly impair dopaminergic neuron survival, contributing to essential tremor and Parkinson‑like disorders with nigrostriatal vulnerability.",
+      "Tracking Biomarkers": "CBC,Vitamin B12    ,hsCRP,TSH, Free T3,Free T4,MRI Brain",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ADHD",
+      "RISK LEVEL": "Low",
+      "Insight": "Several genetic variations in -- indicate a high genetic predisposition to schizophrenia; variants in genes and dopamine/glutamate pathway genes significantly alter neurotransmission and synaptic connectivity, raising psychiatric vulnerability with broader synaptic signaling vulnerability.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ADHD",
+      "RISK LEVEL": "Mild",
+      "Insight": "You have low genetic risk of developing ADHD, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "TSH,Free T3,Free T4,Vitamin D,Iron blood levels ,Ferritin",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ADHD",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Presence of specific genetic variants -- indicates a mild predisposition to ADHD.",
+      "Tracking Biomarkers": "TSH,Free T3,Free T4,Vitamin D,Iron blood levels ,Ferritin ,Vitamin B12     ,Folate",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "ADHD",
+      "RISK LEVEL": "High",
+      "Insight": "Presence of specific genetic variants -- indicates a moderate predisposition; polymorphisms may impair dopamine transport and synaptic signaling, affecting attention regulation and impulse control.",
+      "Tracking Biomarkers": "EEG,TSH,Free T3,Free T4,vitamin D          ,Ferritin,Vitamin B12    ,Folate",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Anxiety",
+      "RISK LEVEL": "Low",
+      "Insight": "Several genetic variants in -- indicate a high genetic predisposition to depressive disorders; variants significantly influence neurotransmitter balance and neural plasticity, affecting mood involving neurotransmission and neuroplasticity pathways.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Anxiety",
+      "RISK LEVEL": "Mild",
+      "Insight": "You have low genetic risk of developing anxiety disorder, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "TSH,Free T3,Free T4,Vitamin D,Vitamin B12  ,Serum Magnesium",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Anxiety",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Specific genetic variants -- indicate a mild predisposition to anxiety.",
+      "Tracking Biomarkers": "TSH,Free T3,Free T4,Vitamin D,Vitamin B12     ,Serum Magnesium,Homocysteine,Cortisol ,DHEA - S",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Anxiety",
+      "RISK LEVEL": "High",
+      "Insight": "Specific genetic variants -- indicate a moderate predisposition; differences in GABA receptor function and HPA axis regulation may heighten stress responses.",
+      "Tracking Biomarkers": "TSH, Free T3,Free T4,vitamin D          ,Vitamin B12    ,Serum Magnesium,Homocysteine,Cortisol,DHEA-S",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Depression",
+      "RISK LEVEL": "Low",
+      "Insight": "Mutations in -- indicate a high genetic predisposition to peripheral neuropathy; mutations in mitochondrial genes significantly compromise nerve function and regeneration, raising vulnerability to nerve damage with persistent axonal or myelin susceptibility.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Depression",
+      "RISK LEVEL": "Mild",
+      "Insight": "There are no clinically significant mutations found in the genes related to depression, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "CBC,Vitamin D,Vitamin B12  ,Folate ,TSH,Free T3,Free T4,Serum Magnesium ,Zinc",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Depression",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few genetic variants in -- indicate a mild predisposition to depression.",
+      "Tracking Biomarkers": "CBC,Vitamin D,Vitamin B12     ,Folate ,TSH,Free T3,Serum Magnesium,Zinc,Homocysteine,HbA1c ,Triglycerides    ,HDL-C,LDL-C,Total Cholesterol  ,IL -6,TNF Alpha ,Cortisol",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Depression",
+      "RISK LEVEL": "High",
+      "Insight": "Slight genetic variants in -- indicate a moderate predisposition; influences on neurotransmitter balance and neural plasticity may affect mood.",
+      "Tracking Biomarkers": "CBC,vitamin D          ,Vitamin B12    ,Folate,TSH, Free T3,Free T4,Serum Magnesium,Zinc,Homocysteine,HbA1c,Triglycerides   ,HDL-C,LDL-C,Total Cholesterol ,IL-6,TNF Alpha,Cortisol,ESR,MRI Brain",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Schizophrenia",
+      "RISK LEVEL": "Low",
+      "Insight": "Specific genetic variants -- indicate a high genetic predisposition to anxiety; genetic differences in GABA receptor function and HPA axis regulation significantly predispose to heightened stress responses and anxiety disorders with increased neurobiological stress reactivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Schizophrenia",
+      "RISK LEVEL": "Mild",
+      "Insight": "You have low genetic risk of developing schizophrenia, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "CBC,Vitamin D,Vitamin B12  ,Folate ,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Schizophrenia",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight genetic variations in -- indicate a mild predisposition to schizophrenia.",
+      "Tracking Biomarkers": "CBC,Vitamin D,Vitamin B12     ,Folate ,TSH,Free T3,Free T4,Homocysteine,MRI Brain",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Schizoprenia",
+      "RISK LEVEL": "High",
+      "Insight": "Slight genetic variations in -- indicate a moderate predisposition; variants in dopamine/glutamate pathways may alter neurotransmission and synaptic connectivity.",
+      "Tracking Biomarkers": "CBC,vitamin D          ,Vitamin B12    ,Folate,TSH, Free T3,Free T4,Homocysteine,MRI Brain",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ankylosing Spondylitis",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations in -- indicate a high genetic predisposition to gout; variants in genes significantly reduce the kidneys' ability to excrete uric acid, leading to elevated levels in the blood and increasing the likelihood of uric acid crystal deposition in joints, triggering painful gout attacks driven by sustained urate handling abnormalities.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ankylosing Spondylitis",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of ankylosing spondylitis.",
+      "Tracking Biomarkers": "ESR,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ankylosing Spondylitis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition to immune‑mediated axial inflammation.",
+      "Tracking Biomarkers": "ESR,hsCRP ,TNF Alpha ,X-ray or MRI of Sacroiliac Joints",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ankylosing Spondylitis",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition; antigen presentation and immune signaling variants can promote sacroiliac/spinal inflammation.",
+      "Tracking Biomarkers": "ESR,hsCRP,TNF Alpha,X-ray or MRI of Sacroiliac Joints",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gout",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations in -- indicate a high genetic predisposition to myalgias or muscle atrophy; mitochondrial polymorphisms or variants significantly affect muscle energy production, recovery, and susceptibility to exercise‑induced injury through impaired bioenergetics and repair capacity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gout",
+      "RISK LEVEL": "Mild",
+      "Insight": "There are no clinically significant mutations found in the genes related to gout, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "Serum Uric acid,Serum Creatinine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gout",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition to altered uric acid transport and excretion.",
+      "Tracking Biomarkers": "Serum Uric acid,Serum Creatinine,Synovial Fluid Analysis for Monosodium Urate crystals,BUN",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Gout",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition; variants may reduce renal urate clearance, leading to elevated uric acid and crystal deposition in joints.",
+      "Tracking Biomarkers": "Serum Uric acid,Serum Creatinine,Synovial Fluid Analysis for Monosodium Urate crystals,BUN",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Myalgias / Muscle Atrophy",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations are seen in --, indicating a high genetic predisposition to osteoarthritis with progressive cartilage degeneration and joint deterioration.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Myalgias / Muscle Atrophy copy",
+      "RISK LEVEL": "Mild",
+      "Insight": "There are no clinically significant mutations found in the genes related to myalgias/muscle atrophy, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "Vitamin D,Serum Calcium,Creatine Kinase ,TSH,Free T3,Free T4",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Myalgias / Muscle Atrophy copy copy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition to myalgias or muscle deconditioning; focus on strength training exercises and adequate protein intake may support muscle health.",
+      "Tracking Biomarkers": "Vitamin D,Serum Calcium ,Creatine Kinase ,TSH,Free T3,Free T4,Serum LDH",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Myalgias / Muscle Atrophy copy copy copy",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition; mitochondrial polymorphisms may affect muscle energy production, recovery, and susceptibility to exercise‑induced injury.",
+      "Tracking Biomarkers": "vitamin D          ,Serum Calcium,Creatine Kinase,TSH, Free T3,Free T4,Serum LDH,MRI Muscle",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoarthritis",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations in -- indicate a high genetic predisposition to reduced bone strength and density; ongoing attention to bone health is contextually relevant.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoarthritis",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of osteoarthritis.",
+      "Tracking Biomarkers": "Vitamin D,Serum Calcium,Serum Magnesium ,Serum Phosphate,hsCRP",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoarthritis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations are seen in --, indicating a mild predisposition to degenerative joint changes; supportive joint care may be beneficial.",
+      "Tracking Biomarkers": "Vitamin D,Serum Calcium ,Serum Magnesium,Serum Phosphate ,hsCRP ,X Ray Knee",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoarthritis",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations are seen in --, indicating a moderate predisposition to cartilage breakdown, inflammation, and joint stiffness.",
+      "Tracking Biomarkers": "vitamin D          ,Serum Calcium,Serum Magnesium,Serum Phosphate,hsCRP,X Ray Knee,MRI Knee",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoporosis",
+      "RISK LEVEL": "Low",
+      "Insight": "Presence of specific genetic variants -- indicates a high genetic predisposition to ADHD; polymorphisms significantly impair dopamine transport and synaptic signaling, affecting attention regulation and impulse control with persistent frontostriatal signaling differences.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoporosis",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition to reduced bone density; maintaining calcium‑rich diet and weight‑bearing activity supports general bone health.",
+      "Tracking Biomarkers": "Serum Calcium,Serum Phosphate,Vitamin D",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoporosis",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of osteoporosis.",
+      "Tracking Biomarkers": "Serum Calcium ,Serum Phosphate ,Vitamin D,DEXA Scan",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Osteoporosis",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition to low bone mass; monitoring bone density is contextually reasonable.",
+      "Tracking Biomarkers": "Serum Calcium,Serum Phosphate,vitamin D          ,DEXA Scan",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Alzheimer's Disease / Dementia",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of Alzheimer's Disease / Dementia.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Alzheimer's Disease / Dementia copy",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your genetic test suggests a mild influence on memory and cognitive function.",
+      "Tracking Biomarkers": "APO E Genotyping",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Alzheimer's Disease / Dementia copy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Your genetic test suggests a moderate influence on cognition; APOE ε4 and related variants may impair amyloid clearance and synaptic repair, accelerating neurodegeneration and memory decline.",
+      "Tracking Biomarkers": "APO E Genotyping",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Alzheimer's Disease / Dementia copy copy",
+      "RISK LEVEL": "High",
+      "Insight": "Your genetic test suggests a high influence on cognitive function; APOE ε4 allele and variants in genes significantly impair amyloid clearance and synaptic repair, accelerating neurodegeneration and memory decline, increasing susceptibility to early cognitive decline under environmental stressors.",
+      "Tracking Biomarkers": "APO E Genotyping,Total tau,Amyloid-β42/40 ratio",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cellular Senescence and DNA Repair",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genes show a high risk for impaired oxidative stress defense; variants in genes significantly impair antioxidant defenses, making cells more vulnerable to damage from free radicals and oxidative stress with increased susceptibility to oxidative injury and chronic disease risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cellular Senescence and DNA Repair",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your genes show a mild impact on DNA repair and senescence; with healthy lifestyle habits, aging resilience is generally preserved.",
+      "Tracking Biomarkers": "Telomere length",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cellular Senescence and DNA Repair copy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Your genes show a moderate reduction in DNA repair capacity; polymorphisms can impair repair efficiency and promote telomere shortening and age‑related cellular degeneration.",
+      "Tracking Biomarkers": "Telomere length",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cellular Senescence and DNA Repair copy copy",
+      "RISK LEVEL": "High",
+      "Insight": "Your genes indicate a significantly reduced capacity for DNA repair and protection against cellular aging; polymorphisms in genes significantly affect DNA repair efficiency and promote age‑related cellular degeneration and telomere shortening, elevating risk for accelerated tissue degeneration and cognitive decline.",
+      "Tracking Biomarkers": "Telomere length",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Response to Oxidative Stress",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic test results indicate preserved oxidative stress response capacity and reduced inherited risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Response to Oxidative Stress",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Your genetic test results indicate a mild compromise in oxidative stress handling mechanisms, and this may increase vulnerability to damage from free radicals and oxidative stress.",
+      "Tracking Biomarkers": "8-OHdG, COQ10",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Response to Oxidative Stress",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your genes show a moderate compromise in antioxidant defenses; variants may increase vulnerability to damage from free radicals and oxidative stress.",
+      "Tracking Biomarkers": "8-OHdG , COQ10",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Response to Oxidative Stress",
+      "RISK LEVEL": "High",
+      "Insight": "Your genes show a high risk for impaired oxidative stress defense; variants in genes significantly impair antioxidant defenses, making cells more vulnerable to damage from free radicals and oxidative stress with increased susceptibility to oxidative injury and chronic disease risk.",
+      "Tracking Biomarkers": "8-OHdG, COQ10",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Age related Macular Degeneration",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic test suggests a high influence on cognitive function; APOE ε4 allele and variants in genes significantly impair amyloid clearance and synaptic repair, accelerating neurodegeneration and memory decline, increasing susceptibility to early cognitive decline under environmental stressors.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Age related Macular Degeneration copy",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variations are seen in genes related to age‑related macular degeneration, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "Genomic testing",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Age related Macular Degeneration copy copy",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- are observed, indicating a mild predisposition to retinal vulnerability.",
+      "Tracking Biomarkers": "Genomic testing,Zinc,copper",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Age related Macular Degeneration copy copy copy",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- are observed, indicating a moderate predisposition; variants can impair control of inflammation and oxidative stress in the retina, causing cell damage, drusen buildup, and progressive vision loss.",
+      "Tracking Biomarkers": "Genomic testing,Zinc,copper,Fundoscopy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cataract",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations in -- indicate a high genetic predisposition to glaucoma; variants in genes significantly disrupt aqueous humor outflow and optic nerve resilience, raising intraocular pressure and vision loss risk with persistent intraocular pressure susceptibility and optic nerve strain.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cataract",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variation is seen, indicating a reduced inherited likelihood of cataracts.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Cataract",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition; variants can impair lens protein stability and detoxification, contributing to lens opacity with age.",
+      "Tracking Biomarkers": "Fasting Blood Glucose ,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Catract",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition via galactose metabolism and lens protein stability.",
+      "Tracking Biomarkers": "Fasting Blood Glucose,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Glaucoma",
+      "RISK LEVEL": "Low",
+      "Insight": "Several variations in -- are observed, indicating a high genetic predisposition to AMD; variants in genes significantly impair control of inflammation and oxidative stress in the retina, causing cell damage, drusen buildup, and progressive vision loss with progressive retinal stress and degeneration.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Glaucoma",
+      "RISK LEVEL": "Mild",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of glaucoma.",
+      "Tracking Biomarkers": "Intraocular Pressure (IOP)",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Glaucoma",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations in -- indicate a mild predisposition related to intraocular pressure regulation and optic nerve resilience.",
+      "Tracking Biomarkers": "Intraocular Pressure (IOP) ,central corneal thickness",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Glaucoma",
+      "RISK LEVEL": "High",
+      "Insight": "Few variations in -- indicate a moderate predisposition; variants can disrupt aqueous humor outflow and optic nerve integrity, raising intraocular pressure and vision loss risk.",
+      "Tracking Biomarkers": "Intraocular Pressure (IOP),central corneal thickness",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Adiponectin Levels",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired adiponectin metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Adiponectin levels",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to lower adiponectin signaling.",
+      "Tracking Biomarkers": "Fasting Insulin,Fasting Glucose,HOMA-IR,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Adiponectin levels",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; polymorphisms may reduce adiponectin levels or receptor sensitivity, affecting insulin signaling, vascular protection, and lipid metabolism.",
+      "Tracking Biomarkers": "Serum Adiponectin,Fasting Insulin,Fasting Glucose,HOMA-IR,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Adiponectin levels",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to adiponectin pathway impairment; polymorphisms in genes significantly reduce adiponectin levels or receptor sensitivity, affecting insulin signaling, vascular protection, and lipid metabolism with susceptibility to insulin resistance, cardiovascular disease, metabolic syndrome, and obesity.",
+      "Tracking Biomarkers": "Serum Adiponectin,Fasting Insulin,Fasting Glucose,HOMA-IR,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Caffeine Sensitivity",
+      "RISK LEVEL": "Low",
+      "Insight": "Your genetic profile indicates low predisposition to caffeine sensitivity, suggesting typical metabolism and receptor response to caffeine exposure.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Caffeine Sensitivity",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your genetic profile indicates mild predisposition to caffeine sensitivity; slower metabolism or receptor sensitivity may relate to sleep disruption, nervousness, or palpitations at modest intakes.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Caffeine Sensitivity",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Your genetic profile indicates moderate predisposition to caffeine sensitivity; variants may slow caffeine clearance and heighten adenosine receptor responsiveness, increasing anxiety, insomnia, and heart‑rate reactivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Caffeine Sensitivity",
+      "RISK LEVEL": "High",
+      "Insight": "Your genetic profile indicates high predisposition to caffeine sensitivity; variants significantly influence caffeine metabolism with slow metabolizers potentially accumulating caffeine, increasing stress and accelerating cellular aging, and combined slower metabolism and receptor sensitivity can prolong stimulant effects and increase blood pressure and heart‑rate reactivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Calcium",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to calcium handling, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Calcium",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a mild predisposition to altered calcium absorption and metabolism with potential mild bone and muscle symptoms.",
+      "Tracking Biomarkers": "Serum Calcium",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Calcium",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a moderate predisposition; polymorphisms may impair calcium absorption and regulation, leading to bone demineralization and neuromuscular effects, elevating osteoporosis risk.",
+      "Tracking Biomarkers": "Serum Calcium",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Calcium",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a high genetic predisposition to calcium dysregulation; polymorphisms in genes significantly impair calcium absorption and regulation, leading to bone demineralization, neuromuscular dysfunction, and higher risk of osteoporosis with increased risk of bone pain and muscle symptoms.",
+      "Tracking Biomarkers": "Serum Calcium,Ionized calcium",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Homocysteine",
+      "RISK LEVEL": "Low",
+      "Insight": "Genetic findings indicate a reduced inherited likelihood of impaired homocysteine metabolism.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Homocysteine",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to elevated homocysteine.",
+      "Tracking Biomarkers": "Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Homocysteine",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants can impair folate metabolism, increasing cardiovascular and neurological risk.",
+      "Tracking Biomarkers": "Homocysteine,Vitamin B12     ,Folate",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Homocysteine",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to hyperhomocysteinemia; variants in genes significantly impair folate metabolism, leading to elevated homocysteine levels and increased cardiovascular and neurological risk with associated cardiometabolic and neurocognitive risks.",
+      "Tracking Biomarkers": "Homocysteine,Vitamin B12    ,Folate,MTHFR Gene Mutation Analysis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Iron",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of iron handling issues.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Iron",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered iron absorption and storage that may relate to anemia or fatigue.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Iron",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; polymorphisms can affect iron storage and increase risk for deficiency or overload (context of hemochromatosis).",
+      "Tracking Biomarkers": "Iron blood levels,Total Iron Binding capacity,Iron blood levels ,Iron blood levels ,Iron blood levels,Total Iron Binding capacity ,Total Iron Binding capacity,Total Iron Binding capacity",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Iron",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to iron dysregulation; polymorphisms in genes significantly disrupt iron storage and increase risk for deficiency or overload (e.g., hemochromatosis) with susceptibility to anemia or iron overload states.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Lipid Intolerance",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired lipid tolerance, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Lipid Intolerance",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered triglyceride sensitivity and fat metabolism.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Lipid Intolerance",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants may impair fat metabolism or increase sensitivity to saturated fat intake, raising hypertriglyceridemia risk.",
+      "Tracking Biomarkers": "Stool test (Elastase, Fat Content)\",\"Stool test (Elastase, Fat Content) \",\"Stool test (Elastase, Fat Content) \",\"Stool test (Elastase, Fat Content) ",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Lipid Intolerance",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to lipid intolerance; genetic variants significantly impair fat metabolism or increase triglyceride sensitivity, particularly to saturated fat intake with susceptibility to atherosclerosis, pancreatitis, and hypertriglyceridemia.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Magnesium",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of clinically significant magnesium impairment.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Magnesium",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered magnesium absorption and metabolism that may relate to mild muscle aches and fatigue.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Magnesium",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; reduced magnesium handling may diminish antioxidant enzyme activity and DNA repair, promoting telomere shortening and age‑related degeneration, with possible sleep disruption.",
+      "Tracking Biomarkers": "24 Hour Urine Magnesium,24 Hour Urine Magnesium ,24 Hour Urine Magnesium ,24 Hour Urine Magnesium",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Magnesium",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to impaired magnesium handling; deficiency significantly reduces antioxidant enzyme activity and DNA repair function, promoting telomere shortening and age‑related degeneration, at risk of having improper sleep with increased susceptibility to muscle symptoms and fatigue.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Phospate",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variations in -- indicate a mild predisposition affecting phosphate metabolism and bone mineralization.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Phosphate",
+      "RISK LEVEL": "Low",
+      "Insight": "Genetic findings indicate a reduced inherited likelihood of phosphate dysregulation.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Phosphate",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variations in -- indicate a moderate predisposition; variants can disrupt phosphate homeostasis, increasing risk for vascular calcification, bone disorders, and premature aging.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Phosphate",
+      "RISK LEVEL": "High",
+      "Insight": "Several variations in -- indicate a high genetic predisposition to phosphate dysregulation; variants in genes significantly disrupt phosphate homeostasis, increasing risk for vascular calcification, bone disorders, and premature aging with systemic calcification and bone mineral balance effects.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Protein Intolerance",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired protein metabolism and intolerance, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Protein Intolerance",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a mild predisposition to altered protein metabolism that may relate to gastrointestinal or tissue symptoms.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Protein Intolerance",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants in amino acid metabolism may impair breakdown or utilization, increasing ammonia or homocysteine.",
+      "Tracking Biomarkers": "Stool test (Elastase, Fat Content)\",\"Stool test (Elastase, Fat Content) \",\"Stool test (Elastase, Fat Content) \",\"Stool test (Elastase, Fat Content) ",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Protein Intolerance",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a high genetic predisposition to protein intolerance; variants in genes related to amino acid metabolism significantly impair breakdown or utilization of proteins, leading to increased ammonia or homocysteine with gastrointestinal distress and skin/bone implications.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Selenium",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of selenium deficiency.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Selenium",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered selenium absorption and metabolism that may relate to mood or energy changes.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Selenium",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants can reduce selenoprotein activity, diminishing antioxidant defense and increasing inflammation and oxidative stress susceptibility.",
+      "Tracking Biomarkers": "Selenium blood levels,Selenium blood levels ,Selenium blood levels,Selenium blood levels",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Selenium",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to selenium handling impairment; variants in genes significantly affect selenoprotein activity, reducing antioxidant defense and increasing susceptibility to inflammation and oxidative stress with heightened inflammatory and oxidative stress risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B1",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired vitamin B1 absorption and metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B1",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered thiamine handling that may relate to fatigue or headaches.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B1",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants may impair mitochondrial energy metabolism and antioxidant defense, accelerating cellular damage and aging.",
+      "Tracking Biomarkers": "Vitamin B1 blood levels,Vitamin B1 blood levels ,Vitamin B1 blood levels ,Vitamin B1 blood levels",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B1",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin B1 dysregulation; variants significantly impair mitochondrial energy metabolism and antioxidant defense, accelerating cellular damage and aging with fatigue and fluid balance symptoms.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B2",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired vitamin B2 absorption and metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B2",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered riboflavin handling that may relate to mucocutaneous symptoms.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B2",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants may impair glutathione recycling, weakening antioxidant defenses.",
+      "Tracking Biomarkers": "Vitamin B2 blood levels,Vitamin B2 blood levels,Vitamin B2 blood levels ,Vitamin B2 blood levels",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B2",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin B2 dysregulation; variants significantly impair glutathione recycling, weakening antioxidant defenses with mucocutaneous and oxidative stress sensitivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B6",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to vitamin B6, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B6",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered vitamin B6 absorption and metabolism that may relate to fatigue or neuropathy.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B6",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; inefficiency may elevate homocysteine and impair DNA synthesis and repair, contributing to cellular aging.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B6",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin B6 dysregulation; deficiency or inefficiency significantly elevates homocysteine, enhancing oxidative stress and impairing DNA synthesis and repair, contributing to cellular aging with hematologic and neurologic sensitivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B9/ Folic Acid",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to vitamin B9/folic acid, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B9/Folic acid",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered folate absorption and metabolism that may relate to anemia or mild fatigue.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B9/Folic acid",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; reduced folate activation can impair methylation, genomic stability, and oxidative balance.",
+      "Tracking Biomarkers": "Vitamin B9 / Folic Acid blood levels,Vitamin B9 ,Vitamin B9,Vitamin B9",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B9/folic acid",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to folate dysregulation; variants significantly reduce folate activation, leading to poor DNA methylation, genomic instability, and oxidative damage with systemic methylation and DNA repair demands.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B12",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired vitamin B12 absorption and metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B12",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered vitamin B12 absorption and metabolism that may relate to anemia or fatigue.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B12",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants can reduce methylation efficiency and neurotransmitter synthesis, impacting cardiovascular and cognitive health.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin B12",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin B12 dysregulation; variants in genes significantly reduce methylation efficiency and neurotransmitter synthesis, impacting cardiovascular and cognitive health with hematologic and neurologic susceptibility.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin C",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered vitamin C absorption and utilization that may relate to gum or skin issues.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin C",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; limited cellular uptake may weaken defenses against free radicals and telomere damage.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin C",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin C dysregulation; variants significantly limit cellular uptake, weakening defense against free radical and telomere damage with mucosal and skin susceptibility.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin D",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to vitamin D, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin D",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered vitamin D absorption and metabolism that may relate to mild bone and muscle symptoms.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin D",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; variants can affect vitamin D metabolism and receptor function, reducing immune regulation and calcium balance, and increasing risk of chronic disease and accelerated aging.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin D",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin D dysregulation; polymorphisms in genes significantly influence vitamin D metabolism and receptor function, reducing immune regulation, calcium balance, and increasing risk of chronic disease and accelerated aging with increased susceptibility to bone and muscle symptoms.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "VItamin E",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired vitamin E absorption and metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin E",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered vitamin E status with potential effects on antioxidant protection and membrane stability.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin E",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; changes in vitamin E handling can affect bioavailability and antioxidant function, increasing susceptibility to oxidative stress.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin E",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to vitamin E dysregulation; variants significantly affect delivery and antioxidant function, increasing membrane lipid peroxidation and DNA damage with greater risk of oxidative membrane damage and reduced antioxidant capacity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin K",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen in genes related to vitamin K, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin K",
+      "RISK LEVEL": "Mild",
+      "Insight": "Slight variations are seen in --, indicating a mild predisposition affecting vitamin K metabolism and clotting factor activation.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin K",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Few variations are seen in --, indicating a moderate predisposition; variants can impair vitamin K recycling and clotting factor activation, affecting bone health and vascular calcification control.",
+      "Tracking Biomarkers": "Plasma Vitamin K1,Plasma Vitamin K1 ,Plasma Vitamin K1 ,Plasma Vitamin K1",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamin k",
+      "RISK LEVEL": "High",
+      "Insight": "Several variations are seen in --, indicating a high genetic predisposition to vitamin K pathway dysregulation; genetic variants in certain genes significantly impair vitamin K recycling and clotting factor activation, affecting bone health and vascular calcification control with coagulation and calcification balance effects.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Vitamins C",
+      "RISK LEVEL": "Low",
+      "Insight": "You have low genetic risk for impaired vitamin C absorption and metabolism, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Zinc",
+      "RISK LEVEL": "Low",
+      "Insight": "No significant variations are seen, indicating a reduced inherited likelihood of zinc deficiency.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Zinc",
+      "RISK LEVEL": "Mild",
+      "Insight": "Detected variants indicate a mild predisposition to altered zinc absorption and metabolism that may relate to skin dryness or hair changes.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Zinc",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Detected variants indicate a moderate predisposition; transporter gene variants may affect zinc‑dependent enzymes, increasing oxidative and DNA damage susceptibility.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Zinc",
+      "RISK LEVEL": "High",
+      "Insight": "Detected variants indicate a high genetic predisposition to zinc handling impairment; zinc‑dependent enzymes are significantly affected by transporter gene variants, leading to oxidative and DNA damage with dermatologic and hair involvement.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk COMT alleles indicate typical catecholamine breakdown, supporting steady stress response.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild COMT variation may slightly reduce catecholamine clearance, with subtle effects on mood and focus under stress.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk COMT variants may reduce catecholamine degradation efficiency, contributing to stress sensitivity, mood fluctuations, or slower cognitive recovery.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk COMT variants may impair catecholamine detoxification, increasing vulnerability to anxiety, irritability, cognitive overload, and emotional dysregulation.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk MTHFR alleles indicate normal enzyme function, supporting efficient methylation and metabolic balance.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "A mild MTHFR variation may slightly reduce methylation efficiency and folate metabolism.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk MTHFR variants may impair folate metabolism and elevate homocysteine levels, affecting methylation capacity.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk MTHFR variants can significantly impair folate metabolism and methylation efficiency, potentially elevating homocysteine and increasing cardiovascular, neurological, and detoxification‑related concerns.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Your MTRR status indicates low risk with typical enzyme function.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild‑risk MTRR variants may slightly reduce enzyme efficiency; steady support of B12/folate may be helpful contextually.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk MTRR variants may impair recycling of methylated B12, affecting homocysteine metabolism and methylation.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk MTRR variants can disrupt B12 recycling and methylation pathways, increasing vulnerability to homocysteine accumulation and detoxification stress.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Your MTR gene shows no relevant variants, suggesting efficient conversion of homocysteine to methionine and stable methylation activity.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Your MTR gene shows mild variants that may slightly affect conversion of homocysteine to methionine using vitamin B12.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk MTR variants may reduce the enzyme's efficiency in converting homocysteine to methionine.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk MTR variants may significantly impair conversion of homocysteine to methionine, disrupting methylation and increasing demand for methyl donors contextually.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk AHCY alleles indicate typical pathway function with balanced methylation flux.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild AHCY variation may slightly affect pathway efficiency with generally preserved function.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate AHCY variation may modestly influence methylation balance without clear clinical impairment.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk AHCY variation may increase reliance on balanced methyl donors and antioxidant defenses contextually.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk CBS alleles indicate typical sulfur amino acid metabolism and homocysteine handling.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild CBS variation may slightly reduce sulfur processing and detox support.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate CBS variation may affect sulfur handling and detoxification, with possible fatigue, irritability, or sensitivity to sulfur‑rich foods.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk CBS variation may slow sulfur metabolism and impact detox functions, increasing demand on methylation and antioxidant systems.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Your SHMT1 status indicates low risk with typical folate pathway function.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild SHMT1 variants may slightly reduce folate utilization efficiency; dietary folate and active B6 may support this pathway contextually.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk SHMT1 variants may impair folate metabolism and one‑carbon transfer; methylated folate and B6 may support cellular repair contextually.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk SHMT1 variants may disrupt folate‑mediated DNA repair and increase vulnerability to cellular stress.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk DNMT alleles indicate typical methylation activity supporting stable gene expression.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild DNMT variants may subtly influence epigenetic programming; balanced methyl donors and polyphenols may be supportive contextually.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk DNMT variants may impair methylation signaling, increasing aging and inflammation risk; methyl donors and DNA repair nutrients may be advisable contextually.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk DNMT variants may disrupt DNA methylation and gene regulation, affecting cellular health and aging, with greater antioxidant and epigenetic support needs contextually.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk TCN2 alleles indicate typical B12 transport supporting optimal methylation.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild TCN2 variants may slightly affect B12 transport, especially during stress or poor absorption.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk TCN2 variants can impair B12 delivery to cells, contributing to low energy, anemia, or cognitive changes.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk TCN2 variants may significantly impair B12 transport, affecting neurological and hematologic health.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Low",
+      "Insight": "Low‑risk BHMT variants support adequate enzyme efficiency, homocysteine clearance, and methylation support.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild‑risk BHMT variants may reduce enzyme efficiency, potentially affecting homocysteine clearance and methylation support—especially during oxidative stress or low choline intake.",
+      "Tracking Biomarkers": "Vitamin B9,Vitamin B12  ,Homocysteine",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk BHMT variants reduce enzyme efficiency, potentially affecting homocysteine clearance and methylation support—especially during oxidative stress or low choline intake.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "High",
+      "Insight": "High-risk BHMT variants reduce enzyme efficiency, potentially affecting homocysteine clearance and methylation support, especially during oxidative stress or low choline intake.",
+      "Tracking Biomarkers": "Vitamin B9 ,Vitamin B12     ,Homocysteine,Metabolomics",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP1A1 profile indicates poor metabolizer status for certain environmental toxins; reduced detox capacity can increase susceptibility to buildup from smoke and pollutants.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP1A1 profile indicates normal metabolizer status, supporting balanced clearance of environmental toxins under typical exposure.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP1A1 profile indicates intermediate metabolizer status; slightly slower detox may increase sensitivity to pollutant exposure.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP1A1 profile indicates fast metabolizer status; rapid clearance can form reactive intermediates, so antioxidant capacity is contextually important.",
+      "Tracking Biomarkers": "CYP genotyping if medicated,CYP genotyping if medicated,CYP genotyping if medicated ,CYP genotyping if medicated",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP1B1 profile indicates poor metabolizer status for estrogen processing; slower clearance may contribute to estrogen‑dominant symptoms contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP1B1 profile indicates normal metabolizer status for estrogen and related hormones, suggesting balanced pathway function.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP1B1 profile indicates intermediate metabolizer status; slightly slower estrogen detox may benefit from general liver‑supportive habits contextually.",
+      "Tracking Biomarkers": "GGT,Fasting Blood Glucose,HbA1c,GGT ,GGT ,GGT  ,HbA1c ,HbA1c ,HbA1c ,Fasting Blood Glucose ,Fasting Blood Glucose ,Fasting Blood Glucose",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP1B1 profile indicates fast metabolizer status; rapid estrogen clearance may increase reactive intermediates, elevating antioxidant needs contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP2A6 profile indicates poor metabolizer status; slower detox of nicotine, mold toxins, and aflatoxins may increase sensitivity to these exposures.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP2A6 profile indicates normal metabolizer status, supporting balanced processing of nicotine, mold toxins, and related chemicals.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP2A6 profile indicates intermediate metabolizer status; slightly reduced processing of smoke‑related compounds may warrant general exposure awareness.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP2A6 profile indicates fast metabolizer status; rapid toxin processing may shorten drug effect durations in select cases.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP2C9 profile indicates poor metabolizer status; slower clearance of certain drugs (e.g., ibuprofen or warfarin) can increase side‑effect sensitivity.",
+      "Tracking Biomarkers": "HbA1c,HbA1c ,HbA1c ,HbA1c",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP2C9 profile indicates normal metabolizer status, supporting typical clearance of NSAIDs and similar medications.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP2C9 profile indicates intermediate metabolizer status; moderately reduced clearance may warrant dosing awareness in clinical contexts.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP2C9 profile indicates fast metabolizer status; rapid clearance may shorten duration of effect for some drugs.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP2C19 profile indicates poor metabolizer status; slower processing of clopidogrel and some antidepressants may elevate side‑effect risk.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP2C19 profile indicates normal metabolizer status, suggesting balanced processing of relevant medications.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP2C19 profile indicates intermediate metabolizer status; somewhat slower detox may increase medication sensitivity.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP2C19 profile indicates fast metabolizer status; rapid clearance can lower drug exposure and effectiveness.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP2D6 profile indicates poor metabolizer status; very slow processing of certain antidepressants or beta blockers increases risk of drug buildup.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP2D6 profile indicates normal metabolizer status, supporting typical processing of SSRIs and beta blockers.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP2D6 profile indicates intermediate metabolizer status; moderately slower detox may increase sensitivity to dose.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP2D6 profile indicates fast metabolizer status; rapid clearance may shorten effectiveness duration for some therapies.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP3A4 profile indicates poor metabolizer status; slower detox across many drugs handled by this enzyme increases risk of accumulation and interactions.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your CYP3A4 profile indicates normal metabolizer status, supporting healthy detox of medications, hormones, and toxins.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your CYP3A4 profile indicates intermediate metabolizer status; somewhat reduced detox capacity may benefit from medication review in clinical settings.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your CYP3A4 profile indicates fast metabolizer status; rapid clearance can shorten drug duration and may require individualized dosing clinically.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your NAT1 profile indicates fast metabolizer status; rapid processing generally supports resilience but may shorten drug effect duration.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your NAT1 profile indicates normal metabolizer status, supporting typical processing of environmental and dietary chemicals.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your NAT2 profile indicates normal metabolizer status, allowing healthy detox of compounds found in processed and smoked foods.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your NAT1 profile indicates poor metabolizer status; slower processing of certain environmental chemicals and drugs can increase sensitivity to everyday exposures.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Some reduction in detox function via GSTM1 may lead to slower toxin clearance; supportive liver and antioxidant measures may be helpful contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your NAT2 profile indicates fast metabolizer status; rapid clearance of food/environmental toxins can increase reactive by‑products, making steady antioxidant support contextually useful.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your NAT2 profile indicates intermediate metabolizer status; mildly reduced processing suggests prudent reduction of grilled meats, dyes, and preservatives.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your NAT1 profile indicates intermediate metabolizer status; slightly reduced capacity may increase reactivity to chemicals.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "You efficiently neutralize toxins via GSTM1; supportive dietary habits (e.g., cruciferous vegetables) align with balanced function.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your NAT2 profile indicates poor metabolizer status; slower detox of substances in smoke, dyes, and preservatives increases reliance on exposure management.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your GSTM1 profile indicates poor metabolizer status (null genotype); reduced capacity to neutralize oxidative stress and detoxify some pollutants may benefit from antioxidant support contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your CYP3A4 profile indicates fast metabolizer status; rapid clearance can shorten drug duration and may require individualized dosing clinically.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your NAT2 profile indicates fast metabolizer status; rapid clearance of food/environmental toxins can increase reactive by‑products, making steady antioxidant support contextually useful.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Poor Metabolizer",
+      "Insight": "Your NAT1 profile indicates fast metabolizer status; rapid processing generally supports resilience but may shorten drug effect duration.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "You efficiently neutralize toxins via GSTM1; supportive dietary habits (e.g., cruciferous vegetables) align with balanced function.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your NAT1 profile indicates intermediate metabolizer status; slightly reduced capacity may increase reactivity to chemicals.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your NAT1 profile indicates normal metabolizer status, supporting typical processing of environmental and dietary chemicals.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your NAT1 profile indicates poor metabolizer status; slower processing of certain environmental chemicals and drugs can increase sensitivity to everyday exposures.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Your NAT2 profile indicates intermediate metabolizer status; mildly reduced processing suggests prudent reduction of grilled meats, dyes, and preservatives.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "Your NAT2 profile indicates normal metabolizer status, allowing healthy detox of compounds found in processed and smoked foods.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your NAT2 profile indicates poor metabolizer status; slower detox of substances in smoke, dyes, and preservatives increases reliance on exposure management.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Normal Metabolizer",
+      "Insight": "Your GSTM1 profile indicates poor metabolizer status (null genotype); reduced capacity to neutralize oxidative stress and detoxify some pollutants may benefit from antioxidant support contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Fast Metabolizer",
+      "Insight": "Some reduction in detox function via GSTM1 may lead to slower toxin clearance; supportive liver and antioxidant measures may be helpful contextually.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "",
+      "RISK LEVEL": "Intermediate Metabolizer",
+      "Insight": "No variants have been identified for this entry, indicating typical detox function as noted.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Breast Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to breast cancer, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "Routine Self Palpation",
+      "Action Plan": "Self",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Breast Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few variations are seen in -- genes that influence DNA repair mechanisms, indicating a mild predisposition to breast cancer.",
+      "Tracking Biomarkers": "Mammogram,USG Breast,Routine Self Palpation",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Breast Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations are seen in -- genes that influence DNA repair mechanisms, indicating a moderate predisposition; inherited mutations in BRCA1/BRCA2 can increase lifetime risk.",
+      "Tracking Biomarkers": "Mammogram,CA 15-3,Routine Self Palpation",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Breast Cancer",
+      "RISK LEVEL": "High",
+      "Insight": "Several variations are seen in -- genes that influence DNA repair mechanisms, indicating a high genetic predisposition to breast cancer; inherited mutations in BRCA1, BRCA2 significantly increase lifetime risk for breast cancers via impaired homologous recombination and repair capacity.",
+      "Tracking Biomarkers": "Breast MRI,CA 15-3,Routine Self Palpation",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Colorectal Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to colorectal cancer, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Colorectal Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "No pathogenic variants are detected in colorectal cancer–related genes, indicating a low genetic predisposition.",
+      "Tracking Biomarkers": "Fecal occult blood test (FOBT) / Fecal immunochemical test (FIT)",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Colorectal Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Variations in related genes may impair DNA repair and Wnt signaling, promoting polyp formation and increasing colorectal carcinoma risk, indicating a moderate predisposition.",
+      "Tracking Biomarkers": "Fecal occult blood test (FOBT) / Fecal immunochemical test (FIT) ,MRI Abdomen with Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Colorectal Cancer",
+      "RISK LEVEL": "High",
+      "Insight": "Variations in related genes significantly impair DNA repair and Wnt signaling, promoting polyp formation and increasing colorectal carcinoma risk, indicating a high genetic predisposition to colorectal cancer.",
+      "Tracking Biomarkers": "Fecal occult blood test (FOBT) / Fecal immunochemical test (FIT) ,Screening Colonoscopy,Screening Colonoscopy,Screening Colonoscopy,Screening Colonoscopy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Melanoma",
+      "RISK LEVEL": "Low",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Melanoma",
+      "RISK LEVEL": "Mild",
+      "Insight": "",
+      "Tracking Biomarkers": "Routine Dermatologist Screening",
+      "Action Plan": "Self-Examination",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Melanoma",
+      "RISK LEVEL": "Moderate",
+      "Insight": "",
+      "Tracking Biomarkers": "Dermoscopic screening,Routine Dermatologist Screening",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Melanoma",
+      "RISK LEVEL": "High",
+      "Insight": "",
+      "Tracking Biomarkers": "Dermoscopic screening",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ovarian Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to ovarian cancer, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ovarian Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "Few variations are seen in -- genes that influence DNA repair mechanisms, indicating a mild predisposition to ovarian cancer.",
+      "Tracking Biomarkers": "CA-125,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ovarian Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Slight variations are seen in -- genes that influence DNA repair and homologous recombination, indicating a moderate predisposition; impaired repair can allow mutation accumulation leading to epithelial ovarian cancer.",
+      "Tracking Biomarkers": "Transvaginal Ultrasound ,CA-125,MRI Abdomen with Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Ovarian Cancer",
+      "RISK LEVEL": "High",
+      "Insight": "Several variations are seen in -- genes that influence DNA repair mechanisms, indicating a high genetic predisposition to ovarian cancer; mutations in genes significantly impair DNA repair and homologous recombination, causing accumulation of mutations, leading to epithelial ovarian cancer via homologous recombination deficiency and mutation accrual.",
+      "Tracking Biomarkers": "Transvaginal Ultrasound ,CA-125,MRI Abdomen with Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "You are at mild risk of developing pancreatic cancer as slight variations are observed in tumor suppressor and DNA repair genes.",
+      "Tracking Biomarkers": "Serum Amylase ,Serum Lipase ,USG Abdomen and Pelvis",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "You are at moderate risk of developing pancreatic cancer; slight variations are observed, and mutations in tumor suppressor and DNA repair genes may compromise cell cycle control and promote inflammation, increasing the risk for pancreatic cell mutations and tumor development.",
+      "Tracking Biomarkers": "CA 19-9,USG Abdomen and Pelvis,Serum Amylase ,Serum Lipase",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Pancreatic Cancer",
+      "RISK LEVEL": "High",
+      "Insight": "",
+      "Tracking Biomarkers": "CA 19-9,MRI Abdomen with Pelvis,Serum Amylase ,Serum Lipase",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Prostate Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Prostate Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "",
+      "Tracking Biomarkers": "Prostate Specific Antigen",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Prostate Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "",
+      "Tracking Biomarkers": "Prostate Specific Antigen ,USG Scrotum",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Prostate cancer",
+      "RISK LEVEL": "High",
+      "Insight": "",
+      "Tracking Biomarkers": "MRI Abdomen with Pelvis,Prostate Specific Antigen",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Renal Cell Carcinoma",
+      "RISK LEVEL": "Low",
+      "Insight": "",
+      "Tracking Biomarkers": "",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Renal Cell Carcinoma",
+      "RISK LEVEL": "Mild",
+      "Insight": "",
+      "Tracking Biomarkers": "Renal Function Test,Serum Electrolytes",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Renal Cell Carcinoma",
+      "RISK LEVEL": "Moderate",
+      "Insight": "",
+      "Tracking Biomarkers": "Renal Function Test,Serum Electrolytes",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Renal Cell Carcinoma",
+      "RISK LEVEL": "High",
+      "Insight": "",
+      "Tracking Biomarkers": "Cystoscopy",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Uterine Cancer",
+      "RISK LEVEL": "Low",
+      "Insight": "There are no clinically significant mutations found in the genes related to uterine cancer, indicating a reduced inherited likelihood.",
+      "Tracking Biomarkers": "PAP Smear",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Uterine Cancer",
+      "RISK LEVEL": "Mild",
+      "Insight": "Mild‑risk uterine cancer‑associated alleles such as -- indicate a mild predisposition through impaired DNA repair and tumor suppressor functions.",
+      "Tracking Biomarkers": "PAP Smear",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Uterine Cancer",
+      "RISK LEVEL": "Moderate",
+      "Insight": "Moderate‑risk uterine cancer‑associated alleles such as -- indicate a moderate predisposition; DNA mismatch repair deficiency can cause microsatellite instability, and variants can impair cell growth regulation.",
+      "Tracking Biomarkers": "PAP Smear",
+      "Action Plan": "",
+      "Nutrition": ""
+    },
+    {
+      "CONDITION": "Uterine Cancer",
+      "RISK LEVEL": "High",
+      "Insight": "High‑risk uterine cancer‑associated alleles such as -- indicate a high genetic predisposition to uterine cancer; variants in genes significantly cause DNA mismatch repair deficiency leading to microsatellite instability, and mutations impair cell growth regulation via defective DNA repair and tumor suppressor pathways.",
+      "Tracking Biomarkers": "Endometrial Biopsy,PAP Smear,MRI Abdomen with Pelvis",
+      "Action Plan": "Consider prophylactic hysterectomy with BSO after childbearing",
+      "Nutrition": ""
+    }
+  ]

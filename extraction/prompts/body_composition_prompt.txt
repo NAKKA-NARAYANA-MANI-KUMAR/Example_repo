@@ -1,0 +1,81 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available body composition biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED BODY COMPOSITION BIOMARKER UNITS:
+TotalFAT(%):TOTAL_BODY_FAT_PERCENTAGE : %
+Total Bone Mass:TOTAL_BONE_MASS : kg
+Total Soft Tissue:TOTAL_SOFT_TISSUE : kg
+Total Lean Mass:TOTAL_LEAN_MASS : kg
+VAT Mass (g):VAT_MASS : g
+SAT/VAT Ratio:SAT_VAT_RATIO : Ratio
+VAT Area (㎠):VAT_AREA : cm²
+ASM/Height^2:ASM_HEIGHT_SQUARED : kg/m²
+ASM/Weight:ASM_WEIGHT : Ratio
+ASM/BMI:ASM_BMI : Ratio
+A/G Ratio:A_G_RATIO : Ratio
+T-Score:T_SCORE : Score
+Z-Score:Z_SCORE : Score
+Body Weight:BODY_WEIGHT : kg
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `FULL BIOMARKER NAME:VARIABLE_NAME : unit`
+   - Search for the FULL BIOMARKER NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "TotalFAT(%):TOTAL_BODY_FAT_PERCENTAGE : %" → search PDF for "TotalFAT(%)" → output as `{"TOTAL_BODY_FAT_PERCENTAGE": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: 
+   - TotalFAT(%) = TOTAL_BODY_FAT_PERCENTAGE
+   - Total Bone Mass = TOTAL_BONE_MASS
+   - Total Soft Tissue = TOTAL_SOFT_TISSUE
+   - Total Lean Mass = TOTAL_LEAN_MASS
+   - VAT Mass (g) = VAT_MASS
+   - SAT/VAT Ratio = SAT_VAT_RATIO
+   - VAT Area (㎠) = VAT_AREA
+   - ASM/Height^2 = ASM_HEIGHT_SQUARED
+   - ASM/Weight = ASM_WEIGHT
+   - ASM/BMI = ASM_BMI
+   - A/G Ratio = A_G_RATIO
+   - T-Score = T_SCORE
+   - Z-Score = Z_SCORE
+   - Body Weight = BODY_WEIGHT
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle decimal values** - preserve decimal places as shown in the report
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "TOTAL_BODY_FAT_PERCENTAGE": 18.5,
+  "TOTAL_BONE_MASS": 2.8,
+  "TOTAL_SOFT_TISSUE": 45.2,
+  "TOTAL_LEAN_MASS": 48.0,
+  "VAT_MASS": 120.5,
+  "SAT_VAT_RATIO": 0.8,
+  "VAT_AREA": 85.2,
+  "ASM_HEIGHT_SQUARED": 7.2,
+  "ASM_WEIGHT": 0.35,
+  "ASM_BMI": 0.28,
+  "A_G_RATIO": 1.4,
+  "T_SCORE": 0.5,
+  "Z_SCORE": 0.2,
+  "BODY_WEIGHT": 75.5
+}
+```

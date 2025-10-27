@@ -1,0 +1,365 @@
+{
+  "report_info": {
+    "type": "Thrive Longevity Report",
+    "generated_date": "2025-10-22",
+    "clinic": {
+      "name": "PMX Health",
+      "address": "4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033",
+      "doctor": {
+        "name": "Samatha Tulla",
+        "specialization": "Internal Medicine Physician & Diabetologist",
+        "registration": "PMX-12345"
+      }
+    }
+  },
+  "source_data": {},
+  "client": {
+    "user_id": "61a36d0a-1041-7000-4202-539a9c2bf8be",
+    "id": null,
+    "name": "Nitya Surekha Annam",
+    "demographics": {
+      "gender": "Female",
+      "location": "Hyderabad",
+      "occupation": "Professional",
+      "dob": "1989-01-01",
+      "assessment_date": "25-06-2025",
+      "age": "36",
+      "zip_code": "500033",
+      "diet": "Vegetarian"
+    }
+  },
+  "profile_card_data": {
+    "metrics": [
+      {
+        "title": "Vascular Age",
+        "value": "42",
+        "suff": "yrs",
+        "pill": "High",
+        "pill_color": "#F49E5C"
+      },
+      {
+        "title": "Heart Rate Variability",
+        "value": "27.18",
+        "suff": "ms",
+        "pill": "Sub Optimal",
+        "pill_color": "#F4CE5C",
+        "footer": "40.0 - 100.0 ms"
+      },
+      {
+        "title": "Grip Strength (Right)",
+        "value": "49.0",
+        "suff": "",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": ">122.6"
+      },
+      {
+        "title": "Grip Strength (Left)",
+        "value": "56.0",
+        "suff": "",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": ">122.6"
+      },
+      {
+        "title": "Cognitive",
+        "value": "140",
+        "suff": "",
+        "pill": "Optimal",
+        "pill_color": "#488F31",
+        "footer": ">120"
+      }
+    ],
+    "age": 36,
+    "height": "160 cms",
+    "weight": "65 kg"
+  },
+  "current_medical_issues": {
+    "symptoms": [
+      {
+        "symptom": "Fatigue and weakness due to Folate Deficiency",
+        "hide": false
+      },
+      {
+        "symptom": "Systemic inflammation and related symptoms",
+        "hide": false
+      },
+      {
+        "symptom": "Fatigue and weakness due to Vitamin D Deficiency",
+        "hide": false
+      },
+      {
+        "symptom": "Fatigue and weakness due to Vitamin B12 Insufficiency",
+        "hide": false
+      },
+      {
+        "symptom": "Fatigue and weakness due to Iron Deficiency Anaemia",
+        "hide": false
+      },
+      {
+        "symptom": "Fatigue and weakness due to IGF -1 Insufficiency",
+        "hide": false
+      },
+      {
+        "symptom": "Fatigue and weakness due to Zinc Deficiency",
+        "hide": false
+      }
+    ],
+    "conditions": [
+      "Folate Deficiency",
+      "Systemic Inflammation",
+      "Vitamin D Deficiency",
+      "Vitamin B12 Insufficiency",
+      "Iron Deficiency Anaemia",
+      "IGF -1 Insufficiency",
+      "Hyperkalaemia",
+      "Hypocalcemia",
+      "Zinc Deficiency"
+    ]
+  },
+  "family_history": {
+    "maternal": [
+      "Diabetes",
+      "Hypertension"
+    ],
+    "paternal": [
+      "Heart Disease"
+    ],
+    "past_history": [
+      "Previous infections",
+      "Vaccinations received"
+    ],
+    "menstrual_history": [
+      "LMP - 12/08/2025",
+      "Cycle length: 28 days",
+      "Duration: 5 days"
+    ]
+  },
+  "vital_params": {
+    "header": "Comprehensive Vital Parameters",
+    "header_data": "Delivers vital health metrics to detect risks early and guide personalized, preventive care",
+    "metrics": {
+      "title": "Vitals",
+      "metrics_data": [
+        {
+          "title": "Body Temperature",
+          "value": "98.6",
+          "suff": "°F",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "97.8-99.1 °F"
+        },
+        {
+          "title": "Heart Rate",
+          "value": "72",
+          "suff": "bpm",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "60.0-100.0 bpm"
+        },
+        {
+          "title": "Blood Pressure",
+          "value": "120/80",
+          "suff": "mmHg",
+          "pill": "Optimal",
+          "pill_color": "#488F31",
+          "footer": "90/60-120/80 mmHg"
+        }
+      ]
+    }
+  },
+  "lifestyle_trends": {
+    "header": "Your Lifestyle Trends",
+    "header_data": "Evaluates daily habits to uncover lifestyle changes that boost long-term health and well-being",
+    "title": "Lifestyle Trends",
+    "lifestyle_trends_data": [
+      {
+        "name": "Diet Preference",
+        "data": "Vegetarian"
+      },
+      {
+        "name": "Physical Activity",
+        "data": "Moderate"
+      },
+      {
+        "name": "Sleep Duration",
+        "data": "7-8 hours"
+      },
+      {
+        "name": "Hydration",
+        "data": "2-3 litres"
+      }
+    ]
+  },
+  "areas_of_concern": {
+    "title": "Areas of Concern",
+    "title_data": "Identifies suboptimal biomarkers to spotlight health risks and guide targeted improvements for better wellness",
+    "areas_of_concern_data": [
+      {
+        "title": "FOLATE",
+        "title_data": "Folate levels for red blood cell production.",
+        "title_pill": "Nutritional Status",
+        "value": "8",
+        "suff": "ng/mL",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": ">10 ng/mL"
+      },
+      {
+        "title": "VITAMIN D",
+        "title_data": "Vitamin D levels for bone health and immune function.",
+        "title_pill": "Nutritional Status",
+        "value": "25",
+        "suff": "ng/mL",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": "30-100 ng/mL"
+      },
+      {
+        "title": "VITAMIN B-12",
+        "title_data": "Measures B12 detects deficiency, anemia, nerve health issues.",
+        "title_pill": "Nutritional Status",
+        "value": "580",
+        "suff": "pg/mL",
+        "pill": "Sub Optimal",
+        "pill_color": "#F4CE5C",
+        "footer": "600-1000"
+      },
+      {
+        "title": "IRON",
+        "title_data": "Iron levels for anemia detection and treatment.",
+        "title_pill": "Nutritional Status",
+        "value": "45",
+        "suff": "μg/dL",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": "60-170 μg/dL"
+      },
+      {
+        "title": "ZINC",
+        "title_data": "Zinc levels for immune function and wound healing.",
+        "title_pill": "Nutritional Status",
+        "value": "65",
+        "suff": "μg/dL",
+        "pill": "Low",
+        "pill_color": "#F49E5C",
+        "footer": "70-120 μg/dL"
+      }
+    ]
+  },
+  "action_plan": {
+    "header": "Action Plan",
+    "action_plan_list": [
+      "Follow Phase 1 for 8 weeks",
+      "Take nutritional supplements based on prescription",
+      "Review after 1 month"
+    ]
+  },
+  "prescription_data": {
+    "user_profile": {
+      "user_id": "61a36d0a-1041-7000-4202-539a9c2bf8be",
+      "first_name": "Nitya",
+      "last_name": "Surekha Annam",
+      "phone_number": "9876543210",
+      "email": "nitya.surekha@example.com",
+      "gender": "Female",
+      "date_of_birth": "1989-01-01",
+      "age": 36,
+      "occupation": "Professional",
+      "city": "Hyderabad",
+      "profile_picture": null,
+      "client_id": null,
+      "is_doctor": false,
+      "zip_code": "500033",
+      "relationship_status": "Single"
+    },
+    "doctor": {
+      "name": "Samatha Tulla MD",
+      "registration_number": "68976",
+      "registration_state": "Telangana State Medical Council",
+      "signature_file_name": "dr_samatha_sign.svg",
+      "specialization": "Internal Medicine",
+      "is_doctor": true
+    },
+    "medications": [
+      {
+        "name": "Albendazole",
+        "strength": "400mg",
+        "dosage": "1 tablet",
+        "frequency": "0-0-1",
+        "duration": "2 months",
+        "instructions": "Afterdinner",
+        "active_ingredients": "",
+        "start_from": "Day1",
+        "timing": "Afterdinner",
+        "available_in_clinic": false,
+        "external_url": ""
+      },
+      {
+        "name": "Opti Allergyshield",
+        "strength": "0",
+        "dosage": "1 tablet",
+        "frequency": "-1-0",
+        "duration": "2 months",
+        "instructions": "Aftermeal",
+        "active_ingredients": "",
+        "start_from": "Day11",
+        "timing": "Aftermeal",
+        "available_in_clinic": true,
+        "external_url": ""
+      },
+      {
+        "name": "months",
+        "strength": "0",
+        "dosage": "1 tablet",
+        "frequency": "-1-0",
+        "duration": "2 months",
+        "instructions": "Afterlunch",
+        "active_ingredients": "",
+        "start_from": "Day12",
+        "timing": "Afterlunch",
+        "available_in_clinic": true,
+        "external_url": ""
+      },
+      {
+        "name": "tablet",
+        "strength": "1",
+        "dosage": "1 tablet",
+        "frequency": "-0-0",
+        "duration": "2 months",
+        "instructions": "Afterbreakfast",
+        "active_ingredients": "",
+        "start_from": "Day13",
+        "timing": "Afterbreakfast",
+        "available_in_clinic": true,
+        "external_url": ""
+      },
+      {
+        "name": "Ace BlendOutshineOmega",
+        "strength": "1",
+        "dosage": "31 capsule",
+        "frequency": "-0-1",
+        "duration": "2 months",
+        "instructions": "AfteMeal",
+        "active_ingredients": "",
+        "start_from": "Day14",
+        "timing": "AfteMeal",
+        "available_in_clinic": true,
+        "external_url": ""
+      },
+      {
+        "name": "capsule mixed",
+        "strength": "0",
+        "dosage": "1 tablet",
+        "frequency": "-0-1",
+        "duration": "2 months",
+        "instructions": "Afterdinner",
+        "active_ingredients": "",
+        "start_from": "Day15",
+        "timing": "Afterdinner",
+        "available_in_clinic": true,
+        "external_url": ""
+      }
+    ]
+  }
+}

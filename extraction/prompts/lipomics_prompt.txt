@@ -1,0 +1,80 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available LIPOMICS biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED LIPOMICS BIOMARKER UNITS:
+Polyunsaturated Omega-3 Fatty Acids:PUFA_O3 : %
+Polyunsaturated Omega-6 Fatty Acids:PUFA_O6 : %
+cis-Monounsaturated Fatty Acids:MUFA : %
+Saturated Fatty Acids:SFA : %
+Trans Fatty Acids:TFA : %
+Omega-3 Index:O3_INDEX : %
+Omega-6/Omega3 Ratio:O6_O3_RATIO : Ratio
+Palmitic Acid Index:PALM_INDEX : %
+AA/EPA Ratio:AA_EPA_RATIO : Ratio
+Trans Fat Index (TFI):TFI : %
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `FULL BIOMARKER NAME:VARIABLE_NAME : unit`
+   - Search for the FULL BIOMARKER NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "Polyunsaturated Omega-3 Fatty Acids:PUFA_O3 : %" → search PDF for "Polyunsaturated Omega-3 Fatty Acids" → output as `{"PUFA_O3": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: 
+   - Polyunsaturated Omega-3 Fatty Acids = PUFA_O3
+   - Polyunsaturated Omega-6 Fatty Acids = PUFA_O6
+   - cis-Monounsaturated Fatty Acids = MUFA
+   - Saturated Fatty Acids = SFA
+   - Trans Fatty Acids = TFA
+   - Omega-3 Index = O3_INDEX
+   - Omega-6/Omega3 Ratio = O6_O3_RATIO
+   - Palmitic Acid Index = PALM_INDEX
+   - AA/EPA Ratio = AA_EPA_RATIO
+   - Trans Fat Index (TFI) = TFI
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle decimal values** - preserve decimal places as shown in the report
+8. **Look for these specific terms** in the PDF:
+   - "Polyunsaturated Omega-3 Fatty Acids"
+   - "Polyunsaturated Omega-6 Fatty Acids"
+   - "cis-Monounsaturated Fatty Acids"
+   - "Saturated Fatty Acids"
+   - "Trans Fatty Acids"
+   - "Omega-3 Index"
+   - "Omega-6/Omega3 Ratio" or "Omega-6/Omega-3 Ratio"
+   - "Palmitic Acid Index"
+   - "AA/EPA Ratio"
+   - "Trans Fat Index (TFI)" or "TFI"
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "PUFA_O3": 8.5,
+  "PUFA_O6": 12.3,
+  "MUFA": 15.2,
+  "SFA": 25.8,
+  "TFA": 2.1,
+  "O3_INDEX": 6.8,
+  "O6_O3_RATIO": 1.8,
+  "PALM_INDEX": 18.5,
+  "AA_EPA_RATIO": 3.2,
+  "TFI": 1.5
+}
+```

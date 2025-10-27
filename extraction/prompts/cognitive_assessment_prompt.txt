@@ -1,0 +1,45 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available COGNITIVE ASSESSMENT biomarkers. Return only a single JSON object with patient information and biomarker values (include all keys even if empty).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED COGNITIVE ASSESSMENT BIOMARKER UNITS:
+- Overall Brain Score:OVERALL_BRAIN_SCORE : score
+- Attention:ATTENTION : score
+- Immediate Memory:IMMEDIATE_MEMORY : score
+- Working Memory:WORKING_MEMORY : score
+- Brain Executive Function:BRAIN_EXECUTIVE_FUNCTION : score
+
+## IMPORTANT EXTRACTION NOTES:
+1. **Include ALL keys** - even if values are empty, include the key with null/empty value
+2. **Extract exact values** as they appear in the report
+3. **For scores** - extract the numerical values
+4. **Search the entire document**: These values may be in different sections of the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and ALL biomarkers (even if empty).
+Use the VARIABLE_NAME (short codes) as JSON keys.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "OVERALL_BRAIN_SCORE": 85,
+  "ATTENTION": 78,
+  "IMMEDIATE_MEMORY": 82,
+  "WORKING_MEMORY": 75,
+  "BRAIN_EXECUTIVE_FUNCTION": 88
+}
+```

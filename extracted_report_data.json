@@ -1,0 +1,232 @@
+{
+  "report_info": {
+    "type": "Thrive Longevity Report",
+    "generated_date": "2025-10-22",
+    "clinic": {
+      "name": "PMX Health",
+      "address": "4th floor, Rd Number 44, Jubilee Hills, Hyderabad, Telangana - 500033",
+      "doctor": {
+        "name": "Samatha Tulla",
+        "specialization": "Internal Medicine Physician & Diabetologist",
+        "registration": "PMX-12345"
+      }
+    }
+  },
+  "source_data": {},
+  "client": {
+    "user_id": "61a36d0a-1041-7000-4202-539a9c2bf8be",
+    "id": null,
+    "name": "",
+    "demographics": {
+      "gender": "",
+      "location": "",
+      "occupation": "",
+      "dob": "",
+      "assessment_date": "",
+      "age": "1",
+      "zip_code": "",
+      "diet": ""
+    }
+  },
+  "profile_card_data": {
+    "metrics": [],
+    "age": 1,
+    "height": "",
+    "weight": ""
+  },
+  "current_medical_issues": {
+    "symptoms": [
+      {
+        "symptom": "Livogen XT",
+        "hide": false
+      }
+    ],
+    "conditions": []
+  },
+  "family_history": {
+    "maternal": [],
+    "paternal": [],
+    "past_history": [],
+    "menstrual_history": []
+  },
+  "vital_params": {
+    "header": "Comprehensive Vital Parameters",
+    "header_data": "Delivers vital health metrics to detect risks early and guide personalized, preventive care",
+    "metrics": {
+      "title": "Vitals",
+      "metrics_data": []
+    }
+  },
+  "lifestyle_trends": {
+    "header": "Your Lifestyle Trends",
+    "header_data": "Evaluates daily habits to uncover lifestyle changes that boost long-term health and well-being",
+    "title": "Lifestyle Trends",
+    "lifestyle_trends_data": []
+  },
+  "areas_of_concern": {
+    "title": "Areas of Concern",
+    "title_data": "Identifies suboptimal biomarkers to spotlight health risks and guide targeted improvements for better wellness",
+    "areas_of_concern_data": [
+      {
+        "title": "Samatha Tulla",
+        "value": "4",
+        "unit": "th",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Zinc Deficiency\nPrescription\nStart\nDosag Freque Durati\nMedications Timing Fro How to Buy Remarks\ne ncy on\nm",
+        "value": "1",
+        "unit": "tablet",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "After",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Link to buy Dewarming\ndinner hs",
+        "value": "1",
+        "unit": "g",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Opti Allergy After",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "PMX\nshield meal hs",
+        "value": "11",
+        "unit": "symptoms",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "once daily After",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "lunch hs",
+        "value": "12",
+        "unit": "levels",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "in body\nfor",
+        "value": "2",
+        "unit": "months",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "To optimize\nVitaone After vitamin D levels",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "PMX and regulate\nhs",
+        "value": "13",
+        "unit": "K",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "ast calcium metaboli\nsm\nAce Blend",
+        "value": "1",
+        "unit": "caps",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Afte",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Day Improve HDL",
+        "value": "5",
+        "unit": "Outshine",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "PMX\nule Meal hs",
+        "value": "14",
+        "unit": "Cholesterol",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "levels\nOmega",
+        "value": "3",
+        "unit": "Prescribed",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Char After",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "discomfort\nMaintains healthy\ndigestion\nAfter",
+        "value": "2",
+        "unit": "mont",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Take when IV",
+        "value": "7",
+        "unit": "Supermag",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      },
+      {
+        "title": "Link to buy days prior to first\ncream hs",
+        "value": "1",
+        "unit": "day",
+        "pill": "",
+        "pill_color": "",
+        "footer": ""
+      }
+    ]
+  }
+}

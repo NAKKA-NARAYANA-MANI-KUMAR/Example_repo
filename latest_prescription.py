@@ -1780,6 +1780,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
             story.append(KeepTogether(self._create_prescription_table(medications)))
             story.append(Spacer(1, 16))
         
+        supplements = []
         if "supplements" in data:
             # Direct access
             supplements = data.get("supplements", [])
@@ -1792,6 +1793,7 @@ class PrescriptionPage(PrescriptionOnlyTemplate):
                 .get("reference_data", {})
                 .get("supplements", [])
             )
+            supplements = []
             for med in ref_supplements:
                 supplements.append(
                     {

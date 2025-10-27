@@ -1,0 +1,68 @@
+**Parse this medical laboratory report and convert it to standardized JSON format. Extract all available metabolic risk profiler biomarkers and convert them to the specified units below. Return only a single JSON object with patient information and biomarker values (skip all null/missing values).**
+
+## PATIENT INFO FORMAT:
+```json
+{
+  "name": "PATIENT FULL NAME",
+  "age": number,
+  "sex": "Male" or "Female",
+  "cycle": "All"
+}
+```
+
+## STANDARDIZED METABOLIC RISK PROFILER BIOMARKER UNITS:
+FVC:FVC : L
+FEV1:FEV1 : L
+FEV1/FVC ratio:FEV1_FVC_RATIO : Ratio
+PEF:PEF : L/s
+FEF25%:FEF25 : L/s
+Average flow rate 25-75%:FEF25_75 : L/s
+SDNN:HEART_RATE_VARIABILITY_SDNN : ms
+
+## IMPORTANT NOTES:
+1. **Biomarker Format**: Each biomarker is listed as `FULL BIOMARKER NAME:VARIABLE_NAME : unit`
+   - Search for the FULL BIOMARKER NAME in the PDF report
+   - In the output JSON, use the VARIABLE_NAME (short code after the colon)
+   - Example: For "FVC:FVC : L" → search PDF for "FVC" → output as `{"FVC": value}`
+2. **Skip null values** - only include biomarkers that have actual values in the report
+3. **Handle alternative names**: 
+   - FVC = FVC
+   - FEV1 = FEV1
+   - FEV1/FVC ratio = FEV1_FVC_RATIO
+   - PEF = PEF
+   - FEF25% = FEF25
+   - Average flow rate 25-75% = FEF25_75
+   - SDNN = HEART_RATE_VARIABILITY_SDNN
+4. **No unit conversions needed** - extract values as they appear in the report
+5. **Use "Male" or "Female"** for sex (never abbreviations)
+6. **Include patient demographics** (name, age, sex, cycle)
+7. **Handle decimal values** - preserve decimal places as shown in the report
+8. **Look for these specific terms** in the PDF:
+   - "FVC" (Forced Vital Capacity)
+   - "FEV1" (Forced Expiratory Volume in 1 second)
+   - "FEV1/FVC ratio" or "FEV1/FVC" (ratio)
+   - "PEF" (Peak Expiratory Flow)
+   - "FEF25%" or "FEF25" (Forced Expiratory Flow at 25% of FVC)
+   - "Average flow rate 25-75%" or "FEF25-75%" (Forced Expiratory Flow between 25-75% of FVC)
+   - "SDNN" (Standard Deviation of Normal-to-Normal intervals)
+
+## OUTPUT FORMAT:
+Return a clean JSON object with patient info and only the biomarkers found in the report (no null values).
+Use the VARIABLE_NAME (short codes) as JSON keys, NOT the full biomarker names.
+
+Example output format:
+```json
+{
+  "name": "PATIENT NAME",
+  "age": 35,
+  "sex": "Male",
+  "cycle": "All",
+  "FVC": 4.2,
+  "FEV1": 3.5,
+  "FEV1_FVC_RATIO": 0.83,
+  "PEF": 8.5,
+  "FEF25": 6.2,
+  "FEF25_75": 4.8,
+  "HEART_RATE_VARIABILITY_SDNN": 45.2
+}
+```
